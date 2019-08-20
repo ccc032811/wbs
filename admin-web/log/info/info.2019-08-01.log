@@ -1,0 +1,622 @@
+2019-08-01 13:54:54.438 febs [main] INFO  com.neefull.fsp.FlpApplication - Starting FlpApplication on pc-wangpei with PID 16136 (D:\workspace\workspace_open\FreelancePlatform\target\classes started by Thinkpad in D:\workspace\workspace_open\FreelancePlatform)
+2019-08-01 13:54:54.441 febs [main] INFO  com.neefull.fsp.FlpApplication - The following profiles are active: dev
+2019-08-01 13:54:55.656 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-01 13:54:55.658 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-01 13:54:55.707 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 36ms. Found 0 repository interfaces.
+2019-08-01 13:54:56.091 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.173 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$e7625b06] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.180 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.183 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.189 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$7dd3ea35] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.207 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'febsProperties' of type [com.neefull.fsp.common.properties.FebsProperties$$EnhancerBySpringCGLIB$$42b38d57] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.212 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroConfig' of type [com.neefull.fsp.common.authentication.ShiroConfig$$EnhancerBySpringCGLIB$$d24bdcf8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.324 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatis-plus-com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.332 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatisPlusConfigure' of type [com.neefull.fsp.common.configure.MybatisPlusConfigure$$EnhancerBySpringCGLIB$$c037647c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.336 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'paginationInterceptor' of type [com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.343 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration$$EnhancerBySpringCGLIB$$bb9c56cf] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.350 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceCreator' of type [com.baomidou.dynamic.datasource.DynamicDataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.352 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceProvider' of type [com.baomidou.dynamic.datasource.provider.YmlDynamicDataSourceProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.354 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-检测到并开启了p6spy
+2019-08-01 13:54:56.361 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Starting...
+2019-08-01 13:54:56.479 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Start completed.
+2019-08-01 13:54:56.480 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Starting...
+2019-08-01 13:54:56.485 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Start completed.
+2019-08-01 13:54:56.485 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 初始共加载 2 个数据源
+2019-08-01 13:54:56.485 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 quartz 成功
+2019-08-01 13:54:56.485 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 base 成功
+2019-08-01 13:54:56.486 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 当前的默认数据源是单数据源，数据源名为 base
+2019-08-01 13:54:56.486 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.499 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:56.507 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.078 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionFactory' of type [org.apache.ibatis.session.defaults.DefaultSqlSessionFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.084 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionTemplate' of type [org.mybatis.spring.SqlSessionTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.088 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.090 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [com.sun.proxy.$Proxy109] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.116 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.117 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [com.sun.proxy.$Proxy111] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.119 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleServiceImpl' of type [com.neefull.fsp.system.service.impl.UserRoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.155 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userServiceImpl' of type [com.neefull.fsp.system.service.impl.UserServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.178 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.179 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [com.sun.proxy.$Proxy114] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.184 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.185 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [com.sun.proxy.$Proxy115] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.186 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuServiceImpl' of type [com.neefull.fsp.system.service.impl.RoleMenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.202 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleServiceImpl' of type [com.neefull.fsp.system.service.impl.RoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.222 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.223 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [com.sun.proxy.$Proxy118] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.226 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuServiceImpl' of type [com.neefull.fsp.system.service.impl.MenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.243 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroRealm' of type [com.neefull.fsp.common.authentication.ShiroRealm] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.603 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'redisSessionDAO' of type [org.crazycake.shiro.RedisSessionDAO] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.606 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sessionManager' of type [org.apache.shiro.web.session.mgt.DefaultWebSessionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.614 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'securityManager' of type [org.apache.shiro.web.mgt.DefaultWebSecurityManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.628 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'authorizationAttributeSourceAdvisor' of type [org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:54:57.930 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2019-08-01 13:54:57.944 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2019-08-01 13:54:57.951 febs [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2019-08-01 13:54:57.952 febs [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
+2019-08-01 13:54:57.957 febs [main] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Tools\Java\jdk1.8.0_144\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;D:\Tools\JetBrains\IntelliJ IDEA 2019.2\jbr\\bin;D:\Tools\JetBrains\IntelliJ IDEA 2019.2\jbr\\bin\server;D:\Tools\xftp6\;D:\Tools\xshell6\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS\;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;D:\Tools\Java\jdk1.8.0_144\bin;D:\Tools\apache-maven-3.5.3\bin;C:\Users\Thinkpad\AppData\Local\Microsoft\WindowsApps;;D:\Tools\JetBrains\IntelliJ IDEA 2019.2\bin;;.]
+2019-08-01 13:54:58.049 febs [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2019-08-01 13:54:58.049 febs [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3484 ms
+2019-08-01 13:54:58.565 febs [main] INFO  com.neefull.fsp.common.xss.XssFilter - ------------ xss filter init ------------
+2019-08-01 13:54:58.945 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2019-08-01 13:54:58.959 febs [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-08-01 13:54:58.959 febs [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.0 created.
+2019-08-01 13:54:58.963 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - Using db table-based data access locking (synchronization).
+2019-08-01 13:54:58.965 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - JobStoreCMT initialized.
+2019-08-01 13:54:58.965 febs [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.0) 'FEBS_Scheduler' with instanceId 'pc-wangpei1564638898947'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 20 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+2019-08-01 13:54:58.965 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'FEBS_Scheduler' initialized from an externally provided properties instance.
+2019-08-01 13:54:58.966 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.0
+2019-08-01 13:54:58.967 febs [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@66020d69
+2019-08-01 13:54:59.026 febs [main] INFO  p6spy - 1564638899026|2|statement|connection 3|url jdbc:mysql://127.0.0.1:3306/flp?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8|SELECT job_id jobId, bean_name beanName, method_name methodName, params, cron_expression cronExpression, status, remark, create_time createTime FROM t_job ORDER BY job_id|SELECT job_id jobId, bean_name beanName, method_name methodName, params, cron_expression cronExpression, status, remark, create_time createTime FROM t_job ORDER BY job_id
+2019-08-01 13:54:59.370 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService
+2019-08-01 13:54:59.371 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'febsAsyncThreadPool'
+2019-08-01 13:54:59.795 febs [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2019-08-01 13:55:00.701 febs [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-08-01 13:55:00.777 febs [main] INFO  o.s.s.quartz.SchedulerFactoryBean - Will start Quartz Scheduler [FEBS_Scheduler] in 1 seconds
+2019-08-01 13:55:00.790 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2019-08-01 13:55:00.816 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2019-08-01 13:55:00.819 febs [main] INFO  com.neefull.fsp.FlpApplication - Started FlpApplication in 7.047 seconds (JVM running for 8.02)
+2019-08-01 13:55:00.854 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'febsAsyncThreadPool'
+2019-08-01 13:55:00.856 febs [main] INFO  o.s.s.quartz.SchedulerFactoryBean - Shutting down Quartz Scheduler
+2019-08-01 13:55:00.856 febs [main] INFO  org.quartz.core.QuartzScheduler - Scheduler FEBS_Scheduler_$_pc-wangpei1564638898947 shutting down.
+2019-08-01 13:55:00.857 febs [main] INFO  org.quartz.core.QuartzScheduler - Scheduler FEBS_Scheduler_$_pc-wangpei1564638898947 paused.
+2019-08-01 13:55:00.857 febs [main] INFO  org.quartz.core.QuartzScheduler - Scheduler FEBS_Scheduler_$_pc-wangpei1564638898947 shutdown complete.
+2019-08-01 13:55:00.860 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - closing dynamicDatasource  ing....
+2019-08-01 13:55:00.861 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Shutdown initiated...
+2019-08-01 13:55:00.863 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Shutdown completed.
+2019-08-01 13:55:00.863 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Shutdown initiated...
+2019-08-01 13:55:00.865 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Shutdown completed.
+2019-08-01 13:55:01.778 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.SchedulerFactoryBean - Starting Quartz Scheduler now, after delay of 1 seconds
+2019-08-01 13:58:26.166 febs [main] INFO  com.neefull.fsp.FlpApplication - Starting FlpApplication on pc-wangpei with PID 19552 (D:\workspace\workspace_open\FreelancePlatform\target\classes started by Thinkpad in D:\workspace\workspace_open\FreelancePlatform)
+2019-08-01 13:58:26.168 febs [main] INFO  com.neefull.fsp.FlpApplication - The following profiles are active: dev
+2019-08-01 13:58:27.095 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-01 13:58:27.097 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-01 13:58:27.143 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 36ms. Found 0 repository interfaces.
+2019-08-01 13:58:27.487 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.554 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$b3a9e428] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.561 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.563 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.570 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4a1b7357] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.586 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'febsProperties' of type [com.neefull.fsp.common.properties.FebsProperties$$EnhancerBySpringCGLIB$$efb1679] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.589 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroConfig' of type [com.neefull.fsp.common.authentication.ShiroConfig$$EnhancerBySpringCGLIB$$9e93661a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.695 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatis-plus-com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.703 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatisPlusConfigure' of type [com.neefull.fsp.common.configure.MybatisPlusConfigure$$EnhancerBySpringCGLIB$$8c7eed9e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.706 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'paginationInterceptor' of type [com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.712 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration$$EnhancerBySpringCGLIB$$87e3dff1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.721 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceCreator' of type [com.baomidou.dynamic.datasource.DynamicDataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.723 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceProvider' of type [com.baomidou.dynamic.datasource.provider.YmlDynamicDataSourceProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.725 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-检测到并开启了p6spy
+2019-08-01 13:58:27.730 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Starting...
+2019-08-01 13:58:27.832 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Start completed.
+2019-08-01 13:58:27.832 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Starting...
+2019-08-01 13:58:27.837 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Start completed.
+2019-08-01 13:58:27.837 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 初始共加载 2 个数据源
+2019-08-01 13:58:27.837 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 quartz 成功
+2019-08-01 13:58:27.838 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 base 成功
+2019-08-01 13:58:27.838 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 当前的默认数据源是单数据源，数据源名为 base
+2019-08-01 13:58:27.838 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.849 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:27.857 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.324 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionFactory' of type [org.apache.ibatis.session.defaults.DefaultSqlSessionFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.330 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionTemplate' of type [org.mybatis.spring.SqlSessionTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.333 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.335 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [com.sun.proxy.$Proxy109] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.358 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.359 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [com.sun.proxy.$Proxy111] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.360 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleServiceImpl' of type [com.neefull.fsp.system.service.impl.UserRoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.393 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userServiceImpl' of type [com.neefull.fsp.system.service.impl.UserServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.416 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.418 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [com.sun.proxy.$Proxy114] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.423 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.424 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [com.sun.proxy.$Proxy115] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.425 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuServiceImpl' of type [com.neefull.fsp.system.service.impl.RoleMenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.441 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleServiceImpl' of type [com.neefull.fsp.system.service.impl.RoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.463 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.464 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [com.sun.proxy.$Proxy118] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.467 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuServiceImpl' of type [com.neefull.fsp.system.service.impl.MenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.481 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroRealm' of type [com.neefull.fsp.common.authentication.ShiroRealm] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.858 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'redisSessionDAO' of type [org.crazycake.shiro.RedisSessionDAO] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.862 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sessionManager' of type [org.apache.shiro.web.session.mgt.DefaultWebSessionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.870 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'securityManager' of type [org.apache.shiro.web.mgt.DefaultWebSecurityManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:28.881 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'authorizationAttributeSourceAdvisor' of type [org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 13:58:29.157 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2019-08-01 13:58:29.171 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2019-08-01 13:58:29.179 febs [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2019-08-01 13:58:29.179 febs [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
+2019-08-01 13:58:29.185 febs [main] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Tools\Java\jdk1.8.0_144\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;D:\Tools\JetBrains\IntelliJ IDEA 2019.2\jbr\\bin;D:\Tools\JetBrains\IntelliJ IDEA 2019.2\jbr\\bin\server;D:\Tools\xftp6\;D:\Tools\xshell6\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS\;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;D:\Tools\Java\jdk1.8.0_144\bin;D:\Tools\apache-maven-3.5.3\bin;C:\Users\Thinkpad\AppData\Local\Microsoft\WindowsApps;;D:\Tools\JetBrains\IntelliJ IDEA 2019.2\bin;;.]
+2019-08-01 13:58:29.304 febs [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2019-08-01 13:58:29.304 febs [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3041 ms
+2019-08-01 13:58:30.004 febs [main] INFO  com.neefull.fsp.common.xss.XssFilter - ------------ xss filter init ------------
+2019-08-01 13:58:30.347 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2019-08-01 13:58:30.357 febs [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-08-01 13:58:30.357 febs [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.0 created.
+2019-08-01 13:58:30.361 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - Using db table-based data access locking (synchronization).
+2019-08-01 13:58:30.362 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - JobStoreCMT initialized.
+2019-08-01 13:58:30.363 febs [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.0) 'FEBS_Scheduler' with instanceId 'pc-wangpei1564639110348'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 20 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+2019-08-01 13:58:30.363 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'FEBS_Scheduler' initialized from an externally provided properties instance.
+2019-08-01 13:58:30.363 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.0
+2019-08-01 13:58:30.364 febs [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@41f785e3
+2019-08-01 13:58:30.417 febs [main] INFO  p6spy - 1564639110417|2|statement|connection 3|url jdbc:mysql://127.0.0.1:3306/flp?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8|SELECT job_id jobId, bean_name beanName, method_name methodName, params, cron_expression cronExpression, status, remark, create_time createTime FROM t_job ORDER BY job_id|SELECT job_id jobId, bean_name beanName, method_name methodName, params, cron_expression cronExpression, status, remark, create_time createTime FROM t_job ORDER BY job_id
+2019-08-01 13:58:30.790 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService
+2019-08-01 13:58:30.791 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'febsAsyncThreadPool'
+2019-08-01 13:58:31.186 febs [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2019-08-01 13:58:31.864 febs [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-08-01 13:58:31.925 febs [main] INFO  o.s.s.quartz.SchedulerFactoryBean - Will start Quartz Scheduler [FEBS_Scheduler] in 1 seconds
+2019-08-01 13:58:31.935 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2019-08-01 13:58:31.954 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2019-08-01 13:58:31.956 febs [main] INFO  com.neefull.fsp.FlpApplication - Started FlpApplication in 6.329 seconds (JVM running for 7.228)
+2019-08-01 13:58:31.973 febs [main] INFO  c.n.f.c.runner.FebsStartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
+2019-08-01 13:58:31.974 febs [main] INFO  c.n.f.c.runner.FebsStartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
+2019-08-01 13:58:31.974 febs [main] INFO  c.n.f.c.runner.FebsStartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
+2019-08-01 13:58:31.974 febs [main] INFO  c.n.f.c.runner.FebsStartedUpRunner -                                                       
+2019-08-01 13:58:31.974 febs [main] INFO  c.n.f.c.runner.FebsStartedUpRunner - FLP系统启动完毕，地址：http://172.20.10.7:8080/login
+2019-08-01 13:58:32.065 febs [RMI TCP Connection(3)-172.20.10.7] INFO  p6spy - 1564639112065|0|statement|connection 25|url jdbc:mysql://127.0.0.1:3306/flp?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8|select 1|select 1
+2019-08-01 13:58:32.472 febs [RMI TCP Connection(5)-172.20.10.7] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-01 13:58:32.472 febs [RMI TCP Connection(5)-172.20.10.7] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2019-08-01 13:58:32.483 febs [RMI TCP Connection(5)-172.20.10.7] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 11 ms
+2019-08-01 13:58:32.926 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.SchedulerFactoryBean - Starting Quartz Scheduler now, after delay of 1 seconds
+2019-08-01 13:58:32.936 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  org.quartz.core.QuartzScheduler - Scheduler FEBS_Scheduler_$_pc-wangpei1564639110348 started.
+2019-08-01 14:00:32.064 febs [main] INFO  com.neefull.fsp.FlpApplication - Starting FlpApplication on pc-wangpei with PID 18552 (D:\workspace\workspace_open\FreelancePlatform\target\classes started by Thinkpad in D:\workspace\workspace_open\FreelancePlatform)
+2019-08-01 14:00:32.067 febs [main] INFO  com.neefull.fsp.FlpApplication - The following profiles are active: dev
+2019-08-01 14:00:32.951 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-01 14:00:32.952 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-01 14:00:33.000 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 37ms. Found 0 repository interfaces.
+2019-08-01 14:00:33.355 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.426 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$1d41011f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.434 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.436 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.443 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$b3b2904e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.464 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'febsProperties' of type [com.neefull.fsp.common.properties.FebsProperties$$EnhancerBySpringCGLIB$$78923370] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.468 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroConfig' of type [com.neefull.fsp.common.authentication.ShiroConfig$$EnhancerBySpringCGLIB$$82a8311] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.584 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatis-plus-com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.592 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatisPlusConfigure' of type [com.neefull.fsp.common.configure.MybatisPlusConfigure$$EnhancerBySpringCGLIB$$f6160a95] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.597 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'paginationInterceptor' of type [com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.603 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration$$EnhancerBySpringCGLIB$$f17afce8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.611 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceCreator' of type [com.baomidou.dynamic.datasource.DynamicDataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.613 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceProvider' of type [com.baomidou.dynamic.datasource.provider.YmlDynamicDataSourceProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.615 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-检测到并开启了p6spy
+2019-08-01 14:00:33.622 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Starting...
+2019-08-01 14:00:33.732 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Start completed.
+2019-08-01 14:00:33.732 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Starting...
+2019-08-01 14:00:33.737 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Start completed.
+2019-08-01 14:00:33.738 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 初始共加载 2 个数据源
+2019-08-01 14:00:33.738 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 quartz 成功
+2019-08-01 14:00:33.738 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 base 成功
+2019-08-01 14:00:33.738 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 当前的默认数据源是单数据源，数据源名为 base
+2019-08-01 14:00:33.738 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.748 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:33.755 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.192 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionFactory' of type [org.apache.ibatis.session.defaults.DefaultSqlSessionFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.198 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionTemplate' of type [org.mybatis.spring.SqlSessionTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.201 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.203 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [com.sun.proxy.$Proxy109] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.234 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.235 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [com.sun.proxy.$Proxy111] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.237 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleServiceImpl' of type [com.neefull.fsp.system.service.impl.UserRoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.278 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userServiceImpl' of type [com.neefull.fsp.system.service.impl.UserServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.308 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.309 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [com.sun.proxy.$Proxy114] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.316 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.318 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [com.sun.proxy.$Proxy115] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.319 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuServiceImpl' of type [com.neefull.fsp.system.service.impl.RoleMenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.344 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleServiceImpl' of type [com.neefull.fsp.system.service.impl.RoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.377 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.379 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [com.sun.proxy.$Proxy118] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.385 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuServiceImpl' of type [com.neefull.fsp.system.service.impl.MenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.405 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroRealm' of type [com.neefull.fsp.common.authentication.ShiroRealm] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.778 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'redisSessionDAO' of type [org.crazycake.shiro.RedisSessionDAO] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.783 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sessionManager' of type [org.apache.shiro.web.session.mgt.DefaultWebSessionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.792 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'securityManager' of type [org.apache.shiro.web.mgt.DefaultWebSecurityManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:34.810 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'authorizationAttributeSourceAdvisor' of type [org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-01 14:00:35.133 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2019-08-01 14:00:35.146 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2019-08-01 14:00:35.153 febs [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2019-08-01 14:00:35.154 febs [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
+2019-08-01 14:00:35.160 febs [main] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Tools\Java\jdk1.8.0_144\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;D:\Tools\JetBrains\IntelliJ IDEA 2019.2\jbr\\bin;D:\Tools\JetBrains\IntelliJ IDEA 2019.2\jbr\\bin\server;D:\Tools\xftp6\;D:\Tools\xshell6\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS\;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;D:\Tools\Java\jdk1.8.0_144\bin;D:\Tools\apache-maven-3.5.3\bin;C:\Users\Thinkpad\AppData\Local\Microsoft\WindowsApps;;D:\Tools\JetBrains\IntelliJ IDEA 2019.2\bin;;.]
+2019-08-01 14:00:35.261 febs [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2019-08-01 14:00:35.261 febs [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3113 ms
+2019-08-01 14:00:35.798 febs [main] INFO  com.neefull.fsp.common.xss.XssFilter - ------------ xss filter init ------------
+2019-08-01 14:00:36.153 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2019-08-01 14:00:36.164 febs [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2019-08-01 14:00:36.164 febs [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.0 created.
+2019-08-01 14:00:36.168 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - Using db table-based data access locking (synchronization).
+2019-08-01 14:00:36.170 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - JobStoreCMT initialized.
+2019-08-01 14:00:36.171 febs [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.0) 'FEBS_Scheduler' with instanceId 'pc-wangpei1564639236154'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 20 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+2019-08-01 14:00:36.171 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'FEBS_Scheduler' initialized from an externally provided properties instance.
+2019-08-01 14:00:36.171 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.0
+2019-08-01 14:00:36.172 febs [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@4e8598d9
+2019-08-01 14:00:36.240 febs [main] INFO  p6spy - 2019-08-01 14:00:36 | 耗时 2 ms | SQL 语句：
+SELECT job_id jobId, bean_name beanName, method_name methodName, params, cron_expression cronExpression, status, remark, create_time createTime FROM t_job ORDER BY job_id;
+2019-08-01 14:00:36.632 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService
+2019-08-01 14:00:36.633 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'febsAsyncThreadPool'
+2019-08-01 14:00:37.039 febs [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2019-08-01 14:00:37.770 febs [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-08-01 14:00:37.844 febs [main] INFO  o.s.s.quartz.SchedulerFactoryBean - Will start Quartz Scheduler [FEBS_Scheduler] in 1 seconds
+2019-08-01 14:00:37.854 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2019-08-01 14:00:37.873 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2019-08-01 14:00:37.875 febs [main] INFO  com.neefull.fsp.FlpApplication - Started FlpApplication in 6.406 seconds (JVM running for 7.379)
+2019-08-01 14:00:37.894 febs [main] INFO  c.n.f.c.runner.FebsStartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
+2019-08-01 14:00:37.894 febs [main] INFO  c.n.f.c.runner.FebsStartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
+2019-08-01 14:00:37.894 febs [main] INFO  c.n.f.c.runner.FebsStartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
+2019-08-01 14:00:37.894 febs [main] INFO  c.n.f.c.runner.FebsStartedUpRunner -                                                       
+2019-08-01 14:00:37.894 febs [main] INFO  c.n.f.c.runner.FebsStartedUpRunner - FLP系统启动完毕，地址：http://172.20.10.7:8080/login
+2019-08-01 14:00:38.532 febs [RMI TCP Connection(6)-172.20.10.7] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-08-01 14:00:38.532 febs [RMI TCP Connection(6)-172.20.10.7] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2019-08-01 14:00:38.544 febs [RMI TCP Connection(5)-172.20.10.7] INFO  p6spy - 2019-08-01 14:00:38 | 耗时 0 ms | SQL 语句：
+select 1;
+2019-08-01 14:00:38.546 febs [RMI TCP Connection(6)-172.20.10.7] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 14 ms
+2019-08-01 14:00:38.845 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.SchedulerFactoryBean - Starting Quartz Scheduler now, after delay of 1 seconds
+2019-08-01 14:00:38.860 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  org.quartz.core.QuartzScheduler - Scheduler FEBS_Scheduler_$_pc-wangpei1564639236154 started.
+2019-08-01 14:00:53.863 febs [QuartzScheduler_FEBS_Scheduler-pc-wangpei1564639236154_ClusterManager] INFO  o.s.s.quartz.LocalDataSourceJobStore - ClusterManager: detected 1 failed or restarted instances.
+2019-08-01 14:00:53.864 febs [QuartzScheduler_FEBS_Scheduler-pc-wangpei1564639236154_ClusterManager] INFO  o.s.s.quartz.LocalDataSourceJobStore - ClusterManager: Scanning for instance "pc-wangpei1564639110348"'s failed in-progress jobs.
+2019-08-01 14:01:54.271 febs [http-nio-8080-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - Enabling session validation scheduler...
+2019-08-01 14:02:08.313 febs [http-nio-8080-exec-3] INFO  c.n.flp.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2019-08-01 14:02:08.361 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:02:08 | 耗时 5 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'admin' GROUP BY u.username;
+2019-08-01 14:05:31.311 febs [http-nio-8080-exec-2] INFO  c.n.flp.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2019-08-01 14:05:36.257 febs [http-nio-8080-exec-6] INFO  c.n.flp.common.aspect.LimitAspect - IP:127.0.0.1 第 2 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2019-08-01 14:05:36.264 febs [http-nio-8080-exec-6] INFO  p6spy - 2019-08-01 14:05:36 | 耗时 3 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'mrbird' GROUP BY u.username;
+2019-08-01 14:05:49.435 febs [http-nio-8080-exec-3] INFO  c.n.flp.common.aspect.LimitAspect - IP:127.0.0.1 第 3 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2019-08-01 14:05:49.651 febs [http-nio-8080-exec-8] INFO  c.n.flp.common.aspect.LimitAspect - IP:127.0.0.1 第 4 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2019-08-01 14:05:55.251 febs [http-nio-8080-exec-10] INFO  c.n.flp.common.aspect.LimitAspect - IP:127.0.0.1 第 5 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2019-08-01 14:05:55.256 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:05:55 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'mrbird' GROUP BY u.username;
+2019-08-01 14:05:55.305 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:05:55 | 耗时 2 ms | SQL 语句：
+INSERT INTO t_login_log (USERNAME, LOGIN_TIME, LOCATION, IP, `SYSTEM`, BROWSER) VALUES ('mrbird', '2019-08-01T14:05:55.277+0800', '内网IP|0|0|内网IP|内网IP', '127.0.0.1', 'Windows 10', 'Chrome 75');
+2019-08-01 14:05:55.375 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:05:55 | 耗时 0 ms | SQL 语句：
+SELECT r.* FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) WHERE u.username = 'MrBird';
+2019-08-01 14:05:55.391 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:05:55 | 耗时 3 ms | SQL 语句：
+SELECT m.perms FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) LEFT JOIN t_role_menu rm ON (rm.role_id = r.role_id) LEFT JOIN t_menu m ON (m.menu_id = rm.menu_id) WHERE u.username = 'MrBird' AND m.perms IS NOT NULL AND m.perms <> '';
+2019-08-01 14:05:55.400 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:05:55 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'MrBird' GROUP BY u.username;
+2019-08-01 14:05:56.042 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:05:56 | 耗时 3 ms | SQL 语句：
+SELECT m.* FROM t_menu m WHERE m.type <> 1 AND m.MENU_ID IN (SELECT DISTINCT rm.menu_id FROM t_role_menu rm LEFT JOIN t_role r ON (rm.role_id = r.role_id) LEFT JOIN t_user_role ur ON (ur.role_id = r.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) WHERE u.username = 'MrBird') ORDER BY m.order_num;
+2019-08-01 14:05:56.213 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:05:56 | 耗时 0 ms | SQL 语句：
+UPDATE t_user SET LAST_LOGIN_TIME = '2019-08-01T14:05:56.175+0800' WHERE USERNAME = 'MrBird';
+2019-08-01 14:05:56.217 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:05:56 | 耗时 0 ms | SQL 语句：
+SELECT count(1) FROM t_login_log;
+2019-08-01 14:05:56.220 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:05:56 | 耗时 0 ms | SQL 语句：
+SELECT count(1) FROM t_login_log WHERE datediff(login_time, now()) = 0;
+2019-08-01 14:05:56.223 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:05:56 | 耗时 0 ms | SQL 语句：
+SELECT count(DISTINCT (ip)) FROM t_login_log WHERE datediff(login_time, now()) = 0;
+2019-08-01 14:05:56.227 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:05:56 | 耗时 0 ms | SQL 语句：
+SELECT date_format(l.login_time, '%m-%d') days, count(1) count FROM (SELECT * FROM t_login_log WHERE date_sub(curdate(), INTERVAL 10 day) <= date(login_time)) AS l WHERE 1 = 1 GROUP BY days;
+2019-08-01 14:05:56.232 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:05:56 | 耗时 0 ms | SQL 语句：
+SELECT date_format(l.login_time, '%m-%d') days, count(1) count FROM (SELECT * FROM t_login_log WHERE date_sub(curdate(), INTERVAL 10 day) <= date(login_time)) AS l WHERE 1 = 1 AND l.username = 'MrBird' GROUP BY days;
+2019-08-01 14:06:02.348 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:06:02 | 耗时 0 ms | SQL 语句：
+SELECT r.* FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) WHERE u.username = 'MrBird';
+2019-08-01 14:06:02.351 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:06:02 | 耗时 0 ms | SQL 语句：
+SELECT m.perms FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) LEFT JOIN t_role_menu rm ON (rm.role_id = r.role_id) LEFT JOIN t_menu m ON (m.menu_id = rm.menu_id) WHERE u.username = 'MrBird' AND m.perms IS NOT NULL AND m.perms <> '';
+2019-08-01 14:06:02.437 febs [http-nio-8080-exec-4] INFO  p6spy - 2019-08-01 14:06:02 | 耗时 0 ms | SQL 语句：
+SELECT DEPT_ID, PARENT_ID, DEPT_NAME, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_dept;
+2019-08-01 14:06:02.448 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:06:02 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM ( SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ) TOTAL;
+2019-08-01 14:06:02.454 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:06:02 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ORDER BY userId ASC LIMIT 0,10;
+2019-08-01 14:06:07.545 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:06:07 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'MrBird' GROUP BY u.username;
+2019-08-01 14:06:07.638 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:06:07 | 耗时 0 ms | SQL 语句：
+SELECT DEPT_ID, PARENT_ID, DEPT_NAME, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_dept;
+2019-08-01 14:06:07.658 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:06:07 | 耗时 0 ms | SQL 语句：
+SELECT ROLE_ID, ROLE_NAME, REMARK, CREATE_TIME, MODIFY_TIME FROM t_role;
+2019-08-01 14:06:25.009 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:06:25 | 耗时 0 ms | SQL 语句：
+SELECT DEPT_ID, PARENT_ID, DEPT_NAME, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_dept;
+2019-08-01 14:06:25.026 febs [http-nio-8080-exec-6] INFO  p6spy - 2019-08-01 14:06:25 | 耗时 0 ms | SQL 语句：
+SELECT ROLE_ID, ROLE_NAME, REMARK, CREATE_TIME, MODIFY_TIME FROM t_role;
+2019-08-01 14:06:46.482 febs [http-nio-8080-exec-4] INFO  p6spy - 2019-08-01 14:06:46 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wnagpei' GROUP BY u.username;
+2019-08-01 14:06:46.526 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:06:46 | 耗时 0 ms | SQL 语句：
+INSERT INTO t_user (USERNAME, PASSWORD, EMAIL, MOBILE, STATUS, CREATE_TIME, SSEX, AVATAR, THEME, IS_TAB, DESCRIPTION) VALUES ('wnagpei', '11246e2fa994930e0772c91e136635fd', 'pei.wang@neefull.com', '18098698828', '1', '2019-08-01T14:06:46.522+0800', '2', 'default.jpg', 'black', '1', '');
+2019-08-01 14:06:46.548 febs [Febs-Async-Thread1] INFO  p6spy - 2019-08-01 14:06:46 | 耗时 3 ms | SQL 语句：
+INSERT INTO t_log (USERNAME, OPERATION, TIME, METHOD, PARAMS, IP, CREATE_TIME, LOCATION) VALUES ('MrBird', '新增用户', 14, 'com.neefull.fsp.system.controller.UserController.addUser()', ' user: "User(userId=8, username=wnagpei, password=11246e2fa994930e0772c91e136635fd, deptId=null, email=pei.wang@neefull.com, mobile=18098698828, status=1, createTime=Thu Aug 01 14:06:46 CST 2019, modifyTime=null, lastLoginTime=null, sex=2, avatar=default.jpg, theme=black, isTab=1, description=, deptName=null, createTimeFrom=null, createTimeTo=null, roleId=1, roleName=null)"', '127.0.0.1', '2019-08-01T14:06:46.543+0800', '内网IP|0|0|内网IP|内网IP');
+2019-08-01 14:06:46.561 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:06:46 | 耗时 1 ms | SQL 语句：
+SELECT COUNT(1) FROM ( SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ) TOTAL;
+2019-08-01 14:06:46.562 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:06:46 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ORDER BY userId ASC LIMIT 0,10;
+2019-08-01 14:07:06.818 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:07:06 | 耗时 0 ms | SQL 语句：
+DELETE FROM t_user WHERE USER_ID IN ('2', '3', '4', '5', '6', '7');
+2019-08-01 14:07:06.824 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:07:06 | 耗时 0 ms | SQL 语句：
+DELETE FROM t_user_role WHERE USER_ID IN ('2', '3', '4', '5', '6', '7');
+2019-08-01 14:07:06.833 febs [Febs-Async-Thread2] INFO  p6spy - 2019-08-01 14:07:06 | 耗时 1 ms | SQL 语句：
+INSERT INTO t_log (USERNAME, OPERATION, TIME, METHOD, PARAMS, IP, CREATE_TIME, LOCATION) VALUES ('MrBird', '删除用户', 15, 'com.neefull.fsp.system.controller.UserController.deleteUsers()', ' userIds: "2,3,4,5,6,7"', '127.0.0.1', '2019-08-01T14:07:06.828+0800', '内网IP|0|0|内网IP|内网IP');
+2019-08-01 14:07:06.849 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:07:06 | 耗时 1 ms | SQL 语句：
+SELECT COUNT(1) FROM ( SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ) TOTAL;
+2019-08-01 14:07:06.851 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:07:06 | 耗时 1 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ORDER BY userId ASC LIMIT 0,10;
+2019-08-01 14:07:11.174 febs [http-nio-8080-exec-4] INFO  p6spy - 2019-08-01 14:07:11 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wnagpei' GROUP BY u.username;
+2019-08-01 14:07:11.200 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:07:11 | 耗时 0 ms | SQL 语句：
+SELECT DEPT_ID, PARENT_ID, DEPT_NAME, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_dept;
+2019-08-01 14:07:11.705 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:07:11 | 耗时 0 ms | SQL 语句：
+SELECT ROLE_ID, ROLE_NAME, REMARK, CREATE_TIME, MODIFY_TIME FROM t_role;
+2019-08-01 14:07:19.222 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:07:19 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wnagpei' GROUP BY u.username;
+2019-08-01 14:07:19.235 febs [http-nio-8080-exec-5] INFO  p6spy - 2019-08-01 14:07:19 | 耗时 0 ms | SQL 语句：
+UPDATE t_user SET DEPT_ID = 1, EMAIL = 'pei.wang@neefull.com', MOBILE = '18098698828', STATUS = '1', MODIFY_TIME = '2019-08-01T14:07:19.232+0800', SSEX = '0', DESCRIPTION = '' WHERE USER_ID = 8;
+2019-08-01 14:07:19.239 febs [http-nio-8080-exec-5] INFO  p6spy - 2019-08-01 14:07:19 | 耗时 0 ms | SQL 语句：
+DELETE FROM t_user_role WHERE USER_ID = 8;
+2019-08-01 14:07:19.248 febs [Febs-Async-Thread3] INFO  p6spy - 2019-08-01 14:07:19 | 耗时 1 ms | SQL 语句：
+INSERT INTO t_log (USERNAME, OPERATION, TIME, METHOD, PARAMS, IP, CREATE_TIME, LOCATION) VALUES ('MrBird', '修改用户', 12, 'com.neefull.fsp.system.controller.UserController.updateUser()', ' user: "User(userId=8, username=null, password=null, deptId=1, email=pei.wang@neefull.com, mobile=18098698828, status=1, createTime=null, modifyTime=Thu Aug 01 14:07:19 CST 2019, lastLoginTime=null, sex=0, avatar=null, theme=null, isTab=null, description=, deptName=null, createTimeFrom=null, createTimeTo=null, roleId=1, roleName=null)"', '127.0.0.1', '2019-08-01T14:07:19.245+0800', '内网IP|0|0|内网IP|内网IP');
+2019-08-01 14:07:19.261 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:07:19 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM ( SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ) TOTAL;
+2019-08-01 14:07:19.263 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:07:19 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ORDER BY userId ASC LIMIT 0,10;
+2019-08-01 14:07:22.374 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:07:22 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wnagpei' GROUP BY u.username;
+2019-08-01 14:07:22.405 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:07:22 | 耗时 0 ms | SQL 语句：
+SELECT DEPT_ID, PARENT_ID, DEPT_NAME, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_dept;
+2019-08-01 14:07:22.907 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:07:22 | 耗时 0 ms | SQL 语句：
+SELECT ROLE_ID, ROLE_NAME, REMARK, CREATE_TIME, MODIFY_TIME FROM t_role;
+2019-08-01 14:07:31.327 febs [http-nio-8080-exec-6] INFO  p6spy - 2019-08-01 14:07:31 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wnagpei' GROUP BY u.username;
+2019-08-01 14:07:51.516 febs [http-nio-8080-exec-9] INFO  c.n.flp.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2019-08-01 14:07:51.519 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:07:51 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wangpei' GROUP BY u.username;
+2019-08-01 14:08:06.473 febs [http-nio-8080-exec-1] INFO  c.n.flp.common.aspect.LimitAspect - IP:127.0.0.1 第 2 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2019-08-01 14:08:06.476 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:08:06 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wangpei' GROUP BY u.username;
+2019-08-01 14:08:19.631 febs [http-nio-8080-exec-4] INFO  c.n.flp.common.aspect.LimitAspect - IP:127.0.0.1 第 3 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2019-08-01 14:08:19.634 febs [http-nio-8080-exec-4] INFO  p6spy - 2019-08-01 14:08:19 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'mrbird' GROUP BY u.username;
+2019-08-01 14:08:19.641 febs [http-nio-8080-exec-4] INFO  p6spy - 2019-08-01 14:08:19 | 耗时 2 ms | SQL 语句：
+INSERT INTO t_login_log (USERNAME, LOGIN_TIME, LOCATION, IP, `SYSTEM`, BROWSER) VALUES ('mrbird', '2019-08-01T14:08:19.637+0800', '内网IP|0|0|内网IP|内网IP', '127.0.0.1', 'Windows 10', 'Chrome 75');
+2019-08-01 14:08:19.655 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:08:19 | 耗时 0 ms | SQL 语句：
+SELECT r.* FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) WHERE u.username = 'MrBird';
+2019-08-01 14:08:19.658 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:08:19 | 耗时 0 ms | SQL 语句：
+SELECT m.perms FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) LEFT JOIN t_role_menu rm ON (rm.role_id = r.role_id) LEFT JOIN t_menu m ON (m.menu_id = rm.menu_id) WHERE u.username = 'MrBird' AND m.perms IS NOT NULL AND m.perms <> '';
+2019-08-01 14:08:19.662 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:08:19 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'MrBird' GROUP BY u.username;
+2019-08-01 14:08:19.915 febs [http-nio-8080-exec-5] INFO  p6spy - 2019-08-01 14:08:19 | 耗时 1 ms | SQL 语句：
+SELECT m.* FROM t_menu m WHERE m.type <> 1 AND m.MENU_ID IN (SELECT DISTINCT rm.menu_id FROM t_role_menu rm LEFT JOIN t_role r ON (rm.role_id = r.role_id) LEFT JOIN t_user_role ur ON (ur.role_id = r.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) WHERE u.username = 'MrBird') ORDER BY m.order_num;
+2019-08-01 14:08:19.986 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:08:19 | 耗时 0 ms | SQL 语句：
+UPDATE t_user SET LAST_LOGIN_TIME = '2019-08-01T14:08:19.983+0800' WHERE USERNAME = 'MrBird';
+2019-08-01 14:08:19.989 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:08:19 | 耗时 0 ms | SQL 语句：
+SELECT count(1) FROM t_login_log;
+2019-08-01 14:08:19.991 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:08:19 | 耗时 0 ms | SQL 语句：
+SELECT count(1) FROM t_login_log WHERE datediff(login_time, now()) = 0;
+2019-08-01 14:08:19.994 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:08:19 | 耗时 0 ms | SQL 语句：
+SELECT count(DISTINCT (ip)) FROM t_login_log WHERE datediff(login_time, now()) = 0;
+2019-08-01 14:08:19.996 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:08:19 | 耗时 0 ms | SQL 语句：
+SELECT date_format(l.login_time, '%m-%d') days, count(1) count FROM (SELECT * FROM t_login_log WHERE date_sub(curdate(), INTERVAL 10 day) <= date(login_time)) AS l WHERE 1 = 1 GROUP BY days;
+2019-08-01 14:08:19.999 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:08:19 | 耗时 0 ms | SQL 语句：
+SELECT date_format(l.login_time, '%m-%d') days, count(1) count FROM (SELECT * FROM t_login_log WHERE date_sub(curdate(), INTERVAL 10 day) <= date(login_time)) AS l WHERE 1 = 1 AND l.username = 'MrBird' GROUP BY days;
+2019-08-01 14:09:35.739 febs [http-nio-8080-exec-6] INFO  p6spy - 2019-08-01 14:09:35 | 耗时 0 ms | SQL 语句：
+SELECT r.* FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) WHERE u.username = 'MrBird';
+2019-08-01 14:09:35.746 febs [http-nio-8080-exec-6] INFO  p6spy - 2019-08-01 14:09:35 | 耗时 0 ms | SQL 语句：
+SELECT m.perms FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) LEFT JOIN t_role_menu rm ON (rm.role_id = r.role_id) LEFT JOIN t_menu m ON (m.menu_id = rm.menu_id) WHERE u.username = 'MrBird' AND m.perms IS NOT NULL AND m.perms <> '';
+2019-08-01 14:09:35.812 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:09:35 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM t_job;
+2019-08-01 14:09:35.813 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:09:35 | 耗时 0 ms | SQL 语句：
+SELECT JOB_ID, bean_name, method_name, params, cron_expression, status, remark, create_time FROM t_job ORDER BY create_time DESC LIMIT 0,10;
+2019-08-01 14:09:37.271 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:09:37 | 耗时 1 ms | SQL 语句：
+SELECT COUNT(1) FROM t_job_log;
+2019-08-01 14:09:37.272 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:09:37 | 耗时 0 ms | SQL 语句：
+SELECT LOG_ID, job_id, bean_name, method_name, params, status, error, times, create_time FROM t_job_log ORDER BY create_time DESC LIMIT 0,10;
+2019-08-01 14:09:39.541 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:09:39 | 耗时 3 ms | SQL 语句：
+SELECT ID, author, base_package, entity_package, mapper_package, mapper_xml_package, service_package, service_impl_package, controller_package, is_trim, trim_value FROM t_generator_config;
+2019-08-01 14:09:40.423 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:09:40 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'febs_base';
+2019-08-01 14:09:46.485 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:09:46 | 耗时 1 ms | SQL 语句：
+SELECT COUNT(1) FROM ( SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ) TOTAL;
+2019-08-01 14:09:46.487 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:09:46 | 耗时 1 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ORDER BY userId ASC LIMIT 0,10;
+2019-08-01 14:09:46.490 febs [http-nio-8080-exec-6] INFO  p6spy - 2019-08-01 14:09:46 | 耗时 1 ms | SQL 语句：
+SELECT DEPT_ID, PARENT_ID, DEPT_NAME, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_dept;
+2019-08-01 14:09:50.122 febs [http-nio-8080-exec-4] INFO  p6spy - 2019-08-01 14:09:50 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wnagpei' GROUP BY u.username;
+2019-08-01 14:09:50.203 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:09:50 | 耗时 0 ms | SQL 语句：
+SELECT DEPT_ID, PARENT_ID, DEPT_NAME, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_dept;
+2019-08-01 14:09:50.224 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:09:50 | 耗时 0 ms | SQL 语句：
+SELECT ROLE_ID, ROLE_NAME, REMARK, CREATE_TIME, MODIFY_TIME FROM t_role;
+2019-08-01 14:09:55.099 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:09:55 | 耗时 2 ms | SQL 语句：
+DELETE FROM t_user WHERE USER_ID IN ('8');
+2019-08-01 14:09:55.101 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:09:55 | 耗时 0 ms | SQL 语句：
+DELETE FROM t_user_role WHERE USER_ID IN ('8');
+2019-08-01 14:09:55.107 febs [Febs-Async-Thread4] INFO  p6spy - 2019-08-01 14:09:55 | 耗时 1 ms | SQL 语句：
+INSERT INTO t_log (USERNAME, OPERATION, TIME, METHOD, PARAMS, IP, CREATE_TIME, LOCATION) VALUES ('MrBird', '删除用户', 8, 'com.neefull.fsp.system.controller.UserController.deleteUsers()', ' userIds: "8"', '127.0.0.1', '2019-08-01T14:09:55.104+0800', '内网IP|0|0|内网IP|内网IP');
+2019-08-01 14:09:55.123 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:09:55 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM ( SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ) TOTAL;
+2019-08-01 14:09:55.124 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:09:55 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ORDER BY userId ASC LIMIT 0,10;
+2019-08-01 14:09:59.634 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:09:59 | 耗时 0 ms | SQL 语句：
+SELECT DEPT_ID, PARENT_ID, DEPT_NAME, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_dept;
+2019-08-01 14:09:59.651 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:09:59 | 耗时 0 ms | SQL 语句：
+SELECT ROLE_ID, ROLE_NAME, REMARK, CREATE_TIME, MODIFY_TIME FROM t_role;
+2019-08-01 14:10:21.637 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:10:21 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wangpei' GROUP BY u.username;
+2019-08-01 14:10:21.653 febs [http-nio-8080-exec-6] INFO  p6spy - 2019-08-01 14:10:21 | 耗时 3 ms | SQL 语句：
+INSERT INTO t_user (USERNAME, PASSWORD, EMAIL, MOBILE, STATUS, CREATE_TIME, SSEX, AVATAR, THEME, IS_TAB, DESCRIPTION) VALUES ('wangpei', 'd89eb3928df6323a27575b9e70ee75cf', 'pei.wang@neefull.com', '18098698828', '1', '2019-08-01T14:10:21.647+0800', '2', 'default.jpg', 'black', '1', '');
+2019-08-01 14:10:21.665 febs [Febs-Async-Thread5] INFO  p6spy - 2019-08-01 14:10:21 | 耗时 1 ms | SQL 语句：
+INSERT INTO t_log (USERNAME, OPERATION, TIME, METHOD, PARAMS, IP, CREATE_TIME, LOCATION) VALUES ('MrBird', '新增用户', 13, 'com.neefull.fsp.system.controller.UserController.addUser()', ' user: "User(userId=9, username=wangpei, password=d89eb3928df6323a27575b9e70ee75cf, deptId=null, email=pei.wang@neefull.com, mobile=18098698828, status=1, createTime=Thu Aug 01 14:10:21 CST 2019, modifyTime=null, lastLoginTime=null, sex=2, avatar=default.jpg, theme=black, isTab=1, description=, deptName=null, createTimeFrom=null, createTimeTo=null, roleId=1, roleName=null)"', '127.0.0.1', '2019-08-01T14:10:21.660+0800', '内网IP|0|0|内网IP|内网IP');
+2019-08-01 14:10:21.678 febs [http-nio-8080-exec-4] INFO  p6spy - 2019-08-01 14:10:21 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM ( SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ) TOTAL;
+2019-08-01 14:10:21.679 febs [http-nio-8080-exec-4] INFO  p6spy - 2019-08-01 14:10:21 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ORDER BY userId ASC LIMIT 0,10;
+2019-08-01 14:10:26.310 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:10:26 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wangpei' GROUP BY u.username;
+2019-08-01 14:10:26.341 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:10:26 | 耗时 0 ms | SQL 语句：
+SELECT DEPT_ID, PARENT_ID, DEPT_NAME, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_dept;
+2019-08-01 14:10:26.846 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:10:26 | 耗时 0 ms | SQL 语句：
+SELECT ROLE_ID, ROLE_NAME, REMARK, CREATE_TIME, MODIFY_TIME FROM t_role;
+2019-08-01 14:10:35.205 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:10:35 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wangpei' GROUP BY u.username;
+2019-08-01 14:10:35.218 febs [http-nio-8080-exec-5] INFO  p6spy - 2019-08-01 14:10:35 | 耗时 2 ms | SQL 语句：
+UPDATE t_user SET DEPT_ID = 1, EMAIL = 'pei.wang@neefull.com', MOBILE = '18098698828', STATUS = '1', MODIFY_TIME = '2019-08-01T14:10:35.214+0800', SSEX = '0', DESCRIPTION = '' WHERE USER_ID = 9;
+2019-08-01 14:10:35.220 febs [http-nio-8080-exec-5] INFO  p6spy - 2019-08-01 14:10:35 | 耗时 0 ms | SQL 语句：
+DELETE FROM t_user_role WHERE USER_ID = 9;
+2019-08-01 14:10:35.228 febs [Febs-Async-Thread1] INFO  p6spy - 2019-08-01 14:10:35 | 耗时 1 ms | SQL 语句：
+INSERT INTO t_log (USERNAME, OPERATION, TIME, METHOD, PARAMS, IP, CREATE_TIME, LOCATION) VALUES ('MrBird', '修改用户', 10, 'com.neefull.fsp.system.controller.UserController.updateUser()', ' user: "User(userId=9, username=null, password=null, deptId=1, email=pei.wang@neefull.com, mobile=18098698828, status=1, createTime=null, modifyTime=Thu Aug 01 14:10:35 CST 2019, lastLoginTime=null, sex=0, avatar=null, theme=null, isTab=null, description=, deptName=null, createTimeFrom=null, createTimeTo=null, roleId=1, roleName=null)"', '127.0.0.1', '2019-08-01T14:10:35.224+0800', '内网IP|0|0|内网IP|内网IP');
+2019-08-01 14:10:35.240 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:10:35 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM ( SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ) TOTAL;
+2019-08-01 14:10:35.241 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:10:35 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ORDER BY userId ASC LIMIT 0,10;
+2019-08-01 14:10:59.723 febs [http-nio-8080-exec-2] INFO  c.n.flp.common.aspect.LimitAspect - IP:127.0.0.1 第 1 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2019-08-01 14:10:59.726 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:10:59 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wangpei' GROUP BY u.username;
+2019-08-01 14:10:59.732 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:10:59 | 耗时 2 ms | SQL 语句：
+INSERT INTO t_login_log (USERNAME, LOGIN_TIME, LOCATION, IP, `SYSTEM`, BROWSER) VALUES ('wangpei', '2019-08-01T14:10:59.728+0800', '内网IP|0|0|内网IP|内网IP', '127.0.0.1', 'Windows 10', 'Chrome 75');
+2019-08-01 14:10:59.744 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:10:59 | 耗时 0 ms | SQL 语句：
+SELECT r.* FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) WHERE u.username = 'wangpei';
+2019-08-01 14:10:59.746 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:10:59 | 耗时 0 ms | SQL 语句：
+SELECT m.perms FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) LEFT JOIN t_role_menu rm ON (rm.role_id = r.role_id) LEFT JOIN t_menu m ON (m.menu_id = rm.menu_id) WHERE u.username = 'wangpei' AND m.perms IS NOT NULL AND m.perms <> '';
+2019-08-01 14:10:59.750 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:10:59 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wangpei' GROUP BY u.username;
+2019-08-01 14:10:59.994 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:10:59 | 耗时 1 ms | SQL 语句：
+SELECT m.* FROM t_menu m WHERE m.type <> 1 AND m.MENU_ID IN (SELECT DISTINCT rm.menu_id FROM t_role_menu rm LEFT JOIN t_role r ON (rm.role_id = r.role_id) LEFT JOIN t_user_role ur ON (ur.role_id = r.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) WHERE u.username = 'wangpei') ORDER BY m.order_num;
+2019-08-01 14:11:00.048 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:11:00 | 耗时 0 ms | SQL 语句：
+UPDATE t_user SET LAST_LOGIN_TIME = '2019-08-01T14:11:00.045+0800' WHERE USERNAME = 'wangpei';
+2019-08-01 14:11:00.052 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:11:00 | 耗时 0 ms | SQL 语句：
+SELECT count(1) FROM t_login_log;
+2019-08-01 14:11:00.054 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:11:00 | 耗时 0 ms | SQL 语句：
+SELECT count(1) FROM t_login_log WHERE datediff(login_time, now()) = 0;
+2019-08-01 14:11:00.058 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:11:00 | 耗时 1 ms | SQL 语句：
+SELECT count(DISTINCT (ip)) FROM t_login_log WHERE datediff(login_time, now()) = 0;
+2019-08-01 14:11:00.060 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:11:00 | 耗时 0 ms | SQL 语句：
+SELECT date_format(l.login_time, '%m-%d') days, count(1) count FROM (SELECT * FROM t_login_log WHERE date_sub(curdate(), INTERVAL 10 day) <= date(login_time)) AS l WHERE 1 = 1 GROUP BY days;
+2019-08-01 14:11:00.063 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:11:00 | 耗时 0 ms | SQL 语句：
+SELECT date_format(l.login_time, '%m-%d') days, count(1) count FROM (SELECT * FROM t_login_log WHERE date_sub(curdate(), INTERVAL 10 day) <= date(login_time)) AS l WHERE 1 = 1 AND l.username = 'wangpei' GROUP BY days;
+2019-08-01 14:11:05.246 febs [http-nio-8080-exec-6] INFO  p6spy - 2019-08-01 14:11:05 | 耗时 1 ms | SQL 语句：
+SELECT r.* FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) WHERE u.username = 'wangpei';
+2019-08-01 14:11:05.251 febs [http-nio-8080-exec-6] INFO  p6spy - 2019-08-01 14:11:05 | 耗时 3 ms | SQL 语句：
+SELECT m.perms FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) LEFT JOIN t_role_menu rm ON (rm.role_id = r.role_id) LEFT JOIN t_menu m ON (m.menu_id = rm.menu_id) WHERE u.username = 'wangpei' AND m.perms IS NOT NULL AND m.perms <> '';
+2019-08-01 14:11:05.295 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:11:05 | 耗时 1 ms | SQL 语句：
+SELECT COUNT(1) FROM ( SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ) TOTAL;
+2019-08-01 14:11:05.296 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:11:05 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ORDER BY userId ASC LIMIT 0,10;
+2019-08-01 14:11:05.297 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:11:05 | 耗时 0 ms | SQL 语句：
+SELECT DEPT_ID, PARENT_ID, DEPT_NAME, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_dept;
+2019-08-01 14:11:09.405 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:11:09 | 耗时 0 ms | SQL 语句：
+DELETE FROM t_user WHERE USER_ID IN ('1');
+2019-08-01 14:11:09.408 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:11:09 | 耗时 0 ms | SQL 语句：
+DELETE FROM t_user_role WHERE USER_ID IN ('1');
+2019-08-01 14:11:09.414 febs [Febs-Async-Thread2] INFO  p6spy - 2019-08-01 14:11:09 | 耗时 1 ms | SQL 语句：
+INSERT INTO t_log (USERNAME, OPERATION, TIME, METHOD, PARAMS, IP, CREATE_TIME, LOCATION) VALUES ('wangpei', '删除用户', 8, 'com.neefull.fsp.system.controller.UserController.deleteUsers()', ' userIds: "1"', '127.0.0.1', '2019-08-01T14:11:09.411+0800', '内网IP|0|0|内网IP|内网IP');
+2019-08-01 14:11:09.428 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:11:09 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM ( SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ) TOTAL;
+2019-08-01 14:11:09.430 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:11:09 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ORDER BY userId ASC LIMIT 0,10;
+2019-08-01 14:11:12.134 febs [http-nio-8080-exec-5] INFO  p6spy - 2019-08-01 14:11:12 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wangpei' GROUP BY u.username;
+2019-08-01 14:11:12.188 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:11:12 | 耗时 0 ms | SQL 语句：
+SELECT DEPT_ID, PARENT_ID, DEPT_NAME, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_dept;
+2019-08-01 14:11:12.208 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:11:12 | 耗时 0 ms | SQL 语句：
+SELECT ROLE_ID, ROLE_NAME, REMARK, CREATE_TIME, MODIFY_TIME FROM t_role;
+2019-08-01 14:11:30.647 febs [http-nio-8080-exec-6] INFO  p6spy - 2019-08-01 14:11:30 | 耗时 2 ms | SQL 语句：
+UPDATE t_user SET PASSWORD = '4f0dfdf7563f639c9bf13301294c1b6a', MODIFY_TIME = '2019-08-01T14:11:30.642+0800' WHERE USERNAME = 'wangpei';
+2019-08-01 14:11:47.093 febs [http-nio-8080-exec-10] INFO  c.n.flp.common.aspect.LimitAspect - IP:127.0.0.1 第 2 次访问key为 [limit_login127.0.0.1]，描述为 [登录接口] 的接口
+2019-08-01 14:11:47.096 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:11:47 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wangpei' GROUP BY u.username;
+2019-08-01 14:11:47.101 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:11:47 | 耗时 2 ms | SQL 语句：
+INSERT INTO t_login_log (USERNAME, LOGIN_TIME, LOCATION, IP, `SYSTEM`, BROWSER) VALUES ('wangpei', '2019-08-01T14:11:47.097+0800', '内网IP|0|0|内网IP|内网IP', '127.0.0.1', 'Windows 10', 'Chrome 75');
+2019-08-01 14:11:47.113 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:11:47 | 耗时 0 ms | SQL 语句：
+SELECT r.* FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) WHERE u.username = 'wangpei';
+2019-08-01 14:11:47.115 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:11:47 | 耗时 0 ms | SQL 语句：
+SELECT m.perms FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) LEFT JOIN t_role_menu rm ON (rm.role_id = r.role_id) LEFT JOIN t_menu m ON (m.menu_id = rm.menu_id) WHERE u.username = 'wangpei' AND m.perms IS NOT NULL AND m.perms <> '';
+2019-08-01 14:11:47.117 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:11:47 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.password, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, u.theme, u.is_tab isTab, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE u.username = 'wangpei' GROUP BY u.username;
+2019-08-01 14:11:47.469 febs [http-nio-8080-exec-4] INFO  p6spy - 2019-08-01 14:11:47 | 耗时 1 ms | SQL 语句：
+SELECT m.* FROM t_menu m WHERE m.type <> 1 AND m.MENU_ID IN (SELECT DISTINCT rm.menu_id FROM t_role_menu rm LEFT JOIN t_role r ON (rm.role_id = r.role_id) LEFT JOIN t_user_role ur ON (ur.role_id = r.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) WHERE u.username = 'wangpei') ORDER BY m.order_num;
+2019-08-01 14:11:47.514 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:11:47 | 耗时 1 ms | SQL 语句：
+UPDATE t_user SET LAST_LOGIN_TIME = '2019-08-01T14:11:47.511+0800' WHERE USERNAME = 'wangpei';
+2019-08-01 14:11:47.519 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:11:47 | 耗时 1 ms | SQL 语句：
+SELECT count(1) FROM t_login_log;
+2019-08-01 14:11:47.521 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:11:47 | 耗时 0 ms | SQL 语句：
+SELECT count(1) FROM t_login_log WHERE datediff(login_time, now()) = 0;
+2019-08-01 14:11:47.523 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:11:47 | 耗时 0 ms | SQL 语句：
+SELECT count(DISTINCT (ip)) FROM t_login_log WHERE datediff(login_time, now()) = 0;
+2019-08-01 14:11:47.524 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:11:47 | 耗时 0 ms | SQL 语句：
+SELECT date_format(l.login_time, '%m-%d') days, count(1) count FROM (SELECT * FROM t_login_log WHERE date_sub(curdate(), INTERVAL 10 day) <= date(login_time)) AS l WHERE 1 = 1 GROUP BY days;
+2019-08-01 14:11:47.527 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:11:47 | 耗时 0 ms | SQL 语句：
+SELECT date_format(l.login_time, '%m-%d') days, count(1) count FROM (SELECT * FROM t_login_log WHERE date_sub(curdate(), INTERVAL 10 day) <= date(login_time)) AS l WHERE 1 = 1 AND l.username = 'wangpei' GROUP BY days;
+2019-08-01 14:11:52.845 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:11:52 | 耗时 0 ms | SQL 语句：
+SELECT r.* FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) WHERE u.username = 'wangpei';
+2019-08-01 14:11:52.847 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:11:52 | 耗时 0 ms | SQL 语句：
+SELECT m.perms FROM t_role r LEFT JOIN t_user_role ur ON (r.role_id = ur.role_id) LEFT JOIN t_user u ON (u.user_id = ur.user_id) LEFT JOIN t_role_menu rm ON (rm.role_id = r.role_id) LEFT JOIN t_menu m ON (m.menu_id = rm.menu_id) WHERE u.username = 'wangpei' AND m.perms IS NOT NULL AND m.perms <> '';
+2019-08-01 14:11:56.492 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:11:56 | 耗时 1 ms | SQL 语句：
+SELECT COUNT(1) FROM t_log;
+2019-08-01 14:11:56.493 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:11:56 | 耗时 0 ms | SQL 语句：
+SELECT ID, USERNAME, OPERATION, TIME, METHOD, PARAMS, IP, CREATE_TIME, LOCATION FROM t_log ORDER BY create_time DESC LIMIT 0,10;
+2019-08-01 14:12:02.655 febs [http-nio-8080-exec-1] INFO  p6spy - 2019-08-01 14:12:02 | 耗时 0 ms | SQL 语句：
+DELETE FROM t_log WHERE ID IN ('996', '995', '994', '993', '992', '991', '990', '989', '988', '987');
+2019-08-01 14:12:02.678 febs [http-nio-8080-exec-6] INFO  p6spy - 2019-08-01 14:12:02 | 耗时 1 ms | SQL 语句：
+SELECT COUNT(1) FROM t_log;
+2019-08-01 14:12:02.680 febs [http-nio-8080-exec-6] INFO  p6spy - 2019-08-01 14:12:02 | 耗时 0 ms | SQL 语句：
+SELECT ID, USERNAME, OPERATION, TIME, METHOD, PARAMS, IP, CREATE_TIME, LOCATION FROM t_log ORDER BY create_time DESC LIMIT 0,10;
+2019-08-01 14:12:07.935 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:12:07 | 耗时 2 ms | SQL 语句：
+DELETE FROM t_log WHERE ID IN ('986', '985', '984', '983', '982', '981', '980', '979', '978', '977');
+2019-08-01 14:12:07.952 febs [http-nio-8080-exec-4] INFO  p6spy - 2019-08-01 14:12:07 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM t_log;
+2019-08-01 14:12:07.953 febs [http-nio-8080-exec-4] INFO  p6spy - 2019-08-01 14:12:07 | 耗时 0 ms | SQL 语句：
+SELECT ID, USERNAME, OPERATION, TIME, METHOD, PARAMS, IP, CREATE_TIME, LOCATION FROM t_log ORDER BY create_time DESC LIMIT 0,10;
+2019-08-01 14:12:14.480 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:12:14 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM t_log;
+2019-08-01 14:12:14.481 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:12:14 | 耗时 0 ms | SQL 语句：
+SELECT ID, USERNAME, OPERATION, TIME, METHOD, PARAMS, IP, CREATE_TIME, LOCATION FROM t_log ORDER BY create_time DESC LIMIT 0,100;
+2019-08-01 14:12:20.159 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:12:20 | 耗时 1 ms | SQL 语句：
+DELETE FROM t_log WHERE ID IN ('976', '975', '974', '973', '972', '971', '970', '969', '968', '967', '966', '965', '964', '963', '962', '961', '960', '959', '958', '957', '956', '955', '954', '953', '952', '951', '950', '949', '948', '947', '946', '945', '944', '943', '942', '941', '940', '939', '938', '937', '936', '935', '934', '933', '932', '931', '930', '929', '928', '927', '926', '925', '924', '923', '922', '921', '920', '919', '918', '917', '916', '915', '914', '913', '912', '911', '910', '909', '908', '907', '906', '905', '904', '903', '902', '901', '900', '899', '898', '897', '896', '895', '894', '893', '892', '891', '890');
+2019-08-01 14:12:20.188 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:12:20 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM t_log;
+2019-08-01 14:12:21.990 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:12:21 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM t_login_log;
+2019-08-01 14:12:21.991 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:12:21 | 耗时 0 ms | SQL 语句：
+SELECT ID, USERNAME, LOGIN_TIME, LOCATION, IP, `SYSTEM`, BROWSER FROM t_login_log ORDER BY login_time DESC LIMIT 0,10;
+2019-08-01 14:13:21.494 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:13:21 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM t_login_log;
+2019-08-01 14:13:21.495 febs [http-nio-8080-exec-2] INFO  p6spy - 2019-08-01 14:13:21 | 耗时 0 ms | SQL 语句：
+SELECT ID, USERNAME, LOGIN_TIME, LOCATION, IP, `SYSTEM`, BROWSER FROM t_login_log ORDER BY login_time DESC LIMIT 0,100;
+2019-08-01 14:13:28.016 febs [http-nio-8080-exec-3] INFO  p6spy - 2019-08-01 14:13:28 | 耗时 1 ms | SQL 语句：
+DELETE FROM t_login_log WHERE ID IN ('67', '66', '65', '64', '63', '62', '61', '60', '59', '58', '57', '56', '55', '54', '53', '52', '51', '50', '49', '48', '47', '46', '45', '44', '43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3');
+2019-08-01 14:13:28.045 febs [http-nio-8080-exec-8] INFO  p6spy - 2019-08-01 14:13:28 | 耗时 0 ms | SQL 语句：
+SELECT COUNT(1) FROM t_login_log;
+2019-08-01 14:13:30.349 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:13:30 | 耗时 1 ms | SQL 语句：
+SELECT COUNT(1) FROM ( SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ) TOTAL;
+2019-08-01 14:13:30.351 febs [http-nio-8080-exec-10] INFO  p6spy - 2019-08-01 14:13:30 | 耗时 0 ms | SQL 语句：
+SELECT u.user_id userId, u.username, u.email, u.mobile, u.status, u.create_time createTime, u.ssex sex, u.dept_id deptId, u.last_login_time lastLoginTime, u.modify_time modifyTime, u.description, u.avatar, d.dept_name deptName, GROUP_CONCAT(r.role_id) roleId, GROUP_CONCAT(r.ROLE_NAME) roleName FROM t_user u LEFT JOIN t_dept d ON (u.dept_id = d.dept_id) LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id) LEFT JOIN t_role r ON r.role_id = ur.role_id WHERE 1 = 1 GROUP BY u.username ORDER BY userId ASC LIMIT 0,10;
+2019-08-01 14:13:30.351 febs [http-nio-8080-exec-9] INFO  p6spy - 2019-08-01 14:13:30 | 耗时 0 ms | SQL 语句：
+SELECT DEPT_ID, PARENT_ID, DEPT_NAME, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_dept;
+2019-08-01 14:13:54.150 febs [http-nio-8080-exec-7] INFO  p6spy - 2019-08-01 14:13:54 | 耗时 0 ms | SQL 语句：
+SELECT MENU_ID, PARENT_ID, MENU_NAME, URL, PERMS, ICON, TYPE, ORDER_NUM, CREATE_TIME, MODIFY_TIME FROM t_menu ORDER BY ORDER_NUM ASC;
+2019-08-01 15:16:34.905 febs [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - Validating all active sessions...
+2019-08-01 15:16:34.906 febs [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - Finished session validation.  No sessions were stopped.
