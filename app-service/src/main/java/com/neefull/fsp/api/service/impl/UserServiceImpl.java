@@ -7,7 +7,6 @@ import com.neefull.common.core.util.EncryptUtil;
 import com.neefull.common.core.util.SerialNumberUtil;
 import com.neefull.fsp.api.config.ServConstants;
 import com.neefull.fsp.api.entity.User;
-import com.neefull.fsp.api.entity.UserInfo;
 import com.neefull.fsp.api.exception.ErrorException;
 import com.neefull.fsp.api.mapper.UserMapper;
 import com.neefull.fsp.api.service.IUserService;
@@ -34,6 +33,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public User findByMobile(String mobile) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.select(User::getUserId);
         lambdaQueryWrapper.eq(User::getMobile, mobile);
         return this.baseMapper.selectOne(lambdaQueryWrapper);
     }
@@ -94,6 +94,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         lambdaQueryWrapper.eq(User::getMobile, user.getUsername()).or().eq(User::getUsername, user.getUsername());
         lambdaQueryWrapper.eq(User::getPassword, user.getPassword());
         return this.baseMapper.selectOne(lambdaQueryWrapper);
+    }
+
+    @Override
+    public int updateUser(User user) {
+        user.setModifyTime(new Date());
+        return this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUserId, user.getUserId()));
     }
 
 }

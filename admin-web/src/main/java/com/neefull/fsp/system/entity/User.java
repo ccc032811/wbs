@@ -185,6 +185,9 @@ public class User implements Serializable {
     @TableField("USER_TYPE")
     private String userType;
 
+    @TableField("AUTH_STATUS")
+    private String authStatus;
+
     public Long getId() {
         return userId;
     }

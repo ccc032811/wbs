@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/admin-web/admin-web.iml" filepath="$PROJECT_DIR$/admin-web/admin-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app-service/app-service.iml" filepath="$PROJECT_DIR$/app-service/app-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common-core/common-core.iml" filepath="$PROJECT_DIR$/common-core/common-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fsp.iml" filepath="$PROJECT_DIR$/fsp.iml" />
+    </modules>
+  </component>
+</project>

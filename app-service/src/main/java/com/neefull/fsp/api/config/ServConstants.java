@@ -23,4 +23,17 @@ public abstract class ServConstants {
         }
     };
 
+    public static Map<String, String> IMG_TYPE = new HashMap<String, String>() {
+        {
+            //身份证正面
+            put("0", "id_image1");
+            //身份证反面
+            put("1", "id_image2");
+            //银行卡正面
+            put("2", "card_image1");
+            //银行卡反面
+            put("3", "card_image2");
+        }
+    };
+
 }

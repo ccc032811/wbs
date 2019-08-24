@@ -13,7 +13,7 @@ import com.neefull.common.core.entity.FebsResponse;
 import com.neefull.fsp.api.config.ServConstants;
 import com.neefull.fsp.api.entity.Sms;
 import com.neefull.fsp.api.utils.RedisUtil;
-import com.neefull.fsp.sms.config.SmsConfig;
+import com.neefull.fsp.api.config.SmsConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,6 @@ import java.util.Random;
 
 @RequestMapping("/sms")
 @RestController
-@EnableConfigurationProperties(SmsConfig.class)
 public class SmsController {
 
     private final Logger logger = LoggerFactory.getLogger(SmsController.class.getName());

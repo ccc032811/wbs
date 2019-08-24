@@ -178,6 +178,14 @@ public class User implements Serializable {
     @TableField("USER_TYPE")
     private String userType;
 
+    /**
+     * 用户实名状态
+     */
+    @NotBlank(message = "{required}")
+    @TableField("AUTH_STATUS")
+    private int authStatus;
+
+
     public Long getId() {
         return userId;
     }
@@ -348,5 +356,13 @@ public class User implements Serializable {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public int getAuthStatus() {
+        return authStatus;
+    }
+
+    public void setAuthStatus(int authStatus) {
+        this.authStatus = authStatus;
     }
 }

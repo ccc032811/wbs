@@ -66,4 +66,11 @@ public interface IUserService extends IService<User> {
      */
     User login(User user);
 
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    int updateUser(User user);
+
 }

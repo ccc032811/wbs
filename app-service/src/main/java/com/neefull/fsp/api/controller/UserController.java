@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.neefull.common.core.entity.FebsResponse;
 import com.neefull.common.core.util.AuthUtils;
 import com.neefull.common.core.util.EncryptUtil;
+import com.neefull.common.core.util.HttpUtils;
 import com.neefull.common.core.util.RegxCheckUtil;
 import com.neefull.fsp.api.annotation.AuthToken;
+import com.neefull.fsp.api.config.IdCardAuthConfig;
 import com.neefull.fsp.api.config.ServConstants;
 import com.neefull.fsp.api.entity.User;
 import com.neefull.fsp.api.entity.UserInfo;
@@ -14,12 +16,18 @@ import com.neefull.fsp.api.service.IUserInfoService;
 import com.neefull.fsp.api.service.IUserService;
 import com.neefull.fsp.api.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author pei.wang
@@ -36,6 +44,8 @@ public class UserController {
     private IUserInfoService userInfoService;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private IdCardAuthConfig idCardAuthConfig;
 
     @RequestMapping(value = "/findByMobile", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -183,5 +193,59 @@ public class UserController {
 
     }
 
+    /**
+     * 用户实名认证，异步调用
+     *
+     * @return
+     */
+    @RequestMapping(value = "/idCardAudit", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String idcardAudit(@RequestBody UserInfo userInfo, HttpServletRequest httpRequest) {
+        String host = idCardAuthConfig.getHost();
+        String path = idCardAuthConfig.getPath();
+        String method = idCardAuthConfig.getMethod();
+        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> querys = new HashMap<String, String>();
+        headers.put("Authorization", "APPCODE " + idCardAuthConfig.getAppCode());
+        querys.put("idcard", userInfo.getCardNo());
+        querys.put("name", userInfo.getRealName());
+        HttpUtils.doGetAsyn(host, path, method, headers, querys, new HttpUtils.CallBack() {
+            @Override
+            public void onRequestComplete(HttpResponse response) throws IOException {
+                //认证结果，更新数据库，发送通知到手机app
+                JSONObject object = null;
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    String result = EntityUtils.toString(entity, "UTF-8");
+                    object = JSONObject.parseObject(result);
+                    JSONObject showapi_res_body = (JSONObject) object.get("showapi_res_body");
+                    String code = showapi_res_body.getString("code");
+                    if ("0".equals(code)) {
+                        //更新用户实名状态
+                        long userId = (long) httpRequest.getAttribute("userId");
+                        User user = new User();
+                        user.setUserId(userId);
+                        user.setAuthStatus(1);
+                        if (userService.updateUser(user) > 0) {
+                            //用户状态更新成功，给用户发送通知消息
+                            log.debug("通知用户实名成功");
+                        } else {
+                            //用户状态更新失败，进入人工认证队列
+                            log.debug("通知用户实名失败");
+                        }
+                    }
 
+                } else {
+                    //TODO
+                    System.out.println("自动认证失败");
+                }
+
+            }
+
+
+        });
+        return new FebsResponse().success().message("用户实名认证申请成功").toJson();
+    }
 }
+

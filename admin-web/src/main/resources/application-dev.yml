@@ -15,17 +15,16 @@ spring:
       datasource:
         # 数据源-1，名称为 base
         base:
-          username: root
-          password: pp2085
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/flp?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+           username: root
+           password: Neefull@123
+           driver-class-name: com.mysql.cj.jdbc.Driver
+           url: jdbc:mysql://106.14.99.137:3306/flp?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=falsmezone=GMT%2b8
         # 数据源-2，名称为 quartz
         quartz:
-          username: root
-          password: pp2085
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/quartz?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
-
+           username: root
+           password: Neefull@123
+           driver-class-name: com.mysql.cj.jdbc.Driver
+           url: jdbc:mysql://106.14.99.137:3306/flp_slave?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=falsrTimezone=GMT%2b8
   redis:
     # Redis数据库索引（默认为 0）
     database: 0
