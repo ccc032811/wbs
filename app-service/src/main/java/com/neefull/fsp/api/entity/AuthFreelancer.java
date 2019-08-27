@@ -9,8 +9,8 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName("t_user_authinfo")
-public class UserAuthinfo {
+@TableName("t_auth_freelancer")
+public class AuthFreelancer {
 
     @TableId(value = "id", type = IdType.AUTO)
     private long id;

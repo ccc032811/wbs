@@ -163,7 +163,6 @@ public class User implements Serializable {
     /**
      * 部门名称
      */
-    @ExcelField(value = "部门")
     @TableField(exist = false)
     private String deptName;
 
@@ -178,13 +177,12 @@ public class User implements Serializable {
     @TableField(exist = false)
     private String roleId;
 
-    @ExcelField(value = "角色")
     @TableField(exist = false)
     private String roleName;
-
+    @ExcelField(value = "用户类型")
     @TableField("USER_TYPE")
     private String userType;
-
+    @ExcelField(value = "用户实名状态")
     @TableField("AUTH_STATUS")
     private String authStatus;
 

@@ -3,9 +3,9 @@ package com.neefull.fsp.api.controller;
 import com.neefull.common.core.entity.FebsResponse;
 import com.neefull.common.core.oss.config.QiniuConfig;
 import com.neefull.fsp.api.annotation.AuthToken;
-import com.neefull.fsp.api.entity.UserAuthinfo;
+import com.neefull.fsp.api.entity.AuthFreelancer;
 import com.neefull.fsp.api.exception.BizException;
-import com.neefull.fsp.api.service.IUserAuthService;
+import com.neefull.fsp.api.service.IAuthFreeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -22,7 +22,7 @@ public class OssController {
     @Autowired
     QiniuConfig qiniuConfig;
     @Autowired
-    IUserAuthService userAuthService;
+    IAuthFreeService iAuthFreeService;
 
     /**
      * 客户端获取上传凭证
@@ -46,11 +46,11 @@ public class OssController {
     @RequestMapping(value = "/uploadCallBack", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String uploadCallBack(@RequestBody UserAuthinfo userAuthinfo, HttpServletRequest httpRequest) {
+    public String uploadCallBack(@RequestBody AuthFreelancer AuthFreelancer, HttpServletRequest httpRequest) {
 
         long userId = (long) httpRequest.getAttribute("userId");
-        userAuthinfo.setUserId(userId);
-        int result = userAuthService.saveUserAuthInfo(userAuthinfo);
+        AuthFreelancer.setUserId(userId);
+        int result = iAuthFreeService.saveAuthFreelancer(AuthFreelancer);
         if (result > 0) {
             return new FebsResponse().success().data(result).message("保存完成").toJson();
         } else {
@@ -66,27 +66,27 @@ public class OssController {
     @RequestMapping(value = "/getUserImgUrls", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     //  @AuthToken
-    public String getUserImgUrl(@RequestBody UserAuthinfo userAuthinfo, HttpServletRequest httpRequest) throws BizException {
+    public String getUserImgUrl(@RequestBody AuthFreelancer AuthFreelancer, HttpServletRequest httpRequest) throws BizException {
         /*long userId = (long) httpRequest.getAttribute("userId");
-        userAuthinfo.setUserId(userId);*/
-        userAuthinfo.setUserId(9);
-        userAuthinfo = userAuthService.queryUserInfo(userAuthinfo);
+        AuthFreelancer.setUserId(userId);*/
+        AuthFreelancer.setUserId(9);
+        AuthFreelancer = iAuthFreeService.queryUserInfo(AuthFreelancer);
         ;
-        userAuthinfo = userAuthService.queryUserInfo(userAuthinfo);
-        if (null == userAuthinfo) {
+        AuthFreelancer = iAuthFreeService.queryUserInfo(AuthFreelancer);
+        if (null == AuthFreelancer) {
             return new FebsResponse().fail().data("").message("未能查询到信息").toJson();
         }
         //处理字符串
         try {
-            userAuthinfo.setIdImage1(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, userAuthinfo.getIdImage1()));
-            userAuthinfo.setIdImage2(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, userAuthinfo.getIdImage2()));
-            userAuthinfo.setCardImage1(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, userAuthinfo.getCardImage1()));
-            userAuthinfo.setCardImage2(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, userAuthinfo.getCardImage2()));
+            AuthFreelancer.setIdImage1(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, AuthFreelancer.getIdImage1()));
+            AuthFreelancer.setIdImage2(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, AuthFreelancer.getIdImage2()));
+            AuthFreelancer.setCardImage1(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, AuthFreelancer.getCardImage1()));
+            AuthFreelancer.setCardImage2(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, AuthFreelancer.getCardImage2()));
         } catch (UnsupportedEncodingException e) {
             throw new BizException("查询图片异常");
         }
         //TODO 返回的字符串，有问题
-        return new FebsResponse().success().data(userAuthinfo).message("").toJson();
+        return new FebsResponse().success().data(AuthFreelancer).message("").toJson();
 
     }
 }

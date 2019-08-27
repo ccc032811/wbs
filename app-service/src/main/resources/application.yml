@@ -4,7 +4,7 @@ server:
     uri-encoding: UTF-8
 spring:
   profiles:
-    active: qa
+    active: dev
 
   thymeleaf:
     cache: false
@@ -24,3 +24,5 @@ mybatis-plus:
 
 logging:
   config:classpath:log4j2.xml
+
+cardBankApi: https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?cardNo=#cardNo#&cardBinCheck=true

@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @TableName("t_dict_jobs")
 @Excel("职位字典")
-public class Job implements Serializable {
+public class JobDict implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     private long id;

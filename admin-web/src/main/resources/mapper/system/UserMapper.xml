@@ -18,8 +18,7 @@
         d.dept_name deptName,
         GROUP_CONCAT(r.role_id) roleId,
         GROUP_CONCAT(r.ROLE_NAME) roleName,
-        u.user_type userType,
-        u.auth_status authStatus
+        u.user_type userType
         FROM
         t_user u
         LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
@@ -46,9 +45,6 @@
         </if>
         <if test="user.createTimeTo!= null and user.createTimeTo !=''">
             And u.create_time &lt; #{user.createTimeTo}
-        </if>
-        <if test="user.userType != null and user.userType != ''">
-            And u.user_type = #{user.userType}
         </if>
         <if test="user.userType != null and user.userType != ''">
             And u.user_type = #{user.userType}

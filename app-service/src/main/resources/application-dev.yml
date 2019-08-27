@@ -6,7 +6,7 @@ spring:
       datasource:
         master:
           username: root
-          password: pp2085
+          password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://127.0.0.1:3306/flp?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
           druid: #以下均为默认值
@@ -28,12 +28,12 @@ spring:
             share-prepared-statements: true
         slave:
           username: root
-          password: pp2085
+          password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/quartz?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+          url: jdbc:mysql://127.0.0.1:3306/flp_slave?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
           druid: #以下均为默认值
             initial-size: 3
-            max-active: 8
+            max-active: 20
             min-idle: 2
             max-wait: -1
             min-evictable-idle-time-millis: 30000

@@ -56,4 +56,8 @@ public class FebsResponse extends HashMap<String, Object> {
     {
         return JSONObject.toJSONStringWithDateFormat(this,"yyyy-MM-dd HH:mm:SS", SerializerFeature.WriteMapNullValue);
     }
+    public String toJsonNoNull()
+    {
+        return JSONObject.toJSONStringWithDateFormat(this,"yyyy-MM-dd HH:mm:SS");
+    }
 }
