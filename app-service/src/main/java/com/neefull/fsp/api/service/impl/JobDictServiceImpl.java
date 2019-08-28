@@ -4,7 +4,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.api.entity.JobDict;
-import com.neefull.fsp.api.mapper.JobDictMapper;
+import com.neefull.fsp.api.mapper.ServiceMapper;
 import com.neefull.fsp.api.service.IJobDictService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,7 +18,7 @@ import java.util.List;
 @DS("slave")
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
-public class JobDictServiceImpl extends ServiceImpl<JobDictMapper, JobDict> implements IJobDictService {
+public class JobDictServiceImpl extends ServiceImpl<ServiceMapper, JobDict> implements IJobDictService {
     @Override
     public List<JobDict> findByLevel(JobDict job) {
         LambdaQueryWrapper<JobDict> lambdaQueryWrapper = new LambdaQueryWrapper<>();

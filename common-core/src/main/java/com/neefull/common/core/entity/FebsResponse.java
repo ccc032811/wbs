@@ -19,7 +19,7 @@ public class FebsResponse extends HashMap<String, Object> {
     }
 
     public FebsResponse message(String message) {
-        this.put("message", message);
+        this.put("msg", message);
         return this;
     }
 

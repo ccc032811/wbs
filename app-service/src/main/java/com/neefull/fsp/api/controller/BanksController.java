@@ -92,9 +92,9 @@ public class BanksController {
                 resultJson.put("bankName", dictBank.getBankName());
                 allBanks.add(resultJson);
             }
-            return new FebsResponse().success().data(allBanks).message("未查询到卡号所属银行").toJsonNoNull();
+            return new FebsResponse().fail().data(allBanks).message("未查询到卡号所属银行").toJsonNoNull();
         } catch (Exception e) {
-            return new FebsResponse().success().data(allBanks).message("未查询到卡号所属银行").toJsonNoNull();
+            return new FebsResponse().fail().data(allBanks).message("未查询到卡号所属银行").toJsonNoNull();
         }
     }
 

@@ -7,6 +7,6 @@ import com.neefull.fsp.api.entity.JobDict;
 /**
  * @author pei.wang
  */
-public interface JobDictMapper extends BaseMapper<JobDict> {
+public interface ServiceMapper extends BaseMapper<JobDict> {
 
 }

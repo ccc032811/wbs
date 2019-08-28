@@ -16,13 +16,13 @@ import java.util.List;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("/job")
-public class JobController {
+@RequestMapping("/service")
+public class ServiceController {
 
     @Autowired
     private IJobDictService jobService;
 
-    @RequestMapping(value = "/findJobs", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/findService", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
   //  @AuthToken
     public String findByMobile(@RequestBody JobDict job) {

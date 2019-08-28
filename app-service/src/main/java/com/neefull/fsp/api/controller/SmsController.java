@@ -1,19 +1,14 @@
 package com.neefull.fsp.api.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.exceptions.ServerException;
-import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import com.neefull.common.core.config.SmsConfig;
 import com.neefull.common.core.entity.FebsResponse;
-import com.neefull.fsp.api.config.AppConstant;
 import com.neefull.fsp.api.entity.Sms;
 import com.neefull.fsp.api.utils.RedisUtil;
-import com.neefull.common.core.config.SmsConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +39,7 @@ public class SmsController {
         // 生成随机数
         String random = String.valueOf(new Random().nextInt(999999));
         String returnResult = "";
-        CommonRequest request = new CommonRequest();
+        /*CommonRequest request = new CommonRequest();
         request.setMethod(MethodType.POST);
         request.setDomain(smsConfig.getDomain());
         request.setVersion("2017-05-25");
@@ -76,7 +71,9 @@ public class SmsController {
             logger.error(e.getMessage());
         } catch (ClientException e) {
             logger.error(e.getMessage());
-        }
+        }*/
+        saveRandom(mobile, random);
+        returnResult = new FebsResponse().success().message("验证码发送成功").data(random).toJson();
         return returnResult;
     }
 
