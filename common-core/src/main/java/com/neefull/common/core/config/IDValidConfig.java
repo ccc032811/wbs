@@ -1,4 +1,4 @@
-package com.neefull.fsp.api.config;
+package com.neefull.common.core.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -6,8 +6,8 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @ConfigurationProperties(prefix = "idcard")
-@PropertySource(value = "classpath:aliyun.properties", ignoreResourceNotFound = true, encoding = "UTF-8")
-public class IdCardAuthConfig {
+@PropertySource(value = "classpath:openapi.properties", ignoreResourceNotFound = true, encoding = "UTF-8")
+public class IDValidConfig {
 
     private String appCode;
 
@@ -16,6 +16,10 @@ public class IdCardAuthConfig {
     private String path;
 
     private String method;
+
+    private String paraName;
+
+    private String paraNo;
 
 
     private int on;
@@ -58,5 +62,21 @@ public class IdCardAuthConfig {
 
     public void setMethod(String method) {
         this.method = method;
+    }
+
+    public String getParaName() {
+        return paraName;
+    }
+
+    public void setParaName(String paraName) {
+        this.paraName = paraName;
+    }
+
+    public String getParaNo() {
+        return paraNo;
+    }
+
+    public void setParaNo(String paraNo) {
+        this.paraNo = paraNo;
     }
 }

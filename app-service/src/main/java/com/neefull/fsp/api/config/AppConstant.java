@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * 常量类
  */
-public abstract class ServConstants {
+public abstract class AppConstant {
 
     public static final String REG_SMS_TEMPLATE = "";
     public static final String AES_KEY = "30D67B0B52A14B8203910D1BD78AF96A";

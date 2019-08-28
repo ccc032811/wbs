@@ -5,7 +5,7 @@
     <groupId>com.neefull</groupId>
     <artifactId>admin-web</artifactId>
     <version>1.0</version>
-    <name>febs</name>
+    <name>admin-web</name>
     <description>后台管理系统</description>
 
     <parent>

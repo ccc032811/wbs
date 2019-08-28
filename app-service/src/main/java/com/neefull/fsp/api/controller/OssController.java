@@ -1,7 +1,7 @@
 package com.neefull.fsp.api.controller;
 
+import com.neefull.common.core.config.QiniuConfig;
 import com.neefull.common.core.entity.FebsResponse;
-import com.neefull.common.core.oss.config.QiniuConfig;
 import com.neefull.fsp.api.annotation.AuthToken;
 import com.neefull.fsp.api.entity.AuthFreelancer;
 import com.neefull.fsp.api.exception.BizException;

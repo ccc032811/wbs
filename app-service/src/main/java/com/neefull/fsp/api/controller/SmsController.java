@@ -10,14 +10,13 @@ import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.neefull.common.core.entity.FebsResponse;
-import com.neefull.fsp.api.config.ServConstants;
+import com.neefull.fsp.api.config.AppConstant;
 import com.neefull.fsp.api.entity.Sms;
 import com.neefull.fsp.api.utils.RedisUtil;
-import com.neefull.fsp.api.config.SmsConfig;
+import com.neefull.common.core.config.SmsConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;
@@ -55,7 +54,7 @@ public class SmsController {
         request.putQueryParameter("RegionId", "default");
         request.putQueryParameter("PhoneNumbers", mobile);
         request.putQueryParameter("SignName", smsConfig.getSignName());
-        request.putQueryParameter("TemplateCode", ServConstants.SMS_TYPE.get(smsType));
+        request.putQueryParameter("TemplateCode", AppConstant.SMS_TYPE.get(smsType));
         request.putQueryParameter("TemplateParam", "{\"code\":" + random + "}");
         try {
 

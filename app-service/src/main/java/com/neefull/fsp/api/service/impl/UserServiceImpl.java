@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.common.core.util.EncryptUtil;
 import com.neefull.common.core.util.SerialNumberUtil;
-import com.neefull.fsp.api.config.ServConstants;
+import com.neefull.fsp.api.config.AppConstant;
 import com.neefull.fsp.api.entity.User;
 import com.neefull.fsp.api.exception.ErrorException;
 import com.neefull.fsp.api.mapper.UserMapper;
@@ -59,7 +59,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             //设置个默认用户
             String default_username = SerialNumberUtil.getNextSerialNumber("游客");
             user.setUsername(default_username);
-            user.setPassword(EncryptUtil.encrypt(null == user.getPassword() ? User.DEFAULT_PASSWORD : user.getPassword(), ServConstants.AES_KEY));
+            user.setPassword(EncryptUtil.encrypt(null == user.getPassword() ? User.DEFAULT_PASSWORD : user.getPassword(), AppConstant.AES_KEY));
             return save(user);
         } catch (RuntimeException e) {
             throw new ErrorException(e.getMessage());
@@ -70,7 +70,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     @Transactional
     public boolean resetPassword(User user) {
-        user.setPassword(EncryptUtil.encrypt(user.getPassword(), ServConstants.AES_KEY));
+        user.setPassword(EncryptUtil.encrypt(user.getPassword(), AppConstant.AES_KEY));
         if (this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUserId, user.getUserId())) > 0) {
             return true;
         } else {

@@ -10,7 +10,7 @@
     <groupId>com.neefull</groupId>
     <artifactId>app-service</artifactId>
     <version>1.0</version>
-    <name>service</name>
+    <name>app-service</name>
     <packaging>jar</packaging>
     <description>api for APP and System</description>
     <dependencies>

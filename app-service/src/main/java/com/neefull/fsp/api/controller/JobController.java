@@ -1,7 +1,6 @@
 package com.neefull.fsp.api.controller;
 
 import com.neefull.common.core.entity.FebsResponse;
-import com.neefull.common.core.oss.config.QiniuConfig;
 import com.neefull.fsp.api.entity.JobDict;
 import com.neefull.fsp.api.service.IJobDictService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +21,6 @@ public class JobController {
 
     @Autowired
     private IJobDictService jobService;
-    @Autowired
-    private QiniuConfig qiniuConfig;
 
     @RequestMapping(value = "/findJobs", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody

@@ -1,4 +1,4 @@
-package com.neefull.common.core.oss.config;
+package com.neefull.common.core.config;
 
 import com.neefull.common.core.oss.OssManager;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -14,6 +14,8 @@ public class QiniuConfig {
     private String accessKey;
     private String secretKey;
     private String bucket;
+    private String acurl;
+    private String domain;
 
     public String getAccessKey() {
         return accessKey;
@@ -38,6 +40,23 @@ public class QiniuConfig {
     public void setBucket(String bucket) {
         this.bucket = bucket;
     }
+
+    public String getAcurl() {
+        return acurl;
+    }
+
+    public void setAcurl(String acurl) {
+        this.acurl = acurl;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
     @Bean
     public OssManager getOssManager() {
         return new OssManager();

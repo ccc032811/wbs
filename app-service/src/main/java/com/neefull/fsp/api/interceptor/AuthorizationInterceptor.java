@@ -3,7 +3,7 @@ package com.neefull.fsp.api.interceptor;
 import com.alibaba.fastjson.JSONObject;
 import com.neefull.common.core.util.AuthUtils;
 import com.neefull.fsp.api.annotation.AuthToken;
-import com.neefull.fsp.api.config.ServConstants;
+import com.neefull.fsp.api.config.AppConstant;
 import com.neefull.fsp.api.exception.BizException;
 import com.neefull.fsp.api.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +42,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             if (StringUtils.isEmpty(token)) {
                 return false;
             }
-            long userId = AuthUtils.decryptPid(token, ServConstants.AES_KEY);
+            long userId = AuthUtils.decryptPid(token, AppConstant.AES_KEY);
             //校验是否存在
             String key = "login" + userId;
             String tokenVo = (String) redisUtil.get(key);

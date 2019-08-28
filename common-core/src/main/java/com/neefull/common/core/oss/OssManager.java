@@ -1,6 +1,6 @@
 package com.neefull.common.core.oss;
 
-import com.neefull.common.core.oss.config.QiniuConfig;
+import com.neefull.common.core.config.QiniuConfig;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import com.qiniu.util.StringUtils;
