@@ -1,17 +1,15 @@
 package com.neefull.fsp.api.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.neefull.common.core.config.IDValidConfig;
 import com.neefull.common.core.entity.FebsResponse;
 import com.neefull.common.core.util.AuthUtils;
 import com.neefull.common.core.util.EncryptUtil;
 import com.neefull.common.core.util.RegxCheckUtil;
 import com.neefull.fsp.api.annotation.AuthToken;
-import com.neefull.common.core.config.IDValidConfig;
 import com.neefull.fsp.api.config.AppConstant;
 import com.neefull.fsp.api.entity.User;
-import com.neefull.fsp.api.entity.UserInfo;
 import com.neefull.fsp.api.exception.BizException;
-import com.neefull.fsp.api.service.IUserInfoService;
 import com.neefull.fsp.api.service.IUserService;
 import com.neefull.fsp.api.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +31,6 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
-    @Autowired
-    private IUserInfoService userInfoService;
     @Autowired
     private RedisUtil redisUtil;
     @Autowired
@@ -165,24 +161,5 @@ public class UserController {
 
     }
 
-    /**
-     * 完善用户信息
-     *
-     * @param userInfo
-     * @param httpRequest
-     * @return
-     */
-    @RequestMapping(value = "/perfectingInformation", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-    @AuthToken
-    public String perfectingInformation(@RequestBody UserInfo userInfo, HttpServletRequest httpRequest) {
-        long userId = (long) httpRequest.getAttribute("userId");
-        userInfo.setUserId(userId);
-        if (userInfoService.perfectingInformation(userInfo)) {
-            return new FebsResponse().success().data(userId).message("用户信息更新成功").toJson();
-        } else {
-            return new FebsResponse().fail().message("用户信息更新失败").toJson();
-        }
-    }
 }
 

@@ -20,10 +20,10 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         // 获取公共字段的值
-        Object fieldValue = getFieldValByName("create_time", metaObject);
+        Object fieldValue = getFieldValByName("createTime", metaObject);
         // 判断是否为空,如果为空则进行填充
         if (fieldValue == null) {
-            setFieldValByName("create_time", new Date(), metaObject);
+            setFieldValByName("createTime", new Date(), metaObject);
         }
     }
 
@@ -34,9 +34,9 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        Object fieldValue = getFieldValByName("modify_time", metaObject);
+        Object fieldValue = getFieldValByName("modifyTime", metaObject);
         if (fieldValue == null) {
-            setFieldValByName("modify_time", new Date(), metaObject);
+            setFieldValByName("modifyTime", new Date(), metaObject);
         }
     }
 }

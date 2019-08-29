@@ -1,5 +1,7 @@
 package com.neefull.fsp.api.config;
 
+import com.baomidou.mybatisplus.core.injector.ISqlInjector;
+import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class MybatisPlusConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {
+
         return new PaginationInterceptor();
     }
 
@@ -24,6 +27,11 @@ public class MybatisPlusConfig {
         /*<!--SQL是否格式化 默认false-->*/
         performanceInterceptor.setFormat(true);
         return performanceInterceptor;
+    }
+
+    @Bean
+    public ISqlInjector sqlInjector() {
+        return new LogicSqlInjector();
     }
 }
 

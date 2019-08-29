@@ -2,7 +2,6 @@ package com.neefull.fsp.api.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.api.entity.User;
-import com.neefull.fsp.api.entity.UserInfo;
 
 /**
  * @author pei.wang
