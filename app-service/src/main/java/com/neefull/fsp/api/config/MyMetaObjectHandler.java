@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -23,7 +24,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         Object fieldValue = getFieldValByName("createTime", metaObject);
         // 判断是否为空,如果为空则进行填充
         if (fieldValue == null) {
-            setFieldValByName("createTime", new Date(), metaObject);
+            setFieldValByName("createTime", new Timestamp(new Date().getTime()), metaObject);
         }
     }
 
@@ -36,7 +37,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void updateFill(MetaObject metaObject) {
         Object fieldValue = getFieldValByName("modifyTime", metaObject);
         if (fieldValue == null) {
-            setFieldValByName("modifyTime", new Date(), metaObject);
+            setFieldValByName("modifyTime", new Timestamp(new Date().getTime()), metaObject);
         }
     }
 }
