@@ -20,7 +20,7 @@ public class AuthCorp {
     @TableField("credit_code")
     private String creditCode;
     @TableField("bank_no")
-    private long bankNo;
+    private String bankNo;
     @TableField("bank_name")
     private String bankName;
     @TableField("corp_address")
@@ -43,7 +43,8 @@ public class AuthCorp {
     private Date modifyTime;
     @TableField("remark")
     private String remark;
-
+    @TableField("authpass_user")
+    private long authpassUser;
 
     public long getId() {
         return id;
@@ -53,7 +54,6 @@ public class AuthCorp {
         this.id = id;
     }
 
-
     public long getUserId() {
         return userId;
     }
@@ -61,7 +61,6 @@ public class AuthCorp {
     public void setUserId(long userId) {
         this.userId = userId;
     }
-
 
     public String getLegalName() {
         return legalName;
@@ -71,7 +70,6 @@ public class AuthCorp {
         this.legalName = legalName;
     }
 
-
     public String getCorpName() {
         return corpName;
     }
@@ -79,7 +77,6 @@ public class AuthCorp {
     public void setCorpName(String corpName) {
         this.corpName = corpName;
     }
-
 
     public String getCreditCode() {
         return creditCode;
@@ -89,15 +86,13 @@ public class AuthCorp {
         this.creditCode = creditCode;
     }
 
-
-    public long getBankNo() {
+    public String getBankNo() {
         return bankNo;
     }
 
-    public void setBankNo(long bankNo) {
+    public void setBankNo(String bankNo) {
         this.bankNo = bankNo;
     }
-
 
     public String getBankName() {
         return bankName;
@@ -107,7 +102,6 @@ public class AuthCorp {
         this.bankName = bankName;
     }
 
-
     public String getCorpAddress() {
         return corpAddress;
     }
@@ -115,7 +109,6 @@ public class AuthCorp {
     public void setCorpAddress(String corpAddress) {
         this.corpAddress = corpAddress;
     }
-
 
     public String getLinkNo() {
         return linkNo;
@@ -125,7 +118,6 @@ public class AuthCorp {
         this.linkNo = linkNo;
     }
 
-
     public String getBusinessLience() {
         return businessLience;
     }
@@ -133,7 +125,6 @@ public class AuthCorp {
     public void setBusinessLience(String businessLience) {
         this.businessLience = businessLience;
     }
-
 
     public String getOpenLience() {
         return openLience;
@@ -143,7 +134,6 @@ public class AuthCorp {
         this.openLience = openLience;
     }
 
-
     public String getAuthStatus() {
         return authStatus;
     }
@@ -151,7 +141,6 @@ public class AuthCorp {
     public void setAuthStatus(String authStatus) {
         this.authStatus = authStatus;
     }
-
 
     public String getAuthType() {
         return authType;
@@ -161,7 +150,6 @@ public class AuthCorp {
         this.authType = authType;
     }
 
-
     public Date getAuthpassTime() {
         return authpassTime;
     }
@@ -170,24 +158,21 @@ public class AuthCorp {
         this.authpassTime = authpassTime;
     }
 
-
     public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(java.sql.Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-
 
     public Date getModifyTime() {
         return modifyTime;
     }
 
-    public void setModifyTime(java.sql.Timestamp modifyTime) {
+    public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
-
 
     public String getRemark() {
         return remark;
@@ -195,5 +180,13 @@ public class AuthCorp {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public long getAuthpassUser() {
+        return authpassUser;
+    }
+
+    public void setAuthpassUser(long authpassUser) {
+        this.authpassUser = authpassUser;
     }
 }

@@ -28,10 +28,5 @@ public class MybatisPlusConfig {
         performanceInterceptor.setFormat(true);
         return performanceInterceptor;
     }
-
-    @Bean
-    public ISqlInjector sqlInjector() {
-        return new LogicSqlInjector();
-    }
 }
 
