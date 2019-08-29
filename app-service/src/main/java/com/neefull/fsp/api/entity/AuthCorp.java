@@ -1,10 +1,9 @@
 package com.neefull.fsp.api.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 @TableName("t_auth_corp")
@@ -37,11 +36,11 @@ public class AuthCorp {
     @TableField("auth_type")
     private String authType;
     @TableField("authpass_time")
-    private java.sql.Timestamp authpassTime;
-    @TableField("create_time")
-    private java.sql.Timestamp createTime;
-    @TableField("modify_time")
-    private java.sql.Timestamp modifyTime;
+    private Date authpassTime;
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
+    @TableField(value = "modify_time", fill = FieldFill.UPDATE)
+    private Date modifyTime;
     @TableField("remark")
     private String remark;
 
@@ -163,16 +162,16 @@ public class AuthCorp {
     }
 
 
-    public java.sql.Timestamp getAuthpassTime() {
+    public Date getAuthpassTime() {
         return authpassTime;
     }
 
-    public void setAuthpassTime(java.sql.Timestamp authpassTime) {
+    public void setAuthpassTime(Date authpassTime) {
         this.authpassTime = authpassTime;
     }
 
 
-    public java.sql.Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
@@ -181,7 +180,7 @@ public class AuthCorp {
     }
 
 
-    public java.sql.Timestamp getModifyTime() {
+    public Date getModifyTime() {
         return modifyTime;
     }
 
