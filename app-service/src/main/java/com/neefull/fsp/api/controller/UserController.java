@@ -49,21 +49,37 @@ public class UserController {
     }
 
     /**
-     * 用户注册
+     * 用户注册/登录
      *
-     * @param user
+     * @param params 用户参数
      * @return
      */
-    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/loginAndregister", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String getUser(@RequestBody User user) {
-
-        if (userService.createUser(user)) {
-            return new FebsResponse().success().data(user.getUserId()).message("用户注册成功").toJson();
-        } else {
-            return new FebsResponse().fail().message("用户注册失败").toJson();
+    public String loginAndregister(@RequestBody User user) {
+        //首先，根据手机号码查询用户是否存在，不存在则注册，存在查询返回用户信息
+        String mobile = user.getMobile();
+        user = userService.findByMobile(mobile);
+        if (null == user) {
+            user = new User();
+            user.setAuthStatus("0");
+            user.setCardStatus("0");
+            user.setMobile(mobile);
+            if (userService.createUser(user)) {
+                //创建成功，可以直接登录
+                user = userService.findByMobile(user.getMobile().trim());
+            } else {
+                return new FebsResponse().fail().data(user.getUserId()).message("发生网络故障，创建用户失败").toJson();
+            }
         }
-
+        //执行用户登录操作，返回用户信息和Token
+        String token = loginToken(user.getUserId());
+        if (null == token) {
+            return new FebsResponse().fail().data(user.getUserId()).message("发生网络故障").toJson();
+        } else {
+            user.setToken(token);
+            return new FebsResponse().success().data(user).message("").toJson();
+        }
     }
 
     /**
@@ -85,7 +101,7 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/login/in", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/loginPassword", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String loginIn(@RequestBody User user) throws BizException {
         //password为空，则默认不是采用密码登录，那么用户名可以使手机号，可以是设置的用户名
@@ -114,10 +130,8 @@ public class UserController {
         JSONObject result = new JSONObject();
 
         if (redisUtil.set("login" + user.getUserId(), token)) {
-            result.put("token", token);
-            result.put("userType", user.getUserType());
-            result.put("status", user.getStatus());
-            return new FebsResponse().success().data(result).toJson();
+            user.setToken(token);
+            return new FebsResponse().success().data(user).toJson();
         } else {
             return new FebsResponse().fail().message("登录失败，异常原因").data(null).toJson();
         }
@@ -159,6 +173,23 @@ public class UserController {
             return new FebsResponse().fail().message("用户信息更新失败").toJson();
         }
 
+    }
+
+
+    /**
+     * 生成用户token
+     *
+     * @param userId
+     * @return
+     */
+    private String loginToken(long userId) {
+        String token = AuthUtils.encryptPid(userId, AppConstant.AES_KEY);
+        JSONObject result = new JSONObject();
+        if (redisUtil.set("login" + userId, token)) {
+            return token;
+        } else {
+            return null;
+        }
     }
 
 }

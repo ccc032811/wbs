@@ -1,9 +1,6 @@
 package com.neefull.fsp.api.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wuwenze.poi.annotation.Excel;
 import com.wuwenze.poi.annotation.ExcelField;
@@ -99,13 +96,13 @@ public class User implements Serializable {
     /**
      * 创建时间
      */
-    @TableField("CREATE_TIME")
+    @TableField(value = "CREATE_TIME", fill = FieldFill.INSERT)
     private Date createTime;
 
     /**
      * 修改时间
      */
-    @TableField("MODIFY_TIME")
+    @TableField(value = "MODIFY_TIME", fill = FieldFill.UPDATE)
     private Date modifyTime;
 
     /**
@@ -177,13 +174,20 @@ public class User implements Serializable {
     @NotBlank(message = "{required}")
     @TableField("USER_TYPE")
     private String userType;
-
     /**
      * 用户实名状态
      */
     @NotBlank(message = "{required}")
     @TableField("AUTH_STATUS")
-    private int authStatus;
+    private String authStatus;
+    /**
+     * 用户实名状态
+     */
+    @NotBlank(message = "{required}")
+    @TableField("CARD_STATUS")
+    private String cardStatus;
+    @TableField(exist = false)
+    private String token;
 
 
     public Long getId() {
@@ -358,11 +362,27 @@ public class User implements Serializable {
         this.userType = userType;
     }
 
-    public int getAuthStatus() {
+    public String getAuthStatus() {
         return authStatus;
     }
 
-    public void setAuthStatus(int authStatus) {
+    public void setAuthStatus(String authStatus) {
         this.authStatus = authStatus;
+    }
+
+    public String getCardStatus() {
+        return cardStatus;
+    }
+
+    public void setCardStatus(String cardStatus) {
+        this.cardStatus = cardStatus;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

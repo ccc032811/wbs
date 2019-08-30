@@ -9,6 +9,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class)
 @MapperScan("com.neefull.fsp.api.mapper")
@@ -16,6 +17,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
         SmsConfig.class,
         CardValidConfig.class,
         IDValidConfig.class})
+@EnableTransactionManagement
 public class AppServiceApplication {
 
     public static void main(String[] args) {

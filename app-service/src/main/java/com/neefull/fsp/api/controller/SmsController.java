@@ -14,8 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Random;
-
 @RequestMapping("/sms")
 @RestController
 public class SmsController {
@@ -37,7 +35,8 @@ public class SmsController {
         String mobile = sms.getMobile();
         String smsType = sms.getSmsType();
         // 生成随机数
-        String random = String.valueOf(new Random().nextInt(999999));
+        //String random = String.valueOf(new Random().nextInt(999999));
+        String random = "888888";
         String returnResult = "";
         /*CommonRequest request = new CommonRequest();
         request.setMethod(MethodType.POST);

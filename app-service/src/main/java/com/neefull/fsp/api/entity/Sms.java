@@ -1,6 +1,8 @@
 package com.neefull.fsp.api.entity;
 
-public class Sms {
+import java.io.Serializable;
+
+public class Sms implements Serializable {
 
     private String mobile;
     private String smsType;

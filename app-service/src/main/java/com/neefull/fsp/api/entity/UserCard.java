@@ -1,15 +1,13 @@
 package com.neefull.fsp.api.entity;
 
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @TableName("t_user_card")
-public class UserCard {
+public class UserCard implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     private long id;
@@ -29,9 +27,9 @@ public class UserCard {
     private String linkNo;
     @TableField("auth_status")
     private long authStatus;
-    @TableField("create_time")
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private Date createTime;
-    @TableField("modify_time")
+    @TableField(value = "modify_time", fill = FieldFill.UPDATE)
     private Date modifyTime;
     @TableField("remark")
     private String remark;

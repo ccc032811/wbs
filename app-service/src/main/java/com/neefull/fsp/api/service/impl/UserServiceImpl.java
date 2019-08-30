@@ -33,7 +33,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public User findByMobile(String mobile) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.select(User::getUserId);
+       /* lambdaQueryWrapper.select(User::getUserId,User::getMobile,
+                User::getPassword,User::getUsername
+        User::getUserType,User::getAuthStatus,User::get);*/
         lambdaQueryWrapper.eq(User::getMobile, mobile);
         return this.baseMapper.selectOne(lambdaQueryWrapper);
     }
@@ -51,7 +53,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Transactional
     public boolean createUser(User user) {
         try {
-            user.setCreateTime(new Date());
             user.setStatus(User.STATUS_VALID);
             user.setAvatar(User.DEFAULT_AVATAR);
             user.setTheme(User.THEME_BLACK);
@@ -59,7 +60,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             //设置个默认用户
             String default_username = SerialNumberUtil.getNextSerialNumber("游客");
             user.setUsername(default_username);
-            user.setPassword(EncryptUtil.encrypt(null == user.getPassword() ? User.DEFAULT_PASSWORD : user.getPassword(), AppConstant.AES_KEY));
+            // user.setPassword(EncryptUtil.encrypt(null == user.getPassword() ? User.DEFAULT_PASSWORD : user.getPassword(), AppConstant.AES_KEY));
             return save(user);
         } catch (RuntimeException e) {
             throw new ErrorException(e.getMessage());
@@ -98,7 +99,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public int updateUser(User user) {
-        user.setModifyTime(new Date());
         return this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUserId, user.getUserId()));
     }
 
