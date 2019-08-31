@@ -19,7 +19,7 @@ spring:
 
 mybatis-plus:
   # 实体类扫描路径
-  type-aliases-package: com.neefull.fsp.system.entity,com.neefull.fsp.generator.entity,com.neefull.fsp.job.entity
+  type-aliases-package: com.neefull.fsp.web.system.entity,com.neefull.fsp.web.generator.entity,com.neefull.fsp.web.job.entity
   # xml 扫描路径
   mapper-locations: classpath:mapper/*/*.xml
   configuration:

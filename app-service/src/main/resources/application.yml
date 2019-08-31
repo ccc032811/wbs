@@ -15,7 +15,7 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.neefull.fsp.api.entity
+  type-aliases-package: com.neefull.fsp.app.entity
   global-config:
     id-type: 0
     field-strategy: 2

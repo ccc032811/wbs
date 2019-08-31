@@ -1,12 +1,12 @@
 package com.neefull.fsp.system.controller;
 
-import com.neefull.fsp.common.annotation.Log;
-import com.neefull.fsp.common.utils.FebsUtil;
-import com.neefull.fsp.common.entity.FebsConstant;
-import com.neefull.fsp.common.controller.BaseController;
-import com.neefull.fsp.common.entity.FebsResponse;
-import com.neefull.fsp.common.entity.QueryRequest;
-import com.neefull.fsp.common.exception.FebsException;
+import Log;
+import FebsUtil;
+import FebsConstant;
+import BaseController;
+import FebsResponse;
+import QueryRequest;
+import FebsException;
 import ${basePackage}.${entityPackage}.${className};
 import ${basePackage}.${servicePackage}.I${className}Service;
 import com.wuwenze.poi.ExcelKit;
