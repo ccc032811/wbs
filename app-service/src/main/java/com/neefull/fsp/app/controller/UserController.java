@@ -164,14 +164,41 @@ public class UserController {
     public String updateUser(@RequestBody User user, HttpServletRequest httpRequest) {
         long userId = (long) httpRequest.getAttribute("userId");
         user.setUserId(userId);
-        if (userService.updateById(user)) {
-            return new FebsResponse().success().data(user.getUserId()).message("用户信息更新成功").toJson();
+        if (userService.updateUser(user) > 0) {
+            user = userService.findUserById(user);
+            return new FebsResponse().success().data(user).message("用户信息更新成功").toJson();
         } else {
-            return new FebsResponse().fail().message("用户信息更新失败").toJson();
+            return new FebsResponse().fail().data(null).message("用户信息更新失败").toJson();
         }
-
     }
 
+    /**
+     * 用户其他信息更新
+     *
+     * @return
+     */
+    @RequestMapping(value = "/updateUserType", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    //@AuthToken
+    public String updateUserType(@RequestBody User user, HttpServletRequest httpRequest) {
+        //long userId = (long) httpRequest.getAttribute("userId");
+        user.setUserId(9L);
+        String userTypeParams = user.getUserType();
+        user = userService.findUserById(user);
+        String userType = user.getUserType();
+        //如果已经设置用户类型，则不允许更换
+        if (null == userType || "".equals(userType)) {
+            user.setUserType(userTypeParams);
+            if (userService.updateUser(user) > 0) {
+                return new FebsResponse().success().data(user).message("用户类型更新成功").toJson();
+            } else {
+                return new FebsResponse().fail().data(user).message("用户类型更新失败").toJson();
+            }
+
+        } else {
+            return new FebsResponse().fail().data(user).message("用户已设置该信息").toJson();
+        }
+    }
 
     /**
      * 生成用户token

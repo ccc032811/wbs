@@ -11,10 +11,10 @@ public interface IUserService extends IService<User> {
     /**
      * 通过用户名查找用户
      *
-     * @param username 用户名
+     * @param user 用户ID
      * @return 用户
      */
-    User findByName(String username);
+    User findUserById(User user);
 
     /**
      * 通过手机号查找用户
@@ -44,18 +44,9 @@ public interface IUserService extends IService<User> {
     /**
      * 重置密码
      *
-     * @param user 用户
+     * @param
      */
     boolean resetPassword(User user);
-
-
-    /**
-     * 更新用户头像
-     *
-     * @param userId 用户
-     * @param avatar 用户头像
-     */
-    void updateAvatar(long userId, String avatar);
 
     /**
      * 验证登录
@@ -67,9 +58,9 @@ public interface IUserService extends IService<User> {
 
     /**
      * 更新用户信息
-     * @param user
      * @return
      */
     int updateUser(User user);
+
 
 }

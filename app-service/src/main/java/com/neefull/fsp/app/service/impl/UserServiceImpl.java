@@ -22,10 +22,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
-
     @Override
-    public User findByName(String username) {
-        return this.baseMapper.findByName(username);
+    public User findUserById(User user) {
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getUserId, user.getUserId());
+        return this.baseMapper.selectOne(lambdaQueryWrapper);
     }
 
     @Override
@@ -79,14 +80,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    @Transactional
-    public void updateAvatar(long userId, String avatar) {
-        User user = new User();
-        user.setAvatar(avatar);
-        this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUserId, userId));
-    }
-
-    @Override
     public User login(User user) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getMobile, user.getUsername()).or().eq(User::getUsername, user.getUsername());
@@ -95,6 +88,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
+    @Transactional
     public int updateUser(User user) {
         return this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUserId, user.getUserId()));
     }

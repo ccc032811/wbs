@@ -58,7 +58,7 @@ public class AuthCorpController {
      */
     @RequestMapping(value = "/getCorpAuthInfo", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    //@AuthToken
+    @AuthToken
     public String getCorpAuthInfo(@RequestBody AuthCorp authCorp, HttpServletRequest httpServletRequest) throws BizException {
         try {
             long userId = (long) httpServletRequest.getAttribute("userId");

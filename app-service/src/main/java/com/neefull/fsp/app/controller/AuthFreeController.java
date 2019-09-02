@@ -1,6 +1,7 @@
 package com.neefull.fsp.app.controller;
 
 
+import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.entity.AuthFreelancer;
 import com.neefull.fsp.app.exception.BizException;
 import com.neefull.fsp.app.mapper.AuthFreeMapper;
@@ -38,10 +39,10 @@ public class AuthFreeController {
 
     @RequestMapping(value = "/freelancerCertification", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    // @AuthToken
+    @AuthToken
     public String freelancerCertification(@RequestBody AuthFreelancer authFreelancer, HttpServletRequest httpServletRequest) throws BizException {
-        //long userId = (long) httpServletRequest.getAttribute("userId");
-        authFreelancer.setUserId(9);
+        long userId = (long) httpServletRequest.getAttribute("userId");
+        authFreelancer.setUserId(userId);
         int result = authFreeService.saveAuthFreelancer(authFreelancer);
         if (result > 0) {
             //判断是否开启自动验证 1代表开启
@@ -56,6 +57,8 @@ public class AuthFreeController {
                     //更新数据库信息
                     if ("0".equals(resultMap.get("code"))) {
                         authFreelancer.setAuthStatus(1);
+                        //更新用户真实姓名
+                        authFreelancer.setRealName(bankCard.getRealName());
                     } else {
                         authFreelancer.setRemark(resultMap.get("msg"));
                     }
@@ -83,10 +86,10 @@ public class AuthFreeController {
 
     @RequestMapping(value = "/updateAuthFreelancer", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    // @AuthToken
+    @AuthToken
     public String updateAuthUserInfo(@RequestBody AuthFreelancer authFreelancer, HttpServletRequest httpServletRequest) throws BizException {
-        //long userId = (long) httpServletRequest.getAttribute("userId");
-        long userId = 9;
+        long userId = (long) httpServletRequest.getAttribute("userId");
+        //long userId = 9;
         authFreelancer.setUserId(userId);
         authFreelancer.setAuthStatus(0);
         if (authFreeService.updateAuthUserInfo(authFreelancer) > 0) {

@@ -39,15 +39,22 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             //解析Token
             String token = request.getHeader("auth_neefull");
             log.debug("Get token from request is {} ", token);
+            JSONObject jsonObject = new JSONObject();
+            PrintWriter out = null;
             if (StringUtils.isEmpty(token)) {
+                jsonObject.put("code", "400");
+                jsonObject.put("msg", "未检测到Token参数");
+                jsonObject.put("data", "");
+                out = response.getWriter();
+                response.setCharacterEncoding("utf-8");
+                response.setContentType("application/json; charset=utf-8");
+                out.println(jsonObject);
                 return false;
             }
             long userId = AuthUtils.decryptPid(token, AppConstant.AES_KEY);
             //校验是否存在
             String key = "login" + userId;
             String tokenVo = (String) redisUtil.get(key);
-            JSONObject jsonObject = new JSONObject();
-            PrintWriter out = null;
             try {
                 if (StringUtils.isEmpty(tokenVo) || !token.equals(tokenVo)) {
                     jsonObject.put("code", "400");
