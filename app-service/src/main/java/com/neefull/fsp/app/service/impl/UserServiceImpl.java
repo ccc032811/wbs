@@ -93,4 +93,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUserId, user.getUserId()));
     }
 
+    @Override
+    @Transactional
+    public int deleteUserByMobile(User user) {
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getMobile, user.getMobile());
+        return this.baseMapper.delete(lambdaQueryWrapper);
+    }
 }

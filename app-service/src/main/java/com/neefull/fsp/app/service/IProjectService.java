@@ -1,7 +1,9 @@
 package com.neefull.fsp.app.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.app.entity.Project;
+import com.neefull.fsp.common.entity.QueryRequest;
 
 import java.util.List;
 
@@ -32,7 +34,7 @@ public interface IProjectService extends IService<Project> {
     Project queryProject(Project project);
 
     /**
-     * 根据条件查询所有企业认证信息
+     * 根据条件查询所有企业发布项目
      *
      * @return
      */
@@ -43,6 +45,6 @@ public interface IProjectService extends IService<Project> {
      *
      * @return
      */
-    List<Project> queryAllProjects(Project project);
+    IPage<Project> personalHome(Project project,QueryRequest request);
 
 }

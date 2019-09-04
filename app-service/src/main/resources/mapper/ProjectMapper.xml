@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neefull.fsp.app.mapper.ProjectMapper">
+    <sql id="queryProject">
+        SELECT
+        id
+        ,user_id userId
+        ,service_type userType
+        ,service_content serviceContent
+        ,settle_time settleTime
+        ,salary_type salaryType
+        ,amount
+        ,title
+        ,des
+        ,content
+        ,requirement
+        ,place
+        ,req_sex reqSex
+        ,req_identity reqIdentity
+        ,req_edu reqEdu
+        ,req_age reqAge
+        ,req_num reqNum
+        ,valid_date validDate
+        ,create_time createTime
+        ,create_user createUser
+        ,modify_time modifyTime
+        ,modify_user modifyUser
+        ,current_state currentState
+        ,remark
+        FROM t_project u
+        WHERE 1 = 1
+        <if test="project.serviceType != null and project.serviceType != ''">
+            AND u.service_type = #{project.serviceType}
+        </if>
+        <if test="project.settleTime != null and project.settleTime != ''">
+            AND u.settle_time = #{project.settleTime}
+        </if>
+        <if test="project.reqSex != null and project.reqSex != ''">
+            AND u.req_sex = #{project.reqSex}
+        </if>
+        <if test="project.reqEdu != null and project.reqEdu != ''">
+            AND u.req_edu = #{project.reqEdu}
+        </if>
+        <if test="project.place != null and project.place != ''">
+            AND u.place = #{project.place}
+        </if>
+    </sql>
+    <select id="personalHome" parameterType="project" resultType="project">
+        <include refid="queryProject"/>
+    </select>
+</mapper>

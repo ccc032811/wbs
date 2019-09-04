@@ -62,5 +62,9 @@ public interface IUserService extends IService<User> {
      */
     int updateUser(User user);
 
-
+    /**
+     * 删除用户信息
+     * @return
+     */
+    int deleteUserByMobile(User user);
 }

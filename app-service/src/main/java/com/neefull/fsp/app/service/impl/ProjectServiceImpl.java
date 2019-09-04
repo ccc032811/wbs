@@ -3,10 +3,14 @@ package com.neefull.fsp.app.service.impl;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.app.mapper.ProjectMapper;
 import com.neefull.fsp.app.service.IProjectService;
+import com.neefull.fsp.common.entity.QueryRequest;
+import com.neefull.fsp.common.util.SortUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,8 +58,9 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     }
 
     @Override
-    public List<Project> queryAllProjects(Project project) {
-        LambdaQueryWrapper<Project> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        return this.baseMapper.selectList(lambdaQueryWrapper);
+    public IPage<Project> personalHome(Project project, QueryRequest request) {
+        Page<Project> page = new Page<>(request.getPageNum(), request.getPageSize());
+        SortUtil.handlePageSort(request, page, "createTime", "desc", false);
+        return this.baseMapper.personalHome(page, project);
     }
 }

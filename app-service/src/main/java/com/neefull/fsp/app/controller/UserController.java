@@ -115,7 +115,7 @@ public class UserController {
 
         } else {
             //用户名密码登录，必须要验证用户名和密码
-            String passwrod = EncryptUtil.encrypt(password, AppConstant.AES_KEY);
+            password = EncryptUtil.encrypt(password, AppConstant.AES_KEY);
             user.setPassword(password);
             user = userService.login(user);
 
@@ -179,10 +179,11 @@ public class UserController {
      */
     @RequestMapping(value = "/updateUserType", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    //@AuthToken
+    @AuthToken
     public String updateUserType(@RequestBody User user, HttpServletRequest httpRequest) {
-        //long userId = (long) httpRequest.getAttribute("userId");
-        user.setUserId(9L);
+        long userId = (long) httpRequest.getAttribute("userId");
+        user.setUserId(userId);
+        log.debug("userId:" + userId);
         String userTypeParams = user.getUserType();
         user = userService.findUserById(user);
         String userType = user.getUserType();
@@ -201,6 +202,22 @@ public class UserController {
     }
 
     /**
+     * 删除用户，测试用
+     *
+     * @return
+     */
+    @RequestMapping(value = "/deleteUserByMobile", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    // @AuthToken
+    public String deleteUserByMobile(@RequestBody User user, HttpServletRequest httpRequest) {
+        if (userService.deleteUserByMobile(user) > 0) {
+            return new FebsResponse().success().data(user).message("删除成功").toJson();
+        } else {
+            return new FebsResponse().fail().data(user).message("删除失败").toJson();
+        }
+    }
+
+    /**
      * 生成用户token
      *
      * @param userId
@@ -215,6 +232,7 @@ public class UserController {
             return null;
         }
     }
+
 
 }
 
