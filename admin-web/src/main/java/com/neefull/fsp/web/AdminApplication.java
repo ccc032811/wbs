@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableAsync
 @EnableTransactionManagement
-@MapperScan("com.neefull.fsp.*.mapper")
+@MapperScan("com.neefull.fsp.web.*.mapper")
 public class AdminApplication {
 
     public static void main(String[] args) {

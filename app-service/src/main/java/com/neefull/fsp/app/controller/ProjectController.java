@@ -45,7 +45,7 @@ public class ProjectController {
     }
 
     /**
-     * 查询用户所有项目信息
+     * 查询企业用户发布的项目
      *
      * @param httpServletRequest
      * @return

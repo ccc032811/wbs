@@ -14,6 +14,7 @@ import com.neefull.fsp.web.common.utils.SortUtil;
 import com.neefull.fsp.web.monitor.entity.Log;
 import com.neefull.fsp.web.monitor.mapper.LogMapper;
 import com.neefull.fsp.web.monitor.service.ILogService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -33,6 +34,7 @@ import java.util.*;
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@Slf4j
 public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogService {
 
     @Autowired
@@ -74,7 +76,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
     public void saveLog(ProceedingJoinPoint point, Log log) throws JsonProcessingException {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
-        Log logAnnotation = method.getAnnotation(Log.class);
+        com.neefull.fsp.web.common.annotation.Log logAnnotation = method.getAnnotation(com.neefull.fsp.web.common.annotation.Log.class);
         if (logAnnotation != null) {
             // 注解上的描述
             log.setOperation(logAnnotation.value());
