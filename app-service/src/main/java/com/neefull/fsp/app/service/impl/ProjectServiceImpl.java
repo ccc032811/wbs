@@ -59,7 +59,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     @Override
     public IPage<Project> personalHome(Project project, QueryRequest request) {
-        Page<Project> page = new Page<>(request.getPageNum(), request.getPageSize());
+        Page<Project> page = new Page<Project>(request.getPageNum(), request.getPageSize());
         SortUtil.handlePageSort(request, page, "createTime", "desc", false);
         return this.baseMapper.personalHome(page, project);
     }
