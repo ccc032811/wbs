@@ -7,6 +7,7 @@ import com.neefull.fsp.app.exception.BizException;
 import com.neefull.fsp.app.mapper.AuthFreeMapper;
 import com.neefull.fsp.app.service.IAuthFreeService;
 import com.neefull.fsp.common.config.CardValidConfig;
+import com.neefull.fsp.common.config.QiniuConfig;
 import com.neefull.fsp.common.entity.BankCard;
 import com.neefull.fsp.common.entity.FebsResponse;
 import com.neefull.fsp.common.util.CertUtil;
@@ -16,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
@@ -77,7 +79,7 @@ public class AuthFreeController {
     }
 
     /**
-     * 获取自由职业者提交的认证信息
+     * 更新自由职业者提交的认证信息
      *
      * @param httpServletRequest
      * @return
@@ -117,6 +119,40 @@ public class AuthFreeController {
             return new FebsResponse().success().data("").message("修改实名认证成功,请等待审核").toJson();
         } else {
             return new FebsResponse().fail().data("").message("网络故障,请重新提交").toJson();
+        }
+    }
+
+    /**
+     * 获取自由职业者认证信息
+     *
+     * @param httpServletRequest
+     * @return
+     * @throws BizException
+     */
+    @Autowired
+    QiniuConfig qiniuConfig;
+
+    @RequestMapping(value = "/getAuthFreelancer", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String getAuthFreelancer(@RequestBody AuthFreelancer authFreelancer, HttpServletRequest httpServletRequest) throws BizException {
+        long userId = (long) httpServletRequest.getAttribute("userId");
+        //long userId = 9;
+        authFreelancer.setUserId(userId);
+        authFreelancer.setAuthStatus(0);
+        authFreelancer = authFreeService.getAuthUserInfo(authFreelancer);
+        if (null != authFreelancer) {
+            try {
+                authFreelancer.setIdImage1(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, authFreelancer.getIdImage1()));
+                authFreelancer.setIdImage2(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, authFreelancer.getIdImage2()));
+                authFreelancer.setCardImage1(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, authFreelancer.getCardImage1()));
+                authFreelancer.setCardImage2(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, authFreelancer.getCardImage2()));
+            } catch (UnsupportedEncodingException e) {
+                new BizException("服务器网络故障");
+            }
+            return new FebsResponse().success().data(authFreelancer).message("查询成功").toJson();
+        } else {
+            return new FebsResponse().fail().data("").message("未查询到相关信息").toJson();
         }
     }
 }

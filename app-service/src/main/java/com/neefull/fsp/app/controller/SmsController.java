@@ -31,6 +31,7 @@ public class SmsController {
     @RequestMapping(value = "/sendSmsCode", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String sendMsg(@RequestBody Sms sms) throws Exception {
+        //TODO
         CommonResponse response = null;
         String mobile = sms.getMobile();
         String smsType = sms.getSmsType();

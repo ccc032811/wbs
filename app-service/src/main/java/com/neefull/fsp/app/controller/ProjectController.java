@@ -2,6 +2,7 @@ package com.neefull.fsp.app.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.app.entity.ProjectPage;
 import com.neefull.fsp.app.exception.BizException;
@@ -9,7 +10,6 @@ import com.neefull.fsp.app.service.IProjectService;
 import com.neefull.fsp.common.entity.FebsResponse;
 import com.neefull.fsp.common.entity.QueryRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,11 +34,11 @@ public class ProjectController {
 
     @RequestMapping(value = "/publishProject", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    // @AuthToken
+    @AuthToken
     public String publishProject(@RequestBody Project project, HttpServletRequest httpServletRequest) throws BizException {
-        //long userId = (long) httpServletRequest.getAttribute("userId");
-        project.setUserId(9);
-        project.setCreateUser(9);
+        long userId = (long) httpServletRequest.getAttribute("userId");
+        project.setUserId(userId);
+        project.setCreateUser(userId);
         project.setCurrentState('0');
         int result = projectService.saveProject(project);
         if (result > 0) {
@@ -60,10 +60,10 @@ public class ProjectController {
 
     @RequestMapping(value = "/getProjectsByUser", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    //@AuthToken
+    @AuthToken
     public String getProjectsByUser(@RequestBody Project project, HttpServletRequest httpServletRequest) throws BizException {
-        // long userId = (long) httpServletRequest.getAttribute("userId");
-        long userId = 9;
+        long userId = (long) httpServletRequest.getAttribute("userId");
+        //long userId = 9;
         List<Project> lst = projectService.getProjectsByUser(userId);
         if (null == lst || lst.size() == 0) {
             return new FebsResponse().fail().data(lst).message("未查询到信息").toJson();
@@ -81,12 +81,11 @@ public class ProjectController {
 
     @RequestMapping(value = "/personalHome", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    //@AuthToken
-    public String personalHome(@RequestBody ProjectPage projectPage) throws BizException {
+    @AuthToken
+    public String personalHome(@RequestBody ProjectPage projectPage, HttpServletRequest httpServletRequest) throws BizException {
         Project project = projectPage.getProject();
         QueryRequest queryRequest = projectPage.getQueryRequest();
-        if(null==project||null==queryRequest)
-        {
+        if (null == project || null == queryRequest) {
             return new FebsResponse().fail().data(null).message("参数不合法").toJson();
         }
         // long userId = (long) httpServletRequest.getAttribute("userId");

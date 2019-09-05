@@ -6,8 +6,10 @@ import com.neefull.fsp.app.entity.AuthCorp;
 import com.neefull.fsp.app.exception.BizException;
 import com.neefull.fsp.app.mapper.AuthCorpMapper;
 import com.neefull.fsp.app.service.IAuthCorpService;
+import com.neefull.fsp.common.config.QiniuConfig;
 import com.neefull.fsp.common.entity.FebsResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,8 @@ public class AuthCorpController {
     IAuthCorpService authCorpService;
     @Autowired
     AuthCorpMapper authCorpMapper;
+    @Autowired
+    QiniuConfig qiniuConfig;
 
     @RequestMapping(value = "/corpCertification", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -62,12 +66,17 @@ public class AuthCorpController {
     public String getCorpAuthInfo(@RequestBody AuthCorp authCorp, HttpServletRequest httpServletRequest) throws BizException {
         try {
             long userId = (long) httpServletRequest.getAttribute("userId");
-            //long userId = authCorp.getUserId();
+            // long userId = 9;
             authCorp.setUserId(userId);
             authCorp = authCorpService.queryCorpByUserId(authCorp);
             if (null == authCorp) {
                 return new FebsResponse().fail().data("").message("企业尚未提交认证资料").toJson();
             } else {
+                //生成图片地址
+                if (StringUtils.isNotEmpty(authCorp.getBusinessLience())) {
+                    String privateUrl = qiniuConfig.getOssManager().getDownUrl(qiniuConfig, authCorp.getBusinessLience());
+                    authCorp.setBusinessLience(privateUrl);
+                }
                 return new FebsResponse().success().data(authCorp).message("").toJson();
             }
 

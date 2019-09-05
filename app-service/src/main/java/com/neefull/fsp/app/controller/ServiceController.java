@@ -1,5 +1,6 @@
 package com.neefull.fsp.app.controller;
 
+import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.entity.JobDict;
 import com.neefull.fsp.app.service.IJobDictService;
 import com.neefull.fsp.common.entity.FebsResponse;
@@ -24,7 +25,7 @@ public class ServiceController {
 
     @RequestMapping(value = "/findService", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-  //  @AuthToken
+    @AuthToken
     public String findByMobile(@RequestBody JobDict job) {
         List<JobDict> jobs = jobService.findByLevel(job);
         if (null != jobs && jobs.size()>0) {

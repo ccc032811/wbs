@@ -23,13 +23,6 @@ public interface IAuthFreeService extends IService<AuthFreelancer> {
      * 查询自由职业者认证信息
      * @param AuthFreelancer
      */
-    AuthFreelancer queryUserInfo(AuthFreelancer AuthFreelancer);
+    AuthFreelancer getAuthUserInfo(AuthFreelancer AuthFreelancer);
 
-   /* *//**
-     * 获取自由职业者图片
-     * @param AuthFreelancer
-     * @return
-     *//*
-    String queryImageInfo(long userId,int imgTYpe);
-*/
 }

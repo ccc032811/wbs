@@ -29,6 +29,7 @@ public class AuthFreeServiceImpl extends ServiceImpl<AuthFreeMapper, AuthFreelan
 
     @Autowired
     IUserService userService;
+
     @Override
     @Transactional
     public int updateAuthUserInfo(AuthFreelancer authFreelancer) {
@@ -41,18 +42,12 @@ public class AuthFreeServiceImpl extends ServiceImpl<AuthFreeMapper, AuthFreelan
         userService.updateUser(user);
         return this.baseMapper.update(authFreelancer, lambdaUpdateWrapper);
     }
+
     @Override
-    public AuthFreelancer queryUserInfo(AuthFreelancer authFreelancer) {
+    public AuthFreelancer getAuthUserInfo(AuthFreelancer authFreelancer) {
         LambdaQueryWrapper<AuthFreelancer> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(AuthFreelancer::getUserId, authFreelancer.getUserId());
         return this.baseMapper.selectOne(lambdaQueryWrapper);
     }
 
-
-   /* @Override
-    public String queryImageInfo(long userId, int imgTYpe) {
-        QueryWrapper<AuthFreelancer> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select()
-        return null;
-    }*/
 }

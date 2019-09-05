@@ -1,17 +1,17 @@
 package com.neefull.fsp.app.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.neefull.fsp.app.annotation.AuthToken;
-import com.neefull.fsp.app.entity.AuthFreelancer;
 import com.neefull.fsp.app.exception.BizException;
 import com.neefull.fsp.app.service.IAuthFreeService;
 import com.neefull.fsp.common.config.QiniuConfig;
 import com.neefull.fsp.common.entity.FebsResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 
 @Slf4j
@@ -33,60 +33,30 @@ public class OssController {
     @RequestMapping(value = "/getUpToken", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String findByMobile(@RequestBody String params) {
+    public String getUpToken(@RequestBody String params) {
         String token = qiniuConfig.getOssManager().getUpToken(qiniuConfig);
         return new FebsResponse().success().data(token).message("获取上传凭证成功").toJson();
     }
 
     /**
-     * 上传完成回调，保存上传信息
+     * 获取Oss文件链接
      *
+     * @param key oss上传成功后的Key
      * @return
      */
-    @RequestMapping(value = "/uploadCallBack", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/getFileDownUrl", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String uploadCallBack(@RequestBody AuthFreelancer AuthFreelancer, HttpServletRequest httpRequest) {
-
-        long userId = (long) httpRequest.getAttribute("userId");
-        AuthFreelancer.setUserId(userId);
-        int result = iAuthFreeService.saveAuthFreelancer(AuthFreelancer);
-        if (result > 0) {
-            return new FebsResponse().success().data(result).message("保存完成").toJson();
-        } else {
-            return new FebsResponse().fail().data("").message("保存失败，请再次尝试").toJson();
-        }
-    }
-
-    /**
-     * 获取保存文件的读取地址信息
-     *
-     * @return
-     */
-    @RequestMapping(value = "/getUserImgUrls", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-    //  @AuthToken
-    public String getUserImgUrl(@RequestBody AuthFreelancer AuthFreelancer, HttpServletRequest httpRequest) throws BizException {
-        /*long userId = (long) httpRequest.getAttribute("userId");
-        AuthFreelancer.setUserId(userId);*/
-        AuthFreelancer.setUserId(9);
-        AuthFreelancer = iAuthFreeService.queryUserInfo(AuthFreelancer);
-        ;
-        AuthFreelancer = iAuthFreeService.queryUserInfo(AuthFreelancer);
-        if (null == AuthFreelancer) {
-            return new FebsResponse().fail().data("").message("未能查询到信息").toJson();
-        }
-        //处理字符串
+    public String getFileDownUrl(@RequestBody JSONObject params) {
         try {
-            AuthFreelancer.setIdImage1(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, AuthFreelancer.getIdImage1()));
-            AuthFreelancer.setIdImage2(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, AuthFreelancer.getIdImage2()));
-            AuthFreelancer.setCardImage1(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, AuthFreelancer.getCardImage1()));
-            AuthFreelancer.setCardImage2(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, AuthFreelancer.getCardImage2()));
-        } catch (UnsupportedEncodingException e) {
-            throw new BizException("查询图片异常");
-        }
-        //TODO 返回的字符串，有问题
-        return new FebsResponse().success().data(AuthFreelancer).message("").toJson();
+            String url = qiniuConfig.getOssManager().getDownUrl(qiniuConfig, params.getString("fileName"));
+            if (StringUtils.isNotEmpty(url)) {
+                return new FebsResponse().success().data(url).message("获取下载链接成功").toJson();
+            }
 
+        } catch (UnsupportedEncodingException e) {
+            new BizException("链接Oss网络故障");
+        }
+        return new FebsResponse().fail().data(null).message("未查询到指定文件").toJson();
     }
 }

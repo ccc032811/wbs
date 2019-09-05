@@ -50,7 +50,7 @@ public class BanksController {
      */
     @RequestMapping(value = "/checkCardNo", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    // @AuthToken
+    @AuthToken
     public String checkCardNo(@RequestBody JSONObject cardNo) throws BizException {
 
         Map<String, String> querys = new HashMap<>();
