@@ -6,11 +6,10 @@ import com.qiniu.util.StringMap;
 import com.qiniu.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 public class OssManager {
 
-    private final String domainOfBucket = "pwqzsgxmt.bkt.clouddn.com";
+    private final String domainOfBucket = "http://pwqzsgxmt.bkt.clouddn.com";
     private final String actionUrl = "http://upload.qiniup.com/";
 
     public String getUpToken(QiniuConfig qiniuConfig) {
@@ -19,6 +18,7 @@ public class OssManager {
         String bucket = qiniuConfig.getBucket();
         Auth auth = Auth.create(accessKey, secretKey);
         StringMap putPolicy = new StringMap();
+        putPolicy.put("insertOnly", 0);
         putPolicy.put("returnBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
         long expireSeconds = 3600;
         String upToken = auth.uploadToken(bucket, null, expireSeconds, putPolicy);
@@ -27,12 +27,11 @@ public class OssManager {
     }
 
     public String getDownUrl(QiniuConfig qiniuConfig, String fileName) throws UnsupportedEncodingException {
-        if(StringUtils.isNullOrEmpty(fileName))
-        {
+        if (StringUtils.isNullOrEmpty(fileName)) {
             return "";
         }
-        String encodedFileName = URLEncoder.encode(fileName, "utf-8").replace("+", "%20");
-        String publicUrl = String.format("%s/%s", domainOfBucket, encodedFileName);
+        //String encodedFileName = URLEncoder.encode(fileName, "utf-8").replace("+", "%20");
+        String publicUrl = String.format("%s/%s", domainOfBucket, fileName);
         String accessKey = qiniuConfig.getAccessKey();
         String secretKey = qiniuConfig.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
