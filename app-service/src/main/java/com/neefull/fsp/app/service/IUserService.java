@@ -47,6 +47,12 @@ public interface IUserService extends IService<User> {
      * @param
      */
     boolean resetPassword(User user);
+    /**
+     * 重置密码
+     *
+     * @param
+     */
+    boolean forgetPassword(User user);
 
     /**
      * 验证登录

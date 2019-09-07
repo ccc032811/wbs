@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.entity.DictBanks;
-import com.neefull.fsp.app.exception.BizException;
 import com.neefull.fsp.app.mapper.DictBanksMapper;
 import com.neefull.fsp.app.service.IDictBanksService;
 import com.neefull.fsp.app.utils.RedisUtil;
@@ -51,7 +50,7 @@ public class BanksController {
     @RequestMapping(value = "/checkCardNo", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String checkCardNo(@RequestBody JSONObject cardNo) throws BizException {
+    public String checkCardNo(@RequestBody JSONObject cardNo){
 
         Map<String, String> querys = new HashMap<>();
         querys.put("cardNo", cardNo.getString("cardNo"));

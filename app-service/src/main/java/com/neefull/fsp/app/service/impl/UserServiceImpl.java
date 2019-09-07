@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.app.config.AppConstant;
 import com.neefull.fsp.app.entity.User;
-import com.neefull.fsp.app.exception.ErrorException;
 import com.neefull.fsp.app.mapper.UserMapper;
 import com.neefull.fsp.app.service.IUserService;
 import com.neefull.fsp.common.util.EncryptUtil;
 import com.neefull.fsp.common.util.SerialNumberUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+
+    @Autowired
+    UserMapper userMapper;
 
     @Override
     public User findUserById(User user) {
@@ -51,19 +54,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     @Transactional
     public boolean createUser(User user) {
-        try {
-            user.setStatus(User.STATUS_VALID);
-            user.setAvatar(User.DEFAULT_AVATAR);
-            user.setTheme(User.THEME_BLACK);
-            user.setIsTab(User.TAB_OPEN);
-            //设置个默认用户
-            String default_username = SerialNumberUtil.getNextSerialNumber("游客");
-            user.setUsername(default_username);
-            // user.setPassword(EncryptUtil.encrypt(null == user.getPassword() ? User.DEFAULT_PASSWORD : user.getPassword(), AppConstant.AES_KEY));
-            return save(user);
-        } catch (RuntimeException e) {
-            throw new ErrorException(e.getMessage());
-        }
+        user.setStatus(User.STATUS_VALID);
+        user.setAvatar(User.DEFAULT_AVATAR);
+        user.setTheme(User.THEME_BLACK);
+        user.setIsTab(User.TAB_OPEN);
+        //设置个默认用户
+        String default_username = SerialNumberUtil.getNextSerialNumber("游客");
+        user.setUsername(default_username);
+        // user.setPassword(EncryptUtil.encrypt(null == user.getPassword() ? User.DEFAULT_PASSWORD : user.getPassword(), AppConstant.AES_KEY));
+        return save(user);
 
     }
 
@@ -71,12 +70,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Transactional
     public boolean resetPassword(User user) {
         user.setPassword(EncryptUtil.encrypt(user.getPassword(), AppConstant.AES_KEY));
-        if (this.baseMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getUserId, user.getUserId())) > 0) {
+        if (userMapper.resetPassword(user)) {
             return true;
         } else {
             return false;
         }
 
+    }
+
+    @Override
+    @Transactional
+    public boolean forgetPassword(User user) {
+        user.setPassword(EncryptUtil.encrypt(user.getPassword(), AppConstant.AES_KEY));
+        if (userMapper.forgetPassword(user)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

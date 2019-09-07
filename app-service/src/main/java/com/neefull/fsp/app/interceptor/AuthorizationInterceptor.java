@@ -3,10 +3,11 @@ package com.neefull.fsp.app.interceptor;
 import com.alibaba.fastjson.JSONObject;
 import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.config.AppConstant;
-import com.neefull.fsp.app.exception.BizException;
 import com.neefull.fsp.app.utils.RedisUtil;
 import com.neefull.fsp.common.util.AuthUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -24,6 +25,7 @@ import java.lang.reflect.Method;
 public class AuthorizationInterceptor implements HandlerInterceptor {
     @Autowired
     RedisUtil redisUtil;
+    Logger log = LoggerFactory.getLogger(AuthorizationInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -42,8 +44,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             JSONObject jsonObject = new JSONObject();
             PrintWriter out = null;
             if (StringUtils.isEmpty(token)) {
-                jsonObject.put("code", "400");
-                jsonObject.put("msg", "未检测到Token参数");
+                jsonObject.put("code", "600");
+                jsonObject.put("msg", "Token参数不存在");
                 jsonObject.put("data", "");
                 out = response.getWriter();
                 response.setCharacterEncoding("utf-8");
@@ -57,8 +59,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             String tokenVo = (String) redisUtil.get(key);
             try {
                 if (StringUtils.isEmpty(tokenVo) || !token.equals(tokenVo)) {
-                    jsonObject.put("code", "400");
-                    jsonObject.put("msg", "权限校验失败");
+                    jsonObject.put("code", "600");
+                    jsonObject.put("msg", "Token校验未通过");
                     jsonObject.put("data", "");
                     out = response.getWriter();
                     response.setCharacterEncoding("utf-8");
@@ -70,7 +72,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                     result = true;
                 }
             } catch (Exception e) {
-                throw new BizException("权限校验失败");
+                throw new Exception("权限校验失败");
             } finally {
                 if (null != out) {
                     out.flush();

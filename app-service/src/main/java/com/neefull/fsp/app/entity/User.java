@@ -8,6 +8,7 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
@@ -61,13 +62,14 @@ public class User implements Serializable {
      * 密码
      */
     @TableField("PASSWORD")
+    @NotNull
     private String password;
 
     /**
      * 部门 ID
      */
     @TableField("DEPT_ID")
-    private Long deptId;
+    private long deptId;
 
     /**
      * 邮箱
@@ -83,6 +85,7 @@ public class User implements Serializable {
      */
     @TableField("MOBILE")
     @ExcelField(value = "联系电话")
+    @NotNull
     private String mobile;
 
     /**
@@ -194,11 +197,11 @@ public class User implements Serializable {
         return userId;
     }
 
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

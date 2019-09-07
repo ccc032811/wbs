@@ -3,7 +3,6 @@ package com.neefull.fsp.app.controller;
 
 import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.entity.AuthCorp;
-import com.neefull.fsp.app.exception.BizException;
 import com.neefull.fsp.app.mapper.AuthCorpMapper;
 import com.neefull.fsp.app.service.IAuthCorpService;
 import com.neefull.fsp.common.config.QiniuConfig;
@@ -15,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 /**
@@ -37,7 +37,7 @@ public class AuthCorpController {
     @RequestMapping(value = "/corpCertification", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String corpCertification(@RequestBody AuthCorp authCorp, HttpServletRequest httpServletRequest) throws BizException {
+    public String corpCertification(@RequestBody AuthCorp authCorp, HttpServletRequest httpServletRequest)  {
         long userId = (long) httpServletRequest.getAttribute("userId");
         authCorp.setUserId(userId);
         //TODO 默认认证通过，保存数据
@@ -58,13 +58,11 @@ public class AuthCorpController {
      * @param authCorp
      * @param httpServletRequest
      * @return
-     * @throws BizException
      */
     @RequestMapping(value = "/getCorpAuthInfo", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String getCorpAuthInfo(@RequestBody AuthCorp authCorp, HttpServletRequest httpServletRequest) throws BizException {
-        try {
+    public String getCorpAuthInfo(@RequestBody AuthCorp authCorp, HttpServletRequest httpServletRequest) throws UnsupportedEncodingException {
             long userId = (long) httpServletRequest.getAttribute("userId");
             // long userId = 9;
             authCorp.setUserId(userId);
@@ -80,9 +78,6 @@ public class AuthCorpController {
                 return new FebsResponse().success().data(authCorp).message("").toJson();
             }
 
-        } catch (Exception e) {
-            throw new BizException(e.getMessage());
-        }
     }
 
     /**
@@ -96,8 +91,7 @@ public class AuthCorpController {
     @RequestMapping(value = "/updateCorpAuthInfo", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String updateCorpAuthInfo(@RequestBody AuthCorp authCorp, HttpServletRequest httpServletRequest) throws BizException {
-        try {
+    public String updateCorpAuthInfo(@RequestBody AuthCorp authCorp, HttpServletRequest httpServletRequest) {
             long userId = (long) httpServletRequest.getAttribute("userId");
             //long userId = 9;
             authCorp.setUserId(userId);
@@ -111,9 +105,5 @@ public class AuthCorpController {
             } else {
                 return new FebsResponse().success().data(result).message("修改成功").toJson();
             }
-
-        } catch (RuntimeException e) {
-            throw new BizException(e.getMessage());
-        }
     }
 }

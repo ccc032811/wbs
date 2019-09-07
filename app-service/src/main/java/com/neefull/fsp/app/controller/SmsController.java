@@ -6,6 +6,7 @@ import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.neefull.fsp.app.entity.Sms;
+import com.neefull.fsp.app.service.IUserService;
 import com.neefull.fsp.app.utils.RedisUtil;
 import com.neefull.fsp.common.config.SmsConfig;
 import com.neefull.fsp.common.entity.FebsResponse;
@@ -24,6 +25,8 @@ public class SmsController {
     private SmsConfig smsConfig;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private IUserService userService;
 
     /**
      * 发送短信验证码
@@ -35,6 +38,12 @@ public class SmsController {
         CommonResponse response = null;
         String mobile = sms.getMobile();
         String smsType = sms.getSmsType();
+        //如果发送验证码，不是用户注册，则要检测用户是否存在
+        if (!smsType.equals("REG")) {
+            if (null == userService.findByMobile(mobile)) {
+                new FebsResponse().fail().message("用户手机号码不存在").data(mobile).toJson();
+            }
+        }
         // 生成随机数
         //String random = String.valueOf(new Random().nextInt(999999));
         String random = "888888";
@@ -100,7 +109,7 @@ public class SmsController {
     private void saveRandom(String mobile, String random) {
         String randomKey = "sms:" + mobile;
         // 5分钟失效
-        redisUtil.set(randomKey, random,5 );
+        redisUtil.set(randomKey, random, 5);
     }
 
     /**

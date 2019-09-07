@@ -4,8 +4,9 @@ package com.neefull.fsp.app.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.entity.Project;
+import com.neefull.fsp.app.entity.ProjectEnrollment;
 import com.neefull.fsp.app.entity.ProjectPage;
-import com.neefull.fsp.app.exception.BizException;
+import com.neefull.fsp.app.service.IProjectEnrService;
 import com.neefull.fsp.app.service.IProjectService;
 import com.neefull.fsp.common.entity.FebsResponse;
 import com.neefull.fsp.common.entity.QueryRequest;
@@ -25,17 +26,19 @@ import java.util.Map;
  * @author pei.wang
  */
 @Slf4j
-@Validated
 @RestController
 @RequestMapping("/project")
+@Validated
 public class ProjectController {
     @Autowired
     IProjectService projectService;
+    @Autowired
+    IProjectEnrService projectEnrService;
 
     @RequestMapping(value = "/publishProject", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String publishProject(@RequestBody Project project, HttpServletRequest httpServletRequest) throws BizException {
+    public String publishProject(@RequestBody Project project, HttpServletRequest httpServletRequest)  {
         long userId = (long) httpServletRequest.getAttribute("userId");
         project.setUserId(userId);
         project.setCreateUser(userId);
@@ -55,13 +58,13 @@ public class ProjectController {
      *
      * @param httpServletRequest
      * @return
-     * @throws BizException
+     * @
      */
 
     @RequestMapping(value = "/getProjectsByUser", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String getProjectsByUser(@RequestBody Project project, HttpServletRequest httpServletRequest) throws BizException {
+    public String getProjectsByUser(@RequestBody Project project, HttpServletRequest httpServletRequest)  {
         long userId = (long) httpServletRequest.getAttribute("userId");
         //long userId = 9;
         List<Project> lst = projectService.getProjectsByUser(userId);
@@ -76,13 +79,13 @@ public class ProjectController {
      * 个人首页
      *
      * @return
-     * @throws BizException
+     * @
      */
 
     @RequestMapping(value = "/personalHome", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String personalHome(@RequestBody ProjectPage projectPage, HttpServletRequest httpServletRequest) throws BizException {
+    public String personalHome(@RequestBody ProjectPage projectPage, HttpServletRequest httpServletRequest)  {
         Project project = projectPage.getProject();
         QueryRequest queryRequest = projectPage.getQueryRequest();
         if (null == project || null == queryRequest) {
@@ -94,6 +97,30 @@ public class ProjectController {
             return new FebsResponse().fail().data(null).message("未查询到相关数据").toJson();
         } else {
             return new FebsResponse().success().data(dataTable).message("数据查询成功").toJson();
+        }
+    }
+
+    /**
+     * 自由职业者报名项目
+     *
+     * @return
+     * @
+     */
+
+    @RequestMapping(value = "/enrollmentProject", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    //@AuthToken
+    public String enrollmentProject(@Validated ProjectEnrollment projectEnrollment, HttpServletRequest httpServletRequest) {
+        //long userId = (long) httpServletRequest.getAttribute("userId");
+        //TODO
+        long userId = 9;
+        //设置报名用户
+        projectEnrollment.setUserId(userId);
+        if(projectEnrService.saveProjectEnrollment(projectEnrollment)>0)
+        {
+            return new FebsResponse().success().data("").message("报名成功").toJson();
+        }else{
+            return new FebsResponse().fail().data("").message("报名失败").toJson();
         }
     }
 

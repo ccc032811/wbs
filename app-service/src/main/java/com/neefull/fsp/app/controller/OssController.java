@@ -2,7 +2,6 @@ package com.neefull.fsp.app.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.neefull.fsp.app.annotation.AuthToken;
-import com.neefull.fsp.app.exception.BizException;
 import com.neefull.fsp.app.service.IAuthFreeService;
 import com.neefull.fsp.common.config.QiniuConfig;
 import com.neefull.fsp.common.entity.FebsResponse;
@@ -55,7 +54,7 @@ public class OssController {
             }
 
         } catch (UnsupportedEncodingException e) {
-            new BizException("链接Oss网络故障");
+            new Exception("链接Oss网络故障");
         }
         return new FebsResponse().fail().data(null).message("未查询到指定文件").toJson();
     }

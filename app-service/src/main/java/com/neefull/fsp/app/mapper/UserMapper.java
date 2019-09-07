@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neefull.fsp.app.entity.User;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -46,5 +47,21 @@ public interface UserMapper extends BaseMapper<User> {
      * @return List<User>
      */
     List<User> findUserDetail(@Param("user") User user);
+
+    /**
+     * 重置密码
+     *
+     * @param
+     */
+    @Update("update t_user set password=#{user.password} where mobile=#{user.mobile}")
+    boolean forgetPassword(@Param("user") User user);
+
+    /**
+     * 重置密码
+     *
+     * @param
+     */
+    @Update("update t_user set password=#{user.password} where user_id=#{user.userId}")
+    boolean resetPassword(@Param("user") User user);
 
 }

@@ -3,7 +3,6 @@ package com.neefull.fsp.app.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.entity.PlatAccount;
-import com.neefull.fsp.app.exception.BizException;
 import com.neefull.fsp.app.mapper.PlatAccMapper;
 import com.neefull.fsp.common.entity.FebsResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,7 @@ public class PlatAccController {
     @RequestMapping(value = "/getDefaultPlatAccount", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String getDefaultPlatAccount(@RequestBody JSONObject params) throws BizException {
+    public String getDefaultPlatAccount(@RequestBody JSONObject params) {
 
         PlatAccount platAccount = platAccountMapper.getDefaultPlatAccount();
         if (null == platAccount) {

@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.config.AppConstant;
 import com.neefull.fsp.app.entity.User;
-import com.neefull.fsp.app.exception.BizException;
 import com.neefull.fsp.app.service.IUserService;
 import com.neefull.fsp.app.utils.RedisUtil;
 import com.neefull.fsp.common.entity.FebsResponse;
@@ -18,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 /**
  * @author pei.wang
@@ -98,9 +98,26 @@ public class UserController {
 
     }
 
+    /**
+     * 重置密码
+     *
+     * @return
+     */
+    @RequestMapping(value = "/forgetPassword", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String forgetPassword(@RequestBody User user) {
+        log.debug("接收到的新密码是{}", user.getPassword());
+        if (userService.forgetPassword(user)) {
+            return new FebsResponse().success().data(user.getMobile()).message("密码更新成功").toJson();
+        } else {
+            return new FebsResponse().fail().data(null).message("更新密码失败").toJson();
+        }
+
+    }
+
     @RequestMapping(value = "/loginPassword", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String loginIn(@RequestBody User user) throws BizException {
+    public String loginIn(@RequestBody User user) {
         //password为空，则默认不是采用密码登录，那么用户名可以使手机号，可以是设置的用户名
         String userName = user.getUsername();
         String password = user.getPassword();
@@ -139,12 +156,11 @@ public class UserController {
      * 用户退出登录
      *
      * @return
-     * @throws BizException
      */
     @AuthToken
     @RequestMapping(value = "/login/out", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String loginOut(HttpServletRequest httpRequest) throws BizException {
+    public String loginOut(HttpServletRequest httpRequest) {
         long userId = (long) httpRequest.getAttribute("userId");
         //退出登录，设置Redis保存的Token失效
         redisUtil.del("login" + userId);

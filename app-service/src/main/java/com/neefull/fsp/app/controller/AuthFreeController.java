@@ -3,7 +3,6 @@ package com.neefull.fsp.app.controller;
 
 import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.entity.AuthFreelancer;
-import com.neefull.fsp.app.exception.BizException;
 import com.neefull.fsp.app.mapper.AuthFreeMapper;
 import com.neefull.fsp.app.service.IAuthFreeService;
 import com.neefull.fsp.common.config.CardValidConfig;
@@ -42,7 +41,7 @@ public class AuthFreeController {
     @RequestMapping(value = "/freelancerCertification", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String freelancerCertification(@RequestBody AuthFreelancer authFreelancer, HttpServletRequest httpServletRequest) throws BizException {
+    public String freelancerCertification(@RequestBody AuthFreelancer authFreelancer, HttpServletRequest httpServletRequest) {
         long userId = (long) httpServletRequest.getAttribute("userId");
         authFreelancer.setUserId(userId);
         int result = authFreeService.saveAuthFreelancer(authFreelancer);
@@ -54,21 +53,17 @@ public class AuthFreeController {
                 bankCard.setCardNo(authFreelancer.getCardNo());
                 bankCard.setCertNo(authFreelancer.getIdNo());
                 bankCard.setLinkNo(authFreelancer.getMobile());
-                try {
-                    Map<String, String> resultMap = certUtil.userCardCert(cardValidConfig, bankCard);
-                    //更新数据库信息
-                    if ("0".equals(resultMap.get("code"))) {
-                        authFreelancer.setAuthStatus(1);
-                        //更新用户真实姓名
-                        authFreelancer.setRealName(bankCard.getRealName());
-                    } else {
-                        authFreelancer.setRemark(resultMap.get("msg"));
-                    }
-                    authFreeService.updateAuthUserInfo(authFreelancer);
-
-                } catch (Exception e) {
-                    throw new BizException(e.getMessage());
+                Map<String, String> resultMap = certUtil.userCardCert(cardValidConfig, bankCard);
+                //更新数据库信息
+                if ("0".equals(resultMap.get("code"))) {
+                    authFreelancer.setAuthStatus(1);
+                    //更新用户真实姓名
+                    authFreelancer.setRealName(bankCard.getRealName());
+                } else {
+                    authFreelancer.setRemark(resultMap.get("msg"));
                 }
+                authFreeService.updateAuthUserInfo(authFreelancer);
+
             }
             return new FebsResponse().success().data(result).message("申请实名认证成功,请等待审核").toJson();
         } else {
@@ -83,13 +78,12 @@ public class AuthFreeController {
      *
      * @param httpServletRequest
      * @return
-     * @throws BizException
      */
 
     @RequestMapping(value = "/updateAuthFreelancer", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String updateAuthUserInfo(@RequestBody AuthFreelancer authFreelancer, HttpServletRequest httpServletRequest) throws BizException {
+    public String updateAuthUserInfo(@RequestBody AuthFreelancer authFreelancer, HttpServletRequest httpServletRequest) {
         long userId = (long) httpServletRequest.getAttribute("userId");
         //long userId = 9;
         authFreelancer.setUserId(userId);
@@ -102,19 +96,15 @@ public class AuthFreeController {
                 bankCard.setCardNo(authFreelancer.getCardNo());
                 bankCard.setCertNo(authFreelancer.getIdNo());
                 bankCard.setLinkNo(authFreelancer.getMobile());
-                try {
-                    Map<String, String> resultMap = certUtil.userCardCert(cardValidConfig, bankCard);
-                    //更新数据库信息
-                    if ("0".equals(resultMap.get("code"))) {
-                        authFreelancer.setAuthStatus(1);
-                    } else {
-                        authFreelancer.setRemark(resultMap.get("msg"));
-                    }
-                    authFreeService.updateAuthUserInfo(authFreelancer);
-
-                } catch (Exception e) {
-                    throw new BizException(e.getMessage());
+                Map<String, String> resultMap = certUtil.userCardCert(cardValidConfig, bankCard);
+                //更新数据库信息
+                if ("0".equals(resultMap.get("code"))) {
+                    authFreelancer.setAuthStatus(1);
+                } else {
+                    authFreelancer.setRemark(resultMap.get("msg"));
                 }
+                authFreeService.updateAuthUserInfo(authFreelancer);
+
             }
             return new FebsResponse().success().data("").message("修改实名认证成功,请等待审核").toJson();
         } else {
@@ -127,7 +117,6 @@ public class AuthFreeController {
      *
      * @param httpServletRequest
      * @return
-     * @throws BizException
      */
     @Autowired
     QiniuConfig qiniuConfig;
@@ -135,7 +124,7 @@ public class AuthFreeController {
     @RequestMapping(value = "/getAuthFreelancer", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String getAuthFreelancer(@RequestBody AuthFreelancer authFreelancer, HttpServletRequest httpServletRequest) throws BizException {
+    public String getAuthFreelancer(@RequestBody AuthFreelancer authFreelancer, HttpServletRequest httpServletRequest) {
         long userId = (long) httpServletRequest.getAttribute("userId");
         //long userId = 9;
         authFreelancer.setUserId(userId);
@@ -148,7 +137,7 @@ public class AuthFreeController {
                 authFreelancer.setCardImage1(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, authFreelancer.getCardImage1()));
                 authFreelancer.setCardImage2(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, authFreelancer.getCardImage2()));
             } catch (UnsupportedEncodingException e) {
-                new BizException("服务器网络故障");
+                new Exception("服务器网络故障");
             }
             return new FebsResponse().success().data(authFreelancer).message("查询成功").toJson();
         } else {
