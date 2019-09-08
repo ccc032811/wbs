@@ -28,7 +28,7 @@ public interface IProjectEnrService extends IService<ProjectEnrollment> {
     int updateProjectEnrollment(ProjectEnrollment projectEnrollment);
 
     /**
-     * 根据项目ID查询报名信息
+     * 根据项目ID查询报名信息（企业用户）
      *
      * @return
      */

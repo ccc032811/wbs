@@ -14,9 +14,10 @@ public class FinalExceptionHandler implements ErrorController {
     public String getErrorPath() {
         return "/error";
     }
+
     @RequestMapping(value = "/error")
     public String error(HttpServletResponse resp, HttpServletRequest req) {
         // 错误处理逻辑
-        return new FebsResponse().error().message("请求发生未知错误").data(null).toJson();
+        return new FebsResponse().error().message("请求地址不存在或者其他未知异常").data(null).toJson();
     }
 }

@@ -35,10 +35,18 @@ public class ProjectController {
     @Autowired
     IProjectEnrService projectEnrService;
 
+    /**
+     * 企业发布项目
+     *
+     * @param project
+     * @param httpServletRequest
+     * @return
+     */
+
     @RequestMapping(value = "/publishProject", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String publishProject(@RequestBody Project project, HttpServletRequest httpServletRequest)  {
+    public String publishProject(@RequestBody Project project, HttpServletRequest httpServletRequest) {
         long userId = (long) httpServletRequest.getAttribute("userId");
         project.setUserId(userId);
         project.setCreateUser(userId);
@@ -54,24 +62,30 @@ public class ProjectController {
     }
 
     /**
-     * 查询企业用户发布的项目
+     * 企业首页,根据状态展示
      *
      * @param httpServletRequest
      * @return
      * @
      */
 
-    @RequestMapping(value = "/getProjectsByUser", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/corpHome", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    @AuthToken
-    public String getProjectsByUser(@RequestBody Project project, HttpServletRequest httpServletRequest)  {
-        long userId = (long) httpServletRequest.getAttribute("userId");
-        //long userId = 9;
-        List<Project> lst = projectService.getProjectsByUser(userId);
-        if (null == lst || lst.size() == 0) {
-            return new FebsResponse().fail().data(lst).message("未查询到信息").toJson();
+    // @AuthToken
+    public String corpHome(@RequestBody ProjectPage projectPage, HttpServletRequest httpServletRequest) {
+        // long userId = (long) httpServletRequest.getAttribute("userId");
+        long userId = 9;
+        Project project = projectPage.getProject();
+        project.setUserId(userId);
+        QueryRequest queryRequest = projectPage.getQueryRequest();
+        if (null == project || null == queryRequest) {
+            return new FebsResponse().fail().data(null).message("参数不合法").toJson();
+        }
+        Map<String, Object> dataTable = getDataTable(this.projectService.corpHome(project, queryRequest));
+        if (0 == (long)dataTable.get("total")) {
+            return new FebsResponse().fail().data(null).message("未查询到相关数据").toJson();
         } else {
-            return new FebsResponse().success().data(lst).message("查询完成").toJson();
+            return new FebsResponse().success().data(dataTable).message("数据查询成功").toJson();
         }
     }
 
@@ -85,7 +99,7 @@ public class ProjectController {
     @RequestMapping(value = "/personalHome", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String personalHome(@RequestBody ProjectPage projectPage, HttpServletRequest httpServletRequest)  {
+    public String personalHome(@RequestBody ProjectPage projectPage, HttpServletRequest httpServletRequest) {
         Project project = projectPage.getProject();
         QueryRequest queryRequest = projectPage.getQueryRequest();
         if (null == project || null == queryRequest) {
@@ -93,7 +107,7 @@ public class ProjectController {
         }
         // long userId = (long) httpServletRequest.getAttribute("userId");
         Map<String, Object> dataTable = getDataTable(this.projectService.personalHome(project, queryRequest));
-        if ("0".equals(dataTable.get("total"))) {
+        if (0 == (long)dataTable.get("total")) {
             return new FebsResponse().fail().data(null).message("未查询到相关数据").toJson();
         } else {
             return new FebsResponse().success().data(dataTable).message("数据查询成功").toJson();
@@ -110,20 +124,49 @@ public class ProjectController {
     @RequestMapping(value = "/enrollmentProject", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     //@AuthToken
-    public String enrollmentProject(@Validated ProjectEnrollment projectEnrollment, HttpServletRequest httpServletRequest) {
+    public String enrollmentProject(@RequestBody ProjectEnrollment projectEnrollment, HttpServletRequest httpServletRequest) {
         //long userId = (long) httpServletRequest.getAttribute("userId");
         //TODO
         long userId = 9;
         //设置报名用户
         projectEnrollment.setUserId(userId);
-        if(projectEnrService.saveProjectEnrollment(projectEnrollment)>0)
-        {
-            return new FebsResponse().success().data("").message("报名成功").toJson();
-        }else{
+        if (projectEnrService.saveProjectEnrollment(projectEnrollment) > 0) {
+            return new FebsResponse().success().data("").message("报名成功,等待企业审核").toJson();
+        } else {
             return new FebsResponse().fail().data("").message("报名失败").toJson();
         }
     }
 
+    /**
+     * 查询自由职业者报名项目信息
+     * 根据用户和项目状态条件筛选，已报名、待完成、待结算、结算完成
+     *
+     * @return
+     * @
+     */
+    @RequestMapping(value = "/queryEnroProjectWithFreelencer", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    //@AuthToken
+    public String queryEnroProjectWithFreelencer(@RequestBody ProjectEnrollment projectEnrollment) {
+        //long userId = (long) httpServletRequest.getAttribute("userId");
+        //TODO
+        long userId = 9;
+        //设置报名用户
+        projectEnrollment.setUserId(userId);
+        if (projectEnrService.saveProjectEnrollment(projectEnrollment) > 0) {
+            return new FebsResponse().success().data("").message("报名成功").toJson();
+        } else {
+            return new FebsResponse().fail().data("").message("报名失败").toJson();
+        }
+    }
+
+
+    /**
+     * 分页数据封装
+     *
+     * @param pageInfo
+     * @return
+     */
     protected Map<String, Object> getDataTable(IPage<?> pageInfo) {
         Map<String, Object> data = new HashMap<>();
         data.put("rows", pageInfo.getRecords());

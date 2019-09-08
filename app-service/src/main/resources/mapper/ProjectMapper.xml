@@ -28,7 +28,7 @@
         ,current_state currentState
         ,remark
         FROM t_project u
-        WHERE 1 = 1
+        WHERE 1=1
         <if test="project.serviceType != null and project.serviceType != ''">
             AND u.service_type = #{project.serviceType}
         </if>
@@ -44,8 +44,19 @@
         <if test="project.place != null and project.place != ''">
             AND u.place = #{project.place}
         </if>
+        <if test="project.userId != null and project.userId != ''">
+            AND u.user_id = #{project.userId}
+        </if>
+        <if test="project.currentState != null and project.currentState != ''">
+            AND u.current_state = #{project.currentState}
+        </if>
     </sql>
     <select id="personalHome" parameterType="project" resultType="project">
         <include refid="queryProject"/>
     </select>
+
+    <select id="corpHome" parameterType="project" resultType="project">
+        <include refid="queryProject"/>
+    </select>
+
 </mapper>

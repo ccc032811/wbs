@@ -25,9 +25,10 @@ public class AuthUtils {
         if (array.length != 3 || !array[2].equals(SALT) || StringUtils.isEmpty(array[0])) {
             return 0;
         }
+        /*不在判断超时时间
         if (Long.valueOf(array[1]) < System.currentTimeMillis()) {
             return 0;
-        }
+        }*/
         return Long.valueOf(array[0]);
     }
 

@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.common.entity.QueryRequest;
 
-import java.util.List;
-
 /**
  * @author pei.wang
  */
@@ -34,17 +32,18 @@ public interface IProjectService extends IService<Project> {
     Project queryProject(Project project);
 
     /**
-     * 根据条件查询所有企业发布项目
+     * 企业首页，根据项目状态和企业用户，查询企业相关项目信息
      *
      * @return
      */
-    List<Project> getProjectsByUser(long userId);
+    IPage<Project> corpHome(Project project, QueryRequest request);
 
     /**
-     * 根据条件查询所有企业认证信息
+     * 个人首页，分页展示
      *
      * @return
      */
     IPage<Project> personalHome(Project project,QueryRequest request);
 
+    int updateProjectSignNum(long projectId);
 }

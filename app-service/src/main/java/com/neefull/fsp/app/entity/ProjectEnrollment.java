@@ -1,9 +1,6 @@
 package com.neefull.fsp.app.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -19,7 +16,7 @@ public class ProjectEnrollment {
     private long projectId;
     @TableField("user_id")
     private long userId;
-    @TableField("create_time")
+    @TableField(value="create_time",fill = FieldFill.INSERT)
     private java.sql.Timestamp createTime;
     @TableField("pass_time")
     private java.sql.Timestamp passTime;
@@ -27,7 +24,7 @@ public class ProjectEnrollment {
     private java.sql.Timestamp passUser;
     @TableField("current_state")
     private int currentState;
-    @TableField("modify_time")
+    @TableField(value = "modify_time",fill = FieldFill.UPDATE)
     private java.sql.Timestamp modifyTime;
     @TableField("modify_user")
     private long modifyUser;

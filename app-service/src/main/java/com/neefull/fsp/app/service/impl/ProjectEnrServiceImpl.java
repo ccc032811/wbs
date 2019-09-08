@@ -4,11 +4,12 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.app.entity.ProjectEnrollment;
 import com.neefull.fsp.app.mapper.ProjectEnrMapper;
 import com.neefull.fsp.app.service.IProjectEnrService;
+import com.neefull.fsp.app.service.IProjectService;
 import com.neefull.fsp.common.entity.QueryRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +25,20 @@ import java.util.List;
 public class ProjectEnrServiceImpl extends ServiceImpl<ProjectEnrMapper, ProjectEnrollment> implements IProjectEnrService {
 
 
+    @Autowired
+    IProjectService projectService;
+
     @Override
     @Transactional
     public int saveProjectEnrollment(ProjectEnrollment projectEnrollment) {
-        return this.baseMapper.insert(projectEnrollment);
+        if (this.baseMapper.insert(projectEnrollment) > 0) {
+            //报名人数+1
+            //查看当前报名人数
+            if (projectService.updateProjectSignNum(projectEnrollment.getProjectId()) > 0) {
+                return 1;
+            }
+        }
+        return 0;
     }
 
     @Override

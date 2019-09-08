@@ -40,7 +40,7 @@ public class Project implements Serializable {
     @TableField("req_age")
     private String reqAge;
     @TableField("req_num")
-    private String reqNum;
+    private int reqNum;
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private java.sql.Timestamp createTime;
     @TableField("create_user")
@@ -55,6 +55,8 @@ public class Project implements Serializable {
     private String remark;
     @TableField("valid_date")
     private String validDate;
+    @TableField("sign_num")
+    private int signNum;
 
     public long getId() {
         return id;
@@ -191,11 +193,11 @@ public class Project implements Serializable {
     }
 
 
-    public String getReqNum() {
+    public int getReqNum() {
         return reqNum;
     }
 
-    public void setReqNum(String reqNum) {
+    public void setReqNum(int reqNum) {
         this.reqNum = reqNum;
     }
 
@@ -267,5 +269,13 @@ public class Project implements Serializable {
 
     public void setValidDate(String validDate) {
         this.validDate = validDate;
+    }
+
+    public int getSignNum() {
+        return signNum;
+    }
+
+    public void setSignNum(int signNum) {
+        this.signNum = signNum;
     }
 }

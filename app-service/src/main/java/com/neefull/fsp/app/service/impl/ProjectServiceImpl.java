@@ -11,11 +11,10 @@ import com.neefull.fsp.app.mapper.ProjectMapper;
 import com.neefull.fsp.app.service.IProjectService;
 import com.neefull.fsp.common.entity.QueryRequest;
 import com.neefull.fsp.common.util.SortUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @author pei.wang
@@ -24,6 +23,9 @@ import java.util.List;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> implements IProjectService {
+
+    @Autowired
+    ProjectMapper projectMapper;
 
     @Override
     @Transactional
@@ -47,14 +49,10 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     }
 
     @Override
-    public List<Project> getProjectsByUser(long userId) {
-        LambdaQueryWrapper<Project> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(Project::getUserId, userId);
-        lambdaQueryWrapper.orderByDesc(Project::getCreateTime);
-        /*queryWrapper.select("id","user_id","service_type","service_content","settle_time"
-                ,"salary_type","amount","title","des","content","place","req_sex","req_identity","req_edu",
-                )*/
-        return this.baseMapper.selectList(lambdaQueryWrapper);
+    public IPage<Project> corpHome(Project project, QueryRequest request) {
+        Page<Project> page = new Page<Project>(request.getPageNum(), request.getPageSize());
+        SortUtil.handlePageSort(request, page, "createTime", "desc", false);
+        return this.baseMapper.corpHome(page, project);
     }
 
     @Override
@@ -62,5 +60,21 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         Page<Project> page = new Page<Project>(request.getPageNum(), request.getPageSize());
         SortUtil.handlePageSort(request, page, "createTime", "desc", false);
         return this.baseMapper.personalHome(page, project);
+    }
+
+    @Override
+    @Transactional
+    public int updateProjectSignNum(long projectId) {
+        //查询当前报名人数
+        Project project = new Project();
+        project.setId(projectId);
+        project = queryProject(project);
+        if (project.getReqNum() == 0 || project.getReqNum() > project.getSignNum()) {
+            //可以报名
+            project.setSignNum(project.getSignNum() + 1);
+            return this.projectMapper.updateProjectSignNum(project);
+
+        }
+        return 0;
     }
 }
