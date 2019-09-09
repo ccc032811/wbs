@@ -17,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 /**
  * @author pei.wang
@@ -215,6 +214,27 @@ public class UserController {
         } else {
             return new FebsResponse().fail().data(user).message("用户已设置该信息").toJson();
         }
+    }
+
+    /**
+     * 查询用户信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/queryUserInfo", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String queryUserInfo(@RequestBody User user, HttpServletRequest httpRequest) {
+        long userId = (long) httpRequest.getAttribute("userId");
+        // long userId = 9;
+        user.setUserId(userId);
+        user = userService.findUserById(user);
+        if (null != user) {
+            return new FebsResponse().success().data(user).message("查询用户信息成功").toJson();
+        } else {
+            return new FebsResponse().fail().data(null).message("未查询到该用户信息").toJson();
+        }
+
     }
 
     /**
