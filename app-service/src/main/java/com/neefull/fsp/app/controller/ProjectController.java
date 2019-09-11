@@ -71,10 +71,10 @@ public class ProjectController {
 
     @RequestMapping(value = "/corpHome", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    // @AuthToken
+    @AuthToken
     public String corpHome(@RequestBody ProjectPage projectPage, HttpServletRequest httpServletRequest) {
-        // long userId = (long) httpServletRequest.getAttribute("userId");
-        long userId = 9;
+        long userId = (long) httpServletRequest.getAttribute("userId");
+        //long userId = 9;
         Project project = projectPage.getProject();
         project.setUserId(userId);
         QueryRequest queryRequest = projectPage.getQueryRequest();
@@ -123,11 +123,11 @@ public class ProjectController {
 
     @RequestMapping(value = "/enrollmentProject", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    //@AuthToken
+   // @AuthToken
     public String enrollmentProject(@RequestBody ProjectEnrollment projectEnrollment, HttpServletRequest httpServletRequest) {
-        //long userId = (long) httpServletRequest.getAttribute("userId");
+        long userId = (long) httpServletRequest.getAttribute("userId");
         //TODO
-        long userId = 9;
+       // long userId = 9;
         //设置报名用户
         projectEnrollment.setUserId(userId);
         if (projectEnrService.saveProjectEnrollment(projectEnrollment) > 0) {

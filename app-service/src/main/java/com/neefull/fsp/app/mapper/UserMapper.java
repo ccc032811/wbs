@@ -64,4 +64,20 @@ public interface UserMapper extends BaseMapper<User> {
     @Update("update t_user set password=#{user.password} where user_id=#{user.userId}")
     boolean resetPassword(@Param("user") User user);
 
+    /**
+     * 设置认证状态
+     *
+     * @param
+     */
+    @Update("update t_user set auth_status=#{user.authStatus},card_status=#{user.cardStatus} where user_id=#{user.userId}")
+    int updateUserAuth(@Param("user") User user);
+
+    /**
+     * 更新用户名字和状态
+     *
+     * @param
+     */
+    @Update("update t_user set username=#{user.username},auth_status=#{user.authStatus},card_status=#{user.cardStatus} where user_id=#{user.userId}")
+    int updateUserAuthWithName(@Param("user") User user);
+
 }

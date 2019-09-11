@@ -32,7 +32,7 @@ public class AuthCorp {
     @TableField("open_lience")
     private String openLience;
     @TableField("auth_status")
-    private String authStatus;
+    private int authStatus;
     @TableField("auth_type")
     private String authType;
     @TableField("authpass_time")
@@ -134,11 +134,11 @@ public class AuthCorp {
         this.openLience = openLience;
     }
 
-    public String getAuthStatus() {
+    public int getAuthStatus() {
         return authStatus;
     }
 
-    public void setAuthStatus(String authStatus) {
+    public void setAuthStatus(int authStatus) {
         this.authStatus = authStatus;
     }
 

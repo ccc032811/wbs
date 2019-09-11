@@ -56,10 +56,11 @@ public class AuthFreeController {
                 Map<String, String> resultMap = certUtil.userCardCert(cardValidConfig, bankCard);
                 //更新数据库信息
                 if ("0".equals(resultMap.get("code"))) {
-                    authFreelancer.setAuthStatus(1);
+                    authFreelancer.setAuthStatus(2);
                     //更新用户真实姓名
                     authFreelancer.setRealName(bankCard.getRealName());
                 } else {
+                    authFreelancer.setAuthStatus(-1);
                     authFreelancer.setRemark(resultMap.get("msg"));
                 }
                 authFreeService.updateAuthUserInfo(authFreelancer);

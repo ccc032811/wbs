@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.app.entity.AuthCorp;
+import com.neefull.fsp.app.entity.User;
 import com.neefull.fsp.app.mapper.AuthCorpMapper;
+import com.neefull.fsp.app.mapper.UserMapper;
 import com.neefull.fsp.app.service.IAuthCorpService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +25,28 @@ import java.util.List;
 public class AuthCorpServiceImpl extends ServiceImpl<AuthCorpMapper, AuthCorp> implements IAuthCorpService {
 
 
+    @Autowired
+    UserMapper userMapper;
+
     @Override
     @Transactional
     public int saveAuthCorp(AuthCorp authCorp) {
-        return this.baseMapper.insert(authCorp);
+        //如果用户认证信息已经存在，则更新，如果不存在，则插入
+        int result = -1;
+        authCorp.setAuthStatus(1);
+        if (null == queryCorpByUserId(authCorp)) {
+            result = this.baseMapper.insert(authCorp);
+        } else {
+            result = updateAuthCorp(authCorp);
+        }
+        if (-1 != result) {
+            User user = new User();
+            user.setAuthStatus(1);
+            user.setCardStatus(1);
+            user.setUserId(authCorp.getUserId());
+            result = userMapper.updateUserAuth(user);
+        }
+        return result;
     }
 
     @Override
@@ -52,7 +73,7 @@ public class AuthCorpServiceImpl extends ServiceImpl<AuthCorpMapper, AuthCorp> i
         if (null != authCorp.getCorpName()) {
             lambdaQueryWrapper.like(AuthCorp::getCorpName, authCorp.getCorpName());
         }
-        if (null != authCorp.getAuthStatus()) {
+        if (0 != authCorp.getAuthStatus()) {
             lambdaQueryWrapper.like(AuthCorp::getAuthStatus, authCorp.getAuthStatus());
         }
         lambdaQueryWrapper.orderByDesc(AuthCorp::getCreateTime, AuthCorp::getAuthStatus);
