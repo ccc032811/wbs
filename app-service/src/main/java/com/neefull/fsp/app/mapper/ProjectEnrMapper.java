@@ -6,7 +6,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.app.entity.ProjectEnrollment;
+import com.neefull.fsp.app.entity.QueryProjectEncroll;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author pei.wang
@@ -14,13 +17,14 @@ import org.apache.ibatis.annotations.Param;
 public interface ProjectEnrMapper extends BaseMapper<ProjectEnrollment> {
 
     /**
-     * 查找用户详细信息
-     *
-     * @param page 分页对象
+     * @param page    分页对象
      * @param project 项目对象，用于传递查询条件
      * @return Ipage
      */
     IPage<Project> personalHome(Page page, @Param("project") Project project);
 
+    List<QueryProjectEncroll> queryFreelencerEnrollment(@Param("queryProjectEncroll") QueryProjectEncroll queryProjectEncroll);
+
+    List<QueryProjectEncroll> querySignUser(@Param("queryProjectEncroll") QueryProjectEncroll queryProjectEncroll);
 
 }

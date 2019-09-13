@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neefull.fsp.app.mapper.ProjectEnrMapper">
+    <sql id="QueryProjectEncroll">
+        SELECT
+        a.project_id,
+        a.user_id,
+        a.current_state signState,
+        a.create_time AS sign_time,
+        a.pass_time,
+        c.real_name,
+        c.MOBILE,
+        c.id_no,
+        b.user_id project_owner,
+        b.service_type,
+        b.service_content,
+        b.settle_time,
+        b.salary_type,
+        b.amount,
+        b.title,
+        b.des,
+        b.content,
+        b.requirement,
+        b.place,
+        b.req_sex,
+        b.req_identity,
+        b.req_edu,
+        b.req_age,
+        b.valid_date,
+        b.req_num,
+        b.sign_num
+        FROM
+        t_project_enrollment a
+        LEFT JOIN t_project b
+        ON a.project_id = b.id
+        LEFT JOIN t_auth_freelancer c
+        ON a.user_id = c.user_id
+        where 1=1
+        <if test="queryProjectEncroll.signState != null and queryProjectEncroll.signState !=''">
+            AND a.current_state = #{queryProjectEncroll.signState}
+        </if>
+        <if test="queryProjectEncroll.userId != null and queryProjectEncroll.userId != ''">
+            AND a.user_id = #{queryProjectEncroll.userId}
+        </if>
+        <if test="queryProjectEncroll.projectId != null and queryProjectEncroll.projectId != ''">
+            AND a.project_id = #{queryProjectEncroll.projectId}
+        </if>
+        <if test="queryProjectEncroll.projectOwner != null and queryProjectEncroll.projectOwner != ''">
+            AND b.user_id = #{queryProjectEncroll.projectOwner}
+        </if>
+    </sql>
+    <select id="queryFreelencerEnrollment" parameterType="QueryProjectEncroll" resultType="QueryProjectEncroll">
+        <include refid="QueryProjectEncroll"/>
+    </select>
+    <select id="querySignUser" parameterType="QueryProjectEncroll" resultType="QueryProjectEncroll">
+        <include refid="QueryProjectEncroll"/>
+    </select>
+
+</mapper>

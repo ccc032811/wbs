@@ -5,9 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.app.entity.ProjectEnrollment;
+import com.neefull.fsp.app.entity.User;
 import com.neefull.fsp.app.mapper.ProjectEnrMapper;
 import com.neefull.fsp.app.service.IProjectEnrService;
 import com.neefull.fsp.app.service.IProjectService;
+import com.neefull.fsp.app.service.IUserService;
 import com.neefull.fsp.common.entity.QueryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,9 +30,20 @@ public class ProjectEnrServiceImpl extends ServiceImpl<ProjectEnrMapper, Project
     @Autowired
     IProjectService projectService;
 
+    @Autowired
+    IUserService userService;
+
     @Override
     @Transactional
     public int saveProjectEnrollment(ProjectEnrollment projectEnrollment) {
+        //判断当前用户是否通过实名认证
+        User currentUser = new User();
+        currentUser.setUserId(projectEnrollment.getUserId());
+        currentUser = userService.findUserById(currentUser);
+        if (null == currentUser || currentUser.getAuthStatus() < 2) {
+            //用户实名未通过，无法报名
+            return -1;
+        }
         if (this.baseMapper.insert(projectEnrollment) > 0) {
             //报名人数+1
             //查看当前报名人数

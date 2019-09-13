@@ -115,29 +115,6 @@ public class ProjectController {
     }
 
     /**
-     * 自由职业者报名项目
-     *
-     * @return
-     * @
-     */
-
-    @RequestMapping(value = "/enrollmentProject", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-   // @AuthToken
-    public String enrollmentProject(@RequestBody ProjectEnrollment projectEnrollment, HttpServletRequest httpServletRequest) {
-        long userId = (long) httpServletRequest.getAttribute("userId");
-        //TODO
-       // long userId = 9;
-        //设置报名用户
-        projectEnrollment.setUserId(userId);
-        if (projectEnrService.saveProjectEnrollment(projectEnrollment) > 0) {
-            return new FebsResponse().success().data("").message("报名成功,等待企业审核").toJson();
-        } else {
-            return new FebsResponse().fail().data("").message("报名失败").toJson();
-        }
-    }
-
-    /**
      * 查询自由职业者报名项目信息
      * 根据用户和项目状态条件筛选，已报名、待完成、待结算、结算完成
      *
