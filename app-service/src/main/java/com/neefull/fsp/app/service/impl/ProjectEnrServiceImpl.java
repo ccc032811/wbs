@@ -4,9 +4,11 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.app.entity.ProjectEnrollment;
 import com.neefull.fsp.app.entity.User;
 import com.neefull.fsp.app.mapper.ProjectEnrMapper;
+import com.neefull.fsp.app.mapper.ProjectMapper;
 import com.neefull.fsp.app.service.IProjectEnrService;
 import com.neefull.fsp.app.service.IProjectService;
 import com.neefull.fsp.app.service.IUserService;
@@ -32,6 +34,8 @@ public class ProjectEnrServiceImpl extends ServiceImpl<ProjectEnrMapper, Project
 
     @Autowired
     IUserService userService;
+    @Autowired
+    ProjectEnrMapper projectEnrMapper;
 
     @Override
     @Transactional
@@ -57,7 +61,7 @@ public class ProjectEnrServiceImpl extends ServiceImpl<ProjectEnrMapper, Project
     @Override
     @Transactional
     public int updateProjectEnrollment(ProjectEnrollment projectEnrollment) {
-        return 0;
+        return this.projectEnrMapper.confirmSignUser(projectEnrollment);
     }
 
     @Override

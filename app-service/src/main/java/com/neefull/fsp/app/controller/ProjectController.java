@@ -83,7 +83,7 @@ public class ProjectController {
         }
         Map<String, Object> dataTable = getDataTable(this.projectService.corpHome(project, queryRequest));
         if (0 == (long)dataTable.get("total")) {
-            return new FebsResponse().fail().data(null).message("未查询到相关数据").toJson();
+            return new FebsResponse().success().data(dataTable).message("未查询到相关数据").toJson();
         } else {
             return new FebsResponse().success().data(dataTable).message("数据查询成功").toJson();
         }
@@ -108,35 +108,11 @@ public class ProjectController {
         // long userId = (long) httpServletRequest.getAttribute("userId");
         Map<String, Object> dataTable = getDataTable(this.projectService.personalHome(project, queryRequest));
         if (0 == (long)dataTable.get("total")) {
-            return new FebsResponse().fail().data(null).message("未查询到相关数据").toJson();
+            return new FebsResponse().success().data(dataTable).message("未查询到相关数据").toJson();
         } else {
             return new FebsResponse().success().data(dataTable).message("数据查询成功").toJson();
         }
     }
-
-    /**
-     * 查询自由职业者报名项目信息
-     * 根据用户和项目状态条件筛选，已报名、待完成、待结算、结算完成
-     *
-     * @return
-     * @
-     */
-    @RequestMapping(value = "/queryEnroProjectWithFreelencer", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
-    @ResponseBody
-    //@AuthToken
-    public String queryEnroProjectWithFreelencer(@RequestBody ProjectEnrollment projectEnrollment) {
-        //long userId = (long) httpServletRequest.getAttribute("userId");
-        //TODO
-        long userId = 9;
-        //设置报名用户
-        projectEnrollment.setUserId(userId);
-        if (projectEnrService.saveProjectEnrollment(projectEnrollment) > 0) {
-            return new FebsResponse().success().data("").message("报名成功").toJson();
-        } else {
-            return new FebsResponse().fail().data("").message("报名失败").toJson();
-        }
-    }
-
 
     /**
      * 分页数据封装

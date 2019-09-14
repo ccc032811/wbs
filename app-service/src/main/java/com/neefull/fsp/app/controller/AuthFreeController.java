@@ -142,7 +142,7 @@ public class AuthFreeController {
             }
             return new FebsResponse().success().data(authFreelancer).message("查询成功").toJson();
         } else {
-            return new FebsResponse().fail().data("").message("未查询到相关信息").toJson();
+            return new FebsResponse().fail().data(authFreelancer).message("未查询到相关认证信息").toJson();
         }
     }
 }

@@ -31,7 +31,7 @@ public class ServiceController {
         if (null != jobs && jobs.size()>0) {
             return new FebsResponse().success().data(jobs).message("").toJson();
         } else {
-            return new FebsResponse().fail().message("未查询到信息").toJson();
+            return new FebsResponse().success().data(jobs).message("未查询到信息").toJson();
         }
 
     }

@@ -16,7 +16,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
     /**
      * 用户首页项目查询
      *
-     * @param page 分页对象
+     * @param page    分页对象
      * @param project 项目对象，用于传递查询条件
      * @return Ipage
      */
@@ -25,12 +25,21 @@ public interface ProjectMapper extends BaseMapper<Project> {
     /**
      * 企业首页项目查询
      *
-     * @param page 分页对象
+     * @param page    分页对象
      * @param project 项目对象，用于传递查询条件
      * @return Ipage
      */
     IPage<Project> corpHome(Page<Project> page, @Param("project") Project project);
 
     @Update("update t_project set sign_num=#{project.signNum} where id=#{project.id}")
-    int  updateProjectSignNum(@Param("project") Project project);
+    int updateProjectSignNum(@Param("project") Project project);
+
+    /**
+     * 更新项目当前状态
+     *
+     * @param project
+     * @return
+     */
+    @Update("update t_project set current_state=#{project.currentState} where id=#{project.id}")
+    int updateProjectState(@Param("project") Project project);
 }
