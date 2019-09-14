@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.app.entity.ProjectEnrollment;
+import com.neefull.fsp.app.entity.QueryProjectEncroll;
 import com.neefull.fsp.common.entity.QueryRequest;
 
 import java.util.List;
@@ -32,13 +33,19 @@ public interface IProjectEnrService extends IService<ProjectEnrollment> {
      *
      * @return
      */
-    List<ProjectEnrollment> getEnrollmentsByProjectId(long projectId);
+    IPage<ProjectEnrollment> getEnrollmentsByProjectId(long projectId);
 
     /**
      * 根据用户和项目ID,查询相关报名信息。可分页查询
      *
      * @return
      */
-    IPage<ProjectEnrollment> getProjectEnroByUser(ProjectEnrollment projectEnrollment, QueryRequest request);
+    IPage<QueryProjectEncroll> queryFreelencerEnrollment(QueryProjectEncroll projectEnrollment, QueryRequest request);
 
+    /**
+     * 用户取消项目报名
+     * @param projectEnrollment
+     * @return
+     */
+    int cancelSignup(ProjectEnrollment projectEnrollment);
 }

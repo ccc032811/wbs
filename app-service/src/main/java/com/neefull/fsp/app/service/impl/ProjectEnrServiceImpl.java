@@ -3,16 +3,18 @@ package com.neefull.fsp.app.service.impl;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.app.entity.ProjectEnrollment;
+import com.neefull.fsp.app.entity.QueryProjectEncroll;
 import com.neefull.fsp.app.entity.User;
 import com.neefull.fsp.app.mapper.ProjectEnrMapper;
-import com.neefull.fsp.app.mapper.ProjectMapper;
 import com.neefull.fsp.app.service.IProjectEnrService;
 import com.neefull.fsp.app.service.IProjectService;
 import com.neefull.fsp.app.service.IUserService;
 import com.neefull.fsp.common.entity.QueryRequest;
+import com.neefull.fsp.common.util.SortUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -48,10 +50,10 @@ public class ProjectEnrServiceImpl extends ServiceImpl<ProjectEnrMapper, Project
             //用户实名未通过，无法报名
             return -1;
         }
-        if (this.baseMapper.insert(projectEnrollment) > 0) {
+        if (this.baseMapper.insert(projectEnrollment) != -1) {
             //报名人数+1
             //查看当前报名人数
-            if (projectService.updateProjectSignNum(projectEnrollment.getProjectId()) > 0) {
+            if (projectService.updateProjectSignNum(projectEnrollment.getProjectId(), 1) != -1) {
                 return 1;
             }
         }
@@ -65,15 +67,32 @@ public class ProjectEnrServiceImpl extends ServiceImpl<ProjectEnrMapper, Project
     }
 
     @Override
-    public List<ProjectEnrollment> getEnrollmentsByProjectId(long projectId) {
-        LambdaQueryWrapper<ProjectEnrollment> lambdaQueryWrapper = new LambdaQueryWrapper<ProjectEnrollment>();
-        lambdaQueryWrapper.eq(ProjectEnrollment::getProjectId, projectId);
-        lambdaQueryWrapper.orderByDesc(ProjectEnrollment::getCreateTime, ProjectEnrollment::getCurrentState);
-        return this.baseMapper.selectList(lambdaQueryWrapper);
+    public IPage<ProjectEnrollment> getEnrollmentsByProjectId(long projectId) {
+        return null;
     }
 
     @Override
-    public IPage<ProjectEnrollment> getProjectEnroByUser(ProjectEnrollment projectEnrollment, QueryRequest request) {
-        return null;
+    public IPage<QueryProjectEncroll> queryFreelencerEnrollment(QueryProjectEncroll projectEnrollment, QueryRequest request) {
+        Page<Project> page = new Page<Project>(request.getPageNum(), request.getPageSize());
+        SortUtil.handlePageSort(request, page, "sign_time", "desc", false);
+        //LambdaQueryWrapper<ProjectEnrollment> lambdaQueryWrapper = new LambdaQueryWrapper<ProjectEnrollment>();
+       /// lambdaQueryWrapper.eq(ProjectEnrollment::getProjectId, projectId);
+        //lambdaQueryWrapper.orderByDesc(ProjectEnrollment::getCreateTime, ProjectEnrollment::getCurrentState);
+        return this.baseMapper.queryFreelencerEnrollment(page,projectEnrollment);
+    }
+
+
+    @Override
+    @Transactional
+    public int cancelSignup(ProjectEnrollment projectEnrollment) {
+        //先删除报名用户信息
+        projectEnrollment.setCurrentState(-2);
+        this.projectEnrMapper.cancelSignup(projectEnrollment);
+        //报名人数+1
+        //查看当前报名人数
+        if (projectService.updateProjectSignNum(projectEnrollment.getProjectId(), -1) != -1) {
+            return 1;
+        }
+        return 0;
     }
 }

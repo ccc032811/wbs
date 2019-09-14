@@ -55,5 +55,4 @@
     <select id="querySignUser" parameterType="QueryProjectEncroll" resultType="QueryProjectEncroll">
         <include refid="QueryProjectEncroll"/>
     </select>
-
 </mapper>

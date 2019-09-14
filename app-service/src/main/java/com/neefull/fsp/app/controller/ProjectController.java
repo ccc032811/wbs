@@ -4,7 +4,6 @@ package com.neefull.fsp.app.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.entity.Project;
-import com.neefull.fsp.app.entity.ProjectEnrollment;
 import com.neefull.fsp.app.entity.ProjectPage;
 import com.neefull.fsp.app.service.IProjectEnrService;
 import com.neefull.fsp.app.service.IProjectService;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -82,7 +80,7 @@ public class ProjectController {
             return new FebsResponse().fail().data(null).message("参数不合法").toJson();
         }
         Map<String, Object> dataTable = getDataTable(this.projectService.corpHome(project, queryRequest));
-        if (0 == (long)dataTable.get("total")) {
+        if (0 == (long) dataTable.get("total")) {
             return new FebsResponse().success().data(dataTable).message("未查询到相关数据").toJson();
         } else {
             return new FebsResponse().success().data(dataTable).message("数据查询成功").toJson();
@@ -100,14 +98,15 @@ public class ProjectController {
     @ResponseBody
     @AuthToken
     public String personalHome(@RequestBody ProjectPage projectPage, HttpServletRequest httpServletRequest) {
+        long userId = (long) httpServletRequest.getAttribute("userId");
         Project project = projectPage.getProject();
+        //project.setSignUser(9);
         QueryRequest queryRequest = projectPage.getQueryRequest();
         if (null == project || null == queryRequest) {
             return new FebsResponse().fail().data(null).message("参数不合法").toJson();
         }
-        // long userId = (long) httpServletRequest.getAttribute("userId");
         Map<String, Object> dataTable = getDataTable(this.projectService.personalHome(project, queryRequest));
-        if (0 == (long)dataTable.get("total")) {
+        if (0 == (long) dataTable.get("total")) {
             return new FebsResponse().success().data(dataTable).message("未查询到相关数据").toJson();
         } else {
             return new FebsResponse().success().data(dataTable).message("数据查询成功").toJson();

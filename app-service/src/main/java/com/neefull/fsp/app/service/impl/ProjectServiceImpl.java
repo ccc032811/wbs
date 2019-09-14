@@ -64,14 +64,14 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     @Override
     @Transactional
-    public int updateProjectSignNum(long projectId) {
+    public int updateProjectSignNum(long projectId,int num) {
         //查询当前报名人数
         Project project = new Project();
         project.setId(projectId);
         project = queryProject(project);
         if (project.getReqNum() == 0 || project.getReqNum() > project.getSignNum()) {
             //可以报名
-            project.setSignNum(project.getSignNum() + 1);
+            project.setSignNum(project.getSignNum() + num);
             return this.projectMapper.updateProjectSignNum(project);
 
         }

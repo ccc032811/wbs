@@ -4,7 +4,7 @@
     <sql id="queryProject">
         SELECT
         id
-        ,user_id userId
+        ,u.user_id userId
         ,service_type userType
         ,service_content serviceContent
         ,settle_time settleTime
@@ -21,13 +21,15 @@
         ,req_age reqAge
         ,req_num reqNum
         ,valid_date validDate
-        ,create_time createTime
+        ,u.create_time createTime
         ,create_user createUser
-        ,modify_time modifyTime
+        ,u.modify_time modifyTime
         ,modify_user modifyUser
-        ,current_state currentState
+        ,u.current_state currentState
         ,remark
-        FROM t_project u
+        ,(SELECT current_state FROM t_project_enrollment b WHERE b.project_id=u.id AND b.user_id=#{project.signUser}) signState
+        ,c.username createUserName
+        FROM t_project u left join t_user c on u.user_id=c.user_id
         WHERE 1=1
         <if test="project.serviceType != null and project.serviceType != ''">
             AND u.service_type = #{project.serviceType}
@@ -49,6 +51,9 @@
         </if>
         <if test="project.currentState != null and project.currentState != ''">
             AND u.current_state = #{project.currentState}
+        </if>
+        <if test="project.id != null and project.id != ''">
+            AND u.id = #{project.id}
         </if>
     </sql>
     <select id="personalHome" parameterType="project" resultType="project">

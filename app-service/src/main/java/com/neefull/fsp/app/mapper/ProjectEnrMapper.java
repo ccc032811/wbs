@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.app.entity.ProjectEnrollment;
 import com.neefull.fsp.app.entity.QueryProjectEncroll;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
@@ -24,15 +25,19 @@ public interface ProjectEnrMapper extends BaseMapper<ProjectEnrollment> {
      */
     IPage<Project> personalHome(Page page, @Param("project") Project project);
 
-    List<QueryProjectEncroll> queryFreelencerEnrollment(@Param("queryProjectEncroll") QueryProjectEncroll queryProjectEncroll);
+    IPage<QueryProjectEncroll> queryFreelencerEnrollment(Page page,@Param("queryProjectEncroll") QueryProjectEncroll queryProjectEncroll);
 
     List<QueryProjectEncroll> querySignUser(@Param("queryProjectEncroll") QueryProjectEncroll queryProjectEncroll);
 
     /**
      * 确认用户报名
+     *
      * @param projectEnrollment
      * @return
      */
     @Update("UPDATE t_project_enrollment t SET t.current_state=#{projectEnrollment.currentState} WHERE project_id=#{projectEnrollment.projectId} AND user_id=#{projectEnrollment.userId}")
     int confirmSignUser(@Param("projectEnrollment") ProjectEnrollment projectEnrollment);
+
+    @Delete("DELETE from  t_project_enrollment  WHERE project_id=#{projectEnrollment.projectId} AND user_id=#{projectEnrollment.userId}")
+    int cancelSignup(@Param("projectEnrollment") ProjectEnrollment projectEnrollment);
 }
