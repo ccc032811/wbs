@@ -11,7 +11,6 @@ import com.neefull.fsp.app.mapper.ProjectMapper;
 import com.neefull.fsp.app.service.IProjectService;
 import com.neefull.fsp.common.entity.QueryRequest;
 import com.neefull.fsp.common.util.SortUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> implements IProjectService {
-
-    @Autowired
-    ProjectMapper projectMapper;
-
     @Override
     @Transactional
     public int saveProject(Project project) {
@@ -64,7 +59,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     @Override
     @Transactional
-    public int updateProjectSignNum(long projectId,int num) {
+    public int updateProjectSignNum(long projectId, int num) {
         //查询当前报名人数
         Project project = new Project();
         project.setId(projectId);
@@ -72,9 +67,14 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         if (project.getReqNum() == 0 || project.getReqNum() > project.getSignNum()) {
             //可以报名
             project.setSignNum(project.getSignNum() + num);
-            return this.projectMapper.updateProjectSignNum(project);
+            return this.baseMapper.updateProjectSignNum(project);
 
         }
         return 0;
+    }
+
+    @Override
+    public Project queryProjectDetail(Project project) {
+        return this.baseMapper.queryProjectDetail(project);
     }
 }

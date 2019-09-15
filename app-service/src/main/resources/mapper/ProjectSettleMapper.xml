@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neefull.fsp.app.mapper.ProjectSettleMapper">
+    <sql id="settle_base_column">
+          t.id,
+          t.project_id,
+          t.user_id,
+          t.settle_amount,
+          t.state,
+          t.settle_time,
+          t.settled_time,
+          t.settle_user,
+          t.real_amount,
+          t.is_model,
+          t.reamark
+    </sql>
+    <select id="querySettleUsers" parameterType="projectSettlement" resultType="projectSettlement">
+        select b.USERNAME,b.MOBILE,b.SSEX,
+        <include refid="settle_base_column"/>
+        from t_project_settlement t left join t_user b
+        on t.user_id=b.USER_ID
+        where t.project_id=#{projectSettlement.projectId}
+    </select>
+
+</mapper>

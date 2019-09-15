@@ -5,7 +5,7 @@
         SELECT
         id
         ,u.user_id userId
-        ,service_type userType
+        ,service_type serviceType
         ,service_content serviceContent
         ,settle_time settleTime
         ,salary_type salaryType
@@ -20,6 +20,7 @@
         ,req_edu reqEdu
         ,req_age reqAge
         ,req_num reqNum
+        ,sign_num signNum
         ,valid_date validDate
         ,u.create_time createTime
         ,create_user createUser
@@ -27,7 +28,8 @@
         ,modify_user modifyUser
         ,u.current_state currentState
         ,remark
-        ,(SELECT current_state FROM t_project_enrollment b WHERE b.project_id=u.id AND b.user_id=#{project.signUser}) signState
+        ,(SELECT current_state FROM t_project_enrollment b WHERE b.project_id=u.id AND b.user_id=#{project.signUser})
+        signState
         ,c.username createUserName
         FROM t_project u left join t_user c on u.user_id=c.user_id
         WHERE 1=1
@@ -59,8 +61,10 @@
     <select id="personalHome" parameterType="project" resultType="project">
         <include refid="queryProject"/>
     </select>
-
     <select id="corpHome" parameterType="project" resultType="project">
+        <include refid="queryProject"/>
+    </select>
+    <select id="queryProjectDetail" parameterType="project" resultType="project">
         <include refid="queryProject"/>
     </select>
 

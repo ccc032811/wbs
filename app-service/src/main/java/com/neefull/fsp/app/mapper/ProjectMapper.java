@@ -42,4 +42,6 @@ public interface ProjectMapper extends BaseMapper<Project> {
      */
     @Update("update t_project set current_state=#{project.currentState} where id=#{project.id}")
     int updateProjectState(@Param("project") Project project);
+
+    Project queryProjectDetail(@Param("project") Project project);
 }

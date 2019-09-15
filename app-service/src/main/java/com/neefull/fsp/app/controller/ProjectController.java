@@ -100,7 +100,7 @@ public class ProjectController {
     public String personalHome(@RequestBody ProjectPage projectPage, HttpServletRequest httpServletRequest) {
         long userId = (long) httpServletRequest.getAttribute("userId");
         Project project = projectPage.getProject();
-        //project.setSignUser(9);
+        project.setSignUser(userId);
         QueryRequest queryRequest = projectPage.getQueryRequest();
         if (null == project || null == queryRequest) {
             return new FebsResponse().fail().data(null).message("参数不合法").toJson();
@@ -110,6 +110,32 @@ public class ProjectController {
             return new FebsResponse().success().data(dataTable).message("未查询到相关数据").toJson();
         } else {
             return new FebsResponse().success().data(dataTable).message("数据查询成功").toJson();
+        }
+    }
+
+    /**
+     * 查询项目详细信息
+     *
+     * @return
+     * @
+     */
+
+    @RequestMapping(value = "/queryProjectDetail", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String queryProjectDetail(@RequestBody Project project, HttpServletRequest httpServletRequest) {
+
+        long userId = (long) httpServletRequest.getAttribute("userId");
+        //long userId = 39;
+        if (null == project) {
+            return new FebsResponse().fail().data(null).message("参数不合法").toJson();
+        }
+        project.setSignUser(userId);
+        project = projectService.queryProjectDetail(project);
+        if (null == project) {
+            return new FebsResponse().success().data(project).message("未查询到相关数据").toJson();
+        } else {
+            return new FebsResponse().success().data(project).message("数据查询成功").toJson();
         }
     }
 
