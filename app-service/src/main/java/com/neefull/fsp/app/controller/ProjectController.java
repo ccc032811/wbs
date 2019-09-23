@@ -1,7 +1,6 @@
 package com.neefull.fsp.app.controller;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.app.entity.ProjectPage;
@@ -15,7 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -79,7 +77,7 @@ public class ProjectController {
         if (null == project || null == queryRequest) {
             return new FebsResponse().fail().data(null).message("参数不合法").toJson();
         }
-        Map<String, Object> dataTable = getDataTable(this.projectService.corpHome(project, queryRequest));
+        Map<String, Object> dataTable = queryRequest.getDataTable(this.projectService.corpHome(project, queryRequest));
         if (0 == (long) dataTable.get("total")) {
             return new FebsResponse().success().data(dataTable).message("未查询到相关数据").toJson();
         } else {
@@ -105,7 +103,7 @@ public class ProjectController {
         if (null == project || null == queryRequest) {
             return new FebsResponse().fail().data(null).message("参数不合法").toJson();
         }
-        Map<String, Object> dataTable = getDataTable(this.projectService.personalHome(project, queryRequest));
+        Map<String, Object> dataTable = queryRequest.getDataTable(this.projectService.personalHome(project, queryRequest));
         if (0 == (long) dataTable.get("total")) {
             return new FebsResponse().success().data(dataTable).message("未查询到相关数据").toJson();
         } else {
@@ -140,18 +138,41 @@ public class ProjectController {
     }
 
     /**
-     * 分页数据封装
+     * 根据项目ID开启/关闭项目
      *
-     * @param pageInfo
      * @return
+     * @
      */
-    protected Map<String, Object> getDataTable(IPage<?> pageInfo) {
-        Map<String, Object> data = new HashMap<>();
-        data.put("rows", pageInfo.getRecords());
-        data.put("total", pageInfo.getTotal());
-        data.put("pages", pageInfo.getPages());
-        data.put("size", pageInfo.getSize());
-        data.put("current", pageInfo.getCurrent());
-        return data;
+
+    @RequestMapping(value = "/openCloseProject", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String openCloseProject(@RequestBody Project project, HttpServletRequest httpServletRequest) {
+        if (projectService.openCloseProject(project) > 0) {
+            //更新之后，返回项目的最新信息
+            project = projectService.queryProjectDetail(project);
+            return new FebsResponse().success().data(project).message("项目操作成功").toJson();
+        } else {
+            return new FebsResponse().fail().data("").message("项目操作失败").toJson();
+        }
     }
+
+    /**
+     * 刷新项目
+     *
+     * @return
+     * @
+     */
+
+    @RequestMapping(value = "/refreshProject", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    // @AuthToken
+    public String refreshProject(@RequestBody Project project, HttpServletRequest httpServletRequest) {
+        if (null != (project = projectService.queryProjectDetail(project))) {
+            return new FebsResponse().success().data(project).message("项目操作成功").toJson();
+        } else {
+            return new FebsResponse().fail().data("").message("项目操作失败").toJson();
+        }
+    }
+
 }

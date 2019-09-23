@@ -26,7 +26,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return new ResponseEntity<Object>(jsonHandler((HttpServletRequest) request,ex), BAD_REQUEST);
+        return new ResponseEntity<Object>(jsonHandler((HttpServletRequest) request, ex), BAD_REQUEST);
     }
 
     @ExceptionHandler(value = Exception.class)

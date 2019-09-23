@@ -57,6 +57,8 @@ public class Project implements Serializable {
     private String validDate;
     @TableField("sign_num")
     private int signNum;
+    @TableField("open_state")
+    private int openState;
     @TableField(exist = false)
     private String signState;
     @TableField(exist = false)
@@ -307,5 +309,13 @@ public class Project implements Serializable {
 
     public void setCreateUserName(String createUserName) {
         this.createUserName = createUserName;
+    }
+
+    public int getOpenState() {
+        return openState;
+    }
+
+    public void setOpenState(int openState) {
+        this.openState = openState;
     }
 }

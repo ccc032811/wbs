@@ -43,9 +43,11 @@ public interface IProjectService extends IService<Project> {
      *
      * @return
      */
-    IPage<Project> personalHome(Project project,QueryRequest request);
+    IPage<Project> personalHome(Project project, QueryRequest request);
 
-    int updateProjectSignNum(long projectId,int num);
+    int updateProjectSignNum(long projectId, int num);
 
-    Project  queryProjectDetail(Project project);
+    Project queryProjectDetail(Project project);
+
+    int openCloseProject(Project project);
 }

@@ -77,4 +77,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     public Project queryProjectDetail(Project project) {
         return this.baseMapper.queryProjectDetail(project);
     }
+
+    @Override
+    public int openCloseProject(Project project) {
+        return this.baseMapper.openCloseProject(project);
+    }
+
+
 }

@@ -43,5 +43,21 @@ public interface ProjectMapper extends BaseMapper<Project> {
     @Update("update t_project set current_state=#{project.currentState} where id=#{project.id}")
     int updateProjectState(@Param("project") Project project);
 
+    /**
+     * 查看项目详细
+     *
+     * @param project
+     * @return
+     */
     Project queryProjectDetail(@Param("project") Project project);
+
+    /**
+     * '
+     * 打开/关闭项目
+     *
+     * @param project
+     * @return
+     */
+    @Update("update t_project set open_state=#{project.openState} where id=#{project.id}")
+    int openCloseProject(@Param("project") Project project);
 }

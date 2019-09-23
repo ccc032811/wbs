@@ -19,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -110,7 +109,7 @@ public class EnrollmentController {
     @AuthToken
     public String querySignUser(@RequestBody ProjectEnrollPage projectEnrollPage, HttpServletRequest httpServletRequest) {
         long userId = (long) httpServletRequest.getAttribute("userId");
-       // long userId = 34;
+        // long userId = 34;
         QueryProjectEncroll queryProjectEncroll = projectEnrollPage.getQueryProjectEncroll();
         QueryRequest queryRequest = projectEnrollPage.getQueryRequest();
         if (null == queryProjectEncroll || null == queryRequest) {
@@ -149,10 +148,10 @@ public class EnrollmentController {
                 projectMapper.updateProjectState(project);
 
             }
-            //TODO
-           /* //如果报名人数=2人的时候，生成项目团队
+            /*//TODO
+            //如果报名人数=2人的时候，生成项目团队
             int signNum = project.getSignNum();
-            if (2 == signNum) {
+            if (2 <= signNum) {
                 ProjectTeam projectTeam = new ProjectTeam();
                 projectTeam.setProjectId(project.getId());
                 projectTeam.setUserId(projectEnrollment.getUserId());

@@ -25,7 +25,7 @@ public interface ProjectEnrMapper extends BaseMapper<ProjectEnrollment> {
      */
     IPage<Project> personalHome(Page page, @Param("project") Project project);
 
-    IPage<QueryProjectEncroll> queryFreelencerEnrollment(Page page,@Param("queryProjectEncroll") QueryProjectEncroll queryProjectEncroll);
+    IPage<QueryProjectEncroll> queryFreelencerEnrollment(Page page, @Param("queryProjectEncroll") QueryProjectEncroll queryProjectEncroll);
 
     List<QueryProjectEncroll> querySignUser(@Param("queryProjectEncroll") QueryProjectEncroll queryProjectEncroll);
 

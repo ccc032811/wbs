@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.app.config.AppConstant;
 import com.neefull.fsp.app.entity.User;
+import com.neefull.fsp.app.entity.UserDetail;
+import com.neefull.fsp.app.entity.UserResume;
 import com.neefull.fsp.app.mapper.UserMapper;
 import com.neefull.fsp.app.service.IUserService;
 import com.neefull.fsp.common.util.EncryptUtil;
@@ -109,5 +111,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getMobile, user.getMobile());
         return this.baseMapper.delete(lambdaQueryWrapper);
+    }
+
+    @Override
+    @Transactional
+    public int fillUserResume(UserResume userResume) {
+        return this.baseMapper.fillUserResume(userResume);
+    }
+
+    @Override
+    public UserResume queryUserResume(UserResume userResume) {
+        return this.baseMapper.queryUserResume(userResume);
+    }
+
+    @Override
+    public UserDetail queryUserDetail(long userId) {
+        return this.baseMapper.queryUserDetail(userId);
     }
 }

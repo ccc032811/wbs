@@ -37,6 +37,14 @@ public class AuthFreeController {
     CardValidConfig cardValidConfig;
     @Autowired
     CertUtil certUtil;
+    /**
+     * 获取自由职业者认证信息
+     *
+     * @param httpServletRequest
+     * @return
+     */
+    @Autowired
+    QiniuConfig qiniuConfig;
 
     @RequestMapping(value = "/freelancerCertification", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -112,15 +120,6 @@ public class AuthFreeController {
             return new FebsResponse().fail().data("").message("网络故障,请重新提交").toJson();
         }
     }
-
-    /**
-     * 获取自由职业者认证信息
-     *
-     * @param httpServletRequest
-     * @return
-     */
-    @Autowired
-    QiniuConfig qiniuConfig;
 
     @RequestMapping(value = "/getAuthFreelancer", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody

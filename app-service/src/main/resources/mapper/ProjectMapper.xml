@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neefull.fsp.app.mapper.ProjectMapper">
     <sql id="queryProject">
-        SELECT
         id
         ,u.user_id userId
         ,service_type serviceType
@@ -31,6 +30,7 @@
         ,(SELECT current_state FROM t_project_enrollment b WHERE b.project_id=u.id AND b.user_id=#{project.signUser})
         signState
         ,c.username createUserName
+        ,u.open_state openState
         FROM t_project u left join t_user c on u.user_id=c.user_id
         WHERE 1=1
         <if test="project.serviceType != null and project.serviceType != ''">
@@ -59,13 +59,19 @@
         </if>
     </sql>
     <select id="personalHome" parameterType="project" resultType="project">
+        SELECT
         <include refid="queryProject"/>
+        /*自由职业者首页，看不到已经关闭的项目*/
+        and u.OPEN_STATE !=-1
     </select>
     <select id="corpHome" parameterType="project" resultType="project">
+        select
         <include refid="queryProject"/>
     </select>
     <select id="queryProjectDetail" parameterType="project" resultType="project">
+        select
         <include refid="queryProject"/>
     </select>
+
 
 </mapper>

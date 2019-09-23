@@ -83,4 +83,75 @@
         WHERE u.username = #{username}
         group by u.username
     </select>
+
+    <sql id="userResumeColums">
+          r.id,
+          r.user_id,
+          r.real_name,
+          r.identity,
+          r.birthday,
+          r.link_no,
+          r.education,
+          r.city_life,
+          r.city_work,
+          r.job_type,
+          r.personal_desc,
+          r.mark,
+          r.edu_desc,
+          r.worked_desc,
+          r.work_state
+    </sql>
+
+    <insert id="fillUserResume">
+        INSERT INTO flp.t_user_resume (
+          user_id,
+          real_name,
+          identity,
+          birthday,
+          link_no,
+          education,
+          city_life,
+          city_work,
+          job_type,
+          personal_desc,
+          mark,
+          edu_desc,
+          worked_desc,
+          work_state
+        )
+    VALUES
+      (
+         #{userResume.userId},
+         #{userResume.realName},
+         #{userResume.identity},
+         #{userResume.birthday},
+         #{userResume.linkNo},
+         #{userResume.education},
+         #{userResume.cityLife},
+         #{userResume.cityWork},
+         #{userResume.jobType},
+         #{userResume.personalDesc},
+         #{userResume.mark},
+         #{userResume.eduDesc},
+         #{userResume.workedDesc},
+         #{userResume.workState}
+      )
+    </insert>
+    <select id="queryUserResume" resultType="UserResume">
+        select
+        <include refid="userResumeColums"/>
+        from t_user_resume r where r.user_id=#{userResume.userId}
+    </select>
+
+    <select id="queryUserDetail" resultType="UserDetail">
+        select
+        b.real_name realName,
+        a.mobile,
+        b.id_no,
+        <include refid="userResumeColums"/>
+        from t_user a
+        left join t_auth_freelancer b on(a.user_id=b.user_id)
+        left join t_user_resume r on(a.user_id=r.user_id)
+        where a.user_id=#{userId}
+    </select>
 </mapper>

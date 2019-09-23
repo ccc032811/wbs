@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.config.AppConstant;
 import com.neefull.fsp.app.entity.User;
+import com.neefull.fsp.app.entity.UserDetail;
+import com.neefull.fsp.app.entity.UserResume;
 import com.neefull.fsp.app.service.IUserService;
 import com.neefull.fsp.app.utils.RedisUtil;
 import com.neefull.fsp.common.entity.FebsResponse;
@@ -188,7 +190,7 @@ public class UserController {
     }
 
     /**
-     * 用户其他信息更新
+     * 选择用户类型
      *
      * @return
      */
@@ -267,6 +269,68 @@ public class UserController {
         } else {
             return null;
         }
+    }
+
+    /**
+     * 查询用户详细信息，包括建立信息，认证信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/queryUserDetail", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String queryUserDetail(@RequestBody UserDetail userDetail, HttpServletRequest httpRequest) {
+        long userId = userDetail.getUserId();
+        userDetail = userService.queryUserDetail(userId);
+        if (null != userDetail) {
+            return new FebsResponse().success().data(userDetail).message("查询用户详细成功").toJson();
+        } else {
+            return new FebsResponse().success().data(null).message("查询用户详细失败").toJson();
+        }
+
+    }
+
+    /**
+     * 补充简历信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/fillUserResume", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String fillUserResume(@RequestBody UserResume userResume, HttpServletRequest httpRequest) {
+        long userId = (long) httpRequest.getAttribute("userId");
+        // long userId = 38;
+        userResume.setUserId(userId);
+        int result = userService.fillUserResume(userResume);
+        if (result > 0) {
+            return new FebsResponse().success().data(result).message("简历保存成功").toJson();
+        } else {
+            return new FebsResponse().fail().data(result).message("简历保存失败").toJson();
+        }
+
+    }
+
+    /**
+     * 查询用户简历
+     *
+     * @return
+     */
+    @RequestMapping(value = "/queryUserResume", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String queryUserResume(@RequestBody UserResume userResume, HttpServletRequest httpRequest) {
+        userResume = userService.queryUserResume(userResume);
+        if (null != userResume) {
+            //计算简历完整度
+            JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(JSONObject.toJSON(userResume)));
+            float size = jsonObject.keySet().size() - 1;
+            userResume.setIntegrity(size / 15);
+            return new FebsResponse().success().data(userResume).message("查询用户简历信息成功").toJson();
+        } else {
+            return new FebsResponse().success().data(null).message("未查询到该用户信息").toJson();
+        }
+
     }
 
 

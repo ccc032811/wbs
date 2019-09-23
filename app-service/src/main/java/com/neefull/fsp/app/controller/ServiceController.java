@@ -28,7 +28,7 @@ public class ServiceController {
     @AuthToken
     public String findByMobile(@RequestBody JobDict job) {
         List<JobDict> jobs = jobService.findByLevel(job);
-        if (null != jobs && jobs.size()>0) {
+        if (null != jobs && jobs.size() > 0) {
             return new FebsResponse().success().data(jobs).message("").toJson();
         } else {
             return new FebsResponse().success().data(jobs).message("未查询到信息").toJson();

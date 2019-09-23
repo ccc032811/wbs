@@ -1,7 +1,6 @@
 package com.neefull.fsp.app.service.impl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -19,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @author pei.wang
@@ -76,9 +73,9 @@ public class ProjectEnrServiceImpl extends ServiceImpl<ProjectEnrMapper, Project
         Page<Project> page = new Page<Project>(request.getPageNum(), request.getPageSize());
         SortUtil.handlePageSort(request, page, "sign_time", "desc", false);
         //LambdaQueryWrapper<ProjectEnrollment> lambdaQueryWrapper = new LambdaQueryWrapper<ProjectEnrollment>();
-       /// lambdaQueryWrapper.eq(ProjectEnrollment::getProjectId, projectId);
+        /// lambdaQueryWrapper.eq(ProjectEnrollment::getProjectId, projectId);
         //lambdaQueryWrapper.orderByDesc(ProjectEnrollment::getCreateTime, ProjectEnrollment::getCurrentState);
-        return this.baseMapper.queryFreelencerEnrollment(page,projectEnrollment);
+        return this.baseMapper.queryFreelencerEnrollment(page, projectEnrollment);
     }
 
 

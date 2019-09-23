@@ -32,13 +32,13 @@ import java.util.Map;
 public class BanksController {
 
     @Autowired
-    private IDictBanksService dictBanksService;
-    @Value("cardBankApi")
-    private String cardBankApi;
-    @Autowired
     DictBanksMapper dictBanksMapper;
     @Autowired
     RedisUtil redisUtil;
+    @Autowired
+    private IDictBanksService dictBanksService;
+    @Value("cardBankApi")
+    private String cardBankApi;
 
     /**
      * 根据卡号，校验卡类型
@@ -50,7 +50,7 @@ public class BanksController {
     @RequestMapping(value = "/checkCardNo", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String checkCardNo(@RequestBody JSONObject cardNo){
+    public String checkCardNo(@RequestBody JSONObject cardNo) {
 
         Map<String, String> querys = new HashMap<>();
         querys.put("cardNo", cardNo.getString("cardNo"));

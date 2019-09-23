@@ -1,6 +1,6 @@
 package com.neefull.fsp.app.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
 import java.util.Date;

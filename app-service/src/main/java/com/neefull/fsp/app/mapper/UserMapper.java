@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neefull.fsp.app.entity.User;
+import com.neefull.fsp.app.entity.UserDetail;
+import com.neefull.fsp.app.entity.UserResume;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
@@ -79,5 +81,29 @@ public interface UserMapper extends BaseMapper<User> {
      */
     @Update("update t_user set username=#{user.username},auth_status=#{user.authStatus},card_status=#{user.cardStatus} where user_id=#{user.userId}")
     int updateUserAuthWithName(@Param("user") User user);
+
+    /**
+     * 完成用户简历
+     *
+     * @param userResume
+     * @return
+     */
+    int fillUserResume(@Param("userResume") UserResume userResume);
+
+    /**
+     * 查询用户简历
+     *
+     * @param userResume
+     * @return
+     */
+    UserResume queryUserResume(@Param("userResume") UserResume userResume);
+
+    /**
+     * 查询用户详细信息
+     *
+     * @param userId
+     * @return
+     */
+    UserDetail queryUserDetail(@Param("userId") long userId);
 
 }

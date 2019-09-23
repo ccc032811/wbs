@@ -22,8 +22,8 @@ public class JobDictServiceImpl extends ServiceImpl<ServiceMapper, JobDict> impl
     @Override
     public List<JobDict> findByLevel(JobDict job) {
         LambdaQueryWrapper<JobDict> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(JobDict::getPid,job.getPid());
-        lambdaQueryWrapper.eq(JobDict::getStatus,0);
+        lambdaQueryWrapper.eq(JobDict::getPid, job.getPid());
+        lambdaQueryWrapper.eq(JobDict::getStatus, 0);
         lambdaQueryWrapper.orderByDesc(JobDict::getRecommend, JobDict::getPopular);
         return this.baseMapper.selectList(lambdaQueryWrapper);
     }

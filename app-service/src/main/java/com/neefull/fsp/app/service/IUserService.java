@@ -2,6 +2,9 @@ package com.neefull.fsp.app.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.app.entity.User;
+import com.neefull.fsp.app.entity.UserDetail;
+import com.neefull.fsp.app.entity.UserResume;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author pei.wang
@@ -47,6 +50,7 @@ public interface IUserService extends IService<User> {
      * @param
      */
     boolean resetPassword(User user);
+
     /**
      * 重置密码
      *
@@ -64,13 +68,27 @@ public interface IUserService extends IService<User> {
 
     /**
      * 更新用户信息
+     *
      * @return
      */
     int updateUser(User user);
 
     /**
      * 删除用户信息
+     *
      * @return
      */
     int deleteUserByMobile(User user);
+
+    int fillUserResume(UserResume userResume);
+
+    /**
+     * 查询用户简历
+     *
+     * @param userResume
+     * @return
+     */
+    UserResume queryUserResume(UserResume userResume);
+
+    UserDetail queryUserDetail(@Param("userId") long userId);
 }
