@@ -5,7 +5,13 @@ import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsConstant;
 import com.neefull.fsp.web.common.utils.DateUtil;
 import com.neefull.fsp.web.common.utils.FebsUtil;
+import com.neefull.fsp.web.system.entity.AuthCorp;
+import com.neefull.fsp.web.system.entity.AuthFreelancer;
+import com.neefull.fsp.web.system.entity.Project;
 import com.neefull.fsp.web.system.entity.User;
+import com.neefull.fsp.web.system.service.IAuthCorpService;
+import com.neefull.fsp.web.system.service.IAuthFreelancerService;
+import com.neefull.fsp.web.system.service.IProjectService;
 import com.neefull.fsp.web.system.service.IUserService;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -31,6 +37,12 @@ public class ViewController extends BaseController {
     private IUserService userService;
     @Autowired
     private ShiroHelper shiroHelper;
+    @Autowired
+    private IAuthCorpService authCorpService;
+    @Autowired
+    private IAuthFreelancerService authFreelancerService;
+    @Autowired
+    private IProjectService projectService;
 
     @GetMapping("login")
     @ResponseBody
@@ -117,6 +129,21 @@ public class ViewController extends BaseController {
         return FebsUtil.view("system/user/userUpdate");
     }
 
+    //**************************************项目管理模块 start *********************************************
+    @GetMapping(FebsConstant.VIEW_PREFIX + "system/project")
+    @RequiresPermissions("project:view")
+    public String systemProject() {
+        return FebsUtil.view("system/project/project");
+    }
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "system/project/detail/{id}")
+    @RequiresPermissions("project:view")
+    public String systemProjectDetail(@PathVariable String id, Model model) {
+        projectDetailModel(id, model, true);
+        return FebsUtil.view("system/project/projectDetail");
+    }
+    //**************************************项目管理模块 end *********************************************
+
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/role")
     @RequiresPermissions("role:view")
     public String systemRole() {
@@ -158,6 +185,18 @@ public class ViewController extends BaseController {
     private void resolveUserModel(String username, Model model, Boolean transform) {
         User user = userService.findByName(username);
         model.addAttribute("user", user);
+        if(User.USERTYPE_FREELANCER.equals(user.getUserType())){   // 0：自由职业者
+            AuthFreelancer authFreelancer = authFreelancerService.findByUserId(user.getUserId());
+            model.addAttribute("authLancer", authFreelancer != null ? authFreelancer : new AuthFreelancer());
+            model.addAttribute("authCorp", new AuthCorp());
+        }else if(User.USERTYPE_CORP.equals(user.getUserType())){   // 1:企业用户
+            AuthCorp authCorp = authCorpService.findByUserId(user.getUserId());
+            model.addAttribute("authLancer", new AuthFreelancer());
+            model.addAttribute("authCorp", authCorp != null ? authCorp : new AuthCorp());
+        }else if(User.USERTYPE_SYSTEM.equals(user.getUserType())){   //2:系统用户
+            model.addAttribute("authLancer", new AuthFreelancer());
+            model.addAttribute("authCorp", new AuthCorp());
+        }
         if (transform) {
             String ssex = user.getSex();
             if (User.SEX_MALE.equals(ssex)) user.setSex("男");
@@ -166,5 +205,16 @@ public class ViewController extends BaseController {
         }
         if (user.getLastLoginTime() != null)
             model.addAttribute("lastLoginTime", DateUtil.getDateFormat(user.getLastLoginTime(), DateUtil.FULL_TIME_SPLIT_PATTERN));
+    }
+
+    /**
+     * 项目信息详情页
+     * @param id 项目id
+     * @param model model
+     * @param transform transform
+     */
+    private void projectDetailModel(String id, Model model, Boolean transform){
+        Project project = projectService.getProjectById(id);
+        model.addAttribute("project", project);
     }
 }

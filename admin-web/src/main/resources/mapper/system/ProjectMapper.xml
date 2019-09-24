@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neefull.fsp.web.system.mapper.ProjectMapper">
+    <sql id="findProjectBySearchSql">
+        SELECT p.id id,
+        p.user_id userId,
+        p.service_type serviceType,
+        p.service_content serviceContent,
+        p.settle_time settleTime,
+        p.salary_type salaryType,
+        p.amount amount,
+        p.title title,
+        p.des des,
+        p.content content,
+        p.requirement requirement,
+        p.place place,
+        p.req_sex reqSex,
+        p.req_identity reqIdentity,
+        p.req_edu reqEdu,
+        p.req_age reqAge,
+        p.req_num reqNum,
+        p.sign_num signNum,
+        p.valid_date validDate,
+        p.create_time createTime,
+        p.create_user createUser,
+        p.modify_time modifyTime,
+        p.modify_user modifyUser,
+        p.current_state currentState,
+        p.remark remark,
+        u.username userName
+        FROM t_project p
+        LEFT JOIN t_user u
+        ON p.user_id=u.user_id
+        WHERE 1=1
+        <if test="project.userName != null and project.userName != ''">
+            AND u.username like concat('%',#{project.userName},'%')
+        </if>
+        <if test="project.serviceType != null and project.serviceType != ''">
+            AND p.service_type like concat('%',#{project.serviceType},'%')
+        </if>
+        <if test="project.serviceContent != null and project.serviceContent != ''">
+            AND p.service_content like concat('%',#{project.serviceContent},'%')
+        </if>
+        <if test="project.title != null and project.title != ''">
+            AND p.title like concat('%',#{project.title},'%')
+        </if>
+        <if test="project.createTimeFrom != null and project.createTimeFrom !=''">
+            AND p.create_time &gt; #{project.createTimeFrom}
+        </if>
+        <if test="project.createTimeTo!= null and project.createTimeTo !=''">
+            AND p.create_time &lt; #{project.createTimeTo}
+        </if>
+    </sql>
+    <select id="findProjectBySearch" parameterType="project" resultType="project">
+        <include refid="findProjectBySearchSql"/>
+    </select>
+    
+    <select id="getProjectById" parameterType="String" resultType="com.neefull.fsp.web.system.entity.Project">
+      SELECT p.*,u.username userName,case when p.current_state = 0 then '新建' when p.current_state = 1 then '待结算'
+      when p.current_state = 2 then '进行中' when p.current_state = 3 then '完结'
+      when p.current_state = -1 then '已删除' END currentStateName,DATE_FORMAT(p.create_time,'%Y-%d-%m %T') createTimeFrom
+      FROM t_project p LEFT JOIN t_user u ON p.user_id=u.user_id
+      WHERE p.id = #{projectId}
+    </select>
+</mapper>

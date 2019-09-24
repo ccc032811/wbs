@@ -70,10 +70,6 @@
                                 <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="reset">
                                     <i class="layui-icon">&#xe79b;</i>
                                 </div>
-                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action action-more"
-                                     shiro:hasAnyPermissions="user:add,user:update,user:password:reset,user:export">
-                                    <i class="layui-icon">&#xe875;</i>
-                                </div>
                             </div>
                         </div>
                     </form>
@@ -85,13 +81,13 @@
 </div>
 <script type="text/html" id="user-status">
     {{#
-    var status = {
-    2: {title: '已实名', color: 'blue'},
-    1: {title: '未实名', color: 'green'},
-    0: {title: '禁用', color: 'volcano'}
-    }[d.status];
+    var authStatus = {
+    2: {title: '已实名', color: 'green'},
+    1: {title: '审核中', color: 'orange'},
+    0: {title: '未实名', color: 'volcano'}
+    }[d.authStatus];
     }}
-    <span class="layui-badge febs-tag-{{status.color}}">{{ status.title }}</span>
+    <span class="layui-badge febs-tag-{{authStatus.color}}">{{ authStatus.title }}</span>
 </script>
 <script type="text/html" id="user-sex">
     {{#
@@ -104,14 +100,12 @@
     <span>{{ sex.title }}</span>
 </script>
 <script type="text/html" id="user-type">
-    {{#
-    var uType = {
-    2: {title: '系统用户'},
-    1: {title: '企业用户'},
-    0: {title: '自由职业者'}
-    }[d.userType];
-    }}
-    <span>{{ uType.title }}</span>
+    {{# if(d.userType == '0'){d.userType = '企业用户'}}
+    {{# } else if(d.userType == '1'){d.userType = '自由职业者'}}
+    {{# } else if(d.userType == '2'){d.userType = '系统用户'}}
+    {{# } else {d.userType = '无类型'}}
+    {{# } }}
+    <span>{{d.userType}}</span>
 </script>
 <script type="text/html" id="user-option">
     <span shiro:lacksPermission="user:view,user:update,user:delete">
@@ -121,9 +115,16 @@
             class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
     <a lay-event="edit" shiro:hasPermission="user:update"><i
             class="layui-icon febs-edit-area febs-blue">&#xe7a4;</i></a>
-    <a lay-event="del" shiro:hasPermission="user:delete"><i class="layui-icon febs-edit-area febs-red">&#xe7f9;</i></a>
     <a lay-event="examine" shiro:hasPermission="user:examine"><i
             class="layui-icon  febs-edit-area febs-blue">&#xe63c;</i></a>
+</script>
+<!--头部工具栏-->
+<script type="text/html" id="toolbarCheck">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="batchCheck">批量审核</button>
+        <button class="layui-btn layui-btn-sm" lay-event="passwordReset">密码重置</button>
+        <button class="layui-btn layui-btn-sm" lay-event="exportExcel">导出Excel</button>
+    </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
     layui.use(['dropdown', 'jquery', 'laydate', 'form', 'table', 'febs', 'treeSelect'], function () {
@@ -151,111 +152,12 @@
             trigger: 'click'
         });
 
-        dropdown.render({
-            elem: $view.find('.action-more'),
-            click: function (name, elem, event) {
-                var checkStatus = table.checkStatus('userTable');
-                if (name === 'add') {
-                    febs.modal.open('新增用户', 'system/user/add', {
-                        btn: ['提交', '重置'],
-                        area: $(window).width() <= 750 ? '95%' : '50%',
-                        yes: function (index, layero) {
-                            $('#user-add').find('#submit').trigger('click');
-                        },
-                        btn2: function () {
-                            $('#user-add').find('#reset').trigger('click');
-                            return false;
-                        }
-                    });
-                }
-                if (name === 'delete') {
-                    if (!checkStatus.data.length) {
-                        febs.alert.warn('请选择需要删除的用户');
-                    } else {
-                        febs.modal.confirm('删除用户', '确定删除该用户？', function () {
-                            var userIds = [];
-                            layui.each(checkStatus.data, function (key, item) {
-                                userIds.push(item.userId)
-                            });
-                            deleteUsers(userIds.join(','));
-                        });
-                    }
-                }
-                if (name === 'reset') {
-                    if (!checkStatus.data.length) {
-                        febs.alert.warn('请选择需要重置密码的用户');
-                    } else {
-                        var usernames = [];
-                        layui.each(checkStatus.data, function (key, item) {
-                            usernames.push(item.username)
-                        });
-                        febs.post(ctx + 'user/password/reset/' + usernames.join(','), null, function () {
-                            febs.alert.success('所选用户密码已重置为1234qwer');
-                        });
-                    }
-                }
-                if (name === 'export') {
-                    var params = $.extend(getQueryParams(), {field: sortObject.field, order: sortObject.type});
-                    params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
-                    params.pageNum = $view.find(".layui-laypage-em").next().html();
-                    febs.download(ctx + 'user/excel', params, '用户信息表.xlsx');
-                }
-                if (name === 'examine') {
-                    if (!checkStatus.data.length) {
-                        febs.alert.warn('请选择需要审核的用户');
-                    } else {
-                        febs.modal.confirm('批量审核用户', '确定审核该批用户？', function () {
-                            var userIds = [];
-                            layui.each(checkStatus.data, function (key, item) {
-                                userIds.push(item.userId)
-                            });
-                            examineUsers(userIds.join(','));
-                        });
-                    }
-                }
-            },
-            options: [{
-                name: 'add',
-                title: '新增用户',
-                perms: 'user:add'
-            }, {
-                name: 'delete',
-                title: '删除用户',
-                perms: 'user:delete'
-            }, {
-                name: 'reset',
-                title: '密码重置',
-                perms: 'user:password:reset'
-            }, {
-                name: 'export',
-                title: '导出Excel',
-                perms: 'user:export'
-            },{
-                name: 'examine',
-                title: '批量审核',
-                perms: 'user:examine'
-            }]
-        });
-
-        /*treeSelect.render({
-            elem: $view.find('#dept'),
-            type: 'get',
-            data: ctx + 'dept/select/tree',
-            placeholder: '请选择',
-            search: false
-        });*/
-
         table.on('tool(userTable)', function (obj) {
             var data = obj.data,
                 layEvent = obj.event;
             if (layEvent === 'detail') {
                 febs.modal.view('用户信息', 'system/user/detail/' + data.username, {
                     area: $(window).width() <= 750 ? '95%' : '660px'
-                });
-            }
-            if (layEvent === 'del') {
-                febs.modal.confirm('删除用户', '确定删除该用户？', function () {
-                    deleteUsers(data.userId);
                 });
             }
             if (layEvent === 'edit') {
@@ -275,6 +177,50 @@
                 febs.modal.confirm('确定审核通过', '确定审核通过该用户？', function () {
                     examineUsers(data.userId);
                 });
+            }
+        });
+
+        //监听头工具栏事件
+        table.on('toolbar(userTable)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'batchCheck':    //批量审核
+                    if (!checkStatus.data.length) {
+                        febs.modal.error('确定批量审核', '请选择需要审核的用户', function () {});
+                    }else{
+                        var userIds = [];
+                        layui.each(checkStatus.data, function (key, item) {
+                            userIds.push(item.userId)
+                        });
+
+                        febs.modal.confirm('确定批量审核', '确定一键批量审核通过用户？', function () {
+                            examineUsers(userIds.join(','));
+                        });
+                    }
+                    break;
+
+                case 'passwordReset':    //密码重置
+                    if (!checkStatus.data.length) {
+                        febs.modal.error('确定密码重置', '请选择需要密码重置的用户', function () {});
+                    }else{
+                        var usernames = [];
+                        layui.each(checkStatus.data, function (key, item) {
+                            usernames.push(item.username)
+                        });
+                        febs.modal.confirm('确定密码重置', '确定将用户的密码进行重置？', function () {
+                            febs.post(ctx + 'user/password/reset/' + usernames.join(','), null, function () {
+                                febs.alert.success('所选用户密码已重置为nifu@123');
+                            });
+                        });
+                    }
+                    break;
+
+                case 'exportExcel':   //导出excel
+                    var params = $.extend(getQueryParams(), {field: sortObject.field, order: sortObject.type});
+                    params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
+                    params.pageNum = $view.find(".layui-laypage-em").next().html();
+                    febs.download(ctx + 'user/excel', params, '用户信息表.xlsx');
+                    break
             }
         });
 
@@ -306,6 +252,8 @@
                 elem: $view.find('table'),
                 id: 'userTable',
                 url: ctx + 'user/list',
+                toolbar: '#toolbarCheck',     //开启头部工具栏
+                defaultToolbar: ['filter','print'],   //显示默认的三个工具，需要哪个写哪个的单词'filter','exports','print'
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'username', title: '用户名'},

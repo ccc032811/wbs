@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.common.entity.QueryRequest;
 import com.neefull.fsp.web.system.entity.User;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author pei.wang
  */
@@ -111,4 +114,10 @@ public interface IUserService extends IService<User> {
     void updateProfile(User user);
 
     void examineUsers(String[] ids);
+
+    /**
+     * 首页统计图-用户分布情况
+     * @return 用户分布数据
+     */
+    List<Map<String, String>> getUserDistribution();
 }

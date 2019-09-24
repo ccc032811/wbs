@@ -18,7 +18,8 @@
         d.dept_name deptName,
         GROUP_CONCAT(r.role_id) roleId,
         GROUP_CONCAT(r.ROLE_NAME) roleName,
-        u.user_type userType
+        u.user_type userType,
+        u.auth_status authStatus
         FROM
         t_user u
         LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
@@ -73,6 +74,7 @@
         u.last_login_time lastLoginTime,
         u.modify_time modifyTime,
         u.description,
+        u.user_type userType,
         u.avatar,
         u.theme,
         u.is_tab isTab,
@@ -86,5 +88,15 @@
         LEFT JOIN t_role r ON r.role_id = ur.role_id
         WHERE u.username = #{username}
         group by u.username
+    </select>
+    
+    <update id="updateUserAuthStatus">
+        update t_user set auth_status = #{authStatus},modify_time=NOW() where user_id = #{userId}
+    </update>
+    
+    <select id="getUserDistribution" resultType="Map">
+        SELECT CASE WHEN user_type = '0' THEN '企业用户' WHEN user_type = '1' THEN '自由职业者'
+        WHEN user_type = '2' THEN '系统用户' WHEN user_type is null or user_type = '' THEN '无类型' END 'name',
+        COUNT(1) 'y' FROM t_user GROUP BY user_type
     </select>
 </mapper>

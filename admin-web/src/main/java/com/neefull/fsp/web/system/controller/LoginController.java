@@ -61,6 +61,7 @@ public class LoginController extends BaseController {
 
             return new FebsResponse().success();
         } catch (UnknownAccountException | IncorrectCredentialsException | LockedAccountException e) {
+            e.printStackTrace();
             throw new FebsException(e.getMessage());
         } catch (AuthenticationException e) {
             throw new FebsException("认证失败！");
@@ -98,6 +99,9 @@ public class LoginController extends BaseController {
         param.setUsername(username);
         List<Map<String, Object>> lastSevenUserVisitCount = this.loginLogService.findLastSevenDaysVisitCount(param);
         data.put("lastSevenUserVisitCount", lastSevenUserVisitCount);
+        //获取用户分布情况
+        List<Map<String,String>> userCountMap = userService.getUserDistribution();
+        data.put("userDistributionCount", userCountMap);
         return new FebsResponse().success().data(data);
     }
 

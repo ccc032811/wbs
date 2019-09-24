@@ -1,0 +1,148 @@
+<style>
+    #febs-project-detail #user-img, #febs-project-detail .user-info {
+        display: inline-block;
+        float: left;
+        margin-left: 15px;
+    }
+
+    #febs-project-detail #user-info-wrapper {
+        margin: 0 0 1rem 0;
+        display: inline-block;
+    }
+
+    #febs-project-detail .user-info div {
+        margin: 10px 15px;
+        max-width: 19rem;
+    }
+
+    #febs-project-detail #options-wrapper a {
+        padding: 4px 6px;
+        color: rgba(0, 0, 0, 0.65);
+        border: 1px solid #d9d9d9;
+        border-radius: 2px;
+    }
+
+    #febs-project-detail #options-wrapper a:hover {
+        color: #40a9ff;
+        border-color: #40a9ff;
+    }
+
+</style>
+<div class="layui-fluid" id="febs-project-detail" lay-title="个人信息">
+    <div id="user-info-wrapper">
+        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="alert">
+                        <span class="febs-alert-base febs-alert-info" style="text-align: center;font-weight: bold;font-size: 17px">[[${project.title}]]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-info">
+            <div><span class="layui-icon layui-icon-user"></span> 发布人:
+                [[${project.userName}]]
+            </div>
+            <div><span class="layui-icon layui-icon-appstore"></span> 服务类型：
+                [[${project.serviceType}]]
+            </div>
+            <div><span class="layui-icon layui-icon-time-circle"></span> 报酬金额/结算时间：
+                [[${project.amount}]]&nbsp;元/[[${project.settleTime}]]
+            </div>
+        </div>
+        <div class="user-info">
+            <div><span class="layui-icon layui-icon-star"></span> 当前状态：
+                <span id="span_status" class="layui-badge febs-tag-green" style="height: 15px">[[${project.currentStateName}]]</span>
+            </div>
+            <div><span class="layui-icon layui-icon-file"></span> 服务内容：
+                [[${project.serviceContent}]]
+            </div>
+            <div><span class="layui-icon layui-icon-YUAN"></span> 发布日期：
+                [[${project.createTimeFrom}]]
+            </div>
+        </div>
+
+        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="alert">
+                        <span class="febs-alert-base febs-alert-success" style="text-align: center;font-weight: bold;font-size: 15px">项目内容</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="user-info">
+            <div id="div_des"><span class="layui-icon layui-icon-message"></span> 描述：
+            </div>
+            <div id="div_content"><span class="layui-icon layui-icon-filedone"></span> 工作内容：
+            </div>
+        </div>
+        <div class="user-info">
+            <div id="div_des_msg">
+                [[${project.des}]]
+            </div>
+            <div id="div_content_msg">
+                [[${project.content}]]
+            </div>
+        </div>
+
+        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="alert">
+                        <span class="febs-alert-base febs-alert-success" style="text-align: center;font-weight: bold;font-size: 15px">项目要求</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="user-info">
+            <div><span class="layui-icon layui-icon-location"></span> 工作地点:
+                [[${project.place}]]
+            </div>
+            <div><span class="layui-icon layui-icon-team"></span> 身份要求：
+                [[${project.reqIdentity}]]
+            </div>
+            <div><span class="layui-icon layui-icon-build"></span> 年龄要求：
+                [[${project.reqAge}]]
+            </div>
+        </div>
+        <div class="user-info">
+            <div><span class="layui-icon layui-icon-skin"></span> 性别要求：
+                [[${project.reqSex}]]
+            </div>
+            <div><span class="layui-icon layui-icon-plus-square"></span> 学历要求：
+                [[${project.reqEdu}]]
+            </div>
+            <div><span class="layui-icon layui-icon-team"></span> 人数要求：
+                [[${project.reqNum}]]&nbsp;人
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['element', 'jquery', 'febs'], function () {
+        var $ = layui.jquery,
+            $view = $('#febs-project-detail');
+        var currentState = [[${project.currentState}]]
+        if(currentState == '3'){
+            $("#span_status").attr("class","layui-badge febs-tag-green");
+        }else if(currentState == '2'){
+            $("#span_status").attr("class","layui-badge febs-tag-orange");
+        }else if(currentState == '1'){
+            $("#span_status").attr("class","layui-badge febs-tag-blue");
+        }else if(currentState == '0'){
+            $("#span_status").attr("class","layui-badge febs-tag-lime");
+        }else if(currentState == '-1'){
+            $("#span_status").attr("class","layui-badge febs-tag-volcano");
+        }
+
+        var heightDes = $("#div_des_msg").height();
+        $("#div_des").css("height", heightDes+"px");
+        $("#div_des").css("line-height", heightDes+"px");
+
+        var heightContent = $("#div_content_msg").height();
+        $("#div_content").css("height", heightContent+"px");
+        $("#div_content").css("line-height", heightContent+"px");
+    });
+</script>

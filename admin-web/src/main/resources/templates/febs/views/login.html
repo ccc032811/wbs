@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>自由薪</title>
+    <title>新酬付</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -11,106 +11,55 @@
     <link rel="stylesheet" th:href="@{layui/css/layui.css(t=2)}" media="all">
     <link rel="stylesheet" th:href="@{febs/css/febs.css(t=2)}" media="all">
     <link rel="stylesheet" th:href="@{febs/css/login.css(t=2)}" media="all">
+    <link rel="stylesheet" th:href="@{febs/css/component.css(t=2)}" media="all">
+    <link rel="stylesheet" th:href="@{febs/css/demo.css(t=2)}" media="all">
+    <link rel="stylesheet" th:href="@{febs/css/normalize.css(t=2)}" media="all">
     <link rel="icon" th:href="@{febs/images/favicon.ico}" type="image/x-icon"/>
 </head>
 <body>
-<div id="febs-login" lay-title="登录">
-    <div class="login-wrap">
-        <div class="layui-container">
-            <div class="layui-row">
-                <div class="layui-col-xs12 layui-col-lg4 layui-col-lg-offset4 febs-tc">
-                    <div class="layui-logo"><span><b>自由薪</b>管理后台</span></div>
-                </div>
-                <div class="layui-col-xs12 layui-col-lg4 layui-col-lg-offset4" id="login-div">
-                    <div class="layui-form" lay-filter="login-form">
-                        <div class="layui-anim layui-anim-upbit">
-                            <ul class="login-type-tab">
-                                <li class="active">系统登录</li>
-                            </ul>
-                            <div class="normal-login-form">
-                                <div class="layui-form-item">
-                                    <label class="layui-icon label-icon layui-icon-username"></label>
-                                    <input type="text" name="username" lay-verify="required"
-                                           placeholder="用户名" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="layui-form-item password-block">
-                                    <label class="layui-icon label-icon layui-icon-password"></label>
-                                    <input type="password" name="password" lay-verify="required"
-                                           placeholder="密码" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="layui-form-item">
-                                    <div class="layui-row">
-                                        <div class="layui-col-xs7">
-                                            <label class="layui-icon label-icon layui-icon-vercode"></label>
-                                            <input type="text" maxlength="4" name="verifyCode" lay-verify="required"
-                                                   placeholder="验证码" class="layui-input" autocomplete="off">
-                                        </div>
-                                        <div class="layui-col-xs5">
-                                            <img class="codeimg" id="codeimg"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="layui-form-item" style="margin-top: -10px;">
-                                    <input type="checkbox" name="rememberMe" title="记住我" lay-skin="primary">
-                                </div>
-                                <div class="layui-form-item">
-                                    <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit
-                                            lay-filter="login-submit" id="login">
-                                        <i style="display: none"
-                                           class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
-                                        立即登录
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- <div class="layui-form-item febs-tr">
-                                 <a id="regist-href">注册账号</a>
-                             </div>-->
-                        </div>
+<!-- 新登录 -->
+<div class="container demo-1" id="febs-login">
+    <div class="content">
+        <div id="large-header" class="large-header">
+            <canvas id="demo-canvas"></canvas>
+            <div class="logo_box">
+                <h3>新酬付管理后台</h3>
+                <form id="loginForm">
+                    <div class="input_outer">
+                        <span class="u_user"></span>
+                        <input name="username" class="text" lay-verify="required" style="color: #FFFFFF !important" type="text" placeholder="请输入账户">
                     </div>
-                </div>
-
-                <div class="layui-col-xs12 layui-col-lg4 layui-col-lg-offset4 febs-hide" id="regist-div">
-                    <div class="layui-form" lay-filter="regist-form">
-                        <div class="layui-anim layui-anim-upbit">
-                            <ul class="login-type-tab">
-                                <li class="active">账号注册</li>
-                            </ul>
-                            <div class="normal-login-form">
-                                <div class="layui-form-item">
-                                    <label class="layui-icon label-icon layui-icon-username"></label>
-                                    <input type="text" name="username" minlength="2" maxlength="10" lay-verify="range"
-                                           placeholder="用户名" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="layui-form-item password-block">
-                                    <label class="layui-icon label-icon layui-icon-password"></label>
-                                    <input type="password" name="password" minlength="6" lay-verify="range"
-                                           placeholder="密码" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="layui-form-item password-block">
-                                    <label class="layui-icon label-icon layui-icon-password"></label>
-                                    <input type="password" name="passwordB" lay-verify="required"
-                                           placeholder="密码确认" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="layui-form-item">
-                                    <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit
-                                            lay-filter="regist-submit" id="regist">
-                                        <i style="display: none"
-                                           class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
-                                        立即注册
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-form-item febs-tr">
-                            <a id="login-href">已有账号？马上登录</a>
-                        </div>
+                    <div class="input_outer">
+                        <span class="us_uer"></span>
+                        <input name="password" class="text" lay-verify="required" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
                     </div>
-                </div>
+                    <div class="input_outer_code">
+                        <span class="us_code"></span>
+                        <input type="text" maxlength="4" name="verifyCode" lay-verify="required" style="color: #FFFFFF !important"
+                               placeholder="验证码" class="text_code" autocomplete="off">
+                        <span class="span_code">
+                            <img class="codeimg" id="codeimg"/>
+                        </span>
+                    </div>
+                    <div class="mb2">
+                        <!--<a id = "sub" lay-filter="sub" class="act-but submit" href="javascript:;" style="color: #FFFFFF">登录</a>-->
+                        <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit
+                                lay-filter="login-submit" id="login" style="border-radius: 50px;height: 50px;line-height: 50px;font-size: 20px">
+                            <i style="display: none"
+                               class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                            立即登录
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 <script th:src="@{layui/layui.js}"></script>
+<script th:src="@{febs/TweenLite.min.js}"></script>
+<script th:src="@{febs/EasePack.min.js}"></script>
+<script th:src="@{febs/rAF.js}"></script>
+<script th:src="@{febs/demo-1.js}"></script>
 <script th:inline="javascript">
     var ctx = [[@{
         /}]];
@@ -121,7 +70,7 @@
             var $ = layui.jquery,
                 validate = layui.validate,
                 $view = $('#febs-login'),
-                type = 'login',
+                type = 'regist',
                 $loginDiv = $view.find('#login-div'),
                 $registDiv = $view.find('#regist-div');
 
@@ -134,7 +83,7 @@
                 var loading = $(this).find('.layui-icon');
                 if (loading.is(":visible")) return;
                 loading.show();
-                $.post(ctx + 'login', data.field, function (r) {
+                $.post(ctx + 'login', $("#loginForm").serialize(), function (r) {
                     if (r.code === 200) {
                         location.href = ctx + 'index';
                     } else {
@@ -203,7 +152,22 @@
             $(document).on('keydown', function (e) {
                 if (e.keyCode === 13) {
                     if (type === 'login')
-                        $view.find('#login').trigger("click");
+                        // $view.find('#login').trigger("click");
+                        form.on('submit(login-submit)', function (data) {
+                            var loading = $(this).find('.layui-icon');
+                            if (loading.is(":visible")) return;
+                            loading.show();
+                            $.post(ctx + 'login', $("#loginForm").serialize(), function (r) {
+                                if (r.code === 200) {
+                                    location.href = ctx + 'index';
+                                } else {
+                                    layer.msg(r.message);
+                                    loading.hide();
+                                    initCode();
+                                }
+                            });
+                            return false;
+                        });
                     if (type === 'regist')
                         $view.find('#regist').trigger("click");
                 }

@@ -51,6 +51,14 @@ public class User implements Serializable {
     public static final String TAB_OPEN = "1";
     // TAB关闭
     public static final String TAB_CLOSE = "0";
+    //用户类型：0-企业用户
+    public static final String USERTYPE_CORP = "0";
+    //用户类型：1-自由职业者
+    public static final String USERTYPE_FREELANCER = "1";
+    //用户类型：2-系统用户
+    public static final String USERTYPE_SYSTEM = "2";
+    //实名认证状态：2-认证成功
+    public static final String AUTH_STATUS_SUCCESS = "2";
 
 
     /**

@@ -7,6 +7,7 @@ import com.neefull.fsp.web.system.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author pei.wang
@@ -37,5 +38,18 @@ public interface UserMapper extends BaseMapper<User> {
      * @return List<User>
      */
     List<User> findUserDetail(@Param("user") User user);
+
+    /**
+     * 根据用户id更新用户实名状态
+     * @param userId 用户Id
+     * @param authStatus 实名状态
+     */
+    void updateUserAuthStatus(@Param("userId") Long userId, @Param("authStatus") String authStatus);
+
+    /**
+     * 首页统计图-用户分布情况
+     * @return 用户分布数据
+     */
+    List<Map<String, String>> getUserDistribution();
 
 }

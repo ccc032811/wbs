@@ -128,10 +128,17 @@
                 </div>
             </div>
         </div>
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div id="chart-right" style="height: 365px"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script data-th-inline="javascript" type="text/javascript">
-    layui.use(['apexcharts', 'febs', 'jquery', 'util'], function () {
+    layui.use(['apexcharts', 'febs', 'jquery', 'util','highcharts'], function () {
         var $ = layui.jquery,
             util = layui.util,
             $view = $('#febs-index'),
@@ -144,19 +151,7 @@
         function handleSuccess(data) {
             var hour = new Date().getHours();
             var time = hour < 6 ? '早上好' : (hour <= 11 ? '上午好' : (hour <= 13 ? '中午好' : (hour <= 18 ? '下午好' : '晚上好')));
-            var welcomeArr = [
-                '喝杯咖啡休息下吧☕',
-                '要不要和朋友打局LOL',
-                '今天又写了几个Bug呢',
-                '今天在群里吹水了吗',
-                '今天吃了什么好吃的呢',
-                '今天您微笑了吗😊',
-                '今天帮助别人了吗',
-                '准备吃些什么呢',
-                '周末要不要去看电影？'
-            ];
-            var index = Math.floor((Math.random() * welcomeArr.length));
-            var welcomeMessage = time + '，<a id="febs-index-user">' + currentUser.username + '</a>，' + welcomeArr[index];
+            var welcomeMessage = time + '，<a id="febs-index-user">' + currentUser.username + '</a>';
             $view.find('#today-ip').text(data.todayIp).end()
                 .find('#today-visit-count').text(data.todayVisitCount).end()
                 .find('#total-visit-count').text(data.totalVisitCount).end()
@@ -182,7 +177,6 @@
                 util.toDateString(new Date(currentTime), 'MM-dd')
             ];
 
-
             layui.each(lastTenDays, function (k, i) {
                 var contain = false;
                 layui.each(data.lastSevenUserVisitCount, function (key, item) {
@@ -201,6 +195,14 @@
                 });
                 if (!contain) totalVisitCount.push(0);
             });
+
+            var data_arr = new Array();
+            var list = data.userDistributionCount;
+            for(var i=0;i<list.length;i++){
+                data_arr[i]=new Array();
+                data_arr[i][0]=list[i].name;
+                data_arr[i][1]=list[i].y;
+            }
 
             var options = {
                 chart: {
@@ -271,6 +273,45 @@
                 document.querySelector("#chart"),
                 options
             ).render();
+
+            Highcharts.chart('chart-right', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: '用户分布情况',
+                    align: 'left',
+                    style: {
+                        color: 'rgba(0, 0, 0, .65)'
+                    }
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                colors: ['#90ed7d', '#f7a35c', '#8085e9',
+                    '#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'],
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Brands',
+                    colorByPoint: true,
+                    data: data_arr
+                }]
+            });
         }
 
         $view.on('click', '#febs-index-user', function () {

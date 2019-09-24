@@ -13,9 +13,13 @@ import com.neefull.fsp.web.common.entity.FebsConstant;
 import com.neefull.fsp.web.common.entity.QueryRequest;
 import com.neefull.fsp.web.common.utils.FebsUtil;
 import com.neefull.fsp.web.common.utils.SortUtil;
+import com.neefull.fsp.web.system.entity.AuthCorp;
+import com.neefull.fsp.web.system.entity.AuthFreelancer;
 import com.neefull.fsp.web.system.entity.User;
 import com.neefull.fsp.web.system.entity.UserRole;
 import com.neefull.fsp.web.system.mapper.UserMapper;
+import com.neefull.fsp.web.system.service.IAuthCorpService;
+import com.neefull.fsp.web.system.service.IAuthFreelancerService;
 import com.neefull.fsp.web.system.service.IUserRoleService;
 import com.neefull.fsp.web.system.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -24,10 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author pei.wang
@@ -40,6 +41,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private IUserRoleService userRoleService;
     @Autowired
     private ShiroRealm shiroRealm;
+    @Autowired
+    private IAuthFreelancerService authFreelancerService;
+    @Autowired
+    private IAuthCorpService authCorpService;
 
     @Override
     public User findByName(String username) {
@@ -182,19 +187,38 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
+    @Transactional
     public void examineUsers(String[] ids) {
         LambdaUpdateWrapper<User> lambdaQueryWrapper = new LambdaUpdateWrapper<>();
+        User currentUser = FebsUtil.getCurrentUser();
         User user = new User();
          for(String id:ids)
          {
              long lid = Long.valueOf(id);
-             user.setUserId(lid);
-             user.setModifyTime(new Date());
-             //状态变为实名
-             user.setStatus(User.STATUS_AUTH);
-             this.baseMapper.updateById(user);
+             this.baseMapper.updateUserAuthStatus(lid, User.AUTH_STATUS_SUCCESS);
+             //再去t_auth_freelancer表和t_auth_corp表更新实名状态
+             user = this.baseMapper.selectById(lid);
+             if(User.USERTYPE_FREELANCER.equals(user.getUserType())){  //自由职业者
+                 authFreelancerService.updateLancerAuthStatus(lid);
+             }else if(User.USERTYPE_CORP.equals(user.getUserType())){  //企业用户
+                 AuthCorp authCorp = new AuthCorp();
+                 authCorp.setUserId(lid);
+                 authCorp.setAuthStatus(User.AUTH_STATUS_SUCCESS);
+                 authCorp.setAuthType(AuthCorp.AUTH_TYPE_PERSON);
+                 authCorp.setAuthpassTime(new Date());
+                 authCorp.setAuthpassUser(currentUser.getUserId());
+                authCorpService.updateAuthCorpByUserId(authCorp);
+             }
          }
+    }
 
+    /**
+     * 首页统计图-用户分布情况
+     * @return 用户分布数据
+     */
+    @Override
+    public List<Map<String, String>> getUserDistribution() {
+        return this.baseMapper.getUserDistribution();
     }
 
     private void setUserRoles(User user, String[] roles) {

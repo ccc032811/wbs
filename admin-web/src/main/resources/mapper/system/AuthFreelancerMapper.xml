@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neefull.fsp.web.system.mapper.AuthFreelancerMapper">
+
+    <!-- 根据用户id获取企业用户认证信息 -->
+    <select id="findByUserId" parameterType="Long" resultType="com.neefull.fsp.web.system.entity.AuthFreelancer">
+        select *,case when auth_status = 0 then '待认证' when auth_status = 1 then '认证通过'
+        when auth_status = -1 then '认证失败' else '认证失败' END authStatusName
+        from t_auth_freelancer where user_id = #{userId}
+    </select>
+
+    <!-- 更新自由职业者用户实名认证状态 -->
+    <update id="updateLancerAuthStatus" parameterType="Long">
+      update t_auth_freelancer set auth_status = '2',modify_time=NOW() where user_id = #{userId}
+    </update>
+</mapper>
