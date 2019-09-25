@@ -12,7 +12,8 @@ public interface IProjectTeamService extends IService<ProjectTeam> {
      * 保存项目团队
      *
      * @param projectTeam
+     * @return
      */
-    int saveProjectTeam(ProjectTeam projectTeam);
+    boolean saveProjectTeam(ProjectTeam projectTeam);
 
 }

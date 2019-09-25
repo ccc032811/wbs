@@ -3,4 +3,18 @@
 
 <mapper namespace="com.neefull.fsp.app.mapper.AuthFreeMapper">
 
+    <select id="queryTeamUsers" resultType="AuthFreelancer">
+
+            SELECT
+            a.user_id,
+            b.real_name,
+            b.mobile,
+            a.create_time
+            FROM t_project_team a LEFT JOIN t_auth_freelancer b ON a.user_id = b.user_id
+            WHERE a.project_id=#{projectId}
+            AND a.team_state>0
+
+
+    </select>
+
 </mapper>

@@ -4,6 +4,7 @@ package com.neefull.fsp.app.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.neefull.fsp.app.entity.TaskAnnex;
 import com.neefull.fsp.app.entity.User;
 import com.neefull.fsp.app.entity.UserDetail;
 import com.neefull.fsp.app.entity.UserResume;

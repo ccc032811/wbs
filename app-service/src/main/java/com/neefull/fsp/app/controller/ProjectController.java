@@ -166,7 +166,7 @@ public class ProjectController {
 
     @RequestMapping(value = "/refreshProject", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    // @AuthToken
+    @AuthToken
     public String refreshProject(@RequestBody Project project, HttpServletRequest httpServletRequest) {
         if (null != (project = projectService.queryProjectDetail(project))) {
             return new FebsResponse().success().data(project).message("项目操作成功").toJson();

@@ -1,13 +1,13 @@
 package com.neefull.fsp.app.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.neefull.fsp.app.annotation.AuthToken;
-import com.neefull.fsp.app.entity.Project;
-import com.neefull.fsp.app.entity.ProjectEnrollPage;
-import com.neefull.fsp.app.entity.ProjectEnrollment;
-import com.neefull.fsp.app.entity.QueryProjectEncroll;
+import com.neefull.fsp.app.config.FspState;
+import com.neefull.fsp.app.entity.*;
 import com.neefull.fsp.app.mapper.ProjectEnrMapper;
 import com.neefull.fsp.app.mapper.ProjectMapper;
+import com.neefull.fsp.app.mapper.ProjectTeamMapper;
 import com.neefull.fsp.app.service.IProjectEnrService;
 import com.neefull.fsp.app.service.IProjectService;
 import com.neefull.fsp.app.service.IProjectTeamService;
@@ -15,6 +15,7 @@ import com.neefull.fsp.common.entity.FebsResponse;
 import com.neefull.fsp.common.entity.QueryRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -137,30 +138,8 @@ public class EnrollmentController {
     @AuthToken
     public String confirmSignUser(@RequestBody ProjectEnrollment projectEnrollment, HttpServletRequest httpServletRequest) {
         int result = projectEnrMapper.confirmSignUser(projectEnrollment);
-        if (result > 0) {
-            //如果项目状态为新建，则更新为进行中
-            Project project = new Project();
-            project.setId(projectEnrollment.getProjectId());
-            project = projectService.queryProject(project);
-            String currentState = String.valueOf(project.getCurrentState());
-            if (!"-1".equals(currentState) && "0".equals(currentState)) {
-                project.setCurrentState('2');
-                projectMapper.updateProjectState(project);
-
-            }
-            /*//TODO
-            //如果报名人数=2人的时候，生成项目团队
-            int signNum = project.getSignNum();
-            if (2 <= signNum) {
-                ProjectTeam projectTeam = new ProjectTeam();
-                projectTeam.setProjectId(project.getId());
-                projectTeam.setUserId(projectEnrollment.getUserId());
-                projectTeamService.saveProjectTeam(projectTeam);
-            }else if(signNum>2)
-            {
-
-            }*/
-
+        if ((result > 0)) {
+            createProjectTeam(projectEnrollment.getProjectId(), projectEnrollment.getUserId());
             return new FebsResponse().success().data("").message("确认用户报名成功").toJson();
         } else {
             return new FebsResponse().fail().data("").message("确认用户报名失败").toJson();
@@ -179,8 +158,6 @@ public class EnrollmentController {
     @AuthToken
     public String cancelSignup(@RequestBody ProjectEnrollment projectEnrollment, HttpServletRequest httpServletRequest) {
         long userId = (long) httpServletRequest.getAttribute("userId");
-        //TODO
-        // long userId = 9;
         projectEnrollment.setUserId(userId);
         if (projectEnrService.cancelSignup(projectEnrollment) > 0) {
             return new FebsResponse().success().data("").message("取消报名成功").toJson();
@@ -189,5 +166,36 @@ public class EnrollmentController {
         }
     }
 
+    /**
+     * 生成项目团队的规则，确认过用户，则在项目团队表中插入一个用户信息
+     * 此时状态是0 代表团队尚未生效，如果某个项目的报名人数>=2的时候，则
+     * 改变团队的状态，使之为1，查询项目团队，只查询为1 的即可
+     */
+    @Autowired
+    ProjectTeamMapper projectTeamMapper;
 
+    @Async
+    public boolean createProjectTeam(long projectId, long userId) {
+        Project project = new Project();
+        //查询项目名称
+        String projectName = projectMapper.getProjectName(projectId);
+        //生成项目团队信息
+        ProjectTeam projectTeam = new ProjectTeam();
+        projectTeam.setUserId(userId);
+        projectTeam.setProjectId(projectId);
+        projectTeam.setTeamName("[" + projectName + "]" + "工作团队");
+        boolean saveResult = projectTeamService.saveProjectTeam(projectTeam);
+        if (saveResult) {
+            //查询当前团队有效人数，如果>=2,则使团队生效
+            LambdaQueryWrapper<ProjectTeam> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.groupBy(ProjectTeam::getProjectId);
+            lambdaQueryWrapper.eq(ProjectTeam::getProjectId, projectId);
+            lambdaQueryWrapper.ne(ProjectTeam::getTeamState, -1);
+            int count = projectTeamMapper.selectCount(lambdaQueryWrapper);
+            if (count >= 2) {
+                projectTeamMapper.changeProjectTeamState(projectId, FspState.PROJECT_TEAM_STATE.Effective.getState());
+            }
+        }
+        return saveResult;
+    }
 }

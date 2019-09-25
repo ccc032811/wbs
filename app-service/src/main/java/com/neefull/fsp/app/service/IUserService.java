@@ -90,5 +90,10 @@ public interface IUserService extends IService<User> {
      */
     UserResume queryUserResume(UserResume userResume);
 
+    /**
+     * 查询用户详细信息
+     * @param userId
+     * @return
+     */
     UserDetail queryUserDetail(@Param("userId") long userId);
 }
