@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neefull.fsp.app.entity.Project;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 /**
@@ -60,4 +61,13 @@ public interface ProjectMapper extends BaseMapper<Project> {
      */
     @Update("update t_project set open_state=#{project.openState} where id=#{project.id}")
     int openCloseProject(@Param("project") Project project);
+
+    /**
+     * 获取项目名称
+     *
+     * @param projectId
+     * @return
+     */
+    @Select("select title from t_project where id=#{projectId}")
+    String getProjectName(@Param("projectId") long projectId);
 }

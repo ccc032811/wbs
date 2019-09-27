@@ -3,11 +3,14 @@ package com.neefull.fsp.app.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.config.AppConstant;
-import com.neefull.fsp.app.entity.User;
-import com.neefull.fsp.app.entity.UserDetail;
-import com.neefull.fsp.app.entity.UserResume;
+import com.neefull.fsp.app.config.FspState;
+import com.neefull.fsp.app.entity.*;
+import com.neefull.fsp.app.mapper.AuthFreeMapper;
+import com.neefull.fsp.app.mapper.ProjectTeamMapper;
+import com.neefull.fsp.app.service.ITaskAnnexService;
 import com.neefull.fsp.app.service.IUserService;
 import com.neefull.fsp.app.utils.RedisUtil;
+import com.neefull.fsp.common.config.QiniuConfig;
 import com.neefull.fsp.common.entity.FebsResponse;
 import com.neefull.fsp.common.util.AuthUtils;
 import com.neefull.fsp.common.util.EncryptUtil;
@@ -19,6 +22,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * @author pei.wang
@@ -330,6 +335,91 @@ public class UserController {
         } else {
             return new FebsResponse().success().data(null).message("未查询到该用户信息").toJson();
         }
+
+    }
+
+    /**
+     * 补充任务附件信息，包括任务描述，任务图片
+     *
+     * @return
+     */
+    @Autowired
+    ITaskAnnexService taskAnnexService;
+
+    @RequestMapping(value = "/fillTaskAnnex", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String fillTaskAnnex(@RequestBody List<TaskAnnex> taskAnnexs, HttpServletRequest httpRequest) {
+        boolean result = taskAnnexService.saveTaskAnnexBatch(taskAnnexs);
+        if (result) {
+            return new FebsResponse().success().data(result).message("保存成功").toJson();
+        } else {
+            return new FebsResponse().fail().data(result).message("保存失败").toJson();
+        }
+
+    }
+
+    /**
+     * 查询任务附件信息，包括任务描述，任务图片
+     *
+     * @return
+     */
+    @Autowired
+    QiniuConfig qiniuConfig;
+
+    @RequestMapping(value = "/queryTaskAnnex", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String queryTaskAnnex(@RequestBody TaskAnnex taskAnnex, HttpServletRequest httpRequest) {
+        List<TaskAnnex> taskAnnexList = taskAnnexService.queryTaskAnnex(taskAnnex);
+
+        if (taskAnnexList.size() > 0) {
+            taskAnnexList.stream().forEach(o -> {
+                try {
+                    o.setAnnexAddress(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, o.getAnnexAddress()));
+                } catch (UnsupportedEncodingException e) {
+                    log.error(e.getMessage());
+                }
+            });
+        }
+        return new FebsResponse().success().data(taskAnnexList).message("查询成功").toJson();
+
+    }
+
+    /**
+     * 我的团队信息信息查询
+     *
+     * @return
+     */
+    @Autowired
+    ProjectTeamMapper projectTeamMapper;
+    @Autowired
+    AuthFreeMapper authFreeMapper;
+
+    @RequestMapping(value = "/queryMyTeams", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String queryMyTeams(@RequestBody User user, HttpServletRequest httpRequest) {
+        if (null == user.getUserType()) {
+            return new FebsResponse().fail().data(null).message("用户类型参数不可为空").toJson();
+        }
+        List<ProjectTeam> projectTeamList = null;
+        long userId = (long) httpRequest.getAttribute("userId");
+        //long userId = user.getUserId();
+        //根据用户类型和UserId，来查询相关项目团队信息
+        int userTypeInt = Integer.valueOf(user.getUserType());
+        if (FspState.USER_TYPE.CORP.TYPE() == userTypeInt) {
+            projectTeamList = this.projectTeamMapper.corpTeams(userId);
+        } else if (FspState.USER_TYPE.FREELENCER.TYPE() == userTypeInt) {
+            projectTeamList = this.projectTeamMapper.freelencerTeams(userId);
+        }
+
+        if (projectTeamList.size() > 0) {
+            projectTeamList.stream().forEach(o -> {
+                o.setTeamUsers(this.authFreeMapper.queryTeamUsers(o.getProjectId()));
+            });
+        }
+        return new FebsResponse().fail().data(projectTeamList).message("团队信息查询成功").toJsonNoNull();
 
     }
 

@@ -3,6 +3,7 @@ package com.neefull.fsp.app.entity;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @TableName("t_project_team")
 public class ProjectTeam {
@@ -19,8 +20,12 @@ public class ProjectTeam {
     private Timestamp createTime;
     @TableField(value = "modify_time", fill = FieldFill.UPDATE)
     private Timestamp modifyTime;
+    @TableField("team_state")
+    private int teamState;
     @TableField("remark")
     private String remark;
+    @TableField(exist = false)
+    private List<AuthFreelancer> teamUsers;
 
     public long getId() {
         return id;
@@ -76,5 +81,21 @@ public class ProjectTeam {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public int getTeamState() {
+        return teamState;
+    }
+
+    public void setTeamState(int teamState) {
+        this.teamState = teamState;
+    }
+
+    public List<AuthFreelancer> getTeamUsers() {
+        return teamUsers;
+    }
+
+    public void setTeamUsers(List<AuthFreelancer> teamUsers) {
+        this.teamUsers = teamUsers;
     }
 }

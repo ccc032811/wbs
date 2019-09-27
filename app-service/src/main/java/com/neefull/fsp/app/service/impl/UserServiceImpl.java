@@ -61,7 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setTheme(User.THEME_BLACK);
         user.setIsTab(User.TAB_OPEN);
         //设置个默认用户
-        String default_username = SerialNumberUtil.getNextSerialNumber("游客");
+        String default_username = SerialNumberUtil.getNextSerialNumber("游客", 2);
         user.setUsername(default_username);
         // user.setPassword(EncryptUtil.encrypt(null == user.getPassword() ? User.DEFAULT_PASSWORD : user.getPassword(), AppConstant.AES_KEY));
         return save(user);

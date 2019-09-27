@@ -22,7 +22,7 @@ public class ProjectTeamServiceImpl extends ServiceImpl<ProjectTeamMapper, Proje
     ProjectTeamMapper projectTeamMapper;
 
     @Override
-    public int saveProjectTeam(ProjectTeam projectTeam) {
-        return this.baseMapper.insert(projectTeam);
+    public boolean saveProjectTeam(ProjectTeam projectTeam) {
+        return save(projectTeam);
     }
 }

@@ -6,7 +6,7 @@ server:
     context-path: /api/app
 spring:
   profiles:
-    active: dev
+    active: qa
 
   thymeleaf:
     cache: false
