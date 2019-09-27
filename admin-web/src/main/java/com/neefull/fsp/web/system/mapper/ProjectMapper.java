@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neefull.fsp.web.system.entity.Project;
+import com.neefull.fsp.web.system.entity.ProjectSettlement;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -20,6 +21,14 @@ public interface ProjectMapper extends BaseMapper<Project> {
      * @return 项目列表
      */
     IPage<Project> findProjectBySearch(Page page, @Param("project") Project project);
+
+    /**
+     * 查询某项目的结算人员列表
+     * @param page page元素
+     * @param settlement 结算人员对象，用于传递查询条件
+     * @return 结算人员列表
+     */
+    IPage<ProjectSettlement> findProjectSettleByProjectId(Page page, @Param("settlement") ProjectSettlement settlement);
 
     /**
      * 根据项目Id查询项目信息

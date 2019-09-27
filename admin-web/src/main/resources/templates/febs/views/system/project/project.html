@@ -8,27 +8,33 @@
                             <div class="layui-col-md10">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">用户名</label>
+                                        <label class="layui-form-label layui-form-label-sm">公司名</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="userName" autocomplete="off" class="layui-input">
+                                            <input type="text" name="corpName" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">项目标题</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="title" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">项目状态</label>
+                                        <div class="layui-input-inline">
+                                            <select name="currentState">
+                                                <option value="">请选择</option>
+                                                <option value="0">新建</option>
+                                                <option value="1">待结算</option>
+                                                <option value="2">进行中</option>
+                                                <option value="3">完结</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label layui-form-label-sm">服务类型</label>
                                         <div class="layui-input-inline">
                                             <input type="text" name="serviceType" autocomplete="off" class="layui-input">
-                                        </div>
-                                    </div>
-                                    <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">服务内容</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" name="serviceContent" autocomplete="off" class="layui-input">
-                                        </div>
-                                    </div>
-                                    <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">标题</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" name="title" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
@@ -69,11 +75,13 @@
     {{# } }}
 </script>
 <script type="text/html" id="user-option">
-    <span shiro:lacksPermission="project:view,project:update,project:delete">
+    <span shiro:lacksPermission="project:view,project:export,project:settle">
         <span class="layui-badge-dot febs-bg-orange"></span> 无权限
     </span>
     <a lay-event="detail" shiro:hasPermission="project:view"><i
             class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
+    <a lay-event="settle" shiro:hasPermission="project:settle"><i
+            class="layui-icon  febs-edit-area febs-blue">&#xe794;</i></a>
 </script>
 <!--头部工具栏-->
 <script type="text/html" id="toolbarCheck">
@@ -113,6 +121,10 @@
             if (layEvent === 'detail') {
                 febs.modal.view('项目信息', 'system/project/detail/' + data.id, {
                     area: $(window).width() <= 750 ? '95%' : '660px'
+                });
+            }else if(layEvent == 'settle'){
+                febs.modal.view(data.corpName + '&nbsp;-&nbsp;' + data.title, 'system/project/settle/' + data.id, {
+                    area: $(window).width() <= 750 ? '95%' : '80%'
                 });
             }
         });
@@ -155,10 +167,9 @@
                 defaultToolbar: ['filter','print'],   //显示默认的三个工具，需要哪个写哪个的单词'filter','exports','print'
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'userName', title: '用户名'},
-                    {field: 'title', title: '标题'},
+                    {field: 'corpName', title: '公司名', minWidth: 180},
+                    {field: 'title', title: '标题', minWidth: 180},
                     {field: 'serviceType', title: '服务类型'},
-                    {field: 'serviceContent', title: '服务内容'},
                     {title: '当前状态', templet: '#current-state'},
                     {field: 'createTime', title: '创建时间', minWidth: 180, sort: true},
                     {title: '操作', toolbar: '#user-option', minWidth: 180}
@@ -177,9 +188,9 @@
             return {
                 createTimeFrom: createTimeFrom,
                 createTimeTo: createTimeTo,
-                userName: $searchForm.find('input[name="userName"]').val().trim(),
+                corpName: $searchForm.find('input[name="corpName"]').val().trim(),
                 serviceType: $searchForm.find('input[name="serviceType"]').val().trim(),
-                serviceContent: $searchForm.find('input[name="serviceContent"]').val().trim(),
+                currentState: $searchForm.find("select[name='currentState']").val().trim(),
                 title: $searchForm.find('input[name="title"]').val().trim(),
                 invalidate_ie_cache: new Date()
             };

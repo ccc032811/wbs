@@ -27,11 +27,11 @@ public class Project implements Serializable {
     private long userId;
 
     /**
-     * 用户名
+     * 公司名称
      */
     @TableField(exist = false)
-    @ExcelField(value = "用户名")
-    private String userName;
+    @ExcelField(value = "公司名称")
+    private String corpName;
 
     /**
      * 标题
@@ -178,7 +178,7 @@ public class Project implements Serializable {
      */
     @TableField("current_state")
     @ExcelField(value = "当前状态")
-    private char currentState;
+    private String currentState;
 
     /**
      * 备注

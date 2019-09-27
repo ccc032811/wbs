@@ -27,19 +27,19 @@
         p.modify_user modifyUser,
         p.current_state currentState,
         p.remark remark,
-        u.username userName
+        u.corp_name corpName
         FROM t_project p
-        LEFT JOIN t_user u
+        LEFT JOIN t_auth_corp u
         ON p.user_id=u.user_id
         WHERE 1=1
-        <if test="project.userName != null and project.userName != ''">
-            AND u.username like concat('%',#{project.userName},'%')
+        <if test="project.corpName != null and project.corpName != ''">
+            AND u.corp_name like concat('%',#{project.corpName},'%')
         </if>
         <if test="project.serviceType != null and project.serviceType != ''">
             AND p.service_type like concat('%',#{project.serviceType},'%')
         </if>
-        <if test="project.serviceContent != null and project.serviceContent != ''">
-            AND p.service_content like concat('%',#{project.serviceContent},'%')
+        <if test="project.currentState != null and project.currentState != ''">
+            AND p.current_state = #{project.currentState}
         </if>
         <if test="project.title != null and project.title != ''">
             AND p.title like concat('%',#{project.title},'%')
@@ -51,15 +51,41 @@
             AND p.create_time &lt; #{project.createTimeTo}
         </if>
     </sql>
+
+    <!-- 项目列表页面检索 -->
     <select id="findProjectBySearch" parameterType="project" resultType="project">
         <include refid="findProjectBySearchSql"/>
     </select>
-    
+
+    <select id="findProjectSettleByProjectId" parameterType="com.neefull.fsp.web.system.entity.ProjectSettlement" resultType="com.neefull.fsp.web.system.entity.ProjectSettlement">
+        SELECT s.*,c.corp_name corpName,p.title projectName,f.real_name userName,u.mobile mobile,
+        DATE_FORMAT(s.settle_time,'%Y-%d-%m %T') settleTimeName,f.card_no cardNo,f.id_no idNo,
+        CASE WHEN s.state = 0 THEN '待结算' WHEN s.state = 1 THEN '结算完成' END stateName
+        FROM t_project_settlement s LEFT JOIN t_project p ON s.project_id=p.id
+        LEFT JOIN t_auth_corp c ON p.user_id=c.user_id
+        LEFT JOIN t_auth_freelancer f ON s.user_id=f.user_id
+        LEFT JOIN t_user u ON s.user_id=u.user_id
+        where s.project_id = #{settlement.projectId}
+        <if test="settlement.userName != null and settlement.userName != ''">
+            AND f.real_name like concat('%',#{settlement.userName},'%')
+        </if>
+        <if test="settlement.mobile != null and settlement.mobile != ''">
+            AND u.mobile like concat('%',#{settlement.mobile},'%')
+        </if>
+        <if test="settlement.cardNo != null and settlement.cardNo != ''">
+            AND f.card_no like concat('%',#{settlement.cardNo},'%')
+        </if>
+        <if test="settlement.state != null and settlement.state != ''">
+            AND s.state = #{settlement.state}
+        </if>
+    </select>
+
+    <!-- 根据项目Id查询项目信息 -->
     <select id="getProjectById" parameterType="String" resultType="com.neefull.fsp.web.system.entity.Project">
-      SELECT p.*,u.username userName,case when p.current_state = 0 then '新建' when p.current_state = 1 then '待结算'
+      SELECT p.*,u.corp_name corpName,case when p.current_state = 0 then '新建' when p.current_state = 1 then '待结算'
       when p.current_state = 2 then '进行中' when p.current_state = 3 then '完结'
       when p.current_state = -1 then '已删除' END currentStateName,DATE_FORMAT(p.create_time,'%Y-%d-%m %T') createTimeFrom
-      FROM t_project p LEFT JOIN t_user u ON p.user_id=u.user_id
+      FROM t_project p LEFT JOIN t_auth_corp u ON p.user_id=u.user_id
       WHERE p.id = #{projectId}
     </select>
 </mapper>

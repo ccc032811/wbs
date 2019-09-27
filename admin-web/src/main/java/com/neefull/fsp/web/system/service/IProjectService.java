@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.common.entity.QueryRequest;
 import com.neefull.fsp.web.system.entity.Project;
+import com.neefull.fsp.web.system.entity.ProjectSettlement;
 
 /**
  * @program: fsp
@@ -19,6 +20,14 @@ public interface IProjectService extends IService<Project> {
      * @return page元素
      */
     IPage<Project> findProjectBySearch(Project project, QueryRequest request);
+
+    /**
+     * 查询某项目的结算人员列表
+     * @param settlement
+     * @param request
+     * @return
+     */
+    IPage<ProjectSettlement> findProjectSettleByProjectId(ProjectSettlement settlement, QueryRequest request);
 
     /**
      * 根据项目Id查询项目信息

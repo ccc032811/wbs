@@ -7,6 +7,7 @@ import com.neefull.fsp.web.common.entity.FebsConstant;
 import com.neefull.fsp.web.common.entity.QueryRequest;
 import com.neefull.fsp.web.common.utils.SortUtil;
 import com.neefull.fsp.web.system.entity.Project;
+import com.neefull.fsp.web.system.entity.ProjectSettlement;
 import com.neefull.fsp.web.system.mapper.ProjectMapper;
 import com.neefull.fsp.web.system.service.IProjectService;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,19 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         Page<Project> page = new Page<>(request.getPageNum(), request.getPageSize());
         SortUtil.handlePageSort(request, page, "id", FebsConstant.ORDER_ASC, false);
         return this.baseMapper.findProjectBySearch(page, project);
+    }
+
+    /**
+     * 查询某项目的结算人员列表
+     * @param settlement
+     * @param request
+     * @return
+     */
+    @Override
+    public IPage<ProjectSettlement> findProjectSettleByProjectId(ProjectSettlement settlement, QueryRequest request) {
+        Page<ProjectSettlement> page = new Page<>(request.getPageNum(), request.getPageSize());
+        SortUtil.handlePageSort(request, page, "settle_time", FebsConstant.ORDER_ASC, false);
+        return this.baseMapper.findProjectSettleByProjectId(page, settlement);
     }
 
     /**

@@ -5,10 +5,7 @@ import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsConstant;
 import com.neefull.fsp.web.common.utils.DateUtil;
 import com.neefull.fsp.web.common.utils.FebsUtil;
-import com.neefull.fsp.web.system.entity.AuthCorp;
-import com.neefull.fsp.web.system.entity.AuthFreelancer;
-import com.neefull.fsp.web.system.entity.Project;
-import com.neefull.fsp.web.system.entity.User;
+import com.neefull.fsp.web.system.entity.*;
 import com.neefull.fsp.web.system.service.IAuthCorpService;
 import com.neefull.fsp.web.system.service.IAuthFreelancerService;
 import com.neefull.fsp.web.system.service.IProjectService;
@@ -141,6 +138,13 @@ public class ViewController extends BaseController {
     public String systemProjectDetail(@PathVariable String id, Model model) {
         projectDetailModel(id, model, true);
         return FebsUtil.view("system/project/projectDetail");
+    }
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "system/project/settle/{id}")
+    @RequiresPermissions("project:settle")
+    public String systemProjectSettle(@PathVariable String id, Model model) {
+        model.addAttribute("projectId", id);
+        return FebsUtil.view("system/project/projectSettle");
     }
     //**************************************项目管理模块 end *********************************************
 
