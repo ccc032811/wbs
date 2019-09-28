@@ -52,12 +52,11 @@ public class FebsResponse extends HashMap<String, Object> {
         return this;
     }
 
-    public String toJson()
-    {
-        return JSONObject.toJSONStringWithDateFormat(this,"yyyy-MM-dd HH:mm:SS", SerializerFeature.WriteMapNullValue);
+    public String toJson() {
+        return JSONObject.toJSONStringWithDateFormat(this, "yyyy-MM-dd HH:mm:SS", SerializerFeature.WriteMapNullValue);
     }
-    public String toJsonNoNull()
-    {
-        return JSONObject.toJSONStringWithDateFormat(this,"yyyy-MM-dd HH:mm:SS");
+
+    public String toJsonNoNull() {
+        return JSONObject.toJSONStringWithDateFormat(this, "yyyy-MM-dd HH:mm:SS");
     }
 }

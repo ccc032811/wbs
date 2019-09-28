@@ -17,12 +17,12 @@ public abstract class SerialNumberUtil {
      * @param prefix
      * @return
      */
-    public static String getNextSerialNumber(String prefix) {
+    public static String getNextSerialNumber(String prefix, int length) {
         //获取当前时间，到毫秒级别,最大限度避免出现重复
-        String currentMi = new SimpleDateFormat("YYYYMMddHHmmssSS").format(new Date());
+        String currentMi = new SimpleDateFormat("YYYYMMddHHmmss").format(new Date());
         //生成随机数
-        String randomNum = getRandom(6);
-        return (null == prefix ? "RLM" + currentMi + randomNum : prefix + currentMi + randomNum);
+        String randomNum = getRandom(length);
+        return (null == prefix ? "游客" + currentMi + randomNum : prefix + currentMi + randomNum);
     }
 
     /**
@@ -38,6 +38,25 @@ public abstract class SerialNumberUtil {
             val += String.valueOf(random.nextInt(10));
         }
         return val;
+    }
+
+    /**
+     * 顺序编号生成器
+     *
+     * @param equipmentType
+     * @param equipmentNo
+     * @return
+     */
+    public synchronized static String getNewNo(String equipmentType, String equipmentNo) {
+
+        String newEquipmentNo = equipmentNo;
+
+        if (equipmentNo != null && !equipmentNo.isEmpty()) {
+            long newEquipment = Long.parseLong(equipmentNo) + 1;
+            newEquipmentNo = String.format(equipmentType + "%08d", newEquipment);
+        }
+
+        return newEquipmentNo;
     }
 
 }

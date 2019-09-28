@@ -36,11 +36,6 @@ public class HttpUtils {
 
     private static final int TIMEOUT_IN_MILLIONS = 5000;
 
-    public interface CallBack {
-        void onRequestComplete(HttpResponse result) throws IOException;
-    }
-
-
     /**
      * 异步的Get请求
      *
@@ -372,5 +367,9 @@ public class HttpUtils {
         } catch (NoSuchAlgorithmException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public interface CallBack {
+        void onRequestComplete(HttpResponse result) throws IOException;
     }
 }

@@ -4,12 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 @Slf4j
-public abstract  class RegxCheckUtil {
+public abstract class RegxCheckUtil {
 
 
     /**
      * 检验手机号码
+     *
      * @param phone
      * @return
      */
@@ -20,7 +22,7 @@ public abstract  class RegxCheckUtil {
         } else {
             Pattern p = Pattern.compile(regex);
             Matcher m = p.matcher(phone);
-            return  m.matches();
+            return m.matches();
         }
     }
 }
