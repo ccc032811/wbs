@@ -2,21 +2,22 @@ package com.neefull.fsp.app.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.app.entity.TaskAnnex;
+import com.neefull.fsp.app.entity.TaskAnnexDetail;
 
 import java.util.List;
 
 /**
  * @author pei.wang
  */
-public interface ITaskAnnexService extends IService<TaskAnnex> {
+public interface ITaskAnnexService extends IService<TaskAnnexDetail> {
 
     /**
      * 保存用户完成任务附件
      *
-     * @param annex
+     * @param taskAnnex
      * @return
      */
-    boolean saveTaskAnnexBatch(List<TaskAnnex> annex);
+    int completedTask(TaskAnnex taskAnnex);
 
     /**
      * 查询用户完成任务附件信息
@@ -24,5 +25,5 @@ public interface ITaskAnnexService extends IService<TaskAnnex> {
      * @param annex
      * @return
      */
-    List<TaskAnnex> queryTaskAnnex(TaskAnnex annex);
+    TaskAnnex queryTaskAnnex(TaskAnnex annex);
 }

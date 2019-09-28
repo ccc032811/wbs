@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neefull.fsp.app.entity.Project;
+import com.neefull.fsp.app.entity.ProjectModel;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -63,11 +64,18 @@ public interface ProjectMapper extends BaseMapper<Project> {
     int openCloseProject(@Param("project") Project project);
 
     /**
-     * 获取项目名称
+     * 获取项目当前信息
      *
      * @param projectId
      * @return
      */
-    @Select("select title from t_project where id=#{projectId}")
-    String getProjectName(@Param("projectId") long projectId);
+    @Select("select * from t_project where id=#{projectId}  LIMIT 1")
+    Project getProjectInfo(@Param("projectId") long projectId);
+
+    /**
+     * 查询项目最大编号
+     * @return
+     */
+    @Select("SELECT IF(ISNULL(MAX(id)),0,MAX(id)) AS maxid FROM t_project")
+    long getMaxId();
 }

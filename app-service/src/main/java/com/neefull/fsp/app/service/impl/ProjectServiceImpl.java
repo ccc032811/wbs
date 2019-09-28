@@ -10,6 +10,7 @@ import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.app.mapper.ProjectMapper;
 import com.neefull.fsp.app.service.IProjectService;
 import com.neefull.fsp.common.entity.QueryRequest;
+import com.neefull.fsp.common.util.SerialNumberUtil;
 import com.neefull.fsp.common.util.SortUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,6 +26,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     @Override
     @Transactional
     public int saveProject(Project project) {
+        //查询最大项目编号
+        long maxId = this.baseMapper.getMaxId();
+        //设置项目编号
+        String pno = SerialNumberUtil.getNewNo("PNO.", String.valueOf(maxId));
+        project.setPno(pno);
         return this.baseMapper.insert(project);
     }
 

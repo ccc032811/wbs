@@ -33,7 +33,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     public String jsonHandler(HttpServletRequest request, Exception e) {
         log(e, request);
-        return new FebsResponse().error().message(e.getMessage()).data(null).toJson();
+        return new FebsResponse().error().message("操作发生未知异常").data(null).toJson();
     }
 
     private void log(Exception ex, HttpServletRequest request) {

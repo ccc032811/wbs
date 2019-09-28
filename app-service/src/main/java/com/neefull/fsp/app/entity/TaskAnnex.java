@@ -3,43 +3,32 @@ package com.neefull.fsp.app.entity;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
 
 @TableName("t_task_annex")
 public class TaskAnnex implements Serializable {
 
-    @TableId(type = IdType.AUTO)
-    private long id;
-    @TableField("user_id")
-    private long userId;
+    @TableId(value = "annex_id", type = IdType.AUTO)
+    private long annexId;
     @TableField("project_id")
     private long projectId;
-    @TableField("annex_address")
-    private String annexAddress;
+    @TableField("user_id")
+    private long userId;
     @TableField("annex_desc")
     private String annexDesc;
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private java.sql.Timestamp createTime;
-    @TableField("remark")
-    private String remark;
+    @TableField(exist = false)
+    private List<TaskAnnexDetail> taskAnnexDetailList;
 
-
-    public long getId() {
-        return id;
+    public long getAnnexId() {
+        return annexId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setAnnexId(long annexId) {
+        this.annexId = annexId;
     }
-
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
 
     public long getProjectId() {
         return projectId;
@@ -49,15 +38,13 @@ public class TaskAnnex implements Serializable {
         this.projectId = projectId;
     }
 
-
-    public String getAnnexAddress() {
-        return annexAddress;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setAnnexAddress(String annexAddress) {
-        this.annexAddress = annexAddress;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
-
 
     public String getAnnexDesc() {
         return annexDesc;
@@ -67,22 +54,19 @@ public class TaskAnnex implements Serializable {
         this.annexDesc = annexDesc;
     }
 
+    public List<TaskAnnexDetail> getTaskAnnexDetailList() {
+        return taskAnnexDetailList;
+    }
 
-    public java.sql.Timestamp getCreateTime() {
+    public void setTaskAnnexDetailList(List<TaskAnnexDetail> taskAnnexDetailList) {
+        this.taskAnnexDetailList = taskAnnexDetailList;
+    }
+
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(java.sql.Timestamp createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
-
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
 }

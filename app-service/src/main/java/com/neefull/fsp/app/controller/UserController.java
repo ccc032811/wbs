@@ -339,22 +339,25 @@ public class UserController {
     }
 
     /**
-     * 补充任务附件信息，包括任务描述，任务图片
+     * 用户完成任务
      *
      * @return
      */
     @Autowired
     ITaskAnnexService taskAnnexService;
 
-    @RequestMapping(value = "/fillTaskAnnex", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @RequestMapping(value = "/completedTask", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     @AuthToken
-    public String fillTaskAnnex(@RequestBody List<TaskAnnex> taskAnnexs, HttpServletRequest httpRequest) {
-        boolean result = taskAnnexService.saveTaskAnnexBatch(taskAnnexs);
-        if (result) {
-            return new FebsResponse().success().data(result).message("保存成功").toJson();
+    public String completedTask(@RequestBody TaskAnnex taskAnnex, HttpServletRequest httpRequest) {
+        long userId = (long) httpRequest.getAttribute("userId");
+        taskAnnex.setUserId(userId);
+        //保存所有明细信息和任务附件主信息
+        int result = taskAnnexService.completedTask(taskAnnex);
+        if (result > 0) {
+            return new FebsResponse().success().data(result).message("提交任务成功").toJson();
         } else {
-            return new FebsResponse().fail().data(result).message("保存失败").toJson();
+            return new FebsResponse().fail().data(result).message("提交任务失败").toJson();
         }
 
     }
@@ -371,10 +374,13 @@ public class UserController {
     @ResponseBody
     @AuthToken
     public String queryTaskAnnex(@RequestBody TaskAnnex taskAnnex, HttpServletRequest httpRequest) {
-        List<TaskAnnex> taskAnnexList = taskAnnexService.queryTaskAnnex(taskAnnex);
+        //获取主键信息
+        taskAnnex = taskAnnexService.queryTaskAnnex(taskAnnex);
+        List<TaskAnnexDetail> taskAnnexDetails = taskAnnex.getTaskAnnexDetailList();
+        if (taskAnnexDetails.size() > 0) {
 
-        if (taskAnnexList.size() > 0) {
-            taskAnnexList.stream().forEach(o -> {
+            taskAnnexDetails.stream().forEach(o ->
+            {
                 try {
                     o.setAnnexAddress(qiniuConfig.getOssManager().getDownUrl(qiniuConfig, o.getAnnexAddress()));
                 } catch (UnsupportedEncodingException e) {
@@ -382,7 +388,7 @@ public class UserController {
                 }
             });
         }
-        return new FebsResponse().success().data(taskAnnexList).message("查询成功").toJson();
+        return new FebsResponse().success().data(taskAnnex).message("查询成功").toJson();
 
     }
 
@@ -421,6 +427,26 @@ public class UserController {
         }
         return new FebsResponse().fail().data(projectTeamList).message("团队信息查询成功").toJsonNoNull();
 
+    }
+
+    /**
+     * 用户更换手机号码
+     *
+     * @param user
+     * @param httpRequest
+     * @return
+     */
+    @RequestMapping(value = "/replacePhoneNum", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String replacePhoneNum(@RequestBody User user, HttpServletRequest httpRequest) {
+        long userId = (long) httpRequest.getAttribute("userId");
+        user.setUserId(userId);
+        if (userService.replacePhoneNum(user)) {
+            return new FebsResponse().success().data("").message("更新成功").toJsonNoNull();
+        } else {
+            return new FebsResponse().fail().data("").message("更新失败").toJsonNoNull();
+        }
     }
 
 

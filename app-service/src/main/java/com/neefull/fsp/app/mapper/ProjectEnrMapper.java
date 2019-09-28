@@ -40,4 +40,7 @@ public interface ProjectEnrMapper extends BaseMapper<ProjectEnrollment> {
 
     @Delete("DELETE from  t_project_enrollment  WHERE project_id=#{projectEnrollment.projectId} AND user_id=#{projectEnrollment.userId}")
     int cancelSignup(@Param("projectEnrollment") ProjectEnrollment projectEnrollment);
+
+    @Update("UPDATE t_project_enrollment t SET t.project_id=#{newId} WHERE t.project_id=#{oldId} AND t.current_state='1' ")
+    boolean updateProjectId(@Param("oldId")long id, @Param("newId")long newId);
 }

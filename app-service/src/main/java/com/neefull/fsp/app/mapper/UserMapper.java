@@ -4,7 +4,6 @@ package com.neefull.fsp.app.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.neefull.fsp.app.entity.TaskAnnex;
 import com.neefull.fsp.app.entity.User;
 import com.neefull.fsp.app.entity.UserDetail;
 import com.neefull.fsp.app.entity.UserResume;
@@ -52,7 +51,7 @@ public interface UserMapper extends BaseMapper<User> {
     List<User> findUserDetail(@Param("user") User user);
 
     /**
-     * 重置密码
+     * 根据手机号码，重置密码
      *
      * @param
      */
@@ -60,7 +59,7 @@ public interface UserMapper extends BaseMapper<User> {
     boolean forgetPassword(@Param("user") User user);
 
     /**
-     * 重置密码
+     * 根据用户id,重置密码
      *
      * @param
      */
@@ -106,5 +105,11 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     UserDetail queryUserDetail(@Param("userId") long userId);
+
+    /**
+     * 用户更换手机号码
+     */
+    @Update("update t_user set DESCRIPTION=CONCAT('用户更换手机号:',mobile),mobile= #{user.mobile} where user_id=#{user.userId}")
+    boolean replacePhoneNum(@Param("user") User user);
 
 }

@@ -7,19 +7,44 @@
           t.user_id,
           t.settle_amount,
           t.state,
-          t.settle_time,
+          t.create_time,
           t.settled_time,
           t.settle_user,
           t.real_amount,
           t.is_model,
           t.reamark
     </sql>
-    <select id="querySettleUsers" parameterType="projectSettlement" resultType="projectSettlement">
+    <select id="querySettleUsers" resultType="ProjectSettlement">
         select b.USERNAME,b.MOBILE,b.SSEX,
         <include refid="settle_base_column"/>
         from t_project_settlement t left join t_user b
         on t.user_id=b.USER_ID
-        where t.project_id=#{projectSettlement.projectId}
+        where t.state=0
+        and t.project_id=#{projectSettlementWapper.projectId}
+    </select>
+
+    <insert id="saveSettleSummary">
+        INSERT INTO t_settle_summary (
+         project_id,
+         amount,
+         is_model
+        )
+        VALUES
+       (
+        #{projectSettlementWapper.projectId},
+        #{projectSettlementWapper.totalAmount},
+        #{projectSettlementWapper.isModel}
+        )
+
+    </insert>
+
+    <select id="querySettleModel" resultType="ProjectSettlement">
+        select
+        <include refid="settle_base_column"/>
+        from t_project_settlement t
+        where t.is_model=1
+        and t.project_id=#{modelId}
+        and t.user_id=#{userId}
     </select>
 
 </mapper>

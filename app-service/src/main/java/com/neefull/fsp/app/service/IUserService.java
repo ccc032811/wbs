@@ -96,4 +96,12 @@ public interface IUserService extends IService<User> {
      * @return
      */
     UserDetail queryUserDetail(@Param("userId") long userId);
+
+    /**
+     * 更换用户手机号码
+     * @param user
+     * @return
+     */
+    boolean replacePhoneNum(User user);
+
 }

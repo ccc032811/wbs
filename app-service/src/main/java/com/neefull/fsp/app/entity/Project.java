@@ -9,6 +9,8 @@ public class Project implements Serializable {
 
     @TableId(type = IdType.AUTO)
     private long id;
+    @TableField("project_no")
+    private String pno;
     @TableId("user_id")
     private long userId;
     @TableField("service_type")
@@ -65,6 +67,8 @@ public class Project implements Serializable {
     private long signUser;
     @TableField(exist = false)
     private String createUserName;
+    @TableField("model_id")
+    private long modelId;
 
     public long getId() {
         return id;
@@ -317,5 +321,21 @@ public class Project implements Serializable {
 
     public void setOpenState(int openState) {
         this.openState = openState;
+    }
+
+    public String getPno() {
+        return pno;
+    }
+
+    public void setPno(String pno) {
+        this.pno = pno;
+    }
+
+    public long getModelId() {
+        return modelId;
+    }
+
+    public void setModelId(long modelId) {
+        this.modelId = modelId;
     }
 }

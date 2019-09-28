@@ -43,7 +43,7 @@ public class ProjectController {
     @ResponseBody
     @AuthToken
     public String publishProject(@RequestBody Project project, HttpServletRequest httpServletRequest) {
-        long userId = (long) httpServletRequest.getAttribute("userId");
+         long userId = (long) httpServletRequest.getAttribute("userId");
         project.setUserId(userId);
         project.setCreateUser(userId);
         project.setCurrentState('0');
@@ -98,7 +98,7 @@ public class ProjectController {
     public String personalHome(@RequestBody ProjectPage projectPage, HttpServletRequest httpServletRequest) {
         long userId = (long) httpServletRequest.getAttribute("userId");
         Project project = projectPage.getProject();
-        project.setSignUser(userId);
+        project.setSignUser(30);
         QueryRequest queryRequest = projectPage.getQueryRequest();
         if (null == project || null == queryRequest) {
             return new FebsResponse().fail().data(null).message("参数不合法").toJson();

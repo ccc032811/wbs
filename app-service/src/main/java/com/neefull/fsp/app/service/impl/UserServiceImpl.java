@@ -128,4 +128,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public UserDetail queryUserDetail(long userId) {
         return this.baseMapper.queryUserDetail(userId);
     }
+
+    @Override
+    @Transactional
+    public boolean replacePhoneNum(User user) {
+        return userMapper.replacePhoneNum(user);
+    }
+
+
 }

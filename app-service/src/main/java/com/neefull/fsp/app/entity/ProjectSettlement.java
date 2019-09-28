@@ -5,39 +5,39 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import java.io.Serializable;
+import java.sql.Timestamp;
 
 @TableName("t_project_settlement")
-public class ProjectSettlement implements Serializable {
-    @TableId(type = IdType.AUTO)
+public class ProjectSettlement {
+
+    @TableId(value = "id", type = IdType.AUTO)
     private long id;
     @TableField("project_id")
     private long projectId;
     @TableField("user_id")
     private long userId;
+    @TableField("settle_amount")
+    private String settleAmount;
+    @TableField("real_amount")
+    private String realAmount;
+    @TableField("state")
+    private int state;
+    @TableField("create_time")
+    private java.sql.Timestamp createTime;
+    @TableField("settled_time")
+    private java.sql.Timestamp settledTime;
+    @TableField("settle_user")
+    private long settleUser;
+    @TableField("is_model")
+    private int isModel;
+    @TableField("reamark")
+    private String reamark;
     @TableField(exist = false)
     private String userName;
     @TableField(exist = false)
     private String ssex;
     @TableField(exist = false)
     private String mobile;
-    @TableField("settle_amount")
-    private double settleAmount;
-    @TableField("real_amount")
-    private double realAmount;
-    @TableField("is_model")
-    private int isModel;
-    @TableField("state")
-    private String state;
-    @TableField("settle_time")
-    private java.sql.Timestamp settleTime;
-    @TableField("settled_time")
-    private java.sql.Timestamp settledTime;
-    @TableField("settle_user")
-    private long settleUser;
-    @TableField("reamark")
-    private String reamark;
-
 
     public long getId() {
         return id;
@@ -66,32 +66,40 @@ public class ProjectSettlement implements Serializable {
     }
 
 
-    public double getSettleAmount() {
+    public String getSettleAmount() {
         return settleAmount;
     }
 
-    public void setSettleAmount(double settleAmount) {
+    public void setSettleAmount(String settleAmount) {
         this.settleAmount = settleAmount;
     }
 
 
-    public String getState() {
+    public String getRealAmount() {
+        return realAmount;
+    }
+
+    public void setRealAmount(String realAmount) {
+        this.realAmount = realAmount;
+    }
+
+
+    public int getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 
 
-    public java.sql.Timestamp getSettleTime() {
-        return settleTime;
+    public Timestamp getCreateTime() {
+        return createTime;
     }
 
-    public void setSettleTime(java.sql.Timestamp settleTime) {
-        this.settleTime = settleTime;
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
     }
-
 
     public java.sql.Timestamp getSettledTime() {
         return settledTime;
@@ -111,6 +119,15 @@ public class ProjectSettlement implements Serializable {
     }
 
 
+    public int getIsModel() {
+        return isModel;
+    }
+
+    public void setIsModel(int isModel) {
+        this.isModel = isModel;
+    }
+
+
     public String getReamark() {
         return reamark;
     }
@@ -127,35 +144,19 @@ public class ProjectSettlement implements Serializable {
         this.userName = userName;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public double getRealAmount() {
-        return realAmount;
-    }
-
-    public void setRealAmount(double realAmount) {
-        this.realAmount = realAmount;
-    }
-
-    public int getIsModel() {
-        return isModel;
-    }
-
-    public void setIsModel(int isModel) {
-        this.isModel = isModel;
-    }
-
     public String getSsex() {
         return ssex;
     }
 
     public void setSsex(String ssex) {
         this.ssex = ssex;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

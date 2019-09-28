@@ -176,14 +176,13 @@ public class EnrollmentController {
 
     @Async
     public boolean createProjectTeam(long projectId, long userId) {
-        Project project = new Project();
         //查询项目名称
-        String projectName = projectMapper.getProjectName(projectId);
+        Project project = projectMapper.getProjectInfo(projectId);
         //生成项目团队信息
         ProjectTeam projectTeam = new ProjectTeam();
         projectTeam.setUserId(userId);
         projectTeam.setProjectId(projectId);
-        projectTeam.setTeamName("[" + projectName + "]" + "工作团队");
+        projectTeam.setTeamName("[" + project.getTitle() + "]" + "工作团队");
         boolean saveResult = projectTeamService.saveProjectTeam(projectTeam);
         if (saveResult) {
             //查询当前团队有效人数，如果>=2,则使团队生效
