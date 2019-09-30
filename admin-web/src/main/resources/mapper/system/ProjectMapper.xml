@@ -60,12 +60,12 @@
     <select id="findProjectSettleByProjectId" parameterType="com.neefull.fsp.web.system.entity.ProjectSettlement" resultType="com.neefull.fsp.web.system.entity.ProjectSettlement">
         SELECT s.*,c.corp_name corpName,p.title projectName,f.real_name userName,u.mobile mobile,
         DATE_FORMAT(s.settle_time,'%Y-%d-%m %T') settleTimeName,f.card_no cardNo,f.id_no idNo,
-        CASE WHEN s.state = 0 THEN '待结算' WHEN s.state = 1 THEN '结算完成' END stateName
+        CASE WHEN s.state = 1 THEN '结算中' WHEN s.state = 2 THEN '结算完成' END stateName
         FROM t_project_settlement s LEFT JOIN t_project p ON s.project_id=p.id
         LEFT JOIN t_auth_corp c ON p.user_id=c.user_id
         LEFT JOIN t_auth_freelancer f ON s.user_id=f.user_id
         LEFT JOIN t_user u ON s.user_id=u.user_id
-        where s.project_id = #{settlement.projectId}
+        where s.project_id = #{settlement.projectId} and (s.state = '1' or s.state = '2')
         <if test="settlement.userName != null and settlement.userName != ''">
             AND f.real_name like concat('%',#{settlement.userName},'%')
         </if>

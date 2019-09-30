@@ -148,6 +148,34 @@ public class ViewController extends BaseController {
     }
     //**************************************项目管理模块 end *********************************************
 
+    //**************************************用户管理模块 start *********************************************
+    @GetMapping(FebsConstant.VIEW_PREFIX + "system/sysUser")
+    @RequiresPermissions("sysuser:view")
+    public String sysUser() {
+        return FebsUtil.view("system/user/sysuser");
+    }
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "system/sysUser/add")
+    @RequiresPermissions("sysuser:add")
+    public String sysUserAdd() {
+        return FebsUtil.view("system/user/sysuserAdd");
+    }
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "system/sysUser/detail/{username}")
+    @RequiresPermissions("sysuser:view")
+    public String sysUserDetail(@PathVariable String username, Model model) {
+        resolveSysUserModel(username, model, true);
+        return FebsUtil.view("system/user/sysuserDetail");
+    }
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "system/sysUser/update/{username}")
+    @RequiresPermissions("sysuser:update")
+    public String sysUserUpdate(@PathVariable String username, Model model) {
+        resolveSysUserModel(username, model, false);
+        return FebsUtil.view("system/user/sysuserUpdate");
+    }
+    //**************************************用户管理模块 end *********************************************
+
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/role")
     @RequiresPermissions("role:view")
     public String systemRole() {
@@ -201,6 +229,19 @@ public class ViewController extends BaseController {
             model.addAttribute("authLancer", new AuthFreelancer());
             model.addAttribute("authCorp", new AuthCorp());
         }
+        if (transform) {
+            String ssex = user.getSex();
+            if (User.SEX_MALE.equals(ssex)) user.setSex("男");
+            else if (User.SEX_FEMALE.equals(ssex)) user.setSex("女");
+            else user.setSex("保密");
+        }
+        if (user.getLastLoginTime() != null)
+            model.addAttribute("lastLoginTime", DateUtil.getDateFormat(user.getLastLoginTime(), DateUtil.FULL_TIME_SPLIT_PATTERN));
+    }
+
+    private void resolveSysUserModel(String username, Model model, Boolean transform) {
+        User user = userService.findByName(username);
+        model.addAttribute("user", user);
         if (transform) {
             String ssex = user.getSex();
             if (User.SEX_MALE.equals(ssex)) user.setSex("男");

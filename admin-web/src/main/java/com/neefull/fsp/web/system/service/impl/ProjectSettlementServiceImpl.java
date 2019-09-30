@@ -72,11 +72,11 @@ public class ProjectSettlementServiceImpl extends ServiceImpl<ProjectSettlementM
                     row.getCell(11).setCellType(CellType.STRING);
 
                     String stateFlag = row.getCell(11).getStringCellValue().substring(2);
-                    //只有结算标识为1的才可以录入数据库
+                    //只有结算标识为2的才可以录入数据库
                     if(StringUtils.isEmpty(stateFlag)){
                         break;
                     }
-                    if("0".equals(stateFlag)){
+                    if(!"2".equals(stateFlag)){
                         filterCount++;
                         continue;
                     }
@@ -85,7 +85,7 @@ public class ProjectSettlementServiceImpl extends ServiceImpl<ProjectSettlementM
 
                     //判断该用户是否已结算过
                     String settleFlag = this.baseMapper.getSettleByProjectIdAndUserId(projectId, userId);
-                    if("1".equals(settleFlag)){
+                    if("2".equals(settleFlag)){
                         filterCount++;
                         continue;
                     }else{

@@ -167,12 +167,12 @@
                 defaultToolbar: ['filter','print'],   //显示默认的三个工具，需要哪个写哪个的单词'filter','exports','print'
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'corpName', title: '公司名', minWidth: 180},
+                    {field: 'corpName', title: '公司名', minWidth: 200},
                     {field: 'title', title: '标题', minWidth: 180},
-                    {field: 'serviceType', title: '服务类型'},
+                    {field: 'serviceType', title: '服务类型', minWidth: 180},
                     {title: '当前状态', templet: '#current-state'},
-                    {field: 'createTime', title: '创建时间', minWidth: 180, sort: true},
-                    {title: '操作', toolbar: '#user-option', minWidth: 180}
+                    {field: 'createTime', title: '创建时间', sort: true},
+                    {title: '操作', toolbar: '#user-option'}
                 ]]
             });
         }

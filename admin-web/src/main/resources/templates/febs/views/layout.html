@@ -58,9 +58,8 @@
     <!-- 侧边菜单 -->
     <div class="layui-side" id="app-sidebar">
         <div class="layui-side-scroll">
-            <div class="layui-logo" style="cursor: pointer">
-                <img data-th-src="@{febs/images/logo.png}">
-                <span>新酬付</span>
+            <div id="logo-img" style="cursor: pointer;text-align:center;margin:10px">
+                <img data-th-src="@{febs/images/febs-logo.png}" width="145px" height="30px">
             </div>
             <script
                     type="text/html"
@@ -116,7 +115,7 @@
 
         $view.find('#user-avatar').attr('src', ctx + "febs/images/avatar/" + currentUser.avatar);
 
-        $view.on('click', '.layui-logo', function () {
+        $view.on('click', '#logo-img', function () {
             febs.navigate("/index");
         });
 

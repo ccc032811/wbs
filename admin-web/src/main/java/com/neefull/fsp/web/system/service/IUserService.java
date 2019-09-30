@@ -31,12 +31,29 @@ public interface IUserService extends IService<User> {
     IPage<User> findUserDetail(User user, QueryRequest request);
 
     /**
+     * 查找用户详细信息--系统用户
+     *
+     * @param request request
+     * @param user    用户对象，用于传递查询条件
+     * @return IPage
+     */
+    IPage<User> findSysUserDetail(User user, QueryRequest request);
+
+    /**
      * 通过用户名查找用户详细信息
      *
      * @param username 用户名
      * @return 用户信息
      */
     User findUserDetail(String username);
+
+    /**
+     * 通过用户名查找用户详细信息--系统用户
+     *
+     * @param username 用户名
+     * @return 用户信息
+     */
+    User findSysUserDetail(String username);
 
     /**
      * 更新用户登录时间

@@ -110,14 +110,13 @@ public class ProjectSettlement implements Serializable {
      * 备注
      */
     @TableField("reamark")
-    @ExcelField(value = "备注")
     private String reamark;
 
     /**
-     * 结算状态 0 待结算 1 结算完成
+     * 结算状态 0 待结算 1 结算中 2 结算完成 -1 已删除
      */
     @TableField("state")
-    @ExcelField(value = "结算状态[0:待结算]",writeConverter = CustomizeFieldWriteConverter.class)
+    @ExcelField(value = "结算状态(2:完成结算)",writeConverter = CustomizeFieldWriteConverter.class)
     @Size(max = 3, message = "{noMoreThan}")
     private String state;
 
@@ -140,7 +139,7 @@ public class ProjectSettlement implements Serializable {
     private long settleUser;
 
     /**
-     * 结算状态中文 0 待结算 1 结算完成
+     * 结算状态中文 0 待结算 1 结算中 2 结算完成 -1 已删除
      */
     @TableField(exist = false)
     private String stateName;

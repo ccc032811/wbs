@@ -59,10 +59,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
+    public IPage<User> findSysUserDetail(User user, QueryRequest request) {
+        Page<User> page = new Page<>(request.getPageNum(), request.getPageSize());
+        SortUtil.handlePageSort(request, page, "userId", FebsConstant.ORDER_ASC, false);
+        return this.baseMapper.findSysUserDetailPage(page, user);
+    }
+
+    @Override
     public User findUserDetail(String username) {
         User param = new User();
         param.setUsername(username);
         List<User> users = this.baseMapper.findUserDetail(param);
+        return CollectionUtils.isNotEmpty(users) ? users.get(0) : null;
+    }
+
+    @Override
+    public User findSysUserDetail(String username) {
+        User param = new User();
+        param.setUsername(username);
+        List<User> users = this.baseMapper.findSysUserDetail(param);
         return CollectionUtils.isNotEmpty(users) ? users.get(0) : null;
     }
 
@@ -83,6 +98,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setTheme(User.THEME_BLACK);
         user.setIsTab(User.TAB_OPEN);
         user.setPassword(EncryptUtil.encrypt(User.DEFAULT_PASSWORD,FebsConstant.AES_KEY));
+        user.setUserType(User.USERTYPE_SYSTEM);
         save(user);
         // 保存用户角色
         String[] roles = user.getRoleId().split(StringPool.COMMA);
