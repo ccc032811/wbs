@@ -4,6 +4,7 @@ package com.neefull.fsp.app.controller;
 import com.neefull.fsp.app.annotation.AuthToken;
 import com.neefull.fsp.app.entity.ProjectSettlement;
 import com.neefull.fsp.app.entity.ProjectSettlementWapper;
+import com.neefull.fsp.app.entity.SettledRecord;
 import com.neefull.fsp.app.service.IProjectSettleService;
 import com.neefull.fsp.common.entity.FebsResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -79,6 +80,42 @@ public class ProjectSettleController {
         } else {
             return new FebsResponse().fail().data("").message("确认结算支付失败").toJson();
         }
+    }
+
+    /**
+     * 自由职业者查询结算信息
+     *
+     * @param settledRecord
+     * @param httpServletRequest
+     * @return
+     **/
+
+    @RequestMapping(value = "/queryUserSettlement", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String queryUserSettlement(@RequestBody SettledRecord settledRecord, HttpServletRequest httpServletRequest) {
+        long userId = (long) httpServletRequest.getAttribute("userId");
+        settledRecord.setUserId(userId);
+        List<SettledRecord> settledRecords = projectSettleService.queryUserSettlement(settledRecord);
+        return new FebsResponse().success().data(settledRecords).message("查询成功").toJson();
+    }
+
+    /**
+     * 企业查询结算信息
+     *
+     * @param settledRecord
+     * @param httpServletRequest
+     * @return
+     **/
+
+    @RequestMapping(value = "/queryCorpSettlement", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String queryCorpSettlement(@RequestBody SettledRecord settledRecord, HttpServletRequest httpServletRequest) {
+        long userId = (long) httpServletRequest.getAttribute("userId");
+        settledRecord.setUserId(userId);
+        List<SettledRecord> settledRecords = projectSettleService.queryCorpSettlement(settledRecord);
+        return new FebsResponse().success().data(settledRecords).message("查询成功").toJson();
     }
 
 }

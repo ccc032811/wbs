@@ -3,6 +3,7 @@ package com.neefull.fsp.app.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.app.entity.ProjectSettlement;
 import com.neefull.fsp.app.entity.ProjectSettlementWapper;
+import com.neefull.fsp.app.entity.SettledRecord;
 
 import java.util.List;
 
@@ -27,5 +28,13 @@ public interface IProjectSettleService extends IService<ProjectSettlement> {
      */
     List<ProjectSettlement> querySettleUsers(ProjectSettlementWapper projectSettlementWapper);
 
+    /**
+     * 查询企业结算记录
+     * @param settledRecord
+     * @return
+     */
 
+    List<SettledRecord> queryCorpSettlement(SettledRecord settledRecord);
+
+    List<SettledRecord> queryUserSettlement(SettledRecord settledRecord);
 }

@@ -197,4 +197,17 @@ public class EnrollmentController {
         }
         return saveResult;
     }
+
+    /**
+     * 联系商家
+     *
+     * @return
+     */
+    @RequestMapping(value = "/queryCorpLink", method = RequestMethod.POST, produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    @AuthToken
+    public String queryCorpLink(@RequestBody AuthCorp authCorp) {
+        String linkNo = projectEnrMapper.queryCorpLinkNo(authCorp);
+        return new FebsResponse().success().data(linkNo).message("查询成功").toJson();
+    }
 }

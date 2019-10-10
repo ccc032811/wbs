@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.app.entity.ProjectSettlement;
 import com.neefull.fsp.app.entity.ProjectSettlementWapper;
+import com.neefull.fsp.app.entity.SettledRecord;
 import com.neefull.fsp.app.mapper.ProjectEnrMapper;
 import com.neefull.fsp.app.mapper.ProjectMapper;
 import com.neefull.fsp.app.mapper.ProjectSettleMapper;
@@ -73,5 +74,15 @@ public class ProjectSettleServiceImpl extends ServiceImpl<ProjectSettleMapper, P
     @Override
     public List<ProjectSettlement> querySettleUsers(ProjectSettlementWapper projectSettlementWapper) {
         return projectSettleMapper.querySettleUsers(projectSettlementWapper);
+    }
+
+    @Override
+    public List<SettledRecord> queryCorpSettlement(SettledRecord settledRecord) {
+        return projectSettleMapper.queryCorpSettlement(settledRecord);
+    }
+
+    @Override
+    public List<SettledRecord> queryUserSettlement(SettledRecord settledRecord) {
+        return projectSettleMapper.queryUserSettlement(settledRecord);
     }
 }

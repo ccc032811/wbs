@@ -4,11 +4,13 @@ package com.neefull.fsp.app.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.neefull.fsp.app.entity.AuthCorp;
 import com.neefull.fsp.app.entity.Project;
 import com.neefull.fsp.app.entity.ProjectEnrollment;
 import com.neefull.fsp.app.entity.QueryProjectEncroll;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -43,4 +45,7 @@ public interface ProjectEnrMapper extends BaseMapper<ProjectEnrollment> {
 
     @Update("UPDATE t_project_enrollment t SET t.project_id=#{newId} WHERE t.project_id=#{oldId} AND t.current_state='1' ")
     boolean updateProjectId(@Param("oldId")long id, @Param("newId")long newId);
+
+    @Select("select link_no from t_auth_corp where user_id=#{authCorp.userId}")
+    String queryCorpLinkNo(@Param("authCorp") AuthCorp authCorp);
 }

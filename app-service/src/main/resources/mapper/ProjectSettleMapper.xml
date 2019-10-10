@@ -46,5 +46,43 @@
         and t.project_id=#{modelId}
         and t.user_id=#{userId}
     </select>
+    <!--查询结算记录-->
+    <sql id="settledRecord">
+        SELECT
+        a.project_id projectId,
+        b.title,
+        b.project_no projectNo,
+        a.user_id userId,
+        c.username userName,
+        c.mobile,
+        a.real_amount settledAount,
+        a.create_time settleTime,
+        a.settled_time settledTime
+        FROM
+        t_project_settlement a
+        LEFT JOIN t_project b ON a.project_id=b.id
+        LEFT JOIN t_user c ON a.user_id=c.USER_ID
+        WHERE a.state = 2
+        /*结算月份*/
+        <if test="settledRecord.settledTime != null and settledRecord.settledTime !='' ">
+            AND DATE_FORMAT (a.settled_time, '%Y%m') = #{settledRecord.settledTime}
+        </if>
+    </sql>
+
+    <select id="queryCorpSettlement" resultType="SettledRecord">
+        <include refid="settledRecord"></include>
+        <if test="settledRecord.userId != null and settledRecord.userId !='' ">
+            AND a.project_id IN
+            (select id from t_project where user_id=#{settledRecord.userId})
+        </if>
+
+    </select>
+
+    <select id="queryUserSettlement" resultType="SettledRecord">
+        <include refid="settledRecord"></include>
+        <if test="settledRecord.userId != null and settledRecord.userId !='' ">
+            AND a.user_id = #{settledRecord.userId}
+        </if>
+    </select>
 
 </mapper>

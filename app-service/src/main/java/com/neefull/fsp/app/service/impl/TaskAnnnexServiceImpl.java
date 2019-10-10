@@ -3,14 +3,8 @@ package com.neefull.fsp.app.service.impl;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.neefull.fsp.app.entity.Project;
-import com.neefull.fsp.app.entity.ProjectSettlement;
-import com.neefull.fsp.app.entity.TaskAnnex;
-import com.neefull.fsp.app.entity.TaskAnnexDetail;
-import com.neefull.fsp.app.mapper.ProjectMapper;
-import com.neefull.fsp.app.mapper.ProjectSettleMapper;
-import com.neefull.fsp.app.mapper.TaskAnnexDetailMapper;
-import com.neefull.fsp.app.mapper.TaskAnnexMapper;
+import com.neefull.fsp.app.entity.*;
+import com.neefull.fsp.app.mapper.*;
 import com.neefull.fsp.app.service.ITaskAnnexService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +31,8 @@ public class TaskAnnnexServiceImpl extends ServiceImpl<TaskAnnexDetailMapper, Ta
     ProjectMapper projectMapper;
     @Autowired
     ProjectSettleMapper projectSettleMapper;
+    @Autowired
+    ProjectEnrMapper projectEnrMapper;
 
     @Override
     @Transactional
@@ -69,6 +65,12 @@ public class TaskAnnnexServiceImpl extends ServiceImpl<TaskAnnexDetailMapper, Ta
         }
         projectSettleMapper.insert(projectSettlemet);
 
+        //stp5.设置用户报名状态为待结算
+        ProjectEnrollment projectEnrollment = new ProjectEnrollment();
+        projectEnrollment.setProjectId(project.getId());
+        projectEnrollment.setUserId(taskAnnex.getUserId());
+        projectEnrollment.setCurrentState(2);//待结算状态
+        projectEnrMapper.confirmSignUser(projectEnrollment);
         return result;
     }
 

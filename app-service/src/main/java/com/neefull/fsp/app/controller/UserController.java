@@ -425,7 +425,7 @@ public class UserController {
                 o.setTeamUsers(this.authFreeMapper.queryTeamUsers(o.getProjectId()));
             });
         }
-        return new FebsResponse().fail().data(projectTeamList).message("团队信息查询成功").toJsonNoNull();
+        return new FebsResponse().success().data(projectTeamList).message("团队信息查询成功").toJsonNoNull();
 
     }
 

@@ -98,7 +98,7 @@ public class ProjectController {
     public String personalHome(@RequestBody ProjectPage projectPage, HttpServletRequest httpServletRequest) {
         long userId = (long) httpServletRequest.getAttribute("userId");
         Project project = projectPage.getProject();
-        project.setSignUser(30);
+        project.setSignUser(userId);
         QueryRequest queryRequest = projectPage.getQueryRequest();
         if (null == project || null == queryRequest) {
             return new FebsResponse().fail().data(null).message("参数不合法").toJson();
