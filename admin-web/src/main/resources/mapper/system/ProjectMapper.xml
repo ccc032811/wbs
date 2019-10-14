@@ -59,7 +59,8 @@
 
     <select id="findProjectSettleByProjectId" parameterType="com.neefull.fsp.web.system.entity.ProjectSettlement" resultType="com.neefull.fsp.web.system.entity.ProjectSettlement">
         SELECT s.*,c.corp_name corpName,p.title projectName,f.real_name userName,u.mobile mobile,
-        DATE_FORMAT(s.settle_time,'%Y-%d-%m %T') settleTimeName,f.card_no cardNo,f.id_no idNo,
+        f.card_no cardNo,f.id_no idNo,
+        DATE_FORMAT(s.create_time,'%Y-%d-%m %T') settleTimeName,
         CASE WHEN s.state = 1 THEN '结算中' WHEN s.state = 2 THEN '结算完成' END stateName
         FROM t_project_settlement s LEFT JOIN t_project p ON s.project_id=p.id
         LEFT JOIN t_auth_corp c ON p.user_id=c.user_id

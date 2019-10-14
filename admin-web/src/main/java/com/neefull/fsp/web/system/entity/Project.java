@@ -177,7 +177,7 @@ public class Project implements Serializable {
      * 当前状态 0新建 1 待结算  2进行中  3完结 -1已删除
      */
     @TableField("current_state")
-    @ExcelField(value = "当前状态")
+    @ExcelField(value = "当前状态" , writeConverterExp = "0=新建,1=待结算,2=结算中,3=完结")
     private String currentState;
 
     /**

@@ -13,15 +13,10 @@ import com.neefull.fsp.web.common.entity.FebsConstant;
 import com.neefull.fsp.web.common.entity.QueryRequest;
 import com.neefull.fsp.web.common.utils.FebsUtil;
 import com.neefull.fsp.web.common.utils.SortUtil;
-import com.neefull.fsp.web.system.entity.AuthCorp;
-import com.neefull.fsp.web.system.entity.AuthFreelancer;
-import com.neefull.fsp.web.system.entity.User;
-import com.neefull.fsp.web.system.entity.UserRole;
+import com.neefull.fsp.web.system.entity.*;
 import com.neefull.fsp.web.system.mapper.UserMapper;
-import com.neefull.fsp.web.system.service.IAuthCorpService;
-import com.neefull.fsp.web.system.service.IAuthFreelancerService;
-import com.neefull.fsp.web.system.service.IUserRoleService;
-import com.neefull.fsp.web.system.service.IUserService;
+import com.neefull.fsp.web.system.service.*;
+import com.neefull.fsp.web.system.utils.MsgContentUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +40,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private IAuthFreelancerService authFreelancerService;
     @Autowired
     private IAuthCorpService authCorpService;
+    @Autowired
+    private IMsgInfoService msgInfoService;
+    @Autowired
+    private IMsgUserService msgUserService;
 
     @Override
     public User findByName(String username) {
@@ -208,6 +207,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         LambdaUpdateWrapper<User> lambdaQueryWrapper = new LambdaUpdateWrapper<>();
         User currentUser = FebsUtil.getCurrentUser();
         User user = new User();
+
+        //新增一条消息
+        MsgInfo msgInfo = MsgContentUtils.getAuthSuccessMsgInfo();
+        msgInfo = msgInfoService.saveReturnPrimaryKey(msgInfo);  //插入操作生成消息id
+
          for(String id:ids)
          {
              long lid = Long.valueOf(id);
@@ -225,6 +229,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                  authCorp.setAuthpassUser(currentUser.getUserId());
                 authCorpService.updateAuthCorpByUserId(authCorp);
              }
+            //给每个用户关联上消息id
+            msgUserService.saveMsgUserByUserIdAndMsgId(msgInfo.getId(), lid);
          }
     }
 

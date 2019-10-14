@@ -187,10 +187,10 @@ public class User implements Serializable {
 
     @TableField(exist = false)
     private String roleName;
-    @ExcelField(value = "用户类型")
+    @ExcelField(value = "用户类型"  , writeConverterExp = "0=企业用户,1=自由职业者")
     @TableField("USER_TYPE")
     private String userType;
-    @ExcelField(value = "用户实名状态")
+    @ExcelField(value = "用户实名状态"  , writeConverterExp = "0=未实名,1=审核中,2=已实名,-1=审核失败")
     @TableField("AUTH_STATUS")
     private String authStatus;
 

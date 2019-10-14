@@ -17,7 +17,7 @@ public interface IProjectSettlementService extends IService<ProjectSettlement> {
      * @param userId
      * @param projectId
      */
-    void settleUserAmount(String userId, String projectId);
+    void settleUserAmount(String userId, String projectId, String projectName, String amount,String settleUserId);
 
     /**
      * 批量导入结算人员名单

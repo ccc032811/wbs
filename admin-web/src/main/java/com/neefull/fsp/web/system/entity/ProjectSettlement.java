@@ -123,8 +123,8 @@ public class ProjectSettlement implements Serializable {
     /**
      * 发起结算时间
      */
-    @TableField("settle_time")
-    private Date settleTime;
+    @TableField("create_time")
+    private Date createTime;
 
     /**
      * 完成结算时间

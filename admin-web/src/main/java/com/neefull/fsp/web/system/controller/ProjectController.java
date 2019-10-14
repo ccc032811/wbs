@@ -5,8 +5,10 @@ import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.entity.QueryRequest;
 import com.neefull.fsp.web.common.exception.FebsException;
+import com.neefull.fsp.web.common.utils.FebsUtil;
 import com.neefull.fsp.web.system.entity.Project;
 import com.neefull.fsp.web.system.entity.ProjectSettlement;
+import com.neefull.fsp.web.system.entity.User;
 import com.neefull.fsp.web.system.service.IProjectService;
 import com.neefull.fsp.web.system.service.IProjectSettlementService;
 import com.wuwenze.poi.ExcelKit;
@@ -104,7 +106,10 @@ public class ProjectController extends BaseController {
     @RequiresPermissions("project:settle")
     public FebsResponse settleUser(String userId, String projectId) throws FebsException {
         try {
-            projectSettlementService.settleUserAmount(userId, projectId);
+            Project project = projectService.getProjectById(projectId);
+            User cuttentUser = FebsUtil.getCurrentUser();   //当前登录的用户
+            projectSettlementService.settleUserAmount(userId, projectId, project.getTitle(),
+                    project.getAmount(), cuttentUser.getUserId().toString());
             return new FebsResponse().success();
         } catch (Exception e) {
             String message = "操作失败";

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neefull.fsp.web.system.mapper.MsgInfoMapper">
+
+    <insert id="saveReturnPrimaryKey" useGeneratedKeys="true" keyProperty="id" parameterType="com.neefull.fsp.web.system.entity.MsgInfo">
+      insert into flp_slave.t_msg_info(title,content,msg_type,create_time,modify_time)
+      VALUES (#{title,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},#{msgType,jdbcType=VARCHAR},NOW(),NOW())
+    </insert>
+</mapper>

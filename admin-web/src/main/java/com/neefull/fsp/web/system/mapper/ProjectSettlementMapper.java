@@ -16,7 +16,7 @@ public interface ProjectSettlementMapper extends BaseMapper<ProjectSettlement> {
      * @param userId
      * @param projectId
      */
-    void settleUserAmount(@Param("userId") String userId, @Param("projectId") String projectId);
+    void settleUserAmount(@Param("userId") String userId, @Param("projectId") String projectId, @Param("settleUserId") String settleUserId);
 
     /**
      * 根据项目id和人员id查询该用户是否对该项目有过结算标记

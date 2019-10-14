@@ -26,7 +26,7 @@
                                                 <option value="">请选择</option>
                                                 <option value="0">新建</option>
                                                 <option value="1">待结算</option>
-                                                <option value="2">进行中</option>
+                                                <option value="2">结算中</option>
                                                 <option value="3">完结</option>
                                             </select>
                                         </div>
@@ -64,7 +64,7 @@
 <script type="text/html" id="current-state">
     {{# if(d.currentState == '3'){d.currentState = '完结'}}
         <span class="layui-badge febs-tag-green">{{ d.currentState }}</span>
-    {{# } else if(d.currentState == '2'){d.currentState = '进行中'}}
+    {{# } else if(d.currentState == '2'){d.currentState = '结算中'}}
         <span class="layui-badge febs-tag-orange">{{ d.currentState }}</span>
     {{# } else if(d.currentState == '1'){d.currentState = '待结算'}}
         <span class="layui-badge febs-tag-blue">{{ d.currentState }}</span>
@@ -80,8 +80,10 @@
     </span>
     <a lay-event="detail" shiro:hasPermission="project:view"><i
             class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
+    {{# if(d.currentState == '2'){d.currentState = '结算中'}}
     <a lay-event="settle" shiro:hasPermission="project:settle"><i
             class="layui-icon  febs-edit-area febs-blue">&#xe794;</i></a>
+    {{# } }}
 </script>
 <!--头部工具栏-->
 <script type="text/html" id="toolbarCheck">

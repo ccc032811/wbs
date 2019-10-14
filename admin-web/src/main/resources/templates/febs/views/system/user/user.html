@@ -110,8 +110,10 @@
             class="layui-icon febs-edit-area febs-green">&#xe7a5;</i></a>
     <a lay-event="edit" shiro:hasPermission="user:update"><i
             class="layui-icon febs-edit-area febs-blue">&#xe7a4;</i></a>
+    {{# if(d.authStatus != '2'){d.authStatus = '实名'}}
     <a lay-event="examine" shiro:hasPermission="user:examine"><i
             class="layui-icon  febs-edit-area febs-blue">&#xe63c;</i></a>
+    {{# } }}
 </script>
 <!--头部工具栏-->
 <script type="text/html" id="toolbarCheck">
