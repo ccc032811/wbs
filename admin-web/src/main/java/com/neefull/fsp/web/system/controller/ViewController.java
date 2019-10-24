@@ -126,6 +126,12 @@ public class ViewController extends BaseController {
         return FebsUtil.view("system/user/userUpdate");
     }
 
+    @GetMapping(FebsConstant.VIEW_PREFIX + "system/sendMessage")
+    @RequiresPermissions("message:send")
+    public String sendMessage() {
+        return FebsUtil.view("system/message/sendMessage");
+    }
+
     //**************************************项目管理模块 start *********************************************
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/project")
     @RequiresPermissions("project:view")

@@ -2,6 +2,7 @@ package com.neefull.fsp.web.system.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+import org.springframework.data.annotation.Transient;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -50,4 +51,7 @@ public class MsgInfo implements Serializable {
      */
     @TableField(value = "modify_time")
     private Date modifyTime;
+
+    @Transient
+    private String userIds;
 }

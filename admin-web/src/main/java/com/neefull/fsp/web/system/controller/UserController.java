@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +52,11 @@ public class UserController extends BaseController {
     public FebsResponse userList(User user, QueryRequest request) {
         Map<String, Object> dataTable = getDataTable(this.userService.findUserDetail(user, request));
         return new FebsResponse().success().data(dataTable);
+    }
+
+    @GetMapping("userLst")
+    public FebsResponse userLst(User user, QueryRequest request) {
+        return new FebsResponse().success().data(this.userService.getAllUseUserLst());
     }
 
     @Log("新增用户")

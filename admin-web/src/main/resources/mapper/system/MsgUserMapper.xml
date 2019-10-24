@@ -7,4 +7,11 @@
         VALUES(#{msgId,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{readState,jdbcType=INTEGER},
         #{deleteState,jdbcType=INTEGER},NOW(),NOW())
     </insert>
+
+    <insert id="saveByMsgIdAndUserList">
+        insert into flp_slave.t_msg_user(msg_id,user_id,read_state,delete_state,create_time,modify_time) VALUES
+        <foreach collection="list" index="index" separator="," item="item">
+            (#{msgId,jdbcType=INTEGER},#{item.userId,jdbcType=INTEGER},'0','0',NOW(),NOW())
+        </foreach>
+    </insert>
 </mapper>

@@ -103,6 +103,10 @@
     <select id="findUserDetailPage" parameterType="user" resultType="user">
         <include refid="findUserDetailSql"/>
     </select>
+    
+    <select id="getAllUseUserLst" resultType="com.neefull.fsp.web.system.entity.User">
+        select * from t_user where user_type <![CDATA[ <> ]]> '2'
+    </select>
 
     <select id="findSysUserDetailPage" parameterType="user" resultType="user">
         <include refid="findSysUserDetailSql"/>

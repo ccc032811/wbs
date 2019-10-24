@@ -11,4 +11,5 @@ import com.neefull.fsp.web.system.entity.MsgInfo;
 public interface MsgInfoMapper extends BaseMapper<MsgInfo> {
 
     int saveReturnPrimaryKey(MsgInfo msgInfo);
+
 }

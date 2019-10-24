@@ -32,6 +32,12 @@ public interface UserMapper extends BaseMapper<User> {
     IPage<User> findUserDetailPage(Page page, @Param("user") User user);
 
     /**
+     * 获取所有的使用用户(不包括系统管理员)
+     * @return
+     */
+    List<User> getAllUseUserLst();
+
+    /**
      * 查找用户详细信息--系统用户
      *
      * @param page 分页对象

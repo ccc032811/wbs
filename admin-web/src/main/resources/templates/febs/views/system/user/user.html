@@ -119,6 +119,7 @@
 <script type="text/html" id="toolbarCheck">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="batchCheck">批量审核</button>
+        <button class="layui-btn layui-btn-sm" lay-event="sendMessage">发送消息</button>
         <button class="layui-btn layui-btn-sm" lay-event="passwordReset">密码重置</button>
         <button class="layui-btn layui-btn-sm" lay-event="exportExcel">导出Excel</button>
     </div>
@@ -217,7 +218,13 @@
                     params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
                     params.pageNum = $view.find(".layui-laypage-em").next().html();
                     febs.download(ctx + 'user/excel', params, '用户信息表.xlsx');
-                    break
+                    break;
+
+                case 'sendMessage':
+                    febs.modal.view('发送消息', 'system/sendMessage', {
+                        area: $(window).width() <= 750 ? '95%' : '80%'
+                    });
+                    break;
             }
         });
 

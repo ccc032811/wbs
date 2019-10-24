@@ -16,4 +16,11 @@ public interface IMsgInfoService extends IService<MsgInfo> {
      * @return
      */
     MsgInfo saveReturnPrimaryKey(MsgInfo msgInfo);
+
+    /**
+     * 发送消息
+     * @param msgInfo
+     * @return
+     */
+    boolean sendMsg(MsgInfo msgInfo);
 }

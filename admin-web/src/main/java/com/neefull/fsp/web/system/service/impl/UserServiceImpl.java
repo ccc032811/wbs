@@ -57,6 +57,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return this.baseMapper.findUserDetailPage(page, user);
     }
 
+    /**
+     * 获取所有的使用用户(不包括系统管理员)
+     * @return
+     */
+    @Override
+    public List<User> getAllUseUserLst() {
+        return this.baseMapper.getAllUseUserLst();
+    }
+
     @Override
     public IPage<User> findSysUserDetail(User user, QueryRequest request) {
         Page<User> page = new Page<>(request.getPageNum(), request.getPageSize());

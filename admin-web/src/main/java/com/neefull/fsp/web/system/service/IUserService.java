@@ -31,6 +31,12 @@ public interface IUserService extends IService<User> {
     IPage<User> findUserDetail(User user, QueryRequest request);
 
     /**
+     * 获取所有的使用用户(不包括系统管理员)
+     * @return
+     */
+    List<User> getAllUseUserLst();
+
+    /**
      * 查找用户详细信息--系统用户
      *
      * @param request request
