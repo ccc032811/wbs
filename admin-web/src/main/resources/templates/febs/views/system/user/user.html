@@ -121,11 +121,15 @@
         <button class="layui-btn layui-btn-sm" lay-event="batchCheck">批量审核</button>
         <button class="layui-btn layui-btn-sm" lay-event="sendMessage">发送消息</button>
         <button class="layui-btn layui-btn-sm" lay-event="passwordReset">密码重置</button>
+        <button class="layui-btn layui-btn-sm" lay-event="lancerTemp">自由职业者模板</button>
+        <button class="layui-btn layui-btn-sm" lay-event="inportLancer" id="btn_inportLancer">导入自由职业者</button>
+        <button class="layui-btn layui-btn-sm" lay-event="corpTemp">企业用户模板</button>
+        <button class="layui-btn layui-btn-sm" lay-event="inportCorp" id="btn_inportCorp">导入企业用户</button>
         <button class="layui-btn layui-btn-sm" lay-event="exportExcel">导出Excel</button>
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
-    layui.use(['dropdown', 'jquery', 'laydate', 'form', 'table', 'febs', 'treeSelect'], function () {
+    layui.use(['dropdown', 'jquery', 'laydate', 'form', 'table', 'febs', 'treeSelect', 'upload'], function () {
         var $ = layui.jquery,
             laydate = layui.laydate,
             febs = layui.febs,
@@ -133,6 +137,7 @@
             table = layui.table,
             treeSelect = layui.treeSelect,
             dropdown = layui.dropdown,
+            upload = layui.upload,
             $view = $('#febs-user'),
             $query = $view.find('#query'),
             $reset = $view.find('#reset'),
@@ -148,6 +153,50 @@
             elem: '#createTime',
             range: true,
             trigger: 'click'
+        });
+
+        upload.render({
+            elem: '#btn_inportLancer',
+            url: ctx + 'user/inportLancer',
+            accept: 'file',
+            exts: 'xlsx', // 只能上传 .xlsx格式
+            size:'204800', //kb
+            before: function () {
+                febs.view.loadBar.start();
+            },
+            done: function (res) {
+                febs.view.loadBar.finish();
+                if (res.code === 200) {
+                    febs.alert.success("导入成功!");
+                    $query.click();
+                }
+            }, error: function (res) {
+                //请求异常回调
+                febs.view.loadBar.error();
+                febs.alert.error('导入失败！');
+            }
+        });
+
+        upload.render({
+            elem: '#btn_inportCorp',
+            url: ctx + 'user/inportCorp',
+            accept: 'file',
+            exts: 'xlsx', // 只能上传 .xlsx格式
+            size:'204800', //kb
+            before: function () {
+                febs.view.loadBar.start();
+            },
+            done: function (res) {
+                febs.view.loadBar.finish();
+                if (res.code === 200) {
+                    febs.alert.success("导入成功");
+                    $query.click();
+                }
+            }, error: function (res) {
+                //请求异常回调
+                febs.view.loadBar.error();
+                febs.alert.error('导入失败！');
+            }
         });
 
         table.on('tool(userTable)', function (obj) {
@@ -224,6 +273,12 @@
                     febs.modal.view('发送消息', 'system/sendMessage', {
                         area: $(window).width() <= 750 ? '95%' : '80%'
                     });
+                    break;
+                case 'lancerTemp':    //自由职业者模板
+                    febs.download(ctx + 'user/templateLancer', null, '自由职业者模板.xlsx');
+                    break;
+                case 'corpTemp':    //企业用户模板
+                    febs.download(ctx + 'user/templateCorp', null, '企业用户模板.xlsx');
                     break;
             }
         });

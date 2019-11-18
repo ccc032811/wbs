@@ -13,6 +13,8 @@ public class AuthFreelancer implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public static final int AUTH_STATUS_DEFAULT = 0;
+
     /**
      * 主键ID
      */

@@ -75,4 +75,10 @@ public interface UserMapper extends BaseMapper<User> {
      */
     List<Map<String, String>> getUserDistribution();
 
+    /**
+     * 新增并返回Id
+     * @param user
+     * @return
+     */
+    int saveReturnPrimaryKey(User user);
 }

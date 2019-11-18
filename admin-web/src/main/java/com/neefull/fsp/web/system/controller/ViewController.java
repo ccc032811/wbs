@@ -133,6 +133,13 @@ public class ViewController extends BaseController {
     }
 
     //**************************************项目管理模块 start *********************************************
+    @GetMapping(FebsConstant.VIEW_PREFIX + "system/projectEnrollment")
+    @RequiresPermissions("enrollment:view")
+    public String projectEnrollment() {
+        return FebsUtil.view("system/project/projectEnrollment");
+    }
+
+
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/project")
     @RequiresPermissions("project:view")
     public String systemProject() {

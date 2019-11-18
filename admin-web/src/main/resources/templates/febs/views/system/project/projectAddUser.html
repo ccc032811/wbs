@@ -1,0 +1,199 @@
+<div class="layui-fluid layui-anim febs-anim" id="febs-settle" lay-title="项目人员管理">
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="user-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div id="hid_projectId" style="display: none">
+                                        [[${projectId}]]
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">人员姓名</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="userName" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">手机号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="mobile" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">结算状态</label>
+                                        <div class="layui-input-inline">
+                                            <select name="state">
+                                                <option value="">请选择</option>
+                                                <option value="1">结算中</option>
+                                                <option value="2">结算完成</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">卡号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="cardNo" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query">
+                                    <i class="layui-icon">&#xe848;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="reset">
+                                    <i class="layui-icon">&#xe79b;</i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table lay-filter="settleTable" lay-data="{id: 'settleTable'}"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="settle-state">
+    {{#
+    var settleState = {
+    2: {title: '结算完成', color: 'green'},
+    1: {title: '结算中', color: 'volcano'}
+    }[d.state];
+    }}
+    <span class="layui-badge febs-tag-{{settleState.color}}">{{ settleState.title }}</span>
+</script>
+<script type="text/html" id="settle-option">
+    <span shiro:lacksPermission="project:view,project:settle">
+        <span class="layui-badge-dot febs-bg-orange"></span> 无权限
+    </span>
+    {{# if(d.state == '1'){d.state = '1'}}
+    <span lay-event="settleUser" shiro:hasPermission="project:settle"
+          class="layui-badge febs-bg-blue" style="cursor: pointer;width: 70px;">结算</span>
+    {{# } }}
+</script>
+<!--头部工具栏-->
+<script type="text/html" id="toolbarSettle">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="settleExcel">导出Excel</button>
+        <button class="layui-btn layui-btn-sm" lay-event="settleInsert" id="btn_upload">
+            <i class="layui-icon"></i>导入结算
+        </button>
+    </div>
+</script>
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['dropdown', 'jquery', 'laydate', 'form', 'table', 'febs', 'treeSelect', 'upload'], function () {
+        var $ = layui.jquery,
+            laydate = layui.laydate,
+            febsettle = layui.febs,
+            form = layui.form,
+            table = layui.table,
+            treeSelect = layui.treeSelect,
+            dropdown = layui.dropdown,
+            upload = layui.upload,
+            $view = $('#febs-settle'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $searchForm = $view.find('form'),
+            tableIns;
+
+        var projectId = $("#hid_projectId").text().trim();
+
+        form.render();
+
+        initTable();
+
+        //上传结算名单
+        upload.render({
+            elem: '#btn_upload'
+            ,url: 'projectSettle/uploadSettle/'
+            ,accept: 'file' //普通文件
+            ,exts: 'xlsx'    //只允许上传excel文件
+            ,size:'204800' //kb
+            ,done: function(res){
+                if(res.result == 'success'){
+                    febsettle.alert.success(res.msg);
+                    $query.click();
+                }else{
+                    febsettle.alert.warn(res.msg);
+                }
+
+            }
+        });
+
+        table.on('tool(settleTable)', function (obj) {
+            var data = obj.data,
+                layEvent = obj.event;
+            if (layEvent === 'settleUser') {   //结算
+                febsettle.get(ctx + 'project/settleUser?userId='+data.userId+'&projectId='+projectId, null, function () {
+                    febsettle.alert.success('操作成功');
+                    $query.click();
+                });
+            }
+        });
+
+        //监听头工具栏事件
+        table.on('toolbar(settleTable)', function(obj){
+            switch(obj.event){
+                case 'settleExcel':    //导出excel
+                    var params = $.extend(getQueryParams(), {});
+                    params.pageSize = 99999;
+                    params.pageNum = 1;
+                    febsettle.download(ctx + 'project/settleExcel', params, '结算人员名单.xlsx');
+                    break;
+                // case 'settleInsert':    //导入结算名单
+                //     break;
+            }
+        });
+
+        table.on('sort(settleTable)', function (obj) {
+            sortObject = obj;
+            tableIns.reload({
+                initSort: obj,
+                where: $.extend(getQueryParams(), {
+                    field: obj.field,
+                    order: obj.type
+                })
+            });
+        });
+
+        $query.on('click', function () {
+            var params = $.extend(getQueryParams(), {});
+            tableIns.reload({where: params, page: {curr: 1}});
+        });
+
+        function initTable() {
+            tableIns = febsettle.table.init({
+                elem: $view.find('table'),
+                id: 'settleTable',
+                url: ctx + 'project/settle?projectId='+projectId,
+                toolbar: '#toolbarSettle',     //开启头部工具栏
+                defaultToolbar: ['filter','print'],   //显示默认的三个工具，需要哪个写哪个的单词'filter','exports','print'
+                cols: [[
+                    {type: 'checkbox'},
+                    {field: 'userName', title: '人员姓名'},
+                    {field: 'mobile', title: '手机号',minWidth: 150},
+                    {field: 'idNo', title: '身份证',minWidth: 180},
+                    {field: 'cardNo', title: '卡号',minWidth: 200},
+                    {field: 'settleTimeName', title: '发起结算时间', minWidth: 180},
+                    {field: 'settleAmount', title: '结算总金额'},
+                    {title: '结算状态', templet: '#settle-state'},
+                    {title: '操作', toolbar: '#settle-option'}
+                ]]
+            });
+        }
+
+        function getQueryParams() {
+            return {
+                userName: $searchForm.find('input[name="userName"]').val().trim(),
+                mobile: $searchForm.find('input[name="mobile"]').val().trim(),
+                state: $searchForm.find("select[name='state']").val().trim(),
+                cardNo: $searchForm.find('input[name="cardNo"]').val().trim(),
+                projectId: projectId,
+                invalidate_ie_cache: new Date()
+            };
+        }
+    })
+</script>

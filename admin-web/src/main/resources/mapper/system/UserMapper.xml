@@ -159,4 +159,11 @@
         WHEN user_type = '2' THEN '系统用户' WHEN user_type is null or user_type = '' THEN '无类型' END 'name',
         COUNT(1) 'y' FROM t_user GROUP BY user_type
     </select>
+
+    <insert id="saveReturnPrimaryKey" useGeneratedKeys="true" keyProperty="userId" parameterType="com.neefull.fsp.web.system.entity.User">
+        insert into t_user(user_id,username,password,dept_id,email,mobile,status,create_time,modify_time,ssex,is_tab,
+        theme,avatar,user_type,auth_status,card_status)
+        VALUES (#{userId},#{username},#{password},#{deptId},#{email},#{mobile},#{status},NOW(),NOW(),#{sex},
+        #{isTab},#{theme},#{avatar},#{userType},#{authStatus},#{cardStatus})
+    </insert>
 </mapper>

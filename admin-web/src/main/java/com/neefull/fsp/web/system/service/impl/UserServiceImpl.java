@@ -252,6 +252,63 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return this.baseMapper.getUserDistribution();
     }
 
+    /**
+     * 批量导入自由职业者
+     * @param list
+     */
+    @Override
+    @Transactional
+    public void batchLancerInsert(List<TemplateLancer> list) {
+        for(int i=0;i<list.size();i++){
+            User user = createUserInfo(list.get(i).getField2(), list.get(i).getField3(),
+                    list.get(i).getField4(), User.USERTYPE_FREELANCER);
+            //新增自由职业者相关信息
+            AuthFreelancer authFreelancer = new AuthFreelancer();
+            authFreelancer.setUserId(user.getUserId());
+            authFreelancer.setCardNo(list.get(i).getField7());
+            authFreelancer.setBankName(list.get(i).getField8());
+            authFreelancer.setBankCity(list.get(i).getField9());
+            authFreelancer.setBankAbbr(list.get(i).getField10());
+            authFreelancer.setBankLeaf(list.get(i).getField11());
+            authFreelancer.setIdNo(list.get(i).getField5());
+            authFreelancer.setRealName(list.get(i).getField6());
+            authFreelancer.setMobile(list.get(i).getField4());
+            authFreelancer.setAuthStatus(AuthFreelancer.AUTH_STATUS_DEFAULT);
+            authFreelancer.setCreateTime(new Date());
+            authFreelancer.setModifyTime(new Date());
+            authFreelancer.setIdImage1("default");
+            authFreelancerService.save(authFreelancer);
+        }
+
+    }
+
+    /**
+     * 批量导入企业用户
+     * @param list
+     */
+    @Override
+    @Transactional
+    public void batchCorpInsert(List<TemplateCorp> list) {
+        for(int i=0;i<list.size();i++){
+            User user = createUserInfo(list.get(i).getField2(), list.get(i).getField3(),
+                    list.get(i).getField4(),User.USERTYPE_CORP);
+            //新增企业用户相关信息
+            AuthCorp authCorp = new AuthCorp();
+            authCorp.setUserId(user.getUserId());
+            authCorp.setLegalName(list.get(i).getField5());
+            authCorp.setCorpName(list.get(i).getField6());
+            authCorp.setCreditCode(list.get(i).getField7());
+            authCorp.setBankNo(list.get(i).getField8());
+            authCorp.setBankName(list.get(i).getField9());
+            authCorp.setCorpAddress(list.get(i).getField10());
+            authCorp.setLinkNo(list.get(i).getField11());
+            authCorp.setOpenLience(list.get(i).getField12());
+            authCorp.setAuthStatus("1");
+            authCorp.setCreateTime(new Date());
+            authCorpService.save(authCorp);
+        }
+    }
+
     private void setUserRoles(User user, String[] roles) {
         List<UserRole> userRoles = new ArrayList<>();
         Arrays.stream(roles).forEach(roleId -> {
@@ -261,5 +318,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             userRoles.add(ur);
         });
         userRoleService.saveBatch(userRoles);
+    }
+
+    /**
+     * 创建用户信息并返回带主键的实体
+     * @return
+     */
+    private User createUserInfo(String userName, String email, String mobile, String userType){
+        User user = new User();
+        user.setUsername(userName);
+        user.setPassword(EncryptUtil.encrypt(User.DEFAULT_PASSWORD,FebsConstant.AES_KEY));
+        user.setDeptId(0L);
+        user.setEmail(email);
+        user.setMobile(mobile);
+        user.setStatus(User.STATUS_VALID);
+        user.setSex(User.SEX_UNKNOW);
+        user.setIsTab(User.TAB_OPEN);
+        user.setTheme(User.THEME_BLACK);
+        user.setAvatar(User.DEFAULT_AVATAR);
+        user.setUserType(userType);
+        user.setAuthStatus(User.AUTH_STATUS_DEFAULT);
+        user.setCardStatus(User.CARD_STATUS_DEFAULT);
+        //新增并返回id
+        this.baseMapper.saveReturnPrimaryKey(user);
+        return user;
     }
 }

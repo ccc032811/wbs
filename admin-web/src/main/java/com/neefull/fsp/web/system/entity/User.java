@@ -59,6 +59,10 @@ public class User implements Serializable {
     public static final String USERTYPE_SYSTEM = "2";
     //实名认证状态：2-认证成功
     public static final String AUTH_STATUS_SUCCESS = "2";
+    //实名认证状态：0-未实名
+    public static final String AUTH_STATUS_DEFAULT = "0";
+    //是否绑定结算卡 0 未绑定
+    public static final String CARD_STATUS_DEFAULT = "0";
 
 
     /**
@@ -193,6 +197,8 @@ public class User implements Serializable {
     @ExcelField(value = "用户实名状态"  , writeConverterExp = "0=未实名,1=审核中,2=已实名,-1=审核失败")
     @TableField("AUTH_STATUS")
     private String authStatus;
+    @TableField("CARD_STATUS")
+    private String cardStatus;
 
     public Long getId() {
         return userId;
