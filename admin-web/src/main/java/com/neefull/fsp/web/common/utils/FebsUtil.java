@@ -91,6 +91,7 @@ public class FebsUtil {
         return (User) SecurityUtils.getSubject().getPrincipal();
     }
 
+
     public static String view(String viewName) {
         return FebsConstant.VIEW_PREFIX + viewName;
     }

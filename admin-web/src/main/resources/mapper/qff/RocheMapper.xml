@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neefull.fsp.web.qff.mapper.RocheMapper">
+    <update id="updateRocheStatus">
+        update qff_roche set status = #{status} where id = #{id}
+    </update>
+
+    <select id="getRochePage" resultType="com.neefull.fsp.web.qff.entity.Roche">
+        select * from qff_roche where 1=1
+        <if test="query.mater!=null and query.mater!=''">
+            and mater_code like concat('%',#{query.mater},'%')
+        </if>
+        <if test="query.batch!=null and query.batch!=''">
+            and batch like concat('%',#{query.batch},'%')
+        </if>
+        <if test="query.startTime!=null and query.startTime!='' and query.endTime!=null and query.endTime!=''">
+            and req_date between  #{query.startTime} and #{query.endTime}
+        </if>
+        <if test="query.status!=null and query.status!=''">
+            and status = #{query.status}
+        </if>
+        order by req_date desc
+    </select>
+</mapper>

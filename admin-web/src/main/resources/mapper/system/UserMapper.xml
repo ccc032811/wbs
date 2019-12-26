@@ -160,6 +160,10 @@
         COUNT(1) 'y' FROM t_user GROUP BY user_type
     </select>
 
+    <select id="findUserByDepartName" resultType="com.neefull.fsp.web.system.entity.User">
+        select * from t_user u left join t_dept d on u.dept_id = d.dept_id where dept_name = #{name}
+    </select>
+
     <insert id="saveReturnPrimaryKey" useGeneratedKeys="true" keyProperty="userId" parameterType="com.neefull.fsp.web.system.entity.User">
         insert into t_user(user_id,username,password,dept_id,email,mobile,status,create_time,modify_time,ssex,is_tab,
         theme,avatar,user_type,auth_status,card_status)

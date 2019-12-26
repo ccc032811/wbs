@@ -4,6 +4,9 @@ server:
     uri-encoding: utf-8
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB # 限制文件上传的大小
   profiles:
     active: dev
 
@@ -17,6 +20,16 @@ spring:
   aop:
     proxy-target-class: true
 
+  mail:
+    auth: true   #开启用户名和密码认证，如果设置false，可以不设置用户名密码，要看对接平台是否支持无密码进行访问
+    protocol: smtp  #以smtp服务器作为发送方式
+    charset: UTF-8    #文件编码码方式
+    port: 465   #smtp的端口号  ×××@163.com 非 SSL 连接的端口一般默认为 25, 可以不添加, 如果开启了 SSL 连接, 需要改为对应邮箱的 SMTP 服务器的端口
+    ssl: true   #是否为ssl连接
+    host: smtp.163.com   #smtp服务器地址
+    timeout: 1000   #连接超时
+
+
 mybatis-plus:
   # 实体类扫描路径
   type-aliases-package: com.neefull.fsp.web.system.entity,com.neefull.fsp.web.generator.entity,com.neefull.fsp.web.job.entity
@@ -27,3 +40,15 @@ mybatis-plus:
   global-config:
     # 关闭 mybatis-plus的 banner
     banner: false
+
+
+qff:
+  send:
+    conserveTemplatePath:   #到货养护包装QFF pdf模板地址
+    conserveDownLoadPath:   #到货养护包装QFF 生成的模板地址
+    recentTemplatePath:     #近效期QFF pdf模板地址
+    recentDownLoadPath:     #近效期QFF生成的模板地址
+    refundTemplatePath:     #退货QFFpdf模板地址
+    refundDownLoadPath:     #退货QFF 生成的模板地址
+    rocheTemplatePath:      #罗氏内部发起QFF pdf模板地址
+    rocheDownLoadPath:      #罗氏内部发起QFF 生成的模板地址

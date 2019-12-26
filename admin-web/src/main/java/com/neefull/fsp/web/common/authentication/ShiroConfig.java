@@ -112,7 +112,6 @@ public class ShiroConfig {
         securityManager.setRememberMeManager(rememberMeManager());
         return securityManager;
     }
-
     /**
      * rememberMe cookie 效果是重开浏览器后无需重新登录
      *

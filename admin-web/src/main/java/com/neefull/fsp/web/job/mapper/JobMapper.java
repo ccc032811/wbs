@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * @author pei.wang
  */
+
 public interface JobMapper extends BaseMapper<Job> {
 
     List<Job> queryList();

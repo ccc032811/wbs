@@ -1,0 +1,293 @@
+<style>
+    #roche-detail {
+        padding: 20px 25px 25px 0;
+    }
+
+    #roche-detail .layui-treeSelect .ztree li a, .ztree li span {
+        margin: 0 0 2px 3px !important;
+    }
+</style>
+<div class="layui-fluid" id="roche-detail" lay-title = "包装QFF">
+    <form class="layui-form " action="" lay-filter="roche-detail-form">
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">运输单号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="transport" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " >
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">NO编号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="number" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" >
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">发起人</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sponsor" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" >
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">申请日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="reqDate" id="reqDate" class="layui-input" placeholder="请选择时间">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">原因</label>
+                <div class="layui-input-block">
+                    <input type="text" name="reason" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" >
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">物料名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="materName" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" >
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">物料编号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="materCode" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " >
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">批号/序列号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="batch" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" >
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">受影响数量</label>
+                <div class="layui-input-block">
+                    <input type="text" name="quantity" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" >
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">行动</label>
+                <div class="layui-input-block">
+                    <input type="text" name="actions" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " >
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">期望完成日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="exceptDate" id="exceptDate" class="layui-input" placeholder="请选择时间">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">实际完成日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="completeDate" id="completeDate" class="layui-input" placeholder="请选择时间">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">后续行动</label>
+                <div class="layui-input-block">
+                    <input type="text" name="follow" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input ">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">期望完成日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="exceptedDate" id="exceptedDate" class="layui-input" placeholder="请选择时间">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">实际完成日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="actualDate" id="actualDate" class="layui-input" placeholder="请选择时间">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm12">
+                <div>
+                    <label class="layui-form-label layui-form-label-sm">备注</label>
+                    <div class="layui-input-block">
+                        <textarea name="remark" lay-verify="required" placeholder="请输入" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm1"></div>
+            <div class="layui-inline layui-col-sm11">
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn" id="test2">图片上传</button>
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                        预览图：
+                        <div class="layui-upload-list" id="demo2" name="images">
+
+                        </div>
+                    </blockquote>
+                </div>
+            </div>
+            <!-- <button type="button" class="layui-btn layui-btn-primary" id="upload_img">上传图片</button>
+             <div id="upload_img_list"> </div>-->
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="text-align: center;" shiro:hasPermission="roche:audit">
+                <button class="layui-btn" lay-submit="" lay-filter="roche-form-submit" id="submit">提交</button>
+            </div>
+            <br>
+            <div style="float: right">
+                <input style="border:0;" name="id" type="hidden">
+            </div>
+        </div>
+    </form>
+</div>
+
+<script data-th-inline="javascript">
+    layui.use(['febs', 'form','laydate', 'formSelects', 'validate', 'treeSelect','upload','layer'], function () {
+        var $ = layui.$,
+            febs = layui.febs,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            formSelects = layui.formSelects,
+            treeSelect = layui.treeSelect,
+            form = layui.form,
+            upload = layui.upload,
+            roche = [[${roche}]],
+            $view = $('#roche-detail'),
+            validate = layui.validate;
+        var s = "";
+        var name ="罗氏QA处理意见";
+
+        laydate.render({
+            elem: '#reqDate',
+            trigger: 'click'
+        });
+
+        laydate.render({
+            elem: '#exceptDate',
+            trigger: 'click'
+        });
+
+        laydate.render({
+            elem: '#completeDate',
+            trigger: 'click'
+        });
+
+        laydate.render({
+            elem: '#exceptedDate',
+            trigger: 'click'
+        });
+
+        laydate.render({
+            elem: '#actualDate',
+            trigger: 'click'
+        });
+
+
+        /*form.verify(validate);*/
+        //表单渲染
+        form.render();
+
+        initRocheValue();
+
+        //给表单赋值
+        function initRocheValue() {
+            form.val("roche-detail-form", {
+                "id":roche.id,
+                "transport": roche.transport,
+                "number": roche.number,
+                "sponsor": roche.sponsor,
+                "reqDate": roche.reqDate,
+                "reason": roche.reason,
+                "materName": roche.materName,
+                "materCode": roche.materCode,
+                "batch": roche.batch,
+                "quantity": roche.quantity,
+                "actions": roche.actions,
+                "exceptDate": roche.exceptDate,
+                "completeDate": roche.completeDate,
+                "remark": roche.remark,
+                "follow": roche.follow,
+                "exceptedDate": roche.exceptedDate,
+                "actualDate": roche.actualDate,
+            });
+        }
+
+        //多图片上传
+        upload.render({
+            elem: '#test2'
+            ,url: ctx+ 'file/uploadImage'
+            ,multiple: true
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" width="90px" height="90px">')
+                });
+            }
+            ,done: function(res){
+                //上传完毕
+            }
+        });
+
+        /*
+         formSelects.render();
+
+      */
+
+
+        //下拉框
+        formSelects.config('roche-opinion', {
+            searchUrl: ctx + 'opinion/getOpinion/'+name,
+            response: {
+                statusCode: 200
+            },
+            beforeSuccess: function (id, url, searchVal, result) {
+                var data = result.data;
+                var tranData = [];
+                for (var i = 0; i < data.length; i++) {
+                    tranData.push({
+                        name: data[i].name,
+                        value: data[i].name
+                    })
+                }
+                result.data = tranData;
+                return result;
+            },
+            error: function (id, url, searchVal, err) {
+                console.error(err);
+                febs.alert.error('获取角色列表失败');
+            }
+        });
+
+
+        //提交更新
+        form.on('submit(roche-form-submit)', function (data) {
+            if (febs.nativeEqual(data.field, roche)) {
+                febs.alert.warn('数据未作任何修改！');
+                return false;
+            }
+            febs.post(ctx + 'roche/commit', data.field, function (data) {
+                layer.closeAll();
+                febs.alert.success('数据修改成功');
+                $('#fbs-roche').find('#query').click();
+            });
+            return false;
+        });
+
+    });
+</script>

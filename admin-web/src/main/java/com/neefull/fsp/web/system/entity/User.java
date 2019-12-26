@@ -188,7 +188,9 @@ public class User implements Serializable {
     @NotBlank(message = "{required}")
     @TableField(exist = false)
     private String roleId;
-
+    /**
+     * 角色名
+     */
     @TableField(exist = false)
     private String roleName;
     @ExcelField(value = "用户类型"  , writeConverterExp = "0=企业用户,1=自由职业者")
@@ -199,6 +201,8 @@ public class User implements Serializable {
     private String authStatus;
     @TableField("CARD_STATUS")
     private String cardStatus;
+
+
 
     public Long getId() {
         return userId;

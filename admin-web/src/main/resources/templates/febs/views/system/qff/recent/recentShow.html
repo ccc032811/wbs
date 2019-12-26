@@ -1,0 +1,151 @@
+<style>
+    #recent-detail {
+        padding: 20px 25px 25px 0;
+    }
+
+    #recent-detail .layui-treeSelect .ztree li a, .ztree li span {
+        margin: 0 0 2px 3px !important;
+    }
+</style>
+<div class="layui-fluid" id="recent-detail" lay-title = "近效期QFF">
+    <form class="layui-form " action="" lay-filter="recent-detail-form">
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">运输单号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="transport" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">康德乐物料号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="kMater" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">罗氏物料号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="rMater" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">产品名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">有效期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="useLife" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">批号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="batch" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">SAP 批次</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sapBatch" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">工厂</label>
+                <div class="layui-input-block">
+                    <input type="text" name="factory" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">库位</label>
+                <div class="layui-input-block">
+                    <input type="text" name="wareHouse" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">数量</label>
+                <div class="layui-input-block">
+                    <input type="text" name="number" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">罗氏QA处理意见</label>
+                <div class="layui-input-block">
+                    <input type="text" name="rConf" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">回复日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="repDate" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script data-th-inline="javascript">
+    layui.use(['febs', 'form', 'formSelects', 'validate', 'treeSelect','upload','layer'], function () {
+        var $ = layui.$,
+            febs = layui.febs,
+            layer = layui.layer,
+            formSelects = layui.formSelects,
+            treeSelect = layui.treeSelect,
+            form = layui.form,
+            upload = layui.upload,
+            recent = [[${recent}]],
+            $view = $('#recent-detail'),
+            validate = layui.validate;
+        var s = "";
+
+
+
+        //表单渲染
+        form.render();
+
+        initRecentValue();
+
+        //给表单赋值
+        function initRecentValue() {
+            form.val("recent-detail-form", {
+                "id":recent.id,
+                "transport": recent.transport,
+                "kMater": recent.kMater,
+                "rMater": recent.rMater,
+                "name": recent.name,
+                "useLife": recent.useLife,
+                "batch": recent.batch,
+                "sapBatch": recent.sapBatch,
+                "factory": recent.factory,
+                "wareHouse": recent.wareHouse,
+                "number": recent.number,
+                "rConf": recent.rConf,
+                "repDate": recent.repDate,
+            });
+        }
+
+
+
+
+    });
+</script>

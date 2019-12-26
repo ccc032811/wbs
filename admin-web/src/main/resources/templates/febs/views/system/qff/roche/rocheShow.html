@@ -1,0 +1,185 @@
+<style>
+    #roche-detail {
+        padding: 20px 25px 25px 0;
+    }
+
+    #roche-detail .layui-treeSelect .ztree li a, .ztree li span {
+        margin: 0 0 2px 3px !important;
+    }
+</style>
+<div class="layui-fluid" id="roche-detail" lay-title = "包装QFF">
+    <form class="layui-form " action="" lay-filter="roche-detail-form">
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">运输单号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="transport" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">NO编号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="number" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">发起人</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sponsor" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">申请日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="reqDate" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">原因</label>
+                <div class="layui-input-block">
+                    <input type="text" name="reason" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">物料名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="materName" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">物料编号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="materCode" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">批号/序列号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="batch" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">受影响数量</label>
+                <div class="layui-input-block">
+                    <input type="text" name="quantity" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">行动</label>
+                <div class="layui-input-block">
+                    <input type="text" name="actions" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">期望完成日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="exceptDate" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">实际完成日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="completeDate" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">后续行动</label>
+                <div class="layui-input-block">
+                    <input type="text" name="follow" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">期望完成日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="exceptedDate" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">实际完成日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="actualDate" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm12">
+                <div>
+                    <label class="layui-form-label layui-form-label-sm">备注</label>
+                    <div class="layui-input-block">
+                        <textarea name="remark" lay-verify="required"  class="layui-textarea"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script data-th-inline="javascript">
+    layui.use(['febs', 'form', 'formSelects', 'validate', 'treeSelect','upload','layer'], function () {
+        var $ = layui.$,
+            febs = layui.febs,
+            layer = layui.layer,
+            formSelects = layui.formSelects,
+            treeSelect = layui.treeSelect,
+            form = layui.form,
+            upload = layui.upload,
+            roche = [[${roche}]],
+            $view = $('#roche-detail'),
+            validate = layui.validate;
+        var s = "";
+
+
+        /*form.verify(validate);*/
+        //表单渲染
+        form.render();
+
+        initRocheValue();
+
+        //给表单赋值
+        function initRocheValue() {
+            form.val("roche-detail-form", {
+                "id":roche.id,
+                "transport": roche.transport,
+                "number": roche.number,
+                "sponsor": roche.sponsor,
+                "reqDate": roche.reqDate,
+                "reason": roche.reason,
+                "materName": roche.materName,
+                "materCode": roche.materCode,
+                "batch": roche.batch,
+                "quantity": roche.quantity,
+                "actions": roche.actions,
+                "exceptDate": roche.exceptDate,
+                "completeDate": roche.completeDate,
+                "remark": roche.remark,
+                "follow": roche.follow,
+                "exceptedDate": roche.exceptedDate,
+                "actualDate": roche.actualDate,
+            });
+        }
+
+    });
+</script>

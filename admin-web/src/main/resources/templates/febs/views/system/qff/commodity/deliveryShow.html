@@ -1,0 +1,266 @@
+<style>
+    #delivery-detail {
+        padding: 20px 25px 25px 0;
+    }
+
+    #delivery-detail .layui-treeSelect .ztree li a, .ztree li span {
+        margin: 0 0 2px 3px !important;
+    }
+</style>
+<div class="layui-fluid" id="delivery-detail" lay-title = "到货QFF">
+    <form class="layui-form " action="" lay-filter="delivery-detail-form">
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">运输单号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="transport" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">QFF编号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="number" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">工厂</label>
+                <div class="layui-input-block">
+                    <input type="text" name="plant" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">康德乐物料号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="kMater" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">康德乐SAP批次</label>
+                <div class="layui-input-block">
+                    <input type="text" name="kBatch" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">罗氏物料号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="rMater" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">是否是危险品</label>
+                <div class="layui-input-block">
+                    <input type="text" name="isDanger" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">药厂物料号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="pMater" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">罗氏批号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="rBatch" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">生产日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="manuDate" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">有效期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="expiryDate" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">异常总数</label>
+                <div class="layui-input-block">
+                    <input type="text" name="quarantine" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">发起日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="initDate" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">回复日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="repTime" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">QFF原因</label>
+                <div class="layui-input-block">
+                    <input type="text" name="reason" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">BA</label>
+                <div class="layui-input-block">
+                    <input type="text" name="ba" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">上报阶段</label>
+                <div class="layui-input-block">
+                    <input type="text" name="stage" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">采购来源</label>
+                <div class="layui-input-block">
+                    <input type="text" name="source" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm4 ">
+                <label class="layui-form-label layui-form-label-sm">投诉编号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="compNumber" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">注册证号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="register" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label layui-form-label-sm">产品分类</label>
+                <div class="layui-input-block">
+                    <input type="text" name="classify" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm6 ">
+                <label class="layui-form-label layui-form-label-sm">Remark箱号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="getRemark" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm6">
+                <label class="layui-form-label febs-form-item-sm">罗氏QA处理意见</label>
+                <div class="layui-input-block">
+                    <input type="text" name="reason" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm12">
+                <div>
+                    <label class="layui-form-label layui-form-label-sm">仪器工程师检查结果</label>
+                    <div class="layui-input-block">
+                        <textarea name="checkResult" lay-verify="required"  class="layui-textarea" readonly="readonly"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm12">
+                <div>
+                    <label class="layui-form-label layui-form-label-sm">备注</label>
+                    <div class="layui-input-block">
+                        <textarea name="remark" lay-verify="required" class="layui-textarea" readonly="readonly"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script data-th-inline="javascript">
+    layui.use(['febs', 'form', 'formSelects', 'validate', 'treeSelect','upload','layer'], function () {
+        var $ = layui.$,
+            febs = layui.febs,
+            layer = layui.layer,
+            formSelects = layui.formSelects,
+            treeSelect = layui.treeSelect,
+            form = layui.form,
+            upload = layui.upload,
+            commodity = [[${commodity}]],
+            $view = $('#delivery-detail'),
+            validate = layui.validate;
+
+
+
+        //表单渲染
+        form.render();
+
+        initDeliveryValue();
+
+        //给表单赋值
+        function initDeliveryValue() {
+            form.val("delivery-detail-form", {
+                "id": commodity.id,
+                "transport": commodity.transport,
+                "number": commodity.number,
+                "plant": commodity.plant,
+                "kMater": commodity.kMater,
+                "kBatch": commodity.kBatch,
+                "rMater": commodity.rMater,
+                "isDanger": commodity.isDanger,
+                "pMater": commodity.pMater,
+                "rBatch": commodity.rBatch,
+                "manuDate": commodity.manuDate,
+                "expiryDate": commodity.expiryDate,
+                "quarantine": commodity.quarantine,
+                "getRemark": commodity.getRemark,
+                "initDate": commodity.initDate,
+                "rConf": commodity.rConf,
+                "repTime": commodity.repTime,
+                "checkResult": commodity.checkResult,
+                "reason": commodity.reason,
+                "compNumber": commodity.compNumber,
+                "remark": commodity.remark,
+                "ba": commodity.ba,
+                "stage": commodity.stage,
+                "source": commodity.source,
+                "register": commodity.register,
+                "classify": commodity.classify,
+                "images": commodity.images
+            });
+        }
+
+    });
+</script>

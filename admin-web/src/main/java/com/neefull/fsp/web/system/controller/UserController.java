@@ -112,6 +112,8 @@ public class UserController extends BaseController {
             throw new FebsException(message);
         }
     }
+
+
     @Log("审核用户")
     @GetMapping("examine/{userIds}")
     @RequiresPermissions("user:examine")

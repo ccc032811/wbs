@@ -13,14 +13,15 @@
 	background-image: url('../images/demo-1-bg.jpg');
 }
 .logo_box{
-	width: 400px;
-	height: 500px;
-	padding: 35px;
-	color: #EEE;
+	width: 900px;
+	height:	430px;
+	padding: 5px;
+	background-color: white;
+	box-shadow:4px 5px 6px 7px rgba(0,0,0,.5);
 	position: absolute;
 	left: 50%;
 	top:50%;
-	margin-left: -200px;
+	margin-left: -450px;
 	margin-top: -250px;
 }
 .logo_box h3{
@@ -43,21 +44,21 @@
 	position: relative;
 }		
 .input_outer{
-	height: 46px;
+	height: 55px;
 	padding: 0 5px;
 	margin-bottom: 30px;
 	border-radius: 50px;
 	position: relative;
-	border: rgba(255,255,255,0.2) 2px solid !important;
+	border: rgba(255,255,255,0.2) 20px solid !important;
 }
 .input_outer_code{
-	height: 46px;
+	height: 55px;
 	padding: 0 5px;
 	margin-bottom: 30px;
 	margin-right: 0px;
 	border-radius: 50px;
 	position: relative;
-	border: rgba(255,255,255,0.2) 2px solid !important;
+	border: rgba(255,255,255,0.2) 20px solid !important;
 }
 .u_user{
 	width: 25px;
@@ -115,13 +116,16 @@
 	line-height: 46px;
 }
 .span_code{
-	width: 40%;
-	float: right;
+	width: 50%;
+	float: contour;
 	margin-top: 4px;
 }
 /*///*/
 .mb2{
-	margin-bottom: 20px
+	margin-bottom: 50px;
+	padding-left:35px;
+	border: rgba(255,255,255,0.2) 20px solid !important;
+
 }
 .mb2 a{
 	text-decoration: none;

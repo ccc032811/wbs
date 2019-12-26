@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neefull.fsp.web.qff.mapper.OpinionMapper">
+
+    <delete id="deleteOpinions" parameterType="string">
+        DELETE FROM qff_opinion WHERE id = #{opinionId}
+    </delete>
+    <select id="getOpinions" resultType="com.neefull.fsp.web.qff.entity.Opinion">
+        select * from qff_opinion where parent_id = (select id from qff_opinion where name = #{name})
+    </select>
+</mapper>

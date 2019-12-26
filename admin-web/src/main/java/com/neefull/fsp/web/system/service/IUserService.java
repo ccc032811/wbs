@@ -155,4 +155,10 @@ public interface IUserService extends IService<User> {
      * 批量导入企业用户
      */
     void batchCorpInsert(List<TemplateCorp> list);
+
+    /**查出部门下所有的用户
+     * @param name
+     * @return
+     */
+    List<User> findUserByDepartName(String name);
 }

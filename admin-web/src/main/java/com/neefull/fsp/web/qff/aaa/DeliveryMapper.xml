@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neefull.fsp.web.qff.aaa.DeliveryMapper">
+<!--
+<update id="deleteDelivery" >
+    update qff_delivery set status = #{status} where number = #{number}
+</update>
+-->
+
+
+<!--<select id="getDeliveryPage" resultType="com.neefull.fsp.web.qff.aaa.Delivery">
+    select * from qff_delivery where 1=1
+    <if test="query.getMater!=null and query.getMater!=''">
+        and rMater like concat('%',#{query.getMater},'%')
+    </if>
+    <if test="query.getBatch!=null and query.getBatch!=''">
+        and rBatch like concat('%',#{query.getBatch},'%')
+    </if>
+    <if test="query.getStartTime!=null and query.getStartTime!='' and query.getEndTime!=null and query.getEndTime!=''">
+        and createTime between  #{query.getStartTime} and #{query.getEndTime}
+    </if>
+    <if test="query.getStatus!=null and query.getStatus!=''">
+        and status = #{query.getStatus}
+    </if>
+    order by createTime desc
+</select>-->
+</mapper>

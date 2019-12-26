@@ -309,6 +309,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
     }
 
+    @Override
+    public List<User> findUserByDepartName(String name) {
+        List<User> user = this.baseMapper.findUserByDepartName(name);
+        return user;
+    }
+
     private void setUserRoles(User user, String[] roles) {
         List<UserRole> userRoles = new ArrayList<>();
         Arrays.stream(roles).forEach(roleId -> {

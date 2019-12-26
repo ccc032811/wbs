@@ -95,7 +95,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-col-md6 layui-col-sm12 layui-col-xs12">
+                        <!--<div class="layui-col-md6 layui-col-sm12 layui-col-xs12">
                             <div class="layui-col-md-offset5">
                                 <table class="login-count-table">
                                     <tr>
@@ -116,7 +116,26 @@
                                     </tr>
                                 </table>
                             </div>
-                        </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+
+        <!--</div>
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div id="chart" style="height: 350px">
+                        <div  style="color : red "><h3>待办任务</h3></div>
+                        <table>
+                            <tr>
+                                <td>
+                                    代办任务一
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -124,17 +143,19 @@
         <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
             <div class="layui-card">
                 <div class="layui-card-body">
-                    <div id="chart" style="height: 350px"></div>
+                    <div id="chart-right" style="height: 350px">
+                        <div  style="color : red "><h3>已完结任务</h3></div>
+                        <table>
+                            <tr>
+                                <td>
+                                    完结任务一
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
-            <div class="layui-card">
-                <div class="layui-card-body">
-                    <div id="chart-right" style="height: 365px"></div>
-                </div>
-            </div>
-        </div>
+        </div>-->
     </div>
 </div>
 <script data-th-inline="javascript" type="text/javascript">
@@ -204,7 +225,7 @@
                 data_arr[i][1]=list[i].y;
             }
 
-            var options = {
+            /*var options = {
                 chart: {
                     height: 350,
                     type: 'bar',
@@ -267,7 +288,7 @@
                     },
                     borderColor: '#f1f1f1'
                 }
-            };
+            };*/
 
             new ApexCharts(
                 document.querySelector("#chart"),

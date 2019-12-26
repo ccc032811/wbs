@@ -81,4 +81,10 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     int saveReturnPrimaryKey(User user);
+
+    /**根据部门查询
+     * @param name
+     * @return
+     */
+    List<User> findUserByDepartName(@Param("name") String name);
 }

@@ -1,8 +1,14 @@
 spring:
+  activiti:
+    check-process-definitions: false #自动检查、部署流程定义文件
+    database-schema-update: true #自动更新数据库结构
+    #流程定义文件存放目录
+    process-definition-location-prefix: classpath:/processes/
+    #process-definition-location-suffixes: #流程文件格式
   datasource:
     dynamic:
       # 是否开启 SQL日志输出，生产环境建议关闭，有性能损耗
-      p6spy: true
+      p6spy: false
       hikari:
         connection-timeout: 30000
         max-lifetime: 1800000
@@ -18,13 +24,13 @@ spring:
            username: root
            password: root
            driver-class-name: com.mysql.cj.jdbc.Driver
-           url: jdbc:mysql://127.0.0.1:3306/flp?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=falsmezone=GMT%2b8&serverTimezone=UTC
+           url: jdbc:mysql://127.0.0.1:3306/flp?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=falsmezone=GMT%2b8&serverTimezone=UTC&nullCatalogMeansCurrent=true
         # 数据源-2，名称为 quartz
         quartz:
            username: root
            password: root
            driver-class-name: com.mysql.cj.jdbc.Driver
-           url: jdbc:mysql://127.0.0.1:3306/flp_slave?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=falsrTimezone=GMT%2b8&serverTimezone=UTC
+           url: jdbc:mysql://127.0.0.1:3306/flp_slave?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=falsrTimezone=GMT%2b8&serverTimezone=UTC&nullCatalogMeansCurrent=true
   redis:
     # Redis数据库索引（默认为 0）
     database: 0
