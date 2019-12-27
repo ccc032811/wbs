@@ -7,12 +7,13 @@ import com.neefull.fsp.web.qff.entity.Commodity;
 import com.neefull.fsp.web.qff.entity.Query;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 /**
  * @Author: chengchengchu
  * @Date: 2019/12/6  18:55
  */
-@Mapper
+@Component
 public interface CommodityMapper extends BaseMapper<Commodity> {
 
     /**对养护QFF分页查询

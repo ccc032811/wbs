@@ -11,6 +11,7 @@ import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.qff.mapper.RefundMapper;
 import com.neefull.fsp.web.qff.service.IRefundService;
+import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -22,6 +23,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -31,6 +34,7 @@ import java.util.*;
  */
 
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class RefundServiceImpl extends ServiceImpl<RefundMapper, Refund> implements IRefundService {
 
     @Autowired
@@ -81,7 +85,7 @@ public class RefundServiceImpl extends ServiceImpl<RefundMapper, Refund> impleme
         String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
         runtimeService.startProcessInstanceByKey("退货QFF",businessKey);
 
-        updateRefundStatus(refund.getId(),2);
+        updateRefundStatus(refund.getId(), ProcessConstant.UNDER_REVIEW);
     }
 
     @Override
@@ -98,7 +102,7 @@ public class RefundServiceImpl extends ServiceImpl<RefundMapper, Refund> impleme
         taskService.complete(task.getId(),map);
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, "退货QFF").singleResult();
         if(processInstance==null){
-            updateRefundStatus(refund.getId(),3);
+            updateRefundStatus(refund.getId(),ProcessConstant.HAS_FINISHED);
         }
     }
 

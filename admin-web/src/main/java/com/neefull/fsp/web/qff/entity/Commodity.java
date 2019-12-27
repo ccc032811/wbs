@@ -154,11 +154,9 @@ public class Commodity implements Serializable {
     /**
      *  图片
      */
-    @TableField("images")
+    @TableField(exist = false)
     private String images;
 
-    @TableField(exist = false)
-    private List<String> imageList;
 
     @TableField(exist = false)
     private List<String> taskHistory;
@@ -417,14 +415,6 @@ public class Commodity implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public List<String> getImageList() {
-        return imageList;
-    }
-
-    public void setImageList(List<String> imageList) {
-        this.imageList = imageList;
     }
 
     public List<String> getTaskHistory() {

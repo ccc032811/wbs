@@ -161,4 +161,10 @@ public interface IUserService extends IService<User> {
      * @return
      */
     List<User> findUserByDepartName(String name);
+
+    /**根据角色id查询所有的用户
+     * @param id
+     * @return
+     */
+    List<User> findUserByRoleId(Integer id);
 }

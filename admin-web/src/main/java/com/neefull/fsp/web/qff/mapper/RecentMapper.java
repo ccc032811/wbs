@@ -8,12 +8,13 @@ import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Recent;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 /**近效期QFF
  * @Author: chengchengchu
  * @Date: 2019/11/29  11:33
  */
-@Mapper
+@Component
 public interface RecentMapper extends BaseMapper<Recent> {
 
 

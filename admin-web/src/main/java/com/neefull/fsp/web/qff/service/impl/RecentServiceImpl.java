@@ -8,6 +8,7 @@ import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.mapper.RecentMapper;
 import com.neefull.fsp.web.qff.service.IRecentService;
+import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -18,6 +19,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +33,7 @@ import java.util.Map;
  */
 
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class RecentServiceImpl extends ServiceImpl<RecentMapper, Recent> implements IRecentService {
 
     @Autowired
@@ -77,7 +81,7 @@ public class RecentServiceImpl extends ServiceImpl<RecentMapper, Recent> impleme
         variable.put("user",user);
         String businessKey = Recent.class.getSimpleName()+":"+recent.getId();
         runtimeService.startProcessInstanceByKey("近效期QFF",businessKey,variable);
-        updateRecentStatus(recent.getId(),2);
+        updateRecentStatus(recent.getId(), ProcessConstant.UNDER_REVIEW);
     }
 
     @Override
@@ -91,7 +95,7 @@ public class RecentServiceImpl extends ServiceImpl<RecentMapper, Recent> impleme
         taskService.complete(task.getId(),variable);
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, "近效期QFF").singleResult();
         if(processInstance==null){
-            updateRecentStatus(recent.getId(),3);
+            updateRecentStatus(recent.getId(),ProcessConstant.HAS_FINISHED);
         }
     }
 

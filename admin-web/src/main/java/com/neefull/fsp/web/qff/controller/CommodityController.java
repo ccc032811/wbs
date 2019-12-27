@@ -8,13 +8,21 @@ import com.neefull.fsp.web.common.exception.FebsException;
 import com.neefull.fsp.web.qff.entity.Commodity;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.service.ICommodityService;
+import com.neefull.fsp.web.qff.service.IDateImageService;
+import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
-import org.activiti.engine.task.IdentityLink;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +38,8 @@ public class CommodityController extends BaseController {
 
     @Autowired
     private ICommodityService commodityService;
+    @Autowired
+    private IDateImageService dateImageService;
 
 
     /**新增养护QFF
@@ -80,7 +90,7 @@ public class CommodityController extends BaseController {
     @GetMapping("/deleteCommodity/{id}")
     @RequiresPermissions("commodity:del")
     public FebsResponse updateCommodityStatus(@PathVariable Integer id) throws FebsException {
-        int count = commodityService.updateCommodityStatus(id,4);
+        int count = commodityService.updateCommodityStatus(id, ProcessConstant.HAVE_ABNORMAL);
         if (count!=1){
             throw new FebsException("删除到货养护包装QFF操作失败");
         }
@@ -109,9 +119,13 @@ public class CommodityController extends BaseController {
     @PostMapping("/commit")
     @RequiresPermissions("commodity:audit")
     public FebsResponse commitProcess(Commodity commodity) throws FebsException {
+       /* String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("到货养护包装QFF", businessKey).singleResult();
+*/
         User user = getCurrentUser();
         try {
             commodityService.commitProcess(commodity,user);
+            commodityService.addOrEditImage(commodity,user);
         } catch (Exception e) {
             throw new FebsException("提交申请失败");
         }
@@ -131,6 +145,7 @@ public class CommodityController extends BaseController {
         if(group.contains(user.getUsername())){
             try {
                 commodityService.agreeCurrentProcess(commodity,user);
+                commodityService.addOrEditImage(commodity,user);
             } catch (Exception e) {
                 throw new FebsException("同意流程失败");
             }
@@ -155,8 +170,6 @@ public class CommodityController extends BaseController {
         }
         return new FebsResponse().success().data(list);
     }
-
-
 
 
 }

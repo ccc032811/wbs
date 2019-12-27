@@ -163,6 +163,9 @@
     <select id="findUserByDepartName" resultType="com.neefull.fsp.web.system.entity.User">
         select * from t_user u left join t_dept d on u.dept_id = d.dept_id where dept_name = #{name}
     </select>
+    <select id="findUserByRoleId" resultType="com.neefull.fsp.web.system.entity.User">
+        select * from t_user u LEFT JOIN t_user_role ur on u.user_id = ur.user_id where ur.role_id = #{id}
+    </select>
 
     <insert id="saveReturnPrimaryKey" useGeneratedKeys="true" keyProperty="userId" parameterType="com.neefull.fsp.web.system.entity.User">
         insert into t_user(user_id,username,password,dept_id,email,mobile,status,create_time,modify_time,ssex,is_tab,
