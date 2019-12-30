@@ -117,6 +117,7 @@ public class RocheController extends BaseController {
         User user = getCurrentUser();
         try {
             rocheService.commitProcess(roche,user);
+            rocheService.addOrEditImages(roche,user);
         } catch (Exception e) {
             throw new FebsException("提交申请失败");
         }

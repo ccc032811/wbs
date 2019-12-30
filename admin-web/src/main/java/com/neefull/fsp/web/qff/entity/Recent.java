@@ -88,6 +88,11 @@ public class Recent implements Serializable {
     @TableField("rep_date")
     private String repDate;
     /**
+     *  图片
+     */
+    @TableField(exist = false)
+    private String images;
+    /**
      *  状态码  1新建  2 审核中 3 完结  4异常
      */
     @TableField("status")
@@ -207,6 +212,14 @@ public class Recent implements Serializable {
 
     public void setRepDate(String repDate) {
         this.repDate = repDate;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
     }
 
     public Integer getStatus() {

@@ -71,4 +71,10 @@ public interface IRefundService extends IService<Refund> {
      * @return
      */
     List<String> getGroup(Refund refund);
+
+    /**添加图片
+     * @param refund
+     * @param user
+     */
+    void addOrEditImage(Refund refund, User user);
 }

@@ -156,8 +156,9 @@ public class Commodity implements Serializable {
      */
     @TableField(exist = false)
     private String images;
-
-
+    /**
+     *  流程
+     */
     @TableField(exist = false)
     private List<String> taskHistory;
     /**

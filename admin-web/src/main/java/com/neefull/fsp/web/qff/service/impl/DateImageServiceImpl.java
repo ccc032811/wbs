@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.web.qff.entity.DateImage;
+import com.neefull.fsp.web.qff.entity.ImageQuery;
 import com.neefull.fsp.web.qff.mapper.DateImageMapper;
 import com.neefull.fsp.web.qff.service.IDateImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,13 +80,13 @@ public class DateImageServiceImpl extends ServiceImpl<DateImageMapper, DateImage
     }
 
     @Override
-    public void deleteImage(Integer dataId, String relevance, String url,String vest) {
-        DateImage dateImage = dateImageMapper.queryImage(dataId, vest, relevance);
+    public void deleteImage(ImageQuery imageQuery) {
+        DateImage dateImage = dateImageMapper.queryImage(imageQuery.getDataId(), imageQuery.getDeptName(), imageQuery.getRelevance());
         String[] images = dateImage.getImage().split(StringPool.COMMA);
         List<String> image = Arrays.asList(images);
         if(images.length!=0){
             for(int i = image.size()-1;i>=0;i--){
-                if(image.get(i).equals(url)){
+                if(image.get(i).equals(imageQuery.getUrl())){
                     image.remove(i);
                 }
             }

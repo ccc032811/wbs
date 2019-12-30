@@ -206,23 +206,26 @@
                 </div>
             </div>
         </div>
+        <div class="layui-form-item">
+            <div class="layui-inline layui-col-sm12">
+                <div class="layui-input-block" >
+                    <div class="site-demo-flow" id="image_show" style="overflow: auto; display: flex">
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
-
+<img alt="" style="display:none" id="displayImg" src="" />
 <script data-th-inline="javascript">
-    layui.use(['febs', 'form', 'formSelects', 'validate', 'treeSelect','upload','layer'], function () {
+    layui.use(['form','layer','jquery'], function () {
         var $ = layui.$,
-            febs = layui.febs,
             layer = layui.layer,
-            formSelects = layui.formSelects,
-            treeSelect = layui.treeSelect,
             form = layui.form,
-            upload = layui.upload,
-            commodity = [[${commodity}]],
-            $view = $('#delivery-detail'),
-            validate = layui.validate;
+            commodity = [[${commodity}]];
 
-
+        var relevance = "qff_commodity";
 
         //表单渲染
         form.render();
@@ -261,6 +264,40 @@
                 "images": commodity.images
             });
         }
+
+
+        $.get(ctx +"file/findImages/"+commodity.id+"/"+relevance,function (res) {
+            var data = res.data;
+            $.each(data,function (index, item) {
+                $('#image_show').append('<a href="javascript:amplificationImg(\''+index+'\',\''+item+'\')"><img name=" '+index+'"src = " '+item+' "style="width:150px;height:auto;"></a>')
+            })
+        });
+        window.amplificationImg = function (name, url) {
+            $("#displayImg").attr("src", url);
+            var height =$("#displayImg").height();
+            var width = $("#displayImg").width();
+            var winHeight = $(window).height() - 100;
+            var winWidth = $(window).width() - 120;
+            if (height > winHeight || width > winWidth) {
+                if (winWidth/ winHeight <= width / height) {
+                    width = winWidth;
+                    height = winWidth * (height / width);
+                }
+                if (winWidth/ winHeight > width / height) {
+                    width = winHeight  * (width / height);
+                    height = winHeight  ;
+                }
+            }
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                shadeClose: true,
+                area: [width + 'px', height + 'px'], //宽高
+                content: '<img name="'+name+'" alt=" '+name+'" src="' + url + '" />'
+            });
+        };
+
 
     });
 </script>

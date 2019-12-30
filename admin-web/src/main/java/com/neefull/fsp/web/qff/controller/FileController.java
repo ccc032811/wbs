@@ -3,6 +3,7 @@ package com.neefull.fsp.web.qff.controller;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
+import com.neefull.fsp.web.qff.entity.ImageQuery;
 import com.neefull.fsp.web.qff.service.IDateImageService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +53,9 @@ public class FileController {
      * @param url
      * @return
      */
-    @PostMapping("/deleteImage/{dataId}/{relevance}/{vest}/{url}")
-    public FebsResponse deleteImage(@PathVariable Integer dataId ,
-                                    @PathVariable String relevance,
-                                    @PathVariable String url,
-                                    @PathVariable String vest){
-        dateImageService.deleteImage(dataId,relevance,url,vest);
+    @PostMapping("/deleteImage")
+    public FebsResponse deleteImage(ImageQuery imageQuery){
+        dateImageService.deleteImage(imageQuery);
         return new FebsResponse().success();
     }
 

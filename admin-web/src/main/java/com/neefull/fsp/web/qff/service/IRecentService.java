@@ -67,4 +67,10 @@ public interface IRecentService extends IService<Recent> {
      * @return
      */
     List<String> getGroup(Recent recent);
+
+    /**添加或者更新图片
+     * @param recent
+     * @param user
+     */
+    void addOrEditImage(Recent recent, User user);
 }

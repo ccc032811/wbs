@@ -10,6 +10,7 @@ import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.qff.mapper.RefundMapper;
+import com.neefull.fsp.web.qff.service.IDateImageService;
 import com.neefull.fsp.web.qff.service.IRefundService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
@@ -43,6 +44,8 @@ public class RefundServiceImpl extends ServiceImpl<RefundMapper, Refund> impleme
     private RuntimeService runtimeService;
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private IDateImageService dateImageService;
 
     @Override
     public Integer addRefund(Refund refund){
@@ -132,6 +135,19 @@ public class RefundServiceImpl extends ServiceImpl<RefundMapper, Refund> impleme
             list.add(identityLink.getGroupId());
         }
         return list;
+
+    }
+
+    @Override
+    public void addOrEditImage(Refund refund, User user) {
+
+        String image = dateImageService.queryImage(refund.getId(), user.getDeptName(), "qff_refund");
+        if(StringUtils.isEmpty(image)){
+            dateImageService.insertDateImage(refund.getId(), user.getDeptName(), "qff_refund",refund.getImages());
+        }else {
+            image= image+refund.getImages();
+            dateImageService.updateDateImage(refund.getId(), user.getDeptName(), "qff_refund",image);
+        }
 
     }
 

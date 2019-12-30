@@ -114,6 +114,7 @@ public class RecentController extends BaseController {
         User user = getCurrentUser();
         try {
             recentService.commitProcess(recent,user);
+            recentService.addOrEditImage(recent,user);
         } catch (Exception e) {
             throw new FebsException("提交申请失败");
         }
@@ -133,6 +134,7 @@ public class RecentController extends BaseController {
         if(group.contains(user.getUsername())){
             try {
                 recentService.agreeCurrentProcess(recent,user);
+                recentService.addOrEditImage(recent,user);
             } catch (Exception e) {
                 throw new FebsException("同意流程失败");
             }

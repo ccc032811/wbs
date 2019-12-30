@@ -2,6 +2,7 @@ package com.neefull.fsp.web.qff.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.qff.entity.DateImage;
+import com.neefull.fsp.web.qff.entity.ImageQuery;
 
 import java.util.List;
 
@@ -45,5 +46,5 @@ public interface IDateImageService extends IService<DateImage> {
      * @param relevance
      * @param url
      */
-    void deleteImage(Integer dataId, String relevance, String url,String vest);
+    void deleteImage(ImageQuery imageQuery);
 }

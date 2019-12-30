@@ -11,6 +11,7 @@ import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.qff.entity.Roche;
 import com.neefull.fsp.web.qff.mapper.RocheMapper;
+import com.neefull.fsp.web.qff.service.IDateImageService;
 import com.neefull.fsp.web.qff.service.IRocheService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
@@ -46,6 +47,8 @@ public class RocheServiceImpl extends ServiceImpl<RocheMapper, Roche> implements
     private RuntimeService runtimeService;
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private IDateImageService dateImageService;
 
 
     @Override
@@ -136,6 +139,18 @@ public class RocheServiceImpl extends ServiceImpl<RocheMapper, Roche> implements
             list.add(identityLink.getGroupId());
         }
         return list;
+    }
+
+    @Override
+    public void addOrEditImages(Roche roche, User user) {
+
+        String image = dateImageService.queryImage(roche.getId(), user.getDeptName(), "qff_roche");
+        if(StringUtils.isEmpty(image)){
+            dateImageService.insertDateImage(roche.getId(), user.getDeptName(), "qff_roche",roche.getImages());
+        }else {
+            image= image+roche.getImages();
+            dateImageService.updateDateImage(roche.getId(), user.getDeptName(), "qff_roche",image);
+        }
     }
 
     private Integer getId(String businessKey){

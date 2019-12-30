@@ -114,6 +114,7 @@ public class RefundController extends BaseController {
         User user = getCurrentUser();
         try {
             refundService.commitProcess(refund,user);
+            refundService.addOrEditImage(refund,user);
         } catch (Exception e) {
             throw new FebsException("提交申请失败");
         }
@@ -133,6 +134,7 @@ public class RefundController extends BaseController {
         if(group.contains(user.getUsername())){
             try {
                 refundService.agreeCurrentProcess(refund,user);
+                refundService.addOrEditImage(refund,user);
             } catch (Exception e) {
                 throw new FebsException("同意流程失败");
             }

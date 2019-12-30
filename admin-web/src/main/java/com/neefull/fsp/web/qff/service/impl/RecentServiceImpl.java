@@ -7,6 +7,7 @@ import com.neefull.fsp.web.qff.entity.Commodity;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.mapper.RecentMapper;
+import com.neefull.fsp.web.qff.service.IDateImageService;
 import com.neefull.fsp.web.qff.service.IRecentService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
@@ -38,6 +39,8 @@ public class RecentServiceImpl extends ServiceImpl<RecentMapper, Recent> impleme
 
     @Autowired
     private RecentMapper recentMapper;
+    @Autowired
+    private IDateImageService dateImageService;
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
@@ -126,6 +129,17 @@ public class RecentServiceImpl extends ServiceImpl<RecentMapper, Recent> impleme
         }
         return list;
 
+    }
+
+    @Override
+    public void addOrEditImage(Recent recent, User user) {
+        String image = dateImageService.queryImage(recent.getId(), user.getDeptName(), "qff_recent");
+        if(StringUtils.isEmpty(image)){
+            dateImageService.insertDateImage(recent.getId(), user.getDeptName(), "qff_recent",recent.getImages());
+        }else {
+            image= image+recent.getImages();
+            dateImageService.updateDateImage(recent.getId(), user.getDeptName(), "qff_recent",image);
+        }
     }
 
     private Integer getId(String businessKey){

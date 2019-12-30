@@ -138,6 +138,11 @@ public class Refund implements Serializable {
     @TableField("classify")
     private String classify;
     /**
+     *  图片
+     */
+    @TableField(exist = false)
+    private String images;
+    /**
      *  状态码  1新建  2 审核中 3 完结  4异常
      */
     @TableField("status")
@@ -337,6 +342,14 @@ public class Refund implements Serializable {
 
     public void setClassify(String classify) {
         this.classify = classify;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
     }
 
     public Integer getStatus() {

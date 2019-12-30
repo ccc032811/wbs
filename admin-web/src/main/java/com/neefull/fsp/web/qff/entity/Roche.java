@@ -108,6 +108,11 @@ public class Roche implements Serializable {
     @TableField("actual_date")
     private String actualDate;
     /**
+     *  图片
+     */
+    @TableField(exist = false)
+    private String images;
+    /**
      *  状态码  1新建  2 审核中 3 完结  4异常
      */
     @TableField("status")
@@ -249,6 +254,14 @@ public class Roche implements Serializable {
 
     public void setActualDate(String actualDate) {
         this.actualDate = actualDate;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
     }
 
     public Integer getStatus() {

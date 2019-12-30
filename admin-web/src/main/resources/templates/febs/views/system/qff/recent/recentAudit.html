@@ -89,8 +89,8 @@
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label layui-form-label-sm">罗氏QA处理意见</label>
                 <div class="layui-input-block">
-                    <input type="text" name="rConf" lay-verify="required" maxlength="50" autocomplete="off"
-                           class="layui-input">
+                    <input type="text" name="rConf"  lay-verify="required" autocomplete="off" list="search_rConf" class="layui-input" placeholder="请输入" >
+                    <datalist id="search_rConf" style="display:none;"></datalist>
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
@@ -127,7 +127,7 @@
         </div>
     </form>
 </div>
-
+<img alt="" style="display:none" id="displayImg" src="" />
 <script data-th-inline="javascript">
     layui.use(['febs', 'form', 'laydate','formSelects', 'validate', 'treeSelect','upload','layer'], function () {
         var $ = layui.$,
@@ -141,8 +141,7 @@
             recent = [[${recent}]],
             $view = $('#recent-detail'),
             validate = layui.validate;
-        var s = "";
-        var name ="罗氏QA处理意见";
+        var rConf ="罗氏QA处理意见";
 
         laydate.render({
             elem: '#repDate',
@@ -190,45 +189,13 @@
             }
         });
 
-        /*
-         formSelects.render();
 
-        */
-
-
-        //下拉框
-        formSelects.config('commodity-opinion', {
-            searchUrl: ctx + 'opinion/getOpinion/'+name,
-            response: {
-                statusCode: 200
-            },
-            beforeSuccess: function (id, url, searchVal, result) {
-                var data = result.data;
-                var tranData = [];
-                for (var i = 0; i < data.length; i++) {
-                    tranData.push({
-                        name: data[i].name,
-                        value: data[i].name
-                    })
-                }
-                result.data = tranData;
-                return result;
-            },
-            error: function (id, url, searchVal, err) {
-                console.error(err);
-                febs.alert.error('获取角色列表失败');
-            }
+        $.get(ctx +"opinion/getOpinion/"+rConf,function(res){
+            var data = res.data;
+            $.each(data,function(index,item){
+                $("#search_rConf").append('<option value="'+item.name+'"></option>')
+            });
         });
-
-
-
-        /* form.on('select(rConf)',function(){
-             febs.get(ctx + 'opinion/getOpinion/',name,function (data) {
-                 for (var k in data){
-                     $('#rConf').append("'<option value='"+data[k].name+"'>"+data[k].name+"</option>")
-                 }
-             })
-         });*/
 
         //提交更新
         form.on('submit(recent-form-submit)', function (data) {

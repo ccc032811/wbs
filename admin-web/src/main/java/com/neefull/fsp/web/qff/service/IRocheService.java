@@ -70,4 +70,10 @@ public interface IRocheService extends IService<Roche> {
      * @return
      */
     List<String> getGroup(Roche roche);
+
+    /**添加修改信息
+     * @param roche
+     * @param user
+     */
+    void addOrEditImages(Roche roche, User user);
 }

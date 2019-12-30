@@ -322,8 +322,8 @@
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label layui-form-label-sm">QFF原因</label>
                 <div class="layui-input-block">
-                    <input type="text" name="reason" lay-verify="required" maxlength="50" autocomplete="off"
-                           class="layui-input " >
+                    <input type="text" name="reason"  lay-verify="required" autocomplete="off" list="search_reason" class="layui-input" placeholder="请输入">
+                    <datalist id="search_reason" style="display:none;"></datalist>
                 </div>
             </div>
         </div>
@@ -388,9 +388,8 @@
             <div class="layui-inline layui-col-sm6">
                 <label class="layui-form-label febs-form-item-sm">罗氏QA处理意见</label>
                 <div class="layui-input-block">
-                    <div>
-                        <select name="companyId"  class="form-control" id="sel_companyId"></select>
-                    </div>
+                    <input type="text" name="rConf"  lay-verify="required" autocomplete="off" list="search_rConf" class="layui-input" placeholder="请输入" >
+                    <datalist id="search_rConf" style="display:none;"></datalist>
                 </div>
             </div>
         </div>
@@ -418,7 +417,7 @@
         <div class="layui-form-item">
             <div class="layui-inline layui-col-sm6">
                 <div class="layui-input-block" >
-                    <div class="site-demo-flow" id="demo" style="overflow: auto; display: flex">
+                    <div class="site-demo-flow" id="image_show" style="overflow: auto; display: flex">
 
                     </div>
                 </div>
@@ -494,8 +493,6 @@
         var $ = layui.jquery,
             febs = layui.febs,
             layer = layui.layer,
-            formSelects = layui.formSelects,
-            treeSelect = layui.treeSelect,
             form = layui.form,
             upload = layui.upload,
             commodity = [[${commodity}]],
@@ -503,12 +500,14 @@
             validate = layui.validate;
 
         var files ="";
+        var imageList = "";
         var images = [];
         var ba = "BA";
         var stage = "QFF上报阶段";
         var source = "采购来源";
         var classify = "产品分类";
-        var name ="罗氏QA处理意见";
+        var rConf ="罗氏QA处理意见";
+        var reason = "QFF原因";
         var relevance = "qff_commodity";
 
         //表单渲染
@@ -590,7 +589,7 @@
                             delete images[i];
                         }
                     }
-                    /*deleteImage(res.data.value);*/
+                    deleteImage(res.data.value);
                 });
                 if(res.code ==200){
                     images.push(res.data.value);
@@ -604,18 +603,18 @@
             }
         });
 
-       /* function deleteImage(url){
-            febs.post(ctx +"file/deleteImage/"+commodity.id+"/"+relevance+"/"+currentUser.deptName+"/"+url,function (res) {
+
+        function deleteImage(url){
+            var parameter = {dataId: commodity.id, relevance: relevance, deptName: currentUser.deptName, url: url};
+            febs.post(ctx + "file/deleteImage/", parameter, function (res) {
 
             })
-        }*/
-
-
+        }
 
         $.get(ctx +"file/findImages/"+commodity.id+"/"+relevance,function (res) {
             var data = res.data;
             $.each(data,function (index, item) {
-                $('#demo').append('<a href="javascript:amplificationImg(\''+index+'\',\''+item+'\')"><img name=" '+index+'"src = " '+item+' "style="width:150px;height:auto;"></a>')
+                $('#image_show').append('<a href="javascript:amplificationImg(\''+index+'\',\''+item+'\')"><img name=" '+index+'"src = " '+item+' "style="width:150px;height:auto;"></a>')
             })
         });
         window.amplificationImg = function (name, url) {
@@ -645,7 +644,7 @@
         };
 
 
-        var imageList = "";
+
         //提交更新
         form.on('submit(conserve-form-submit)', function (data) {
             if (febs.nativeEqual(data.field, commodity)) {
@@ -663,6 +662,21 @@
                 febs.alert.success('数据修改成功');
             });
             return false;
+        });
+
+
+        $.get(ctx +"opinion/getOpinion/"+reason,function(res){
+            var data = res.data;
+            $.each(data,function(index,item){
+                $("#search_reason").append('<option value="'+item.name+'"></option>')
+            });
+        });
+
+        $.get(ctx +"opinion/getOpinion/"+rConf,function(res){
+            var data = res.data;
+            $.each(data,function(index,item){
+                $("#search_rConf").append('<option value="'+item.name+'"></option>')
+            });
         });
 
         $.get(ctx +"opinion/getOpinion/"+ba,function(res){

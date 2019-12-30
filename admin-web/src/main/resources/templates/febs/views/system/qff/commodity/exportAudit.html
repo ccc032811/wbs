@@ -119,8 +119,8 @@
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label layui-form-label-sm">QFF原因</label>
                 <div class="layui-input-block">
-                    <input type="text" name="reason" lay-verify="required" maxlength="50" autocomplete="off"
-                           class="layui-input" readonly="readonly">
+                    <input type="text" name="reason"  lay-verify="required" autocomplete="off" list="search_reason" class="layui-input" placeholder="请输入">
+                    <datalist id="search_reason" style="display:none;"></datalist>
                 </div>
             </div>
         </div>
@@ -185,8 +185,8 @@
             <div class="layui-inline layui-col-sm6">
                 <label class="layui-form-label febs-form-item-sm">罗氏QA处理意见</label>
                 <div class="layui-input-block">
-                    <input type="text" name="rConf" lay-verify="required" maxlength="50" autocomplete="off"
-                           class="layui-input " readonly="readonly">
+                    <input type="text" name="rConf"  lay-verify="required" autocomplete="off" list="search_rConf" class="layui-input" placeholder="请输入" >
+                    <datalist id="search_rConf" style="display:none;"></datalist>
                 </div>
             </div>
         </div>
@@ -238,7 +238,7 @@
         </div>
     </form>
 </div>
-
+<img alt="" style="display:none" id="displayImg" src="" />
 <script data-th-inline="javascript">
     layui.use(['febs', 'form', 'formSelects', 'validate', 'treeSelect','upload','layer'], function () {
         var $ = layui.$,
@@ -256,7 +256,8 @@
         var stage = "QFF上报阶段";
         var source = "采购来源";
         var classify = "产品分类";
-        var name ="罗氏QA处理意见";
+        var rConf ="罗氏QA处理意见";
+        var reason = "QFF原因";
 
         //表单渲染
         form.render();
@@ -313,6 +314,20 @@
         });
 
 
+
+        $.get(ctx +"opinion/getOpinion/"+reason,function(res){
+            var data = res.data;
+            $.each(data,function(index,item){
+                $("#search_reason").append('<option value="'+item.name+'"></option>')
+            });
+        });
+
+        $.get(ctx +"opinion/getOpinion/"+rConf,function(res){
+            var data = res.data;
+            $.each(data,function(index,item){
+                $("#search_rConf").append('<option value="'+item.name+'"></option>')
+            });
+        });
 
         $.get(ctx +"opinion/getOpinion/"+ba,function(res){
             var data=res.data;
