@@ -1,5 +1,5 @@
 <div class="layui-layout layui-layout-admin" id="febs-layout">
-    <div class="layui-header layui-anim febs-anim-down" id="app-header">
+    <div class="layui-header layui-anim febs-anim-down" id="app-header" style="background-color: #00A1DD">
         <script type="text/html"
                 template
                 lay-done="layui.element.render('nav','febs-header')">
@@ -16,7 +16,7 @@
                     <a>
                         <img style="width: 1.9rem;margin-right:.5rem;border-radius: 50%"
                              src="{{= ctx + 'febs/images/avatar/' + currentUser.avatar }}" title="头像">
-                        {{ currentUser.username }}
+                        <span style="color: #fff">{{ currentUser.username }}</span>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a class="layui-nav-child-href" id="user-profile">个人中心</a></dd>
@@ -58,8 +58,8 @@
     <!-- 侧边菜单 -->
     <div class="layui-side" id="app-sidebar">
         <div class="layui-side-scroll">
-            <div id="logo-img" style="cursor: pointer;text-align:center;margin:10px">
-                <img data-th-src="@{febs/images/cardinal_logo_small.png}" width="150px" height="50px">
+            <div id="logo-img" style="cursor: pointer;text-align:center">
+                <img data-th-src="@{febs/images/cardinal_logo_small.png}" width="245px" height="50px">
             </div>
             <script
                     type="text/html"

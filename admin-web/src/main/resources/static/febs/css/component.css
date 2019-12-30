@@ -10,14 +10,15 @@
 }
 
 .demo-1 .large-header {
-	background-image: url('../images/demo-1-bg.jpg');
+	background-color: #fff;
 }
 .logo_box{
-	width: 900px;
+	width: 50%;
 	height:	430px;
 	padding: 5px;
 	background-color: white;
-	box-shadow:4px 5px 6px 7px rgba(0,0,0,.5);
+	-webkit-box-shadow: #d4d2d2 0px 0px 10px 10px;
+	-moz-box-shadow: #d4d2d2 0px 0px 10px;
 	position: absolute;
 	left: 50%;
 	top:50%;
@@ -33,32 +34,36 @@
 	line-height: 20px;
 	padding:0 0 45px 0;
 }
-.forms{
-	width: 280px;
-	height: 485px;
+#loginForm{
+	width: 70%;
+	height: 290px;
+	margin-left: 15%;
+	margin-top: 10px;
 }
 .logon_inof{
 	width: 100%;
 	min-height: 450px;
 	padding-top: 35px;
 	position: relative;
-}		
+}
 .input_outer{
+	width: 49%;
 	height: 55px;
 	padding: 0 5px;
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 	border-radius: 50px;
 	position: relative;
-	border: rgba(255,255,255,0.2) 20px solid !important;
+	/*border: rgba(255,255,255,0.2) 20px solid !important;*/
 }
 .input_outer_code{
+	width: 49%;
 	height: 55px;
 	padding: 0 5px;
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 	margin-right: 0px;
 	border-radius: 50px;
 	position: relative;
-	border: rgba(255,255,255,0.2) 20px solid !important;
+	/*border: rgba(255,255,255,0.2) 20px solid !important;*/
 }
 .u_user{
 	width: 25px;
@@ -94,7 +99,7 @@
 	line-height: 46px;
 }
 .text{
-	width: 220px;
+	width: 70%;
 	height: 46px;
 	outline: none;
 	display: inline-block;
@@ -105,7 +110,7 @@
 	line-height: 46px;
 }
 .text_code{
-	width: 100px;
+	width: 23%;
 	height: 46px;
 	outline: none;
 	display: inline-block;
@@ -115,14 +120,9 @@
 	background: none;
 	line-height: 46px;
 }
-.span_code{
-	width: 50%;
-	float: contour;
-	margin-top: 4px;
-}
 /*///*/
 .mb2{
-	margin-bottom: 50px;
+	margin-top: 50px;
 	padding-left:35px;
 	border: rgba(255,255,255,0.2) 20px solid !important;
 
@@ -142,4 +142,29 @@
 	font-size: 20px;
 	border-radius: 50px;
 	background: #0096e6;
+}
+
+/*lable标签的大小、位置、背景颜色更改，在css选择时，“+”代表相邻元素，即当前元素的下一元素*/
+#color-input-red +label{
+	display: block;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	position: absolute;
+	top: 15px;
+	left: 20px;
+	border: 1px solid #858585;
+}
+
+/*当input框为选中状态时，lable标签的样式，其中在css选择时，“：”表示当前input框的值，即checked；
+      该部分主要对显示的“对号”的大限居中方式，显示颜色进行了设置*/
+#color-input-red:checked +label::before{
+	display: block;
+	content: "\2714";
+	text-align: center;
+	font-size: 16px;
+	color: #000;
+}
+input[type=checkbox]{
+	visibility: hidden;
 }

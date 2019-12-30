@@ -138,6 +138,77 @@
         color: #151BFD;
         border-bottom: 1px solid #ddd;
     }
+
+
+
+    .timeline-main-line{
+        width: 90%;
+        height: 50px;
+        margin-left: 5%
+    }
+    .timeline-item-success{
+        width: 25%;
+        height: 50px;
+        float:left;
+        border-bottom: 3px solid #3DCCA6;
+    }
+    .timeline-item-fail{
+        width: 25%;
+        height: 50px;
+        float:left;
+        border-bottom: 3px solid #CBCBCB;
+    }
+    .timeline-item-end{
+        width: 5%;
+        height: 50px;
+        float:left;
+    }
+    .timeline-item-cricle-success{
+        width: 30px;
+        height: 20px;
+        border-radius: 80%;
+        background-color: #3DCCA6;
+        position: relative;
+        top: 22px;
+        left: -10px;
+        text-align: center;
+        color: #fff;
+    }
+    .timeline-item-cricle-fail{
+        width: 30px;
+        height: 20px;
+        border-radius: 80%;
+        background-color: #CBCBCB;
+        position: relative;
+        top: 42px;
+        left: -10px;
+        text-align: center;
+        color: #000;
+    }
+    .timeline-item-timestamp{
+        width: 100px;
+        height: 20px;
+        color: #000;
+        position: relative;
+        top: 10px;
+        left: -30px;
+    }
+    .timeline-item-name{
+        width: 100px;
+        height: 20px;
+        color: #000;
+        position: relative;
+        top: 40px;
+        left: -20px;
+    }
+    .timeline-item-name-fail{
+        width: 100px;
+        height: 20px;
+        color: #000;
+        position: relative;
+        top: 60px;
+        left: -20px;
+    }
 </style>
 <div class="layui-fluid" id="conserve-detail" lay-title = "养护QFF">
     <form class="layui-form " action="" lay-filter="conserve-detail-form">
@@ -366,28 +437,50 @@
             </div>
         </div>
         <div class="layui-form-item" >
-            <div class="time_line_box"  >
-                <div class="time_up" style=" display: flex;" >
-                    <div class="time_on" style=" display: flex;">
-                        <h5>你说</h5>
-                    </div>
-                    <div class="time_on" style=" display: flex;">
-                        <div><h5>你说</h5></div>
-                    </div>
-                    <div class="time_on" style=" display: flex;">
-                        <div><h5>你说</h5></div>
-                    </div>
+<!--            <div class="time_line_box"  >-->
+<!--                <div class="time_up" style=" display: flex;" >-->
+<!--                    <div class="time_on" style=" display: flex;">-->
+<!--                        <h5>你说</h5>-->
+<!--                    </div>-->
+<!--                    <div class="time_on" style=" display: flex;">-->
+<!--                        <div><h5>你说</h5></div>-->
+<!--                    </div>-->
+<!--                    <div class="time_on" style=" display: flex;">-->
+<!--                        <div><h5>你说</h5></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="time_line" style="width:100%;" >-->
+<!--                    <li class="order_item" style="left:15%;"></li>-->
+<!--                    <li class="order_item " style="left:50%;"></li>-->
+<!--                    <li class="order_item" style="left:82%;"></li>-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+            <div class="timeline-main-line">
+                <div class="timeline-item-success">
+                    <div class="timeline-item-timestamp">2019-12-01</div>
+                    <div class="timeline-item-cricle-success">1</div>
+                    <div class="timeline-item-name">KDL审核</div>
                 </div>
-                <div class="time_line" style="width:100%;" >
-                    <li class="order_item" style="left:15%;"></li>
-                    <li class="order_item " style="left:50%;"></li>
-                    <li class="order_item" style="left:82%;"></li>
+                <div class="timeline-item-success">
+                    <div class="timeline-item-timestamp">2019-12-03</div>
+                    <div class="timeline-item-cricle-success">2</div>
+                    <div class="timeline-item-name">罗氏审核</div>
+                </div>
+                <div class="timeline-item-fail">
+                    <div class="timeline-item-cricle-fail">3</div>
+                    <div class="timeline-item-name-fail">xxx审核</div>
+                </div>
+                <div class="timeline-item-end">
+                    <div class="timeline-item-cricle-fail">4</div>
+                    <div class="timeline-item-name-fail">仓库处理完成</div>
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div  style="text-align: center;" shiro:hasPermission="commodity:audit">
-                <button class="layui-btn" lay-submit="" lay-filter="conserve-form-submit" id="submit">提交</button>
+                <button class="layui-btn" lay-submit="" lay-filter="conserve-form-submit" id="submit" style="margin-top: 50px;">提交</button>
             </div>
             <br>
             <div style="float: right">

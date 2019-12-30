@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
@@ -24,42 +23,54 @@
         <div id="large-header" class="large-header">
             <canvas id="demo-canvas"></canvas>
             <div class="logo_box">
-                <h3><img data-th-src="@{febs/images/login-logo.png}" width="60px" height="30px">&nbsp;新酬付管理后台</h3>
+                <div style="width: 80%;height: 100px;border-bottom: 1px solid #E3E1DF;margin-left: 5%">
+                    <img data-th-src="@{febs/images/cardinal_logo_small.jpg}" width="300px" height="68px" style="margin-top: 20px">
+                </div>
                 <form id="loginForm">
-                    <div class="input_outer">
-                        <span class="u_user"></span>
-                        <input name="username" class="text" lay-verify="required" style="color: #FFFFFF !important" type="text" placeholder="请输入账户">
+                    <div style="width: 100%;height: 70px">
+                        <div class="input_outer" style="float: left">
+                            <span class="u_user"></span>
+                            <input name="username" class="text" lay-verify="required" style="color: #000 !important" type="text" placeholder="请输入账户">
+                        </div>
+                        <div class="input_outer" style="float: right">
+                            <span class="us_uer"></span>
+                            <input name="password" class="text" lay-verify="required" style="color: #000 !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
+                        </div>
                     </div>
-                    <div class="input_outer">
-                        <span class="us_uer"></span>
-                        <input name="password" class="text" lay-verify="required" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
+                    <div style="width: 100%;height: 70px">
+                        <div class="input_outer_code" style="float: left">
+                            <span class="us_code"></span>
+                            <input type="text" maxlength="4" name="verifyCode" lay-verify="required" style="color: #000 !important"
+                                   placeholder="验证码" class="text_code" autocomplete="off">
+                            <img class="codeimg" id="codeimg" width="80" height="25px"/>
+                        </div>
+                        <div class="input_outer" style="float: right">
+                            <div style="width: 80%;height: 30px;margin-top: 16px;">
+                                <input id="color-input-red" class="chat-button-location-radio-input" type="checkbox" name="color-input-red" value="#f0544d" />
+                                <label for="color-input-red"></label>
+                                <span style="margin-left: 35px;color: #AAAAAA;font-size: 13px">记住用户名</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="input_outer_code">
-                        <span class="us_code"></span>
-                        <input type="text" maxlength="4" name="verifyCode" lay-verify="required" style="color: #FFFFFF !important"
-                               placeholder="验证码" class="text_code" autocomplete="off">
-                        <span class="span_code">
-                            <img class="codeimg" id="codeimg"/>
-                        </span>
-                    </div>
+
                     <div class="mb2">
                         <!--<a id = "sub" lay-filter="sub" class="act-but submit" href="javascript:;" style="color: #FFFFFF">登录</a>-->
                         <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit
-                                lay-filter="login-submit" id="login" style="border-radius: 50px;height: 50px;line-height: 50px;font-size: 20px">
+                                lay-filter="login-submit" id="login" style="border-radius: 50px;height: 50px;line-height: 50px;font-size: 20px;width: 80%">
                             <i style="display: none"
                                class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
                             立即登录
                         </button>
                     </div>
                 </form>
+                <div style="width: 70%;height: 20px;font-size: 14px;margin-left: 5%;">
+                    上药控股有限公司版权所有©2013-2019
+                </div>
             </div>
         </div>
     </div>
 </div>
 <script th:src="@{layui/layui.js}"></script>
-<script th:src="@{febs/TweenLite.min.js}"></script>
-<script th:src="@{febs/EasePack.min.js}"></script>
-<script th:src="@{febs/rAF.js}"></script>
 <script th:src="@{febs/demo-1.js}"></script>
 <script th:inline="javascript">
     var ctx = [[@{
@@ -176,15 +187,6 @@
             });
 
         });
-</script>
-<script>
-    layui.use(['dropdown', 'jquery', 'laydate', 'form', 'table', 'febs', 'treeSelect', 'upload'], function () {
-        var $ = layui.jquery
-
-        $(function () {
-            $("#sel_companyId").searchableSelect();
-        });
-    });
 </script>
 </body>
 </html>
