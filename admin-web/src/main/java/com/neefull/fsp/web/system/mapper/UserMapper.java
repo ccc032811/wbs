@@ -87,4 +87,10 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     List<User> findUserByDepartName(@Param("name") String name);
+
+    /**根据角色id查询所有用户
+     * @param id
+     * @return
+     */
+    List<User> findUserByRoleId(@Param("id") Integer id);
 }

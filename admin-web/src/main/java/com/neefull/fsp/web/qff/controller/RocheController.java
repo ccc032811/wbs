@@ -9,6 +9,7 @@ import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.qff.entity.Roche;
 import com.neefull.fsp.web.qff.service.IRocheService;
+import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import com.sun.xml.internal.fastinfoset.util.FixedEntryStringIntMap;
 import org.apache.commons.collections4.CollectionUtils;
@@ -83,7 +84,7 @@ public class RocheController extends BaseController {
     @GetMapping("/deleteRoche/{id}")
     @RequiresPermissions("refund:del")
     public FebsResponse updateRocheStatus(@PathVariable Integer id) throws FebsException {
-        Integer count = rocheService.updateRocheStatus(id,4);
+        Integer count = rocheService.updateRocheStatus(id, ProcessConstant.HAVE_ABNORMAL);
         if(count!=1){
             throw new FebsException("删除罗氏内部QFF失败");
         }

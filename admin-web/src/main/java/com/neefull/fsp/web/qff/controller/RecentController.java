@@ -7,6 +7,7 @@ import com.neefull.fsp.web.common.exception.FebsException;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.service.IRecentService;
+import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -80,7 +81,7 @@ public class RecentController extends BaseController {
     @GetMapping("/deleteRecent/{id}")
     @RequiresPermissions("recent:del")
     public FebsResponse updateRecentStatus(@PathVariable Integer id) throws FebsException {
-        Integer count = recentService.updateRecentStatus(id,4);
+        Integer count = recentService.updateRecentStatus(id, ProcessConstant.HAVE_ABNORMAL);
         if(count!=1){
             throw new FebsException("删除近效期QFF失败");
         }

@@ -71,4 +71,10 @@ public interface ICommodityService extends IService<Commodity> {
      * @return
      */
     List<String> getGroupId(Commodity commodity, User user);
+
+    /**添加或者更新图片信息
+     * @param commodity
+     * @param user
+     */
+    void addOrEditImage(Commodity commodity, User user);
 }

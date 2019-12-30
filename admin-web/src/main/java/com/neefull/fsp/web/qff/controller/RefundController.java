@@ -7,6 +7,7 @@ import com.neefull.fsp.web.common.exception.FebsException;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.qff.service.IRefundService;
+import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -80,7 +81,7 @@ public class RefundController extends BaseController {
     @GetMapping("/deleteRefund/{id}")
     @RequiresPermissions("refund:del")
     public FebsResponse updateRefundStatus(@PathVariable Integer id) throws FebsException {
-        Integer count = refundService.updateRefundStatus(id,4);
+        Integer count = refundService.updateRefundStatus(id, ProcessConstant.HAVE_ABNORMAL);
         if(count!=1){
             throw new FebsException("删除退货QFF");
         }

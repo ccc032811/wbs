@@ -12,6 +12,7 @@ import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.qff.entity.Roche;
 import com.neefull.fsp.web.qff.mapper.RocheMapper;
 import com.neefull.fsp.web.qff.service.IRocheService;
+import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -22,6 +23,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +37,7 @@ import java.util.Map;
  */
 
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class RocheServiceImpl extends ServiceImpl<RocheMapper, Roche> implements IRocheService {
 
     @Autowired
@@ -86,7 +90,7 @@ public class RocheServiceImpl extends ServiceImpl<RocheMapper, Roche> implements
         String businessKey = Roche.class.getSimpleName()+":"+roche.getId();
         runtimeService.startProcessInstanceByKey("罗氏内部发起QFF", businessKey);
         //更改状态审核中
-        updateRocheStatus(roche.getId(),2);
+        updateRocheStatus(roche.getId(), ProcessConstant.UNDER_REVIEW);
     }
 
     @Override
@@ -102,7 +106,7 @@ public class RocheServiceImpl extends ServiceImpl<RocheMapper, Roche> implements
         taskService.complete(task.getId());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, "罗氏内部发起QFF").singleResult();
         if(processInstance==null){
-            updateRocheStatus(roche.getId(),3);
+            updateRocheStatus(roche.getId(),ProcessConstant.HAS_FINISHED);
         }
     }
 

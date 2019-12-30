@@ -9,7 +9,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.web.qff.entity.Commodity;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.mapper.CommodityMapper;
+import com.neefull.fsp.web.qff.mapper.DateImageMapper;
 import com.neefull.fsp.web.qff.service.ICommodityService;
+import com.neefull.fsp.web.qff.service.IDateImageService;
+import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
@@ -18,8 +21,10 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.identity.NativeUserQuery;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -40,6 +45,8 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
 
     @Autowired
     private CommodityMapper commodityMapper;
+    @Autowired
+    private IDateImageService dateImageService;
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
@@ -83,15 +90,7 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
         for (HistoricTaskInstance taskInstance : taskInstances) {
             taskList.add(taskInstance.getName());
         }
-
         Commodity commodity = commodityMapper.selectById(id);
-        List<String> list = new ArrayList<>();
-        String images = commodity.getImages();
-        String[] split = images.split(StringPool.COMMA);
-        for (String s : split) {
-            list.add(s);
-        }
-        commodity.setImageList(list);
         commodity.setTaskHistory(taskList);
         return commodity;
     }
@@ -106,8 +105,10 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
         String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
         //启动流程
         runtimeService.startProcessInstanceByKey("到货养护包装QFF", businessKey,variable);
+
         //更改状态审核中
-        updateCommodityStatus(commodity.getId(),2);
+        updateCommodityStatus(commodity.getId(), ProcessConstant.UNDER_REVIEW);
+
     }
 
     @Override
@@ -124,7 +125,7 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
         taskService.complete(task.getId(),variable);
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, "到货养护包装QFF").singleResult();
         if(processInstance==null){
-            updateCommodityStatus(commodity.getId(),3);
+            updateCommodityStatus(commodity.getId(),ProcessConstant.HAS_FINISHED);
         }
     }
 
@@ -155,6 +156,18 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
             list.add(identityLink.getGroupId());
         }
         return list;
+    }
+
+
+    @Override
+    public void addOrEditImage(Commodity commodity, User user) {
+        String queryImage = dateImageService.queryImage(commodity.getId(), user.getDeptName(), "qff_commodity");
+        if(StringUtils.isEmpty(queryImage)){
+            dateImageService.insertDateImage(commodity.getId(), user.getDeptName(),"qff_commodity",commodity.getImages());
+        }else {
+            queryImage = queryImage + commodity.getImages();
+            dateImageService.updateDateImage(commodity.getId(), user.getDeptName(),"qff_commodity",queryImage);
+        }
     }
 
 

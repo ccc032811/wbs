@@ -8,12 +8,13 @@ import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Refund;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 /**退货QFF
  * @Author: chengchengchu
  * @Date: 2019/11/29  13:54
  */
-@Mapper
+@Component
 public interface RefundMapper extends BaseMapper<Refund> {
 
 
