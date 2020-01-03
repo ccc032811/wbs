@@ -3,6 +3,7 @@ package com.neefull.fsp.web.qff.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.common.entity.QueryRequest;
+import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Roche;
 import com.neefull.fsp.web.system.entity.User;
@@ -48,32 +49,39 @@ public interface IRocheService extends IService<Roche> {
      */
     Roche queryRocheById(Integer id);
 
-    /**提交流程
-     * @param roche
-     */
-    void commitProcess(Roche roche,User user);
+//    /**提交流程
+//     * @param roche
+//     */
+//    void commitProcess(Roche roche,User user);
+//
+//    /**同意当前流程
+//     * @param roche
+//     * @param user
+//     */
+//    void agreeCurrentProcess(Roche roche, User user);
+//
+//    /**查询用户当前任务
+//     * @param user
+//     * @return
+//     */
+//    List<Roche> queryCurrentProcess(User user);
+//
+//    /**查询当前数据的审核人的信息
+//     * @param roche
+//     * @return
+//     */
+//    List<String> getGroup(Roche roche);
+//
+//    /**添加修改信息
+//     * @param roche
+//     * @param user
+//     */
+//    void addOrEditImages(Roche roche, User user);
+//
+//    /**查询当前流程
+//     * @param id
+//     * @return
+//     */
+//    List<ProcessHistory> queryHistory(Integer id);
 
-    /**同意当前流程
-     * @param roche
-     * @param user
-     */
-    void agreeCurrentProcess(Roche roche, User user);
-
-    /**查询用户当前任务
-     * @param user
-     * @return
-     */
-    List<Roche> queryCurrentProcess(User user);
-
-    /**查询当前数据的审核人的信息
-     * @param roche
-     * @return
-     */
-    List<String> getGroup(Roche roche);
-
-    /**添加修改信息
-     * @param roche
-     * @param user
-     */
-    void addOrEditImages(Roche roche, User user);
 }

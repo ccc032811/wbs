@@ -52,3 +52,8 @@ qff:
     refundDownLoadPath:     #退货QFF 生成的模板地址
     rocheTemplatePath:      #罗氏内部发起QFF pdf模板地址
     rocheDownLoadPath:      #罗氏内部发起QFF 生成的模板地址
+  process:
+    commodityProcess: 到货养护分包出库QFF
+    recentProcess: 近效期QFF
+    refundProcess: 退货QFF
+    rocheProcess: 罗氏内部发起QFF

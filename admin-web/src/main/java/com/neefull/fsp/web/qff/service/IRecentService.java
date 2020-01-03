@@ -2,6 +2,7 @@ package com.neefull.fsp.web.qff.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.system.entity.User;
@@ -45,32 +46,38 @@ public interface IRecentService extends IService<Recent> {
      */
     Recent queryRecentById(Integer id);
 
-    /**提交流程
-     * @param id
-     */
-    void commitProcess(Recent recent,User user);
-
-    /**同意当前任务
-     * @param recent
-     * @param user
-     */
-    void agreeCurrentProcess(Recent recent, User user);
-
-    /**查询任务
-     * @param user
-     * @return
-     */
-    List<Recent> queryCurrentProcess(User user);
-
-    /**查询当前数据在审批的审核人
-     * @param recent
-     * @return
-     */
-    List<String> getGroup(Recent recent);
-
-    /**添加或者更新图片
-     * @param recent
-     * @param user
-     */
-    void addOrEditImage(Recent recent, User user);
+//    /**提交流程
+//     * @param id
+//     */
+//    void commitProcess(Recent recent,User user);
+//
+//    /**同意当前任务
+//     * @param recent
+//     * @param user
+//     */
+//    void agreeCurrentProcess(Recent recent, User user);
+//
+//    /**查询任务
+//     * @param user
+//     * @return
+//     */
+//    List<Recent> queryCurrentProcess(User user);
+//
+//    /**查询当前数据在审批的审核人
+//     * @param recent
+//     * @return
+//     */
+//    List<String> getGroup(Recent recent);
+//
+//    /**添加或者更新图片
+//     * @param recent
+//     * @param user
+//     */
+//    void addOrEditImage(Recent recent, User user);
+//
+//    /**查询流程
+//     * @param id
+//     * @return
+//     */
+//    List<ProcessHistory> queryHistory(Integer id);
 }

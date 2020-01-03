@@ -20,7 +20,7 @@ public class RocheListener implements TaskListener {
         IUserService userService = SpringBeanUtil.getObject(IUserService.class);
         List<User> users = userService.findUserByRoleId(86);
         for (User user : users) {
-            delegateTask.addCandidateGroup(user.getUsername());
+            delegateTask.addCandidateUser(user.getUsername());
         }
 
     }

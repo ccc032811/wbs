@@ -1,10 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<style>
+    .item{
+        width: 20px;
+        height: 20px;
+        border-radius: 60%;
+        background-color: red;
+        position: relative;
+        top: 20px;
+        right:-290px;
+        text-align: center;
+        color: #dcdfe6;
+    }
+</style>
+<div class="layui-fluid layui-anim febs-anim" id="fbs-conserve" lay-title="我的代办">
+    <div class="layui-row febs-container">
+        <div class="item" id="bubbling"/>
+        <div class="layui-card-body febs-table-full">
+            <div style="height: 100px; width: 280px;border:1px solid #000; float:left" >
+                <div style="height: 100px;width: 60px;float: left">
+                    <img data-th-src="@{febs/images/mycomm.png}" width="60px" height="60px" style="margin-top: 20px;margin-left: 5px">
+                </div>
+                <div style="height: 100px;width: 220px;float: left;">
+                    <div style="text-align: center;margin-top: 38px;" id = "num"></div>
+                </div>
+            </div>
+            <div style="height: 100px; width: 280px;border:1px solid #000;margin-left: 15px ; float:left"   shiro:hasPermission="roche:add" >
+                <div style="height: 100px;width: 60px;float: left; margin-left: 5px">
+                    <img data-th-src="@{febs/images/start.png}" width="60px" height="60px" style="margin-top: 20px;margin-left: 5px">
+                </div>
+                <div style="height: 100px;width: 215px;float: left">
+                    <div style="text-align: center;margin-top: 33px;" class="site-demo-button" id="layerDemo">
+                        <button id="btn"  onclick="btnOn()" style="border: none;background-color:transparent;"><span style="color: #00A1DD"><h2>发起QFF</h2></span>
 
-</body>
-</html>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['jquery', 'febs'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs;
+
+        $.get(ctx +"file/findTask",function (data) {
+            var num = data.data;
+            if(num==0){
+                $("#num").append('<span style="color: red"><h2>当前没有待办任务</h2></span>')
+                $("#bubbling").append(num)
+            }else {
+                $("#num").append('<span style="color: red"><h2>当前有'+num+'条待办任务</h2></span>')
+                $("#bubbling").append(num)
+            }
+        });
+
+        /*btn.onclick = function () {
+            febs.modal.open('新增', 'system/qff/roche/add' , {
+                area: $(window).width() <= 750 ? '90%' : '60%'
+            });
+        }*/
+
+        window.btnOn = function () {
+            febs.modal.open('新增', 'system/qff/roche/add' , {
+                area: $(window).width() <= 750 ? '90%' : '60%'
+            });
+        }
+
+
+    });
+</script>

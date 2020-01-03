@@ -8,11 +8,18 @@ import com.neefull.fsp.web.qff.entity.DateImage;
 import com.neefull.fsp.web.qff.entity.ImageQuery;
 import com.neefull.fsp.web.qff.mapper.DateImageMapper;
 import com.neefull.fsp.web.qff.service.IDateImageService;
+import com.neefull.fsp.web.system.entity.User;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.identity.UserQuery;
+import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +33,9 @@ import java.util.List;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class DateImageServiceImpl extends ServiceImpl<DateImageMapper, DateImage> implements IDateImageService {
 
+    private static final String IMAGE_DIR ="D:\\JavaSoft\\nginx-1.12.2\\html\\";
+    private static final String IMAGE_URL ="http://127.0.0.1:10086/";
+
     @Autowired
     private DateImageMapper dateImageMapper;
 
@@ -37,7 +47,6 @@ public class DateImageServiceImpl extends ServiceImpl<DateImageMapper, DateImage
         }else {
             return date.getImage();
         }
-
     }
 
     @Override
@@ -48,7 +57,7 @@ public class DateImageServiceImpl extends ServiceImpl<DateImageMapper, DateImage
             String[] images = dateImage.getImage().split(StringPool.COMMA);
             if(images.length!=0){
                 for (String image : images) {
-                    imageList.add(image);
+                    imageList.add(IMAGE_URL+image);
                 }
             }
         }
@@ -80,20 +89,11 @@ public class DateImageServiceImpl extends ServiceImpl<DateImageMapper, DateImage
     }
 
     @Override
-    public void deleteImage(ImageQuery imageQuery) {
-        DateImage dateImage = dateImageMapper.queryImage(imageQuery.getDataId(), imageQuery.getDeptName(), imageQuery.getRelevance());
-        String[] images = dateImage.getImage().split(StringPool.COMMA);
-        List<String> image = Arrays.asList(images);
-        if(images.length!=0){
-            for(int i = image.size()-1;i>=0;i--){
-                if(image.get(i).equals(imageQuery.getUrl())){
-                    image.remove(i);
-                }
-            }
+    public void deleteImage(String url) {
+        File file = new File(IMAGE_DIR+url);
+        if(file.exists()){
+            file.delete();
         }
-        //更新操作
-
-
-
     }
+
 }

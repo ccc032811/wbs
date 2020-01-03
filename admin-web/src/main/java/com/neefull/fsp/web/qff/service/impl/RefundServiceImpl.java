@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.web.common.entity.QueryRequest;
+import com.neefull.fsp.web.qff.config.ProcessInstanceProperties;
+import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.entity.Refund;
@@ -14,8 +16,10 @@ import com.neefull.fsp.web.qff.service.IDateImageService;
 import com.neefull.fsp.web.qff.service.IRefundService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
@@ -38,14 +42,21 @@ import java.util.*;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class RefundServiceImpl extends ServiceImpl<RefundMapper, Refund> implements IRefundService {
 
+
+    private static final String FORM_NAME = "qff_refund";
+
     @Autowired
     private RefundMapper refundMapper;
+    @Autowired
+    private IDateImageService dateImageService;
+    @Autowired
+    private ProcessInstanceProperties properties;
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
     private TaskService taskService;
     @Autowired
-    private IDateImageService dateImageService;
+    private HistoryService historyService;
 
     @Override
     public Integer addRefund(Refund refund){
@@ -78,89 +89,114 @@ public class RefundServiceImpl extends ServiceImpl<RefundMapper, Refund> impleme
         return refund;
     }
 
-    @Override
-    public void commitProcess(Refund refund,User user) {
-        String format = DateFormatUtils.format(new Date(), "yyyy/MM/dd HH:mm:ss");
-        refund.setRepTime(format);
-        editRefund(refund);
-        Map<String,Object > map = new HashMap<>();
-        map.put("user",user);
-        String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
-        runtimeService.startProcessInstanceByKey("退货QFF",businessKey);
-
-        updateRefundStatus(refund.getId(), ProcessConstant.UNDER_REVIEW);
-    }
-
-    @Override
-    public void agreeCurrentProcess(Refund refund, User user) {
-        Map<String,Object > map = new HashMap<>();
-        map.put("user",user);
-        //设置更新的时间
-        String format = DateFormatUtils.format(new Date(), "yyyy/MM/dd HH:mm:ss");
-        refund.setRepTime(format);
-        editRefund(refund);
-        String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
-        Task task = taskService.createTaskQuery().processDefinitionKey("退货QFF").processInstanceBusinessKey(businessKey).singleResult();
-        taskService.claim(task.getId(),user.getUsername());
-        taskService.complete(task.getId(),map);
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, "退货QFF").singleResult();
-        if(processInstance==null){
-            updateRefundStatus(refund.getId(),ProcessConstant.HAS_FINISHED);
-        }
-    }
-
-    @Override
-    public List<Refund> queryCurrentProcess(User user) {
-        List<Refund> list = new ArrayList<>();
-        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey("退货QFF").taskCandidateOrAssigned(user.getUsername()).list();
-        if(CollectionUtils.isNotEmpty(tasks)){
-            for (Task task : tasks) {
-                ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-                Refund refund = queryRefundById(getId(processInstance.getBusinessKey()));
-                if(refund!=null){
-                    list.add(refund);
-                }
-            }
-        }
-        return list;
-    }
-
-    @Override
-    public List<String> getGroup(Refund refund) {
-        String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
-        Task task = taskService.createTaskQuery().processDefinitionKey("退货QFF").processInstanceBusinessKey(businessKey).singleResult();
-        List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(task.getId());
-        List<String> list = new ArrayList<>();
-        for (IdentityLink identityLink : identityLinksForTask) {
-            list.add(identityLink.getGroupId());
-        }
-        return list;
-
-    }
-
-    @Override
-    public void addOrEditImage(Refund refund, User user) {
-
-        String image = dateImageService.queryImage(refund.getId(), user.getDeptName(), "qff_refund");
-        if(StringUtils.isEmpty(image)){
-            dateImageService.insertDateImage(refund.getId(), user.getDeptName(), "qff_refund",refund.getImages());
-        }else {
-            image= image+refund.getImages();
-            dateImageService.updateDateImage(refund.getId(), user.getDeptName(), "qff_refund",image);
-        }
-
-    }
-
-    private Integer getId(String businessKey){
-        String starId = "";
-        if (businessKey.startsWith(Refund.class.getSimpleName())) {
-            if (StringUtils.isNotBlank(businessKey)) {
-                //截取字符串
-                starId = businessKey.split("\\:")[1].toString();
-            }
-        }
-        return Integer.parseInt(starId);
-    }
+//    @Override
+//    @Transactional
+//    public void commitProcess(Refund refund,User user) {
+//        String format = DateFormatUtils.format(new Date(), "yyyy/MM/dd HH:mm:ss");
+//        refund.setRepTime(format);
+//        editRefund(refund);
+//        Map<String,Object > map = new HashMap<>();
+//        map.put("user",user);
+//        String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
+//        runtimeService.startProcessInstanceByKey(properties.getRefundProcess(),businessKey);
+//        agreeCurrentProcess(refund,user);
+//        updateRefundStatus(refund.getId(), ProcessConstant.UNDER_REVIEW);
+//        addOrEditImage(refund,user);
+//    }
+//
+//    @Override
+//    @Transactional
+//    public void agreeCurrentProcess(Refund refund, User user) {
+//        Map<String,Object > map = new HashMap<>();
+//        map.put("user",user);
+//        //设置更新的时间
+//        String format = DateFormatUtils.format(new Date(), "yyyy/MM/dd HH:mm:ss");
+//        refund.setRepTime(format);
+//        editRefund(refund);
+//        String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
+//        Task task = taskService.createTaskQuery().processDefinitionKey(properties.getRefundProcess()).processInstanceBusinessKey(businessKey).singleResult();
+//        taskService.claim(task.getId(),user.getUsername());
+//        taskService.complete(task.getId(),map);
+//        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, properties.getRefundProcess()).singleResult();
+//        if(processInstance==null){
+//            updateRefundStatus(refund.getId(),ProcessConstant.HAS_FINISHED);
+//        }
+//        addOrEditImage(refund,user);
+//    }
+//
+//    @Override
+//    public List<Refund> queryCurrentProcess(User user) {
+//        List<Refund> list = new ArrayList<>();
+//        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(properties.getRefundProcess()).taskCandidateOrAssigned(user.getUsername()).list();
+//        if(CollectionUtils.isNotEmpty(tasks)){
+//            for (Task task : tasks) {
+//                ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
+//                Refund refund = queryRefundById(getId(processInstance.getBusinessKey()));
+//                if(refund!=null){
+//                    list.add(refund);
+//                }
+//            }
+//        }
+//        return list;
+//    }
+//
+//    @Override
+//    public List<String> getGroup(Refund refund) {
+//        String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
+//        Task task = taskService.createTaskQuery().processDefinitionKey(properties.getRefundProcess()).processInstanceBusinessKey(businessKey).singleResult();
+//        List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(task.getId());
+//        List<String> list = new ArrayList<>();
+//        for (IdentityLink identityLink : identityLinksForTask) {
+//            list.add(identityLink.getUserId());
+//        }
+//        return list;
+//
+//    }
+//
+//    @Override
+//    @Transactional
+//    public void addOrEditImage(Refund refund, User user) {
+//
+//        String image = dateImageService.queryImage(refund.getId(), user.getDeptName(), FORM_NAME);
+//        if(StringUtils.isEmpty(image)){
+//            dateImageService.insertDateImage(refund.getId(), user.getDeptName(), FORM_NAME,refund.getImages());
+//        }else {
+//            image= image+refund.getImages();
+//            dateImageService.updateDateImage(refund.getId(), user.getDeptName(), FORM_NAME,image);
+//        }
+//
+//    }
+//
+//    @Override
+//    public List<ProcessHistory> queryHistory(Integer id) {
+//        List<ProcessHistory> list = new ArrayList<>();
+//        String businessKey = Refund.class.getSimpleName()+":"+id;
+//        List<HistoricTaskInstance> taskInstances = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(businessKey).processDefinitionKey(properties.getRefundProcess()).orderByHistoricTaskInstanceStartTime().asc().list();
+//        for (HistoricTaskInstance taskInstance : taskInstances) {
+//            ProcessHistory processHistory = new ProcessHistory();
+//            processHistory.setName(taskInstance.getName());
+//            if(taskInstance.getEndTime() ==null){
+//                processHistory.setDate("");
+//            }else {
+//                processHistory.setDate(DateFormatUtils.format(taskInstance.getEndTime(),"yyyy-MM-dd"));
+//            }
+//
+//            list.add(processHistory);
+//        }
+//        return list;
+//
+//    }
+//
+//    private Integer getId(String businessKey){
+//        String starId = "";
+//        if (businessKey.startsWith(Refund.class.getSimpleName())) {
+//            if (StringUtils.isNotBlank(businessKey)) {
+//                //截取字符串
+//                starId = businessKey.split("\\:")[1].toString();
+//            }
+//        }
+//        return Integer.parseInt(starId);
+//    }
 
 
 }

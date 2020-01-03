@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.neefull.fsp.web.qff.config.ProcessInstanceProperties;
 import com.neefull.fsp.web.qff.entity.Commodity;
+import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.mapper.CommodityMapper;
 import com.neefull.fsp.web.qff.mapper.DateImageMapper;
@@ -43,18 +45,20 @@ import java.util.*;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity> implements ICommodityService {
 
+    private static final String FORM_NAME = "qff_commodity";
+
     @Autowired
     private CommodityMapper commodityMapper;
     @Autowired
     private IDateImageService dateImageService;
+    @Autowired
+    private ProcessInstanceProperties properties;
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
     private TaskService taskService;
     @Autowired
     private HistoryService historyService;
-    @Autowired
-    private IdentityService identityService;
 
 
     @Override
@@ -84,111 +88,130 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
 
     @Override
     public Commodity queryCommodityById(Integer id) {
-        List<String> taskList = new ArrayList<>();
-        String businessKey = Commodity.class.getSimpleName()+":"+id;
-        List<HistoricTaskInstance> taskInstances = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(businessKey).processDefinitionKey("到货养护包装QFF").orderByHistoricTaskInstanceEndTime().asc().list();
-        for (HistoricTaskInstance taskInstance : taskInstances) {
-            taskList.add(taskInstance.getName());
-        }
         Commodity commodity = commodityMapper.selectById(id);
-        commodity.setTaskHistory(taskList);
         return commodity;
     }
 
-    @Override
-    public void commitProcess(Commodity commodity, User user) {
-        String format = DateFormatUtils.format(new Date(), "yyyy/MM/dd HH:mm:ss");
-        commodity.setRepTime(format);
-        editCommodity(commodity);
-        Map<String,Object> variable = new HashMap<>();
-        variable.put("user",user);
-        String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
-        //启动流程
-        runtimeService.startProcessInstanceByKey("到货养护包装QFF", businessKey,variable);
-
-        //更改状态审核中
-        updateCommodityStatus(commodity.getId(), ProcessConstant.UNDER_REVIEW);
-
-    }
-
-    @Override
-    public void agreeCurrentProcess(Commodity commodity, User user) {
-        Map<String,Object> variable = new HashMap<>();
-        variable.put("user",user);
-        //设置更新的时间
-        String format = DateFormatUtils.format(new Date(), "yyyy/MM/dd HH:mm:ss");
-        commodity.setRepTime(format);
-        editCommodity(commodity);
-        String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
-        Task task = taskService.createTaskQuery().processDefinitionKey("到货养护包装QFF").processInstanceBusinessKey(businessKey).singleResult();
-        taskService.claim(task.getId(),user.getUsername());
-        taskService.complete(task.getId(),variable);
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, "到货养护包装QFF").singleResult();
-        if(processInstance==null){
-            updateCommodityStatus(commodity.getId(),ProcessConstant.HAS_FINISHED);
-        }
-    }
-
-    @Override
-    public List<Commodity> queryCurrentProcess(User user) {
-        List<Commodity> list = new ArrayList<>();
-        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey("到货养护包装QFF").taskCandidateOrAssigned(user.getUsername()).list();
-        if(CollectionUtils.isNotEmpty(tasks)){
-            for (Task task : tasks) {
-                ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-                Commodity commodity = queryCommodityById(getId(processInstance.getBusinessKey()));
-                if(commodity !=null){
-                    list.add(commodity);
-                }
-            }
-        }
-        return list;
-
-    }
-
-    @Override
-    public List<String> getGroupId(Commodity commodity, User user) {
-        String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
-        Task task = taskService.createTaskQuery().processDefinitionKey("到货养护包装QFF").processInstanceBusinessKey(businessKey).singleResult();
-        List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(task.getId());
-        List<String> list = new ArrayList<>();
-        for (IdentityLink identityLink : identityLinksForTask) {
-            list.add(identityLink.getGroupId());
-        }
-        return list;
-    }
-
-
-    @Override
-    public void addOrEditImage(Commodity commodity, User user) {
-        String queryImage = dateImageService.queryImage(commodity.getId(), user.getDeptName(), "qff_commodity");
-        if(StringUtils.isEmpty(queryImage)){
-            dateImageService.insertDateImage(commodity.getId(), user.getDeptName(),"qff_commodity",commodity.getImages());
-        }else {
-            queryImage = queryImage + commodity.getImages();
-            dateImageService.updateDateImage(commodity.getId(), user.getDeptName(),"qff_commodity",queryImage);
-        }
-    }
-
-
-    private Integer getId(String businessKey){
-        String starId = "";
-        if (businessKey.startsWith(Commodity.class.getSimpleName())) {
-            if (StringUtils.isNotBlank(businessKey)) {
-                //截取字符串
-                starId = businessKey.split("\\:")[1].toString();
-            }
-        }
-        return Integer.parseInt(starId);
-    }
-
-
-    private Commodity queryCommodityByNumber(String businessKey) {
-        QueryWrapper<Commodity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("number", businessKey);
-        Commodity commodity = commodityMapper.selectOne(queryWrapper);
-        return commodity;
-    }
+//    @Override
+//    @Transactional
+//    public void commitProcess(Commodity commodity, User user) {
+//
+//        String format = DateFormatUtils.format(new Date(), "yyyy/MM/dd HH:mm:ss");
+//        commodity.setRepTime(format);
+//        editCommodity(commodity);
+//        Map<String,Object> variable = new HashMap<>();
+//        variable.put("user",user);
+//        String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
+//        //启动流程
+//        runtimeService.startProcessInstanceByKey(properties.getCommodityProcess(), businessKey,variable);
+//        agreeCurrentProcess(commodity,user);
+//
+//        //更改状态审核中
+//        updateCommodityStatus(commodity.getId(), ProcessConstant.UNDER_REVIEW);
+//        addOrEditImage(commodity,user);
+//
+//    }
+//
+//    @Override
+//    @Transactional
+//    public void agreeCurrentProcess(Commodity commodity, User user) {
+//        Map<String,Object> variable = new HashMap<>();
+//        variable.put("user",user);
+//        //设置更新的时间
+//        String format = DateFormatUtils.format(new Date(), "yyyy/MM/dd HH:mm:ss");
+//        commodity.setRepTime(format);
+//        editCommodity(commodity);
+//        String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
+//        Task task = taskService.createTaskQuery().processDefinitionKey(properties.getCommodityProcess()).processInstanceBusinessKey(businessKey).singleResult();
+//        taskService.claim(task.getId(),user.getUsername());
+//        taskService.complete(task.getId(),variable);
+//        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, properties.getCommodityProcess()).singleResult();
+//        if(processInstance==null){
+//            updateCommodityStatus(commodity.getId(),ProcessConstant.HAS_FINISHED);
+//        }
+//        addOrEditImage(commodity,user);
+//    }
+//
+//    @Override
+//    public List<Commodity> queryCurrentProcess(User user) {
+//        List<Commodity> list = new ArrayList<>();
+//        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(properties.getCommodityProcess()).taskCandidateOrAssigned(user.getUsername()).list();
+//        if(CollectionUtils.isNotEmpty(tasks)){
+//            for (Task task : tasks) {
+//                ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
+//                Commodity commodity = queryCommodityById(getId(processInstance.getBusinessKey()));
+//                if(commodity !=null){
+//                    list.add(commodity);
+//                }
+//            }
+//        }
+//        return list;
+//
+//    }
+//
+//    @Override
+//    public List<String> getGroupId(Commodity commodity, User user) {
+//        String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
+//        Task task = taskService.createTaskQuery().processDefinitionKey(properties.getCommodityProcess()).processInstanceBusinessKey(businessKey).singleResult();
+//        List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(task.getId());
+//        List<String> list = new ArrayList<>();
+//        for (IdentityLink identityLink : identityLinksForTask) {
+//            list.add(identityLink.getUserId());
+//        }
+//        return list;
+//    }
+//
+//
+//    @Override
+//    @Transactional
+//    public void addOrEditImage(Commodity commodity, User user) {
+//        String queryImage = dateImageService.queryImage(commodity.getId(), user.getDeptName(), FORM_NAME);
+//        if(StringUtils.isEmpty(queryImage)){
+//            dateImageService.insertDateImage(commodity.getId(), user.getDeptName(),FORM_NAME,commodity.getImages());
+//        }else {
+//            queryImage = queryImage + commodity.getImages();
+//            dateImageService.updateDateImage(commodity.getId(), user.getDeptName(),FORM_NAME,queryImage);
+//        }
+//    }
+//
+//    @Override
+//    public List<ProcessHistory> queryHistory(Integer id) {
+//        List<ProcessHistory> list = new ArrayList<>();
+//        String businessKey = Commodity.class.getSimpleName()+":"+id;
+//        List<HistoricTaskInstance> taskInstances = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(businessKey).processDefinitionKey(properties.getCommodityProcess()).orderByHistoricTaskInstanceStartTime().asc().list();
+//        for (HistoricTaskInstance taskInstance : taskInstances) {
+//            ProcessHistory processHistory = new ProcessHistory();
+//            processHistory.setName(taskInstance.getName());
+//            if(taskInstance.getEndTime() ==null){
+//                processHistory.setDate("");
+//            }else {
+//                processHistory.setDate(DateFormatUtils.format(taskInstance.getEndTime(),"yyyy-MM-dd"));
+//            }
+//
+//            list.add(processHistory);
+//        }
+//        return list;
+//    }
+//
+//
+//    private Integer getId(String businessKey){
+//        String starId = "";
+//        if (businessKey.startsWith(Commodity.class.getSimpleName())) {
+//            if (StringUtils.isNotBlank(businessKey)) {
+//                //截取字符串
+//                starId = businessKey.split("\\:")[1].toString();
+//            }
+//        }
+//        return Integer.parseInt(starId);
+//    }
+//
+//
+//    private Commodity queryCommodityByNumber(String businessKey) {
+//        QueryWrapper<Commodity> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("number", businessKey);
+//        Commodity commodity = commodityMapper.selectOne(queryWrapper);
+//        return commodity;
+//    }
 
 
 }

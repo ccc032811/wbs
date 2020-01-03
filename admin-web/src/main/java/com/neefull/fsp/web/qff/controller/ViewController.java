@@ -33,6 +33,13 @@ public class ViewController extends BaseController {
     @Autowired
     private IOpinionService opinionService;
 
+    //***************************************************我的代办*****************************************************
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "qff/mycommission")
+    public String showCommission(){
+        return FebsUtil.view("system/qff/other/mycommission");
+    }
+
 
     //***************************************************到货*****************************************************
 
@@ -184,6 +191,11 @@ public class ViewController extends BaseController {
     @RequiresPermissions("roche:view")
     public String showRoche(){
         return FebsUtil.view("system/qff/roche/roche");
+    }
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "system/qff/roche/add")
+    public String rocheCommit(){
+        return FebsUtil.view("system/qff/roche/rocheCommit");
     }
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/qff/roche/rocheShow/{id}")

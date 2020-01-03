@@ -6,22 +6,23 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.web.common.entity.QueryRequest;
-import com.neefull.fsp.web.qff.entity.Query;
-import com.neefull.fsp.web.qff.entity.Recent;
-import com.neefull.fsp.web.qff.entity.Refund;
-import com.neefull.fsp.web.qff.entity.Roche;
+import com.neefull.fsp.web.qff.config.ProcessInstanceProperties;
+import com.neefull.fsp.web.qff.entity.*;
 import com.neefull.fsp.web.qff.mapper.RocheMapper;
 import com.neefull.fsp.web.qff.service.IDateImageService;
 import com.neefull.fsp.web.qff.service.IRocheService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -41,14 +42,20 @@ import java.util.Map;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class RocheServiceImpl extends ServiceImpl<RocheMapper, Roche> implements IRocheService {
 
+    private static final String FORM_NAME = "qff_roche";
+
     @Autowired
     private RocheMapper rocheMapper;
+    @Autowired
+    private IDateImageService dateImageService;
+    @Autowired
+    private ProcessInstanceProperties properties;
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
     private TaskService taskService;
     @Autowired
-    private IDateImageService dateImageService;
+    private HistoryService historyService;
 
 
     @Override
@@ -84,85 +91,112 @@ public class RocheServiceImpl extends ServiceImpl<RocheMapper, Roche> implements
         return roche;
     }
 
-    @Override
-    public void commitProcess(Roche roche,User user) {
-        editRoche(roche);
-        Map<String,Object> map = new HashMap<>();
-        map.put("user",user);
-        //启动流程
-        String businessKey = Roche.class.getSimpleName()+":"+roche.getId();
-        runtimeService.startProcessInstanceByKey("罗氏内部发起QFF", businessKey);
-        //更改状态审核中
-        updateRocheStatus(roche.getId(), ProcessConstant.UNDER_REVIEW);
-    }
-
-    @Override
-    public void agreeCurrentProcess(Roche roche, User user) {
-        //更新
-        editRoche(roche);
-        Map<String,Object> map = new HashMap<>();
-        map.put("user",user);
-        //同意任务
-        String businessKey = Roche.class.getSimpleName()+":"+roche.getId();
-        Task task = taskService.createTaskQuery().processDefinitionKey("罗氏内部发起QFF").processInstanceBusinessKey(businessKey).singleResult();
-        taskService.claim(task.getId(),user.getUsername());
-        taskService.complete(task.getId());
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, "罗氏内部发起QFF").singleResult();
-        if(processInstance==null){
-            updateRocheStatus(roche.getId(),ProcessConstant.HAS_FINISHED);
-        }
-    }
-
-    @Override
-    public List<Roche> queryCurrentProcess(User user) {
-        List<Roche> list = new ArrayList<>();
-        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey("罗氏内部发起QFF").taskAssignee(user.getUsername()).list();
-        if(CollectionUtils.isNotEmpty(tasks)){
-            for (Task task : tasks) {
-                ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-                Roche roche = queryRocheById(getId(processInstance.getBusinessKey()));
-                if(roche!=null){
-                    list.add(roche);
-                }
-            }
-        }
-        return list;
-    }
-
-    @Override
-    public List<String> getGroup(Roche roche) {
-        String businessKey = Roche.class.getSimpleName()+":"+roche.getId();
-        Task task = taskService.createTaskQuery().processDefinitionKey("罗氏内部发起QFF").processInstanceBusinessKey(businessKey).singleResult();
-        List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(task.getId());
-        List<String> list = new ArrayList<>();
-        for (IdentityLink identityLink : identityLinksForTask) {
-            list.add(identityLink.getGroupId());
-        }
-        return list;
-    }
-
-    @Override
-    public void addOrEditImages(Roche roche, User user) {
-
-        String image = dateImageService.queryImage(roche.getId(), user.getDeptName(), "qff_roche");
-        if(StringUtils.isEmpty(image)){
-            dateImageService.insertDateImage(roche.getId(), user.getDeptName(), "qff_roche",roche.getImages());
-        }else {
-            image= image+roche.getImages();
-            dateImageService.updateDateImage(roche.getId(), user.getDeptName(), "qff_roche",image);
-        }
-    }
-
-    private Integer getId(String businessKey){
-        String starId = "";
-        if (businessKey.startsWith(Roche.class.getSimpleName())) {
-            if (StringUtils.isNotBlank(businessKey)) {
-                //截取字符串
-                starId = businessKey.split("\\:")[1].toString();
-            }
-        }
-        return Integer.parseInt(starId);
-    }
+//    @Override
+//    @Transactional
+//    public void commitProcess(Roche roche,User user) {
+//        //新增
+//        addRoche(roche);
+//        Map<String,Object> map = new HashMap<>();
+//        map.put("user",user);
+//        //启动流程
+//        String businessKey = Roche.class.getSimpleName()+":"+roche.getId();
+//        runtimeService.startProcessInstanceByKey(properties.getRocheProcess(), businessKey);
+//        agreeCurrentProcess(roche,user);
+//        //更改状态审核中
+//        updateRocheStatus(roche.getId(), ProcessConstant.UNDER_REVIEW);
+//        addOrEditImages(roche,user);
+//    }
+//
+//    @Override
+//    @Transactional
+//    public void agreeCurrentProcess(Roche roche, User user) {
+//        //更新
+//        editRoche(roche);
+//        Map<String,Object> map = new HashMap<>();
+//        map.put("user",user);
+//        //同意任务
+//        String businessKey = Roche.class.getSimpleName()+":"+roche.getId();
+//        Task task = taskService.createTaskQuery().processDefinitionKey(properties.getRocheProcess()).processInstanceBusinessKey(businessKey).singleResult();
+//        taskService.claim(task.getId(),user.getUsername());
+//        taskService.complete(task.getId());
+//        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, properties.getRocheProcess()).singleResult();
+//        if(processInstance==null){
+//            updateRocheStatus(roche.getId(),ProcessConstant.HAS_FINISHED);
+//        }
+//        addOrEditImages(roche,user);
+//    }
+//
+//    @Override
+//    public List<Roche> queryCurrentProcess(User user) {
+//        List<Roche> list = new ArrayList<>();
+//        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(properties.getRocheProcess()).taskAssignee(user.getUsername()).list();
+//        if(CollectionUtils.isNotEmpty(tasks)){
+//            for (Task task : tasks) {
+//                ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
+//                Roche roche = queryRocheById(getId(processInstance.getBusinessKey()));
+//                if(roche!=null){
+//                    list.add(roche);
+//                }
+//            }
+//        }
+//        return list;
+//    }
+//
+//    @Override
+//    public List<String> getGroup(Roche roche) {
+//        String businessKey = Roche.class.getSimpleName()+":"+roche.getId();
+//        Task task = taskService.createTaskQuery().processDefinitionKey(properties.getRocheProcess()).processInstanceBusinessKey(businessKey).singleResult();
+//        List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(task.getId());
+//        List<String> list = new ArrayList<>();
+//        for (IdentityLink identityLink : identityLinksForTask) {
+//            list.add(identityLink.getUserId());
+//        }
+//        return list;
+//    }
+//
+//    @Override
+//    @Transactional
+//    public void addOrEditImages(Roche roche, User user) {
+//
+//        String image = dateImageService.queryImage(roche.getId(), user.getDeptName(), FORM_NAME);
+//        if(StringUtils.isEmpty(image)){
+//            dateImageService.insertDateImage(roche.getId(), user.getDeptName(), FORM_NAME,roche.getImages());
+//        }else {
+//            image= image+roche.getImages();
+//            dateImageService.updateDateImage(roche.getId(), user.getDeptName(), FORM_NAME,image);
+//        }
+//    }
+//
+//    @Override
+//    public List<ProcessHistory> queryHistory(Integer id) {
+//        List<ProcessHistory> list = new ArrayList<>();
+//        String businessKey = Roche.class.getSimpleName()+":"+id;
+//        List<HistoricTaskInstance> taskInstances = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(businessKey).processDefinitionKey(properties.getRocheProcess()).orderByHistoricTaskInstanceStartTime().asc().list();
+//        for (HistoricTaskInstance taskInstance : taskInstances) {
+//            ProcessHistory processHistory = new ProcessHistory();
+//            processHistory.setName(taskInstance.getName());
+//            if(taskInstance.getEndTime() ==null){
+//                processHistory.setDate("");
+//            }else {
+//                processHistory.setDate(DateFormatUtils.format(taskInstance.getEndTime(),"yyyy-MM-dd"));
+//            }
+//
+//            list.add(processHistory);
+//        }
+//        return list;
+//
+//    }
+//
+//    private Integer getId(String businessKey){
+//        String starId = "";
+//        if (businessKey.startsWith(Roche.class.getSimpleName())) {
+//            if (StringUtils.isNotBlank(businessKey)) {
+//                //截取字符串
+//                starId = businessKey.split("\\:")[1].toString();
+//            }
+//        }
+//        return Integer.parseInt(starId);
+//    }
 
 
 }

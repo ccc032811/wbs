@@ -6,9 +6,11 @@ import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
 import com.neefull.fsp.web.qff.entity.Commodity;
+import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.service.ICommodityService;
 import com.neefull.fsp.web.qff.service.IDateImageService;
+import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -16,13 +18,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +35,7 @@ public class CommodityController extends BaseController {
     @Autowired
     private ICommodityService commodityService;
     @Autowired
-    private IDateImageService dateImageService;
+    private IProcessService processService;
 
 
     /**新增养护QFF
@@ -109,7 +105,30 @@ public class CommodityController extends BaseController {
             throw new FebsException("查询到货养护包装QFF操作失败");
         }
         return new FebsResponse().success().data(commodity);
+
     }
+
+    /**查询流程
+     * @param commodity
+     * @return
+     */
+    @GetMapping("/queryHistory")
+    public FebsResponse queryHistory(Commodity commodity){
+        List<ProcessHistory> list = processService.queryHistory(commodity);
+        return new FebsResponse().success().data(list);
+    }
+
+
+//    /**查询流程
+//     * @param id
+//     * @return
+//     */
+//    @GetMapping("/queryHistory/{id}")
+//    public FebsResponse queryHistory(@PathVariable Integer id){
+//        List<ProcessHistory> list = commodityService.queryHistory(id);
+//        return new FebsResponse().success().data(list);
+//    }
+
 
     /**提交流程
      * @param commodity
@@ -119,13 +138,11 @@ public class CommodityController extends BaseController {
     @PostMapping("/commit")
     @RequiresPermissions("commodity:audit")
     public FebsResponse commitProcess(Commodity commodity) throws FebsException {
-       /* String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey("到货养护包装QFF", businessKey).singleResult();
-*/
+
         User user = getCurrentUser();
         try {
-            commodityService.commitProcess(commodity,user);
-            commodityService.addOrEditImage(commodity,user);
+            processService.commitProcess(commodity,user);
+//            commodityService.commitProcess(commodity,user);
         } catch (Exception e) {
             throw new FebsException("提交申请失败");
         }
@@ -141,11 +158,12 @@ public class CommodityController extends BaseController {
     @RequiresPermissions("commodity:audit")
     public FebsResponse agreeCurrentProcess(Commodity commodity) throws FebsException {
         User user = getCurrentUser();
-        List<String> group = commodityService.getGroupId(commodity,user);
+//        List<String> group = commodityService.getGroupId(commodity,user);
+        List<String> group = processService.getGroupId(commodity,user);
         if(group.contains(user.getUsername())){
             try {
-                commodityService.agreeCurrentProcess(commodity,user);
-                commodityService.addOrEditImage(commodity,user);
+//                commodityService.agreeCurrentProcess(commodity,user);
+                processService.agreeCurrentProcess(commodity,user);
             } catch (Exception e) {
                 throw new FebsException("同意流程失败");
             }
@@ -156,20 +174,20 @@ public class CommodityController extends BaseController {
     }
 
 
-    /**查询用户当前任务
-     * @return
-     * @throws FebsException
-     */
-    @GetMapping("/check")
-    @RequiresPermissions("commodity:audit")
-    public FebsResponse queryCurrentProcess() throws FebsException {
-        User user = getCurrentUser();
-        List<Commodity> list = commodityService.queryCurrentProcess(user);
-        if(CollectionUtils.isEmpty(list)){
-            throw new FebsException("没有任务");
-        }
-        return new FebsResponse().success().data(list);
-    }
+//    /**查询用户当前任务
+//     * @return
+//     * @throws FebsException
+//     */
+//    @GetMapping("/check")
+//    @RequiresPermissions("commodity:audit")
+//    public FebsResponse queryCurrentProcess() throws FebsException {
+//        User user = getCurrentUser();
+//        List<Commodity> list = commodityService.queryCurrentProcess(user);
+//        if(CollectionUtils.isEmpty(list)){
+//            throw new FebsException("没有任务");
+//        }
+//        return new FebsResponse().success().data(list);
+//    }
 
 
 }

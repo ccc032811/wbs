@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
+import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Refund;
+import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.service.IRefundService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
@@ -31,6 +33,8 @@ public class RefundController extends BaseController {
 
     @Autowired
     private IRefundService refundService;
+    @Autowired
+    private IProcessService processService;
 
     /**新增退货QFF
      * @param refund
@@ -103,6 +107,28 @@ public class RefundController extends BaseController {
         return new FebsResponse().success().data(refund);
     }
 
+    /**查询流程
+     * @param refund
+     * @return
+     */
+    @GetMapping("/queryHistory")
+    public FebsResponse queryHistory(Refund refund){
+        List<ProcessHistory> list = processService.queryHistory(refund);
+        return new FebsResponse().success().data(list);
+    }
+
+
+//    /**查询流程
+//     * @param id
+//     * @return
+//     */
+//    @GetMapping("/queryHistory/{id}")
+//    public FebsResponse queryHistory(@PathVariable Integer id){
+//        List<ProcessHistory> list = refundService.queryHistory(id);
+//        return new FebsResponse().success().data(list);
+//    }
+
+
     /**提交流程
      * @param refund
      * @return
@@ -113,8 +139,9 @@ public class RefundController extends BaseController {
     public FebsResponse commitProcess(Refund refund) throws FebsException {
         User user = getCurrentUser();
         try {
-            refundService.commitProcess(refund,user);
-            refundService.addOrEditImage(refund,user);
+//            refundService.commitProcess(refund,user);
+            processService.commitProcess(refund,user);
+
         } catch (Exception e) {
             throw new FebsException("提交申请失败");
         }
@@ -130,11 +157,12 @@ public class RefundController extends BaseController {
     @RequiresPermissions("refund:audit")
     public FebsResponse agreeCurrentProcess(Refund refund) throws FebsException {
         User user = getCurrentUser();
-        List<String> group = refundService.getGroup(refund);
+        List<String> group = processService.getGroupId(refund,user);
+//        List<String> group = refundService.getGroup(refund);
         if(group.contains(user.getUsername())){
             try {
-                refundService.agreeCurrentProcess(refund,user);
-                refundService.addOrEditImage(refund,user);
+//                refundService.agreeCurrentProcess(refund,user);
+                processService.agreeCurrentProcess(refund,user);
             } catch (Exception e) {
                 throw new FebsException("同意流程失败");
             }
@@ -144,20 +172,20 @@ public class RefundController extends BaseController {
         return new FebsResponse().success();
     }
 
-    /**查询用户当前任务
-     * @return
-     * @throws FebsException
-     */
-    @GetMapping("/check")
-    @RequiresPermissions("refund:audit")
-    public FebsResponse queryCurrentProcess() throws FebsException {
-        User user = getCurrentUser();
-        List<Refund> list = refundService.queryCurrentProcess(user);
-        if(CollectionUtils.isEmpty(list)){
-            throw new FebsException("没有任务");
-        }
-        return new FebsResponse().success().data(list);
-    }
+//    /**查询用户当前任务
+//     * @return
+//     * @throws FebsException
+//     */
+//    @GetMapping("/check")
+//    @RequiresPermissions("refund:audit")
+//    public FebsResponse queryCurrentProcess() throws FebsException {
+//        User user = getCurrentUser();
+//        List<Refund> list = refundService.queryCurrentProcess(user);
+//        if(CollectionUtils.isEmpty(list)){
+//            throw new FebsException("没有任务");
+//        }
+//        return new FebsResponse().success().data(list);
+//    }
 
 
 

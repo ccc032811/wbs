@@ -3,6 +3,7 @@ package com.neefull.fsp.web.qff.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.common.entity.QueryRequest;
+import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.system.entity.User;
@@ -49,32 +50,38 @@ public interface IRefundService extends IService<Refund> {
      */
     Refund queryRefundById(Integer id);
 
-    /**提交流程
-     * @param
-     */
-    void commitProcess(Refund refund,User user);
-
-    /**同意当前任务
-     * @param refund
-     * @param user
-     */
-    void agreeCurrentProcess(Refund refund, User user);
-
-    /**查询当前用户任务
-     * @param user
-     * @return
-     */
-    List<Refund> queryCurrentProcess(User user);
-
-    /**根据当前数据查询改节点审核的人员信息
-     * @param refund
-     * @return
-     */
-    List<String> getGroup(Refund refund);
-
-    /**添加图片
-     * @param refund
-     * @param user
-     */
-    void addOrEditImage(Refund refund, User user);
+//    /**提交流程
+//     * @param
+//     */
+//    void commitProcess(Refund refund,User user);
+//
+//    /**同意当前任务
+//     * @param refund
+//     * @param user
+//     */
+//    void agreeCurrentProcess(Refund refund, User user);
+//
+//    /**查询当前用户任务
+//     * @param user
+//     * @return
+//     */
+//    List<Refund> queryCurrentProcess(User user);
+//
+//    /**根据当前数据查询改节点审核的人员信息
+//     * @param refund
+//     * @return
+//     */
+//    List<String> getGroup(Refund refund);
+//
+//    /**添加图片
+//     * @param refund
+//     * @param user
+//     */
+//    void addOrEditImage(Refund refund, User user);
+//
+//    /**查询流程
+//     * @param id
+//     * @return
+//     */
+//    List<ProcessHistory> queryHistory(Integer id);
 }

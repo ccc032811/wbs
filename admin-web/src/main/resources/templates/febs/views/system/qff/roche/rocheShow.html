@@ -6,9 +6,128 @@
     #roche-detail .layui-treeSelect .ztree li a, .ztree li span {
         margin: 0 0 2px 3px !important;
     }
+    .uploader-list {
+        margin-left: -15px;
+    }
+    .uploader-list .info {
+        position: relative;
+        margin-top: -25px;
+        background-color: black;
+        color: white;
+        filter: alpha(Opacity=80);
+        -moz-opacity: 0.5;
+        opacity: 0.5;
+        width: 100px;
+        height: 25px;
+        text-align: center;
+        display: none;
+    }
+
+    .uploader-list .handle {
+        position: relative;
+        background-color: black;
+        color: white;
+        filter: alpha(Opacity=80);
+        -moz-opacity: 0.5;
+        opacity: 0.5;
+        width: 100px;
+        text-align: right;
+        height: 18px;
+        margin-bottom: -18px;
+        display: none;
+    }
+
+    .uploader-list .handle span {
+        margin-right: 5px;
+    }
+
+    .uploader-list .handle span:hover {
+        cursor: pointer;
+    }
+
+    .uploader-list .file-iteme {
+        margin: 12px 0 0 15px;
+        padding: 1px;
+        float: left;
+    }
+
+    .timeline-main-line{
+        width: 90%;
+        height: 50px;
+        margin-left: 5%
+    }
+    .timeline-item-start{
+        width: 25%;
+        height: 50px;
+        float:left;
+    }
+    .timeline-item-success{
+        width: 25%;
+        height: 50px;
+        float:left;
+        border-bottom: 3px solid #3DCCA6;
+    }
+    .timeline-item-fail{
+        width: 25%;
+        height: 50px;
+        float:left;
+        border-bottom: 3px solid #CBCBCB;
+    }
+    .timeline-item-no-start{
+        width: 25%;
+        height: 50px;
+        float:left;
+    }
+
+    .timeline-item-cricle-success{
+        width: 30px;
+        height: 20px;
+        border-radius: 80%;
+        background-color: #3DCCA6;
+        position: relative;
+        top: 22px;
+        left: 220px;
+        text-align: center;
+        color: #fff;
+    }
+    .timeline-item-cricle-fail{
+        width: 30px;
+        height: 20px;
+        border-radius: 80%;
+        background-color: #CBCBCB;
+        position: relative;
+        top: 42px;
+        left: 220px;
+        text-align: center;
+        color: #000;
+    }
+    .timeline-item-timestamp{
+        width: 100px;
+        height: 20px;
+        color: #000;
+        position: relative;
+        top: 10px;
+        left: 220px;
+    }
+    .timeline-item-name{
+        width: 100px;
+        height: 20px;
+        color: #000;
+        position: relative;
+        top: 40px;
+        left: 220px;
+    }
+    .timeline-item-name-fail{
+        width: 100px;
+        height: 20px;
+        color: #000;
+        position: relative;
+        top: 60px;
+        left: 220px;
+    }
 </style>
-<div class="layui-fluid" id="roche-detail" lay-title = "包装QFF">
-    <form class="layui-form " action="" lay-filter="roche-detail-form">
+<div class="layui-fluid" id="roche-detail" lay-title = "罗氏内部">
+    <form class="layui-form " action="" lay-filter="roche-detail-form" >
         <div class="layui-form-item">
             <div class="layui-inline layui-col-sm4 ">
                 <label class="layui-form-label layui-form-label-sm">运输单号</label>
@@ -143,6 +262,11 @@
                 </div>
             </div>
         </div>
+        <div class="layui-form-item" >
+            <div class="timeline-main-line" id="process">
+
+            </div>
+        </div>
     </form>
 </div>
 <img alt="" style="display:none" id="displayImg" src="" />
@@ -216,6 +340,46 @@
             });
         };
 
+        $.get(ctx + "roche/queryHistory",roche ,function (data) {
+            var data = data.data;
+            if(data[0]==null){
+                $("#process").append('<div class="timeline-item-no-start">\n' +
+                    '                    <div class="timeline-item-cricle-fail">'+1+'</div>\n' +
+                    '                    <div class="timeline-item-name-fail">xxx审核</div>\n' +
+                    '                </div>')
+            }else {
+
+                $("#process").append('<div class="timeline-item-start">\n' +
+                    '                    <div class="timeline-item-timestamp">'+data[0].date+'</div>\n' +
+                    '                    <div class="timeline-item-cricle-success">'+1+'</div>\n' +
+                    '                    <div class="timeline-item-name">'+data[0].name+'</div>\n' +
+                    '                </div>')
+            }
+            if(data[1]==null){
+                error(2)
+            }else {
+                success(data[1],2)
+            }
+            if(data[2]==null){
+                error(3)
+            }else {
+                success(data[2],3)
+            }
+        });
+
+        function success(data,index){
+            $("#process").append('<div class="timeline-item-success">\n' +
+                '                    <div class="timeline-item-timestamp">'+data.date+'</div>\n' +
+                '                    <div class="timeline-item-cricle-success">'+index+'</div>\n' +
+                '                    <div class="timeline-item-name">'+data.name+'</div>\n' +
+                '                </div>')
+        }
+        function error(index){
+            $("#process").append('<div class="timeline-item-fail">\n' +
+                '                    <div class="timeline-item-cricle-fail">'+index+'</div>\n' +
+                '                    <div class="timeline-item-name-fail">xxx审核</div>\n' +
+                '                </div>')
+        }
 
     });
 </script>

@@ -46,17 +46,14 @@ public class CommodityListener extends BaseController implements JavaDelegate{
 
     @Override
     public void execute(DelegateExecution execution) {
-       /* //获取流程中的对象  获取邮件地址跟密码
-        User user = (User) execution.getVariable("user");
-        String email = user.getEmail();*/
 
         if(execution.getCurrentActivityName().equals("罗氏")){
-            //查询罗氏接受人的邮箱
+            //罗氏的邮箱
         }else if(execution.getCurrentActivityName().equals("康德乐")){
-            //查询康德乐接受人的邮箱
+            //康德的邮箱
         }
 
-        //生成pdf和获取附件的地址
+        //获取流程的id
         String businessKey = execution.getProcessBusinessKey();
         String starId = "";
         if (businessKey.startsWith(Commodity.class.getSimpleName())) {
@@ -65,6 +62,7 @@ public class CommodityListener extends BaseController implements JavaDelegate{
                 starId = businessKey.split("\\:")[1].toString();
             }
         }
+        //查询
         Commodity commodity = conserveService.queryCommodityById(Integer.parseInt(starId));
 
         Map<String,String> map = new HashMap<>();

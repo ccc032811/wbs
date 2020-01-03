@@ -20,6 +20,6 @@
             <if test="query.status!=null and query.status!=''">
                 and status = #{query.status}
             </if>
-            order by create_time desc
+            and status != 4 order by create_time desc
     </select>
 </mapper>

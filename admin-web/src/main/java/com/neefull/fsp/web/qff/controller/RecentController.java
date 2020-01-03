@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
+import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Recent;
+import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.service.IRecentService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
@@ -31,6 +33,8 @@ public class RecentController extends BaseController {
 
     @Autowired
     private IRecentService recentService;
+    @Autowired
+    private IProcessService processService;
 
     /**新增近效期QFF
      * @param recent
@@ -93,15 +97,38 @@ public class RecentController extends BaseController {
      * @return
      * @throws FebsException
      */
-    @GetMapping("/queryRecent")
+    @GetMapping("/queryRecent/{id}")
     @RequiresPermissions("recent:view")
-    public FebsResponse queryRecentById(@RequestParam("id")Integer id) throws FebsException {
+    public FebsResponse queryRecentById(@PathVariable Integer id) throws FebsException {
         Recent recent = recentService.queryRecentById(id);
         if(recent==null){
             throw new FebsException("查询近效期QFF失败");
         }
         return new FebsResponse().success().data(recent);
     }
+
+
+    /**查询流程
+     * @param recent
+     * @return
+     */
+    @GetMapping("/queryHistory")
+    public FebsResponse queryHistory(Recent recent){
+        List<ProcessHistory> list = processService.queryHistory(recent);
+        return new FebsResponse().success().data(list);
+    }
+
+//    /**查询流程
+//     * @param id
+//     * @return
+//     */
+//    @GetMapping("/queryHistory/{id}")
+//    public FebsResponse queryHistory(@PathVariable Integer id){
+//        List<ProcessHistory> list = recentService.queryHistory(id);
+//        return new FebsResponse().success().data(list);
+//    }
+
+
 
     /**提交流程
      * @param recent
@@ -113,8 +140,8 @@ public class RecentController extends BaseController {
     public FebsResponse commitProcess(Recent recent) throws FebsException {
         User user = getCurrentUser();
         try {
-            recentService.commitProcess(recent,user);
-            recentService.addOrEditImage(recent,user);
+//            recentService.commitProcess(recent,user);
+            processService.commitProcess(recent,user);
         } catch (Exception e) {
             throw new FebsException("提交申请失败");
         }
@@ -130,34 +157,34 @@ public class RecentController extends BaseController {
     @RequiresPermissions("recent:audit")
     public FebsResponse agreeCurrentProcess(Recent recent) throws FebsException {
         User user = getCurrentUser();
-        List<String> group = recentService.getGroup(recent);
+        List<String> group = processService.getGroupId(recent,user);
+//        List<String> group = recentService.getGroup(recent);
         if(group.contains(user.getUsername())){
             try {
-                recentService.agreeCurrentProcess(recent,user);
-                recentService.addOrEditImage(recent,user);
+//                recentService.agreeCurrentProcess(recent,user);
+                processService.agreeCurrentProcess(recent,user);
             } catch (Exception e) {
                 throw new FebsException("同意流程失败");
             }
         }else {
             throw new FebsException("当前无权限或改数据已审核");
         }
-
         return new FebsResponse().success();
     }
 
-    /**查询用户当前任务
-     * @return
-     * @throws FebsException
-     */
-    @GetMapping("/check")
-    @RequiresPermissions("recent:audit")
-    public FebsResponse queryCurrentProcess() throws FebsException {
-        User user = getCurrentUser();
-        List<Recent> list = recentService.queryCurrentProcess(user);
-        if(CollectionUtils.isEmpty(list)){
-            throw new FebsException("没有任务");
-        }
-        return new FebsResponse().success().data(list);
-    }
+//    /**查询用户当前任务
+//     * @return
+//     * @throws FebsException
+//     */
+//    @GetMapping("/check")
+//    @RequiresPermissions("recent:audit")
+//    public FebsResponse queryCurrentProcess() throws FebsException {
+//        User user = getCurrentUser();
+//        List<Recent> list = recentService.queryCurrentProcess(user);
+//        if(CollectionUtils.isEmpty(list)){
+//            throw new FebsException("没有任务");
+//        }
+//        return new FebsResponse().success().data(list);
+//    }
 
 }

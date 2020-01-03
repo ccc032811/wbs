@@ -1,10 +1,14 @@
 package com.neefull.fsp.web.qff.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.api.R;
+import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
 import com.neefull.fsp.web.qff.entity.ImageQuery;
 import com.neefull.fsp.web.qff.service.IDateImageService;
+import com.neefull.fsp.web.qff.service.IProcessService;
+import com.neefull.fsp.web.system.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +30,25 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/file")
-public class FileController {
+public class FileController extends BaseController {
 
     @Autowired
     private IDateImageService dateImageService;
+    @Autowired
+    private IProcessService processService;
 
     private static final String IMAGE_DIR ="D:\\JavaSoft\\nginx-1.12.2\\html";
-    private static final String IMAGE_URL ="http://127.0.0.1:10086/";
+
+
+    /**查询需要完成任务
+     * @return
+     */
+    @GetMapping("/findTask")
+    public FebsResponse findTask(){
+        User user = getCurrentUser();
+        Integer count = processService.findTask(user.getUsername());
+        return new FebsResponse().success().data(count);
+    }
 
     /**查询所有图片
      * @param dataId
@@ -46,33 +62,23 @@ public class FileController {
         return new FebsResponse().success().data(list);
     }
 
-
     /**删除图片
-     * @param dataId
-     * @param relevance
      * @param url
      * @return
      */
-    @PostMapping("/deleteImage")
-    public FebsResponse deleteImage(ImageQuery imageQuery){
-        dateImageService.deleteImage(imageQuery);
+    @GetMapping("/deleteImage/{url}")
+    public FebsResponse deleteImage(@PathVariable String url){
+        dateImageService.deleteImage(url);
         return new FebsResponse().success();
     }
 
-
     /**上传图片
      * @param file
-     * @param id
-     * @param type
-     * @param relevance
      * @return
      * @throws FebsException
      */
     @PostMapping("/uploadImage")
-    public FebsResponse uploadImage(@RequestParam("file") MultipartFile file,
-                                    @RequestParam("id")Integer id ,
-                                    @RequestParam("type")String type,
-                                    @RequestParam("relevance")String relevance) throws FebsException {
+    public FebsResponse uploadImage(@RequestParam("file") MultipartFile file) throws FebsException {
 
         try {
             BufferedImage image = ImageIO.read(file.getInputStream());
@@ -83,10 +89,10 @@ public class FileController {
             throw new FebsException("图片上传类型有误");
         }
         String filename = file.getOriginalFilename();
-        String extension = StringUtils.substringAfterLast(filename, ".");
-        filename = UUID.randomUUID().toString() + "." + extension;
+        String extension = StringUtils.substringAfterLast(filename, StringPool.DOT);
+        filename = UUID.randomUUID().toString() + StringPool.DOT + extension;
 
-        String paths[] = IMAGE_DIR.split("\\/");
+        String paths[] = IMAGE_DIR.split(StringPool.SLASH);
         String dir = paths[0];
         for (int i = 0; i < paths.length - 1; i++) {
             try {
@@ -107,8 +113,8 @@ public class FileController {
             throw new FebsException("文件上传失败");
         }
         Map<String,String> map =new HashMap<>();
-        map.put("index",UUID.randomUUID().toString().replaceAll("-",""));
-        map.put("value",IMAGE_URL+filename);
+        map.put("index",UUID.randomUUID().toString().replaceAll(StringPool.DASH,StringPool.EMPTY));
+        map.put("value",filename);
         return new FebsResponse().success().data(map);
 
     }

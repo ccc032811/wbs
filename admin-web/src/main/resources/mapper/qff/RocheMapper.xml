@@ -19,6 +19,6 @@
         <if test="query.status!=null and query.status!=''">
             and status = #{query.status}
         </if>
-        order by req_date desc
+        and status != 4 order by req_date desc
     </select>
 </mapper>

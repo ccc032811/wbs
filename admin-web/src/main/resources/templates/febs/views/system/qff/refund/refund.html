@@ -74,15 +74,12 @@
     {{#}}}
 </script>
 <script data-th-inline="none" type="text/javascript">
-    layui.use(['dropdown', 'jquery', 'laydate', 'form', 'table', 'febs', 'treeSelect', 'upload'], function () {
+    layui.use([ 'jquery', 'laydate', 'form', 'table', 'febs'], function () {
         var $ = layui.jquery,
             laydate = layui.laydate,
             febs = layui.febs,
             form = layui.form,
             table = layui.table,
-            treeSelect = layui.treeSelect,
-            dropdown = layui.dropdown,
-            upload = layui.upload,
             $view = $('#fbs-refund'),
             $query = $view.find('#query'),
             $reset = $view.find('#reset'),
@@ -167,13 +164,11 @@
             });
         }
 
-
         table.on('sort(refundTable)', function (obj) {
             tableIns.reload({
                 where: $.extend(getQueryParams())
             });
         });
-
 
         //获取查询参数
         function getQueryParams() {
