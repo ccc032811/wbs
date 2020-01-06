@@ -66,6 +66,7 @@
                     template
                     lay-api="getMenus"
                     lay-done="layui.element.render('nav','febs-sidebar');layui.febs.sidebarFocus()">
+                <img data-th-src="@{febs/images/navi_qff.png}" width="125px" height="125px" style="padding-left: 50px">
                 <ul class="layui-nav layui-nav-tree" lay-filter="febs-sidebar" lay-shrink="all">
                     {{#
                     function __createSlidebar(data,index){
@@ -75,7 +76,7 @@
                         layui.each(data,function(i,child){
                         var left = index == 0 ? 50 : 50 + index * 20;
                         html += '
-                        <dd><a style="padding-left:' + left + 'px" target="'+(child.target||'')+'"
+                        <dd><a style="padding-left:' + left + 'px;background-color:#fff;color: #000;" target="'+(child.target||'')+'"
                                lay-href="'+ (child.href||'') +'">' + child.title + '</a>';
                             if(child.childs) html += __createSlidebar(child.childs,index+1);
                             html += '
@@ -90,7 +91,7 @@
                     layui.each(d.childs, function(i,child){
                     }}
                     <li class="layui-nav-item">
-                        <a lay-href="{{child.href||''}}" target="{{child.target||''}}" title="{{child.title}}"><i
+                        <a lay-href="{{child.href||''}}" target="{{child.target||''}}" title="{{child.title}}" style="color: #000"><i
                                 class="layui-icon {{child.icon}}"></i>{{child.title}} {{# if(child.notice){ }}<span
                                 class="layui-badge">{{ child.notice }}</span>{{# } }}</a>
                         {{ __createSlidebar(child.childs,0) }}

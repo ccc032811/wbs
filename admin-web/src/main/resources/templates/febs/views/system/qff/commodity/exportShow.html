@@ -125,6 +125,30 @@
         top: 60px;
         left: 220px;
     }
+
+    /* 覆盖样式 */
+    .layui-form-item {
+        margin-bottom: 0px;
+    }
+    .layui-form-item{
+        border-right: 1px solid #000;
+    }
+    .layui-col-sm4, .layui-col-sm6, .layui-col-sm12{
+        border-left: 1px solid #000;
+        border-top: 1px solid #000;
+    }
+    .layui-form-label-sm{
+        border-right: 1px solid #000;
+    }
+    .febs-form-item-sm{
+        border-right: 1px solid #000;
+    }
+    .layui-input, .layui-textarea {
+        width: 99%;
+    }
+    .layui-form-item .layui-inline {
+        margin-bottom: 0px;
+    }
 </style>
 <div class="layui-fluid" id="export-detail" lay-title = "出库QFF">
     <form class="layui-form " action="" lay-filter="export-detail-form">
@@ -190,7 +214,7 @@
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label layui-form-label-sm">罗氏批号</label>
+                <label class="layui-form-label layui-form-label-sm" style="min-height: 40px;">罗氏批号</label>
                 <div class="layui-input-block">
                     <input type="text" name="rBatch" lay-verify="required" maxlength="50" autocomplete="off"
                            class="layui-input" readonly="readonly">
@@ -308,33 +332,29 @@
         <div class="layui-form-item">
             <div class="layui-inline layui-col-sm12">
                 <div>
-                    <label class="layui-form-label layui-form-label-sm">仪器工程师检查结果</label>
+                    <label class="layui-form-label layui-form-label-sm" style="min-height: 85px;">仪器工程师检查结果</label>
                     <div class="layui-input-block">
                         <textarea name="checkResult" lay-verify="required" class="layui-textarea"  readonly="readonly"></textarea>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item" style="border-bottom: 1px solid #000">
             <div class="layui-inline layui-col-sm12">
                 <div>
-                    <label class="layui-form-label layui-form-label-sm">备注</label>
+                    <label class="layui-form-label layui-form-label-sm" style="min-height: 85px;">备注</label>
                     <div class="layui-input-block">
                         <textarea name="remark" lay-verify="required"  class="layui-textarea"  readonly="readonly"></textarea>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="layui-form-item">
-            <div class="layui-inline layui-col-sm12">
-                <div class="layui-input-block" >
-                    <div class="site-demo-flow" id="image_show" style="overflow: auto; display: flex">
+        <div class="layui-form-item" style="border: 0;padding-top: 10px">
+            <div class="site-demo-flow" id="image_show" style="overflow: auto; display: flex">
 
-                    </div>
-                </div>
             </div>
         </div>
-        <div class="layui-form-item" >
+        <div class="layui-form-item" style="border: 0">
             <div class="timeline-main-line" id="process">
 
             </div>

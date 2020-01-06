@@ -3542,7 +3542,7 @@ body .layui-table-tips .layui-layer-content {
 }
 
 .layui-nav .layui-nav-item a:hover, .layui-nav .layui-this a {
-    color: #fff
+    color: #00A1DD;
 }
 
 .layui-nav .layui-this:after {
@@ -3656,7 +3656,7 @@ body .layui-table-tips .layui-layer-content {
 }
 
 .layui-nav-itemed > a, .layui-nav-tree .layui-nav-title a, .layui-nav-tree .layui-nav-title a:hover {
-    color: #fff !important
+    color: #fff;
 }
 
 .layui-nav-tree .layui-nav-child {
@@ -3676,7 +3676,7 @@ body .layui-table-tips .layui-layer-content {
 
 .layui-nav-tree .layui-nav-child, .layui-nav-tree .layui-nav-child a:hover {
     background: 0 0;
-    color: #fff
+    color: #00A1DD
 }
 
 .layui-nav-tree .layui-nav-more {
