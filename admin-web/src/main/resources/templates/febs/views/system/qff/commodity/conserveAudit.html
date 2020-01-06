@@ -329,7 +329,9 @@
                 <label class="layui-form-label febs-form-item-sm">罗氏QA处理意见</label>
                 <div class="layui-input-block" id = "rConf" >
                     <input type="text" name="rConf"  lay-verify="required" autocomplete="off" list="search_rConf" class="layui-input" placeholder="请输入" >
+                    <div style="overflow: auto; height: 30px";>
                     <datalist id="search_rConf" style="display:none;"></datalist>
+                    </div>
                 </div>
             </div>
         </div>
@@ -520,7 +522,10 @@
 
         function deleteImage(url){
             febs.get(ctx + "file/deleteImage/"+url, function (res) {
-
+                var count = res;
+                if(count===200){
+                    layer.msg("删除成功");
+                }
             })
         }
 
@@ -619,17 +624,20 @@
         });
 
 
-        $.get(ctx +"opinion/getOpinion/"+reason,function(res){
-            var data = res.data;
-            $.each(data,function(index,item){
-                $("#search_reason").append('<option value="'+item.name+'"></option>')
-            });
-        });
+
+
 
         $.get(ctx +"opinion/getOpinion/"+rConf,function(res){
             var data = res.data;
             $.each(data,function(index,item){
                 $("#search_rConf").append('<option value="'+item.name+'"></option>')
+            });
+        });
+
+        $.get(ctx +"opinion/getOpinion/"+reason,function(res){
+            var data = res.data;
+            $.each(data,function(index,item){
+                $("#search_reason").append('<option value="'+item.name+'"></option>')
             });
         });
 
