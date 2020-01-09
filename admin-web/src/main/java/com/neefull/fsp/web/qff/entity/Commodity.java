@@ -53,7 +53,7 @@ public class Commodity implements Serializable {
      *  KDL Material 物料
      */
     @TableField("k_mater")
-    @ExcelField(value = "物料")
+    @ExcelField(value = "KDLMaterial物料")
     private String kMater;
     /**
      *  KDL SAP Batch 康德乐SAP批次

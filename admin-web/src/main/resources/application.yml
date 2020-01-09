@@ -57,3 +57,5 @@ qff:
     recentProcess: 近效期QFF
     refundProcess: 退货QFF
     rocheProcess: 罗氏内部发起QFF
+    imagePath: D:\JavaSoft\nginx-1.12.2\html\   #图片存储的地址
+    imageUrl:  http://127.0.0.1:10086/     #图片展示路径

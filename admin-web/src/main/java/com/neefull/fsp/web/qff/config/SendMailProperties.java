@@ -83,5 +83,7 @@ public class SendMailProperties {
     public void setTimeout(String timeout) {
         this.timeout = timeout;
     }
+
+
 }
 

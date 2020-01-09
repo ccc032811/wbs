@@ -108,9 +108,10 @@ public class CommodityListener extends BaseController implements JavaDelegate{
             mimeMessageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(), true);
             mimeMessageHelper.setFrom("ccc032811@163.com");//发送的邮箱地址
             mimeMessageHelper.setTo("ccc032811@163.com");//接收的邮箱地址
+//            mimeMessageHelper.setTo("wangpei_it@163.com");//接收的邮箱地址
 //            mimeMessageHelper.setCc("");//抄送者的邮箱地址
             mimeMessageHelper.setSubject("测试Springboot发送带附件的邮件,用来测试的");//邮件名称
-            mimeMessageHelper.setText("发送邮件...awd哇大王的哇强强无情的发额我夫人隔热隔热隔热条共七个父亲法律啊但是敢欺负我忍忍认为热狗热");//邮箱文字内容
+            mimeMessageHelper.setText("发送邮件...这是用来测试QFF流程的邮件测试，有很多附件。。。。。。。。。。。。。。。。?????????????????????????");//邮箱文字内容
 
         } catch (MessagingException e) {
             e.printStackTrace();

@@ -28,6 +28,7 @@ import java.util.*;
  */
 
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class ProcessServiceImpl implements IProcessService {
 
 
@@ -51,7 +52,6 @@ public class ProcessServiceImpl implements IProcessService {
     private ProcessInstanceProperties properties;
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void commitProcess(Object object, User user) {
 
         Map<String,Object> variable = new HashMap<>();
@@ -127,7 +127,6 @@ public class ProcessServiceImpl implements IProcessService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void agreeCurrentProcess(Object object, User user) {
         //设置更新的时间
         Map<String,Object> variable = new HashMap<>();
@@ -145,7 +144,9 @@ public class ProcessServiceImpl implements IProcessService {
             if(processInstance==null){
                 commodityService.updateCommodityStatus(commodity.getId(),ProcessConstant.HAS_FINISHED);
             }
-            addOrEditImages(commodity,user);
+            if(StringUtils.isNotEmpty(commodity.getImages())){
+                addOrEditImages(commodity,user);
+            }
         }else if(object instanceof Recent){
             Recent recent = (Recent) object;
 
@@ -158,7 +159,9 @@ public class ProcessServiceImpl implements IProcessService {
             if(processInstance==null){
                 recentService.updateRecentStatus(recent.getId(),ProcessConstant.HAS_FINISHED);
             }
-            addOrEditImages(recent,user);
+            if(StringUtils.isNotEmpty(recent.getImages())){
+                addOrEditImages(recent,user);
+            }
         }else if(object instanceof Refund){
             Refund refund = (Refund) object;
             editRefund(refund);
@@ -171,7 +174,9 @@ public class ProcessServiceImpl implements IProcessService {
             if(processInstance==null){
                 refundService.updateRefundStatus(refund.getId(),ProcessConstant.HAS_FINISHED);
             }
-            addOrEditImages(refund,user);
+            if(StringUtils.isNotEmpty(refund.getImages())){
+                addOrEditImages(refund,user);
+            }
         }else if(object instanceof Roche){
             Roche roche = (Roche) object;
             rocheService.editRoche(roche);
@@ -184,7 +189,9 @@ public class ProcessServiceImpl implements IProcessService {
             if(processInstance==null){
                 rocheService.updateRocheStatus(roche.getId(),ProcessConstant.HAS_FINISHED);
             }
-            addOrEditImages(roche,user);
+            if(StringUtils.isNotEmpty(roche.getImages())){
+                addOrEditImages(roche,user);
+            }
         }
     }
 
@@ -237,19 +244,21 @@ public class ProcessServiceImpl implements IProcessService {
 
 
     private void addOrEditImages(Object object ,User user) {
+        String image = "";
+
         if (object instanceof Commodity) {
             Commodity commodity = (Commodity) object;
-            String queryImage = dateImageService.queryImage(commodity.getId(), user.getDeptName(), ProcessConstant.COMMODITY_FORM);
-            if (StringUtils.isEmpty(queryImage)) {
+            DateImage dateImage = dateImageService.queryImage(commodity.getId(), user.getDeptName(), ProcessConstant.COMMODITY_FORM);
+            if (dateImage==null) {
                 dateImageService.insertDateImage(commodity.getId(), user.getDeptName(), ProcessConstant.COMMODITY_FORM, commodity.getImages());
             } else {
-                queryImage = queryImage + commodity.getImages();
-                dateImageService.updateDateImage(commodity.getId(), user.getDeptName(), ProcessConstant.COMMODITY_FORM, queryImage);
+                image = image + commodity.getImages();
+                dateImageService.updateDateImage(commodity.getId(), user.getDeptName(), ProcessConstant.COMMODITY_FORM, image);
             }
         } else if (object instanceof Recent) {
             Recent recent = (Recent) object;
-            String image = dateImageService.queryImage(recent.getId(), user.getDeptName(), ProcessConstant.RECENT_FORM);
-            if (StringUtils.isEmpty(image)) {
+            DateImage dateImage = dateImageService.queryImage(recent.getId(), user.getDeptName(), ProcessConstant.RECENT_FORM);
+            if (dateImage==null) {
                 dateImageService.insertDateImage(recent.getId(), user.getDeptName(), ProcessConstant.RECENT_FORM, recent.getImages());
             } else {
                 image = image + recent.getImages();
@@ -257,8 +266,8 @@ public class ProcessServiceImpl implements IProcessService {
             }
         } else if (object instanceof Refund) {
             Refund refund = (Refund) object;
-            String image = dateImageService.queryImage(refund.getId(), user.getDeptName(), ProcessConstant.REFUND_FORM);
-            if (StringUtils.isEmpty(image)) {
+            DateImage dateImage = dateImageService.queryImage(refund.getId(), user.getDeptName(), ProcessConstant.REFUND_FORM);
+            if (dateImage == null) {
                 dateImageService.insertDateImage(refund.getId(), user.getDeptName(), ProcessConstant.REFUND_FORM, refund.getImages());
             } else {
                 image = image + refund.getImages();
@@ -266,8 +275,8 @@ public class ProcessServiceImpl implements IProcessService {
             }
         } else if (object instanceof Roche) {
             Roche roche = (Roche) object;
-            String image = dateImageService.queryImage(roche.getId(), user.getDeptName(), ProcessConstant.ROCHE_FORM);
-            if (StringUtils.isEmpty(image)) {
+            DateImage dateImage = dateImageService.queryImage(roche.getId(), user.getDeptName(), ProcessConstant.ROCHE_FORM);
+            if (dateImage==null) {
                 dateImageService.insertDateImage(roche.getId(), user.getDeptName(), ProcessConstant.ROCHE_FORM, roche.getImages());
             } else {
                 image = image + roche.getImages();

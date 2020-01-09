@@ -6,55 +6,11 @@
     #roche-detail .layui-treeSelect .ztree li a, .ztree li span {
         margin: 0 0 2px 3px !important;
     }
-    .uploader-list {
-        margin-left: -15px;
-    }
-    .uploader-list .info {
-        position: relative;
-        margin-top: -25px;
-        background-color: black;
-        color: white;
-        filter: alpha(Opacity=80);
-        -moz-opacity: 0.5;
-        opacity: 0.5;
-        width: 100px;
-        height: 25px;
-        text-align: center;
-        display: none;
-    }
-
-    .uploader-list .handle {
-        position: relative;
-        background-color: black;
-        color: white;
-        filter: alpha(Opacity=80);
-        -moz-opacity: 0.5;
-        opacity: 0.5;
-        width: 100px;
-        text-align: right;
-        height: 18px;
-        margin-bottom: -18px;
-        display: none;
-    }
-
-    .uploader-list .handle span {
-        margin-right: 5px;
-    }
-
-    .uploader-list .handle span:hover {
-        cursor: pointer;
-    }
-
-    .uploader-list .file-iteme {
-        margin: 12px 0 0 15px;
-        padding: 1px;
-        float: left;
-    }
 
     .timeline-main-line{
-        width: 90%;
+        width: 85%;
         height: 50px;
-        margin-left: 5%
+        margin-left: 18%
     }
     .timeline-item-start{
         width: 25%;
@@ -80,24 +36,24 @@
     }
 
     .timeline-item-cricle-success{
-        width: 30px;
+        width: 25px;
         height: 20px;
         border-radius: 80%;
         background-color: #3DCCA6;
         position: relative;
         top: 22px;
-        left: 220px;
+        left: 95%;
         text-align: center;
         color: #fff;
     }
     .timeline-item-cricle-fail{
-        width: 30px;
+        width: 25px;
         height: 20px;
         border-radius: 80%;
         background-color: #CBCBCB;
         position: relative;
         top: 42px;
-        left: 220px;
+        left:  95%;
         text-align: center;
         color: #000;
     }
@@ -107,15 +63,15 @@
         color: #000;
         position: relative;
         top: 10px;
-        left: 220px;
+        left:  95%;
     }
     .timeline-item-name{
-        width: 100px;
+        width: 25%;
         height: 20px;
         color: #000;
         position: relative;
         top: 40px;
-        left: 220px;
+        left:  95%;
     }
     .timeline-item-name-fail{
         width: 100px;
@@ -123,175 +79,197 @@
         color: #000;
         position: relative;
         top: 60px;
-        left: 220px;
+        left:  95%;
     }
 
     /* 覆盖样式 */
     .layui-form-item {
         margin-bottom: 0px;
     }
-    .layui-form-item{
+    .layui-form-item-rigth{
         border-right: 1px solid #000;
     }
-    .layui-input-block {
-        margin-left: 90px;
-    }
-    .layui-col-sm4, .layui-col-sm12{
+    .layui-col-sm4,.layui-col-sm6 {
         border-left: 1px solid #000;
         border-top: 1px solid #000;
+        height: 39px;
     }
-    .layui-form-label-sm{
+    .layui-col-sm12{
+        border-left: 1px solid #000;
+        border-top: 1px solid #000;
+        height: 100px;
+    }
+    .layui-form-label {
+        float: left;
+        display: block;
+        padding: 10px 14px;
+        width: 80px;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: center;
+        height: 21px;
         border-right: 1px solid #000;
     }
+    .layui-input-block{
+        height: 39px;
+    }
     .layui-input, .layui-textarea {
-        width: 99%;
+        width: 100%;
     }
     .layui-form-item .layui-inline {
         margin-bottom: 0px;
     }
 </style>
-<div class="layui-fluid" id="roche-detail" lay-title = "包装QFF">
+<div class="layui-fluid" id="roche-detail" lay-title = "罗氏内部发起QFF" style="margin-left: 18px">
     <form class="layui-form " action="" lay-filter="roche-detail-form">
-        <div class="layui-form-item">
+        <div class="layui-form-item layui-form-item-rigth">
             <div class="layui-inline layui-col-sm4 ">
-                <label class="layui-form-label layui-form-label-sm">运输单号</label>
+                <label class="layui-form-label ">运输单号</label>
                 <div class="layui-input-block">
                     <input type="text" name="transport"  maxlength="50" autocomplete="off"
-                           class="layui-input " >
+                           class="layui-input " readonly="readonly" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label layui-form-label-sm">NO编号</label>
+                <label class="layui-form-label ">NO编号</label>
                 <div class="layui-input-block">
                     <input type="text" name="number"  maxlength="50" autocomplete="off"
-                           class="layui-input" >
+                           class="layui-input" readonly="readonly" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label layui-form-label-sm">发起人</label>
+                <label class="layui-form-label ">发起人</label>
                 <div class="layui-input-block">
                     <input type="text" name="sponsor"  maxlength="50" autocomplete="off"
-                           class="layui-input" >
+                           class="layui-input" readonly="readonly" >
                 </div>
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item layui-form-item-rigth">
             <div class="layui-inline layui-col-sm4 ">
-                <label class="layui-form-label layui-form-label-sm">申请日期</label>
+                <label class="layui-form-label ">申请日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="reqDate" id="reqDate" class="layui-input" placeholder="请选择时间">
+                    <input type="text" name="reqDate" id="reqDate" class="layui-input"  autocomplete="off"
+                           placeholder="请选择时间" readonly="readonly" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label layui-form-label-sm">原因</label>
+                <label class="layui-form-label ">原因</label>
                 <div class="layui-input-block">
                     <input type="text" name="reason"  maxlength="50" autocomplete="off"
-                           class="layui-input" >
+                           class="layui-input"  readonly="readonly" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label layui-form-label-sm">物料名称</label>
+                <label class="layui-form-label ">物料名称</label>
                 <div class="layui-input-block">
                     <input type="text" name="materName" maxlength="50" autocomplete="off"
-                           class="layui-input" >
+                           class="layui-input"  readonly="readonly"  >
                 </div>
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item layui-form-item-rigth">
             <div class="layui-inline layui-col-sm4 ">
-                <label class="layui-form-label layui-form-label-sm" style="min-height: 40px;">物料编号</label>
+                <label class="layui-form-label " >物料编号</label>
                 <div class="layui-input-block">
                     <input type="text" name="materCode" maxlength="50" autocomplete="off"
-                           class="layui-input " >
+                           class="layui-input "  readonly="readonly" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label layui-form-label-sm">批号/序列号</label>
+                <label class="layui-form-label ">批号/序列号</label>
                 <div class="layui-input-block">
                     <input type="text" name="batch"  maxlength="50" autocomplete="off"
-                           class="layui-input" >
+                           class="layui-input"  readonly="readonly" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label layui-form-label-sm">受影响数量</label>
+                <label class="layui-form-label ">受影响数量</label>
                 <div class="layui-input-block">
                     <input type="text" name="quantity"  maxlength="50" autocomplete="off"
-                           class="layui-input" >
+                           class="layui-input"  readonly="readonly" >
                 </div>
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item layui-form-item-rigth">
             <div class="layui-inline layui-col-sm4 ">
-                <label class="layui-form-label layui-form-label-sm" style="min-height: 40px;">行动</label>
+                <label class="layui-form-label " >行动</label>
                 <div class="layui-input-block" id="actions">
-                    <input type="text" name="actions"   autocomplete="off" list="search_actions" class="layui-input" placeholder="请输入" >
-                    <datalist id="search_actions" style="display:none;"></datalist>
+                    <input type="text" name="actions"  maxlength="50" autocomplete="off"
+                           class="layui-input"  readonly="readonly" >
+                    <!--<input type="text" name="actions"   autocomplete="off" list="search_actions" class="layui-input" placeholder="请输入" >
+                    <datalist id="search_actions" style="display:none;"></datalist>-->
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label layui-form-label-sm">期望完成日期</label>
+                <label class="layui-form-label ">期望完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="exceptDate" id="exceptDate" class="layui-input" placeholder="请选择时间">
+                    <input type="text" name="exceptDate" id="exceptDate" class="layui-input"
+                           placeholder="请选择时间" readonly="readonly" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label layui-form-label-sm">实际完成日期</label>
+                <label class="layui-form-label ">实际完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="completeDate" id="completeDate" class="layui-input" placeholder="请选择时间">
+                    <input type="text" name="completeDate" id="completeDate" class="layui-input"
+                           placeholder="请选择时间" readonly="readonly" >
                 </div>
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item layui-form-item-rigth">
             <div class="layui-inline layui-col-sm4 ">
-                <label class="layui-form-label layui-form-label-sm" style="min-height: 40px;">后续行动</label>
+                <label class="layui-form-label " >后续行动</label>
                 <div class="layui-input-block">
                     <input type="text" name="follow"  maxlength="50" autocomplete="off"
-                           class="layui-input ">
+                           class="layui-input " readonly="readonly" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label layui-form-label-sm">期望完成日期</label>
+                <label class="layui-form-label ">期望完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="exceptedDate" id="exceptedDate" class="layui-input" placeholder="请选择时间">
+                    <input type="text" name="exceptedDate" id="exceptedDate" class="layui-input"
+                           placeholder="请选择时间" readonly="readonly" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label layui-form-label-sm">实际完成日期</label>
+                <label class="layui-form-label ">实际完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="actualDate" id="actualDate" class="layui-input" placeholder="请选择时间">
+                    <input type="text" name="actualDate" id="actualDate" class="layui-input"
+                           placeholder="请选择时间" readonly="readonly" >
                 </div>
             </div>
         </div>
-        <div class="layui-form-item" style="border-bottom: 1px solid #000">
-            <div class="layui-inline layui-col-sm12">
-                <div>
-                    <label class="layui-form-label layui-form-label-sm" style="min-height: 85px;">备注</label>
-                    <div class="layui-input-block">
-                        <textarea name="remark"  placeholder="请输入" class="layui-textarea"></textarea>
-                    </div>
+        <div class="layui-form-item layui-form-item-rigth" >
+            <div class="layui-inline layui-col-sm12" >
+                <label class="layui-form-label " style="height: 80px;"><div style="margin-top: 20px">备注</div></label>
+                <div class="layui-input-block" >
+                    <textarea name="remark" lay-verify="required" placeholder="请输入" class="layui-textarea" ></textarea>
                 </div>
+
             </div>
         </div>
-        <div class="layui-form-item" style="border: 0;padding-top: 10px">
+        <div class="layui-form-item"><div style="border-top: 1px solid #000;margin-top: 1px"></div></div>
+
+        <div class="layui-form-item" style="border: 0;padding-top: 20px">
             <div class="site-demo-flow" id="image_show" style="overflow: auto; display: flex">
 
             </div>
-            <img data-th-src="@{febs/images/image_add.png}" width="100px" height="100px" id="chose">
+           <!-- <img data-th-src="@{febs/images/image_add.png}" width="100px" height="100px" id="chose">
             <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;width: 88%">
                 预览图：
                 <div class="layui-upload-list uploader-list" style="overflow: auto; display: flex" id="uploader-list" >
 
                 </div>
-            </blockquote>
+            </blockquote>-->
         </div>
-        <div class="layui-form-item" style="border: 0">
+        <div class="layui-form-item" style="margin-top: 30px">
             <div class="timeline-main-line" id="process">
 
             </div>
         </div>
         <div class="layui-form-item">
-            <div  style="text-align: center;" shiro:hasPermission="roche:audit">
-                <button class="layui-btn" lay-submit="" lay-filter="roche-form-submit" id="submit" style="margin-top: 50px;">提交</button>
+            <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="roche:audit">
+                <button class="layui-btn" lay-submit="" lay-filter="roche-form-submit" id="submit" >提交</button>
             </div>
             <br>
             <div style="float: right">
@@ -302,9 +280,11 @@
 </div>
 <img alt="" style="display:none" id="displayImg" src="" />
 
+<!--
 <script id="actions_view" type="text/html">
     <input type="text" id = "actions_value" name="actions" lay-verify="required" autocomplete="off" class="layui-input" readonly>
 </script>
+-->
 
 <script data-th-inline="javascript">
     layui.use(['febs', 'form','laydate', 'upload','layer','laytpl'], function () {
@@ -318,10 +298,10 @@
             roche = [[${roche}]],
             $view = $('#roche-detail');
 
-        var files ="";
+       /* var files ="";
         var imageList = "";
         var images = [];
-        var actions = "Actions行动";
+        var actions = "Actions行动";*/
         var relevance = "qff_roche";
 
         laydate.render({
@@ -374,10 +354,11 @@
                 "follow": roche.follow,
                 "exceptedDate": roche.exceptedDate,
                 "actualDate": roche.actualDate,
+
             });
         }
 
-        upload.render({
+     /*   upload.render({
             elem: '#chose'  //绑定
             ,url: ctx+ 'file/uploadImage'  //上传url
             ,accept: "images"     //设置文件的类型
@@ -415,7 +396,7 @@
             febs.get(ctx + "file/deleteImage/"+url, function (res) {
 
             })
-        }
+        }*/
 
 
         $.get(ctx +"file/findImages/"+roche.id+"/"+relevance,function (res) {
@@ -471,11 +452,6 @@
             }else {
                 success(data[1],2)
             }
-            if(data[2]==null){
-                error(3)
-            }else {
-                success(data[2],3)
-            }
         });
 
         function success(data,index){
@@ -495,7 +471,7 @@
 
         //提交更新
         form.on('submit(roche-form-submit)', function (data) {
-            if (febs.nativeEqual(data.field, roche)) {
+           /* if (febs.nativeEqual(data.field, roche)) {
                 febs.alert.warn('数据未作任何修改！');
                 return false;
             }
@@ -503,8 +479,8 @@
                 if(images[i]!= undefined)
                     imageList+=images[i]+",";
             }
-            data.field.images = imageList;
-            febs.post(ctx + 'roche/commit', data.field, function (data) {
+            data.field.images = imageList;*/
+            febs.post(ctx + 'roche/agree', data.field, function (data) {
                 layer.closeAll();
                 febs.alert.success('数据修改成功');
                 $('#fbs-roche').find('#query').click();
@@ -513,7 +489,7 @@
         });
 
 
-        $.get(ctx +"opinion/getOpinion/"+actions ,function(res){
+       /* $.get(ctx +"opinion/getOpinion/"+actions ,function(res){
             var data = res.data;
             $.each(data,function(index,item){
                 $("#search_actions").append('<option value="'+item.name+'"></option>')
@@ -521,13 +497,13 @@
         });
 
 
-        if(roche.actions != ""){
+        if(roche.actions != ""||roche.actions != null){
             var gettpl = document.getElementById('actions_view').innerHTML;
             laytpl(gettpl).render(roche, function(html){
                 document.getElementById('actions').innerHTML = html;
                 $("#actions_value").attr ("value",roche.actions)
             });
-        }
+        }*/
 
     });
 </script>

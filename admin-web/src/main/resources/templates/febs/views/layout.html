@@ -1,3 +1,4 @@
+
 <div class="layui-layout layui-layout-admin" id="febs-layout">
     <div class="layui-header layui-anim febs-anim-down" id="app-header" style="background-color: #00A1DD">
         <script type="text/html"
@@ -102,8 +103,12 @@
         </div>
     </div>
     <!-- 主体内容 -->
-    <div class="layui-body" id="febs-body"></div>
+    <div class="layui-body" id="febs-body">
+        <div style="background-color: red ; margin-top: 95%; width: 100% ; height: 33px;z-index: 9999999999;position: relative"><span>测试</span></div>
+    </div>
+
 </div>
+
 <script data-th-inline="javascript" type="text/javascript">
     layui.use(['jquery', 'febs', 'element'], function () {
         var $ = layui.jquery,

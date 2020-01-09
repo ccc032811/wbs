@@ -7,26 +7,21 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wuwenze.poi.annotation.Excel;
 import com.wuwenze.poi.annotation.ExcelField;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 近效期QFF
- *
+/**用于近效期excel导出
  * @Author: chengchengchu
- * @Date: 2019/11/26  20:25
+ * @Date: 2020/1/9  9:48
  */
 
 @TableName(value = "qff_recent")
 @Excel("近效期QFF")
-public class Recent implements Serializable {
-    private static final long serialVersionUID = -6883719899970874252L;
+public class RecentExcelImport implements Serializable {
+
+    private static final long serialVersionUID = 302033785722298807L;
     /**
      *  主键id
      */
@@ -36,6 +31,7 @@ public class Recent implements Serializable {
      *  运输单号
      */
     @TableField("transport")
+    @ExcelField(value = "运输单号")
     private String transport;
     /**
      *  康德乐物料号
@@ -101,6 +97,7 @@ public class Recent implements Serializable {
      *  回复日期
      */
     @TableField("rep_date")
+    @ExcelField(value = "回复日期")
     private String repDate;
     /**
      *  图片
@@ -263,4 +260,5 @@ public class Recent implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
 }

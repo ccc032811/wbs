@@ -1,32 +1,33 @@
+
 <div class="layui-fluid layui-anim febs-anim" id="fbs-refund" lay-title="退货QFF">
     <div class="layui-row febs-container">
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body febs-table-full">
-                    <form class="layui-form layui-table-form" lay-filter="refund-table-form">
+                    <form class="layui-form layui-table-form" lay-filter="refund-table-form" >
                         <div class="layui-row">
                             <div class="layui-col-md10 ">
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">物料号</label>
+                                        <label class="layui-form-label layui-form-label-sm"  style="border-right: 1px solid white;">物料号</label>
                                         <div class="layui-input-inline">
                                             <input type="text" name="mater" autocomplete="off" class="layui-input" placeholder="请输入罗氏物料号">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">批次号</label>
+                                        <label class="layui-form-label layui-form-label-sm"  style="border-right: 1px solid white;">批次号</label>
                                         <div class="layui-input-inline">
                                             <input type="text" name="batch" autocomplete="off" class="layui-input" placeholder="请输入罗氏批号">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">日期区间</label>
+                                        <label class="layui-form-label layui-form-label-sm"  style="border-right: 1px solid white;">日期区间</label>
                                         <div class="layui-input-inline">
                                             <input type="text" name="searchTime" id="searchTime" class="layui-input" placeholder="请选择时间">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">状态</label>
+                                        <label class="layui-form-label layui-form-label-sm"  style="border-right: 1px solid white;">状态</label>
                                         <div class="layui-input-inline">
                                             <select name="status">
                                                 <option value="">全部</option>
@@ -39,7 +40,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
+                            <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area" style=" border-left: 1px solid white;border-top: 1px solid white;height: 40px">
                                 <div class="layui-btn layui-btn-normal" id="query" >
                                     <i class="layui-icon ">查询</i>
                                 </div>
@@ -73,6 +74,11 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="refund:del">删除</a>
     {{#}}}
 </script>
+<script type="text/html" id="toolbarCheck">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="download" shiro:hasPermission="refund:down">导出Excel文件</button>
+    </div>
+</script>
 <script data-th-inline="none" type="text/javascript">
     layui.use([ 'jquery', 'laydate', 'form', 'table', 'febs'], function () {
         var $ = layui.jquery,
@@ -101,11 +107,11 @@
         function initTable() {
             tableIns = febs.table.init({
                 elem: $view.find('table'),
-                height: 580,
+                height: 650,
                 id: 'refundTable',          //表单id
                 url: ctx + 'refund/list',   //url
-                /*toolbar: '#toolbarCheck',     //开启头部工具栏
-                defaultToolbar: ['print'],   //显示默认的三个工具，需要哪个写哪个的单词'filter','exports','print'*/
+                toolbar: '#toolbarCheck',     //开启头部工具栏
+                defaultToolbar: ['filter','print'],     //显示默认的三个工具，需要哪个写哪个的单词'filter','exports','print'*/
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'number', title: '编号',align:'center',width: 110},
@@ -136,17 +142,29 @@
         });
 
 
+        table.on('toolbar(refundTable)', function(obj){
+            var layEvent = obj.event;
+            if (layEvent === 'download') {
+                var params = getQueryParams();
+                params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
+                params.pageNum = $view.find(".layui-laypage-em").next().html();
+                febs.download(ctx + 'refund/excel',params, '退货QFF.xlsx');
+
+            }
+        });
+
+
         table.on('tool(refundTable)', function (obj) {
             var data = obj.data,
                 layEvent = obj.event;
             if (layEvent === 'detail') {
                 febs.modal.view('具体信息', 'system/qff/refund/refundShow/' + data.id, {
-                    area: $(window).width() <= 750 ? '90%' : '60%'
+                    area:  [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '80%']
                 });
             }
             if (layEvent === 'edit') {
-                febs.modal.open('审核', 'system/qff/refund/refundAudit/' + data.id, {
-                    area: $(window).width() <= 750 ? '90%' : '60%'
+                febs.modal.view('审核', 'system/qff/refund/refundAudit/' + data.id, {
+                    area:  [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '90%']
                 });
             }
             if (layEvent === 'del') {

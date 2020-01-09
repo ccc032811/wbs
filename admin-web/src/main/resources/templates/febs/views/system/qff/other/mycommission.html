@@ -56,15 +56,10 @@
             }
         });
 
-        /*btn.onclick = function () {
-            febs.modal.open('新增', 'system/qff/roche/add' , {
-                area: $(window).width() <= 750 ? '90%' : '60%'
-            });
-        }*/
 
         window.btnOn = function () {
             febs.modal.open('新增', 'system/qff/roche/add' , {
-                area: $(window).width() <= 750 ? '90%' : '60%'
+                area: [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '80%']
             });
         }
 

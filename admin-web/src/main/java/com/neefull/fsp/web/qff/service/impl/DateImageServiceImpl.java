@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.neefull.fsp.web.qff.config.ProcessInstanceProperties;
 import com.neefull.fsp.web.qff.entity.DateImage;
 import com.neefull.fsp.web.qff.entity.ImageQuery;
 import com.neefull.fsp.web.qff.mapper.DateImageMapper;
@@ -33,20 +34,17 @@ import java.util.List;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class DateImageServiceImpl extends ServiceImpl<DateImageMapper, DateImage> implements IDateImageService {
 
-    private static final String IMAGE_DIR ="D:\\JavaSoft\\nginx-1.12.2\\html\\";
-    private static final String IMAGE_URL ="http://127.0.0.1:10086/";
 
     @Autowired
     private DateImageMapper dateImageMapper;
+    @Autowired
+    private ProcessInstanceProperties properties;
 
     @Override
-    public String queryImage(Integer dataId, String vest,String relevance) {
+    public DateImage queryImage(Integer dataId, String vest,String relevance) {
         DateImage date = dateImageMapper.queryImage(dataId, vest, relevance);
-        if(date ==null){
-            return null;
-        }else {
-            return date.getImage();
-        }
+
+        return date;
     }
 
     @Override
@@ -54,10 +52,12 @@ public class DateImageServiceImpl extends ServiceImpl<DateImageMapper, DateImage
         List<String> imageList = new ArrayList<>();
         List<DateImage> list = dateImageMapper.findImageByIdAndForm(dataId,relevance);
         for (DateImage dateImage : list) {
-            String[] images = dateImage.getImage().split(StringPool.COMMA);
-            if(images.length!=0){
-                for (String image : images) {
-                    imageList.add(IMAGE_URL+image);
+            if(dateImage.getImage().length()!=0){
+                String[] images = dateImage.getImage().split(StringPool.COMMA);
+                if(images.length!=0){
+                    for (String image : images) {
+                        imageList.add(properties.getImageUrl()+image);
+                    }
                 }
             }
         }
@@ -90,7 +90,7 @@ public class DateImageServiceImpl extends ServiceImpl<DateImageMapper, DateImage
 
     @Override
     public void deleteImage(String url) {
-        File file = new File(IMAGE_DIR+url);
+        File file = new File(properties.getImagePath()+url);
         if(file.exists()){
             file.delete();
         }

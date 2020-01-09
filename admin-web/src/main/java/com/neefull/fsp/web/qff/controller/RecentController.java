@@ -4,18 +4,18 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
-import com.neefull.fsp.web.qff.entity.ProcessHistory;
-import com.neefull.fsp.web.qff.entity.Query;
-import com.neefull.fsp.web.qff.entity.Recent;
+import com.neefull.fsp.web.qff.entity.*;
 import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.service.IRecentService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
+import com.wuwenze.poi.ExcelKit;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -118,17 +118,6 @@ public class RecentController extends BaseController {
         return new FebsResponse().success().data(list);
     }
 
-//    /**查询流程
-//     * @param id
-//     * @return
-//     */
-//    @GetMapping("/queryHistory/{id}")
-//    public FebsResponse queryHistory(@PathVariable Integer id){
-//        List<ProcessHistory> list = recentService.queryHistory(id);
-//        return new FebsResponse().success().data(list);
-//    }
-
-
 
     /**提交流程
      * @param recent
@@ -170,6 +159,19 @@ public class RecentController extends BaseController {
             throw new FebsException("当前无权限或改数据已审核");
         }
         return new FebsResponse().success();
+    }
+
+
+    /**导出excel
+     * @param query
+     * @param response
+     */
+    @GetMapping("excel")
+    @RequiresPermissions("recent:down")
+    public void download(Query query, HttpServletResponse response){
+        IPage<RecentExcelImport> recentPage = recentService.getRecentExcelImportPage(query);
+        List<RecentExcelImport> excelImportList = recentPage.getRecords();
+        ExcelKit.$Export(RecentExcelImport.class, response).downXlsx(excelImportList, false);
     }
 
 //    /**查询用户当前任务

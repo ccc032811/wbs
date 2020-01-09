@@ -38,4 +38,5 @@ public interface IOpinionService extends IService<Opinion> {
      * @return
      */
     List<Opinion> getOpinions(String name);
+
 }

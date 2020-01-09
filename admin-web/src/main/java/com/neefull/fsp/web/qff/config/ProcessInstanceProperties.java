@@ -19,6 +19,10 @@ public class ProcessInstanceProperties {
 
     private String rocheProcess;
 
+    private String imagePath;
+
+    private String imageUrl;
+
     public String getCommodityProcess() {
         return commodityProcess;
     }
@@ -49,5 +53,21 @@ public class ProcessInstanceProperties {
 
     public void setRocheProcess(String rocheProcess) {
         this.rocheProcess = rocheProcess;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

@@ -17,7 +17,8 @@ public interface IDateImageService extends IService<DateImage> {
      * @param dataId
      * @param vest
      */
-    String queryImage(Integer dataId, String vest,String relevance);
+    DateImage queryImage(Integer dataId, String vest,String relevance);
+
 
     /**查询图片
      * @param dataId
@@ -46,7 +47,5 @@ public interface IDateImageService extends IService<DateImage> {
      * @param url
      */
     void deleteImage(String url);
-
-
 
 }

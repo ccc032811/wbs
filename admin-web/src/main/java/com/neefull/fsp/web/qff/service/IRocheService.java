@@ -49,39 +49,4 @@ public interface IRocheService extends IService<Roche> {
      */
     Roche queryRocheById(Integer id);
 
-//    /**提交流程
-//     * @param roche
-//     */
-//    void commitProcess(Roche roche,User user);
-//
-//    /**同意当前流程
-//     * @param roche
-//     * @param user
-//     */
-//    void agreeCurrentProcess(Roche roche, User user);
-//
-//    /**查询用户当前任务
-//     * @param user
-//     * @return
-//     */
-//    List<Roche> queryCurrentProcess(User user);
-//
-//    /**查询当前数据的审核人的信息
-//     * @param roche
-//     * @return
-//     */
-//    List<String> getGroup(Roche roche);
-//
-//    /**添加修改信息
-//     * @param roche
-//     * @param user
-//     */
-//    void addOrEditImages(Roche roche, User user);
-//
-//    /**查询当前流程
-//     * @param id
-//     * @return
-//     */
-//    List<ProcessHistory> queryHistory(Integer id);
-
 }

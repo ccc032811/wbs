@@ -23,7 +23,7 @@ public interface RecentMapper extends BaseMapper<Recent> {
      * @param query
      * @return
      */
-    IPage<Recent> getRecentPage(Page page, @Param("query") Query query);
+    IPage<Recent> getRecentPage(Page page, Query query);
 
     /**更新近效期QFF状态
      * @param id
