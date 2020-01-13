@@ -6,7 +6,6 @@ import com.neefull.fsp.web.qff.entity.Commodity;
 import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.service.ICommodityService;
 import com.neefull.fsp.web.qff.service.IRecentService;
-import com.neefull.fsp.web.qff.utils.FilePdfTemplate;
 import com.sun.mail.util.MailSSLSocketFactory;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
@@ -37,9 +36,9 @@ public class RecentListener implements JavaDelegate {
     private TemplateProperties templateProperties;
     @Autowired
     private IRecentService recentService;
-    @Autowired
+  /*  @Autowired
     private FilePdfTemplate template;
-
+*/
     @Override
     public void execute(DelegateExecution execution) {
        /* //获取流程中的对象  获取邮件地址跟密码

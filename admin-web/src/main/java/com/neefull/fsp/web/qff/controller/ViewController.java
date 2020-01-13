@@ -221,6 +221,11 @@ public class ViewController extends BaseController {
         return FebsUtil.view("system/qff/opinion/opinion");
     }
 
+    //***********************************************测试用***********************************************************
+    @GetMapping(FebsConstant.VIEW_PREFIX + "system/qff/commodity/textDemo")
+    public String commodityDemo(){
+        return FebsUtil.view("system/qff/other/commodityDemo");
+    }
 
 
 }

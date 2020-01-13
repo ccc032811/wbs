@@ -105,7 +105,7 @@ public class FileController extends BaseController {
         String extension = StringUtils.substringAfterLast(filename, StringPool.DOT);
         filename = UUID.randomUUID().toString() + StringPool.DOT + extension;
 
-        String[] paths = properties.getImagePath().split(StringPool.SLASH);
+        /*String[] paths = properties.getImagePath().split(StringPool.SLASH);
         String dir = paths[0];
         for (int i = 0; i < paths.length - 1; i++) {
             try {
@@ -118,7 +118,7 @@ public class FileController extends BaseController {
             } catch (Exception err) {
                 System.err.println("文件夹创建发生异常");
             }
-        }
+        }*/
         File filePath = new File(properties.getImagePath(), filename);
         try {
             file.transferTo(filePath);
@@ -200,8 +200,6 @@ public class FileController extends BaseController {
     private SendMailProperties mailProperties;
 
     public  void sendMail(String text) {
-
-
 
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost(mailProperties.getHost());

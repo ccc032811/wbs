@@ -88,6 +88,9 @@ public class RefundController extends BaseController {
     @GetMapping("/deleteRefund/{id}")
     @RequiresPermissions("refund:del")
     public FebsResponse updateRefundStatus(@PathVariable Integer id) throws FebsException {
+        Refund refund = new Refund();
+        refund.setId(id);
+        processService.deleteInstance(refund);
         Integer count = refundService.updateRefundStatus(id, ProcessConstant.HAVE_ABNORMAL);
         if(count!=1){
             throw new FebsException("删除退货QFF");
@@ -120,7 +123,6 @@ public class RefundController extends BaseController {
         return new FebsResponse().success().data(list);
     }
 
-
     /**提交流程
      * @param refund
      * @return
@@ -131,7 +133,6 @@ public class RefundController extends BaseController {
     public FebsResponse commitProcess(Refund refund) throws FebsException {
         User user = getCurrentUser();
         try {
-//            refundService.commitProcess(refund,user);
             processService.commitProcess(refund,user);
 
         } catch (Exception e) {
@@ -150,10 +151,8 @@ public class RefundController extends BaseController {
     public FebsResponse agreeCurrentProcess(Refund refund) throws FebsException {
         User user = getCurrentUser();
         List<String> group = processService.getGroupId(refund,user);
-//        List<String> group = refundService.getGroup(refund);
         if(group.contains(user.getUsername())){
             try {
-//                refundService.agreeCurrentProcess(refund,user);
                 processService.agreeCurrentProcess(refund,user);
             } catch (Exception e) {
                 throw new FebsException("同意流程失败");

@@ -51,7 +51,6 @@ public class OpinionController {
         }
     }
 
-
     /**新增
      * @param opinion
      * @return
@@ -66,7 +65,6 @@ public class OpinionController {
             throw new FebsException("新增失败");
         }
     }
-
 
     /**删除
      * @param opinionIds
@@ -83,7 +81,6 @@ public class OpinionController {
             throw new FebsException("删除失败");
         }
     }
-
 
     /**更新
      * @param opinion

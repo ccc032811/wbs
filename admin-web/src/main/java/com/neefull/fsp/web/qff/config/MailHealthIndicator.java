@@ -5,7 +5,6 @@ import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
 /**
- * mail健康检查
  * @Author: chengchengchu
  * @Date: 2019/12/13  15:24
  */

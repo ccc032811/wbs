@@ -44,4 +44,9 @@ public interface IProcessService  {
      */
     Integer findTask(String name);
 
+    /**删除流程
+     * @param object
+     */
+    void deleteInstance(Object object);
+
 }

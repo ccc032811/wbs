@@ -85,6 +85,9 @@ public class RecentController extends BaseController {
     @GetMapping("/deleteRecent/{id}")
     @RequiresPermissions("recent:del")
     public FebsResponse updateRecentStatus(@PathVariable Integer id) throws FebsException {
+        Recent recent = new Recent();
+        recent.setId(id);
+        processService.deleteInstance(recent);
         Integer count = recentService.updateRecentStatus(id, ProcessConstant.HAVE_ABNORMAL);
         if(count!=1){
             throw new FebsException("删除近效期QFF失败");
@@ -118,7 +121,6 @@ public class RecentController extends BaseController {
         return new FebsResponse().success().data(list);
     }
 
-
     /**提交流程
      * @param recent
      * @return
@@ -129,7 +131,6 @@ public class RecentController extends BaseController {
     public FebsResponse commitProcess(Recent recent) throws FebsException {
         User user = getCurrentUser();
         try {
-//            recentService.commitProcess(recent,user);
             processService.commitProcess(recent,user);
         } catch (Exception e) {
             throw new FebsException("提交申请失败");
@@ -147,10 +148,8 @@ public class RecentController extends BaseController {
     public FebsResponse agreeCurrentProcess(Recent recent) throws FebsException {
         User user = getCurrentUser();
         List<String> group = processService.getGroupId(recent,user);
-//        List<String> group = recentService.getGroup(recent);
         if(group.contains(user.getUsername())){
             try {
-//                recentService.agreeCurrentProcess(recent,user);
                 processService.agreeCurrentProcess(recent,user);
             } catch (Exception e) {
                 throw new FebsException("同意流程失败");
@@ -160,7 +159,6 @@ public class RecentController extends BaseController {
         }
         return new FebsResponse().success();
     }
-
 
     /**导出excel
      * @param query

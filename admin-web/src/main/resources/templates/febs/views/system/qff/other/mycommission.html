@@ -11,7 +11,7 @@
         color: #dcdfe6;
     }
 </style>
-<div class="layui-fluid layui-anim febs-anim" id="fbs-conserve" lay-title="我的代办">
+<div class="layui-fluid layui-anim febs-anim" id="fbs-serve" lay-title="我的代办">
     <div class="layui-row febs-container">
         <div class="item" id="bubbling"/>
         <div class="layui-card-body febs-table-full">
@@ -28,11 +28,14 @@
                     <img data-th-src="@{febs/images/start.png}" width="60px" height="60px" style="margin-top: 20px;margin-left: 5px">
                 </div>
                 <div style="height: 100px;width: 215px;float: left">
-                    <div style="text-align: center;margin-top: 33px;" class="site-demo-button" id="layerDemo">
-                        <button id="btn"  onclick="btnOn()" style="border: none;background-color:transparent;"><span style="color: #00A1DD"><h2>发起QFF</h2></span>
-
-                        </button>
+                    <div style="text-align: center;margin-top: 33px;" class="site-demo-button" >
+                        <button id="btn"  onclick="btnOn()" style="border: none;background-color:transparent;"><span style="color: #00A1DD"><h2>发起QFF</h2></span></button>
                     </div>
+                </div>
+            </div>
+            <div style="height: 100px; width: 280px;border:1px solid #000;margin-left: 15px ; float:left" >
+                <div style="text-align: center;margin-top: 33px;" class="site-demo-button" >
+                    <button type="button" class="layui-btn layui-btn-warm" onclick="textDemo()">创建测试使用</button>
                 </div>
             </div>
         </div>
@@ -60,6 +63,12 @@
         window.btnOn = function () {
             febs.modal.open('新增', 'system/qff/roche/add' , {
                 area: [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '80%']
+            });
+        };
+
+        window.textDemo = function () {
+            febs.modal.open('测试', 'system/qff/commodity/textDemo',{
+                area: [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '50%']
             });
         }
 

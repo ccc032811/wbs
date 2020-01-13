@@ -90,6 +90,9 @@ public class CommodityController extends BaseController {
     @GetMapping("/deleteCommodity/{id}")
     @RequiresPermissions("commodity:del")
     public FebsResponse updateCommodityStatus(@PathVariable Integer id) throws FebsException {
+        Commodity commodity = new Commodity();
+        commodity.setId(id);
+        processService.deleteInstance(commodity);
         int count = commodityService.updateCommodityStatus(id, ProcessConstant.HAVE_ABNORMAL);
         if (count!=1){
             throw new FebsException("删除到货养护包装QFF操作失败");
@@ -122,7 +125,6 @@ public class CommodityController extends BaseController {
         return new FebsResponse().success().data(list);
     }
 
-
     /**提交流程
      * @param commodity
      * @return
@@ -135,7 +137,6 @@ public class CommodityController extends BaseController {
         User user = getCurrentUser();
         try {
             processService.commitProcess(commodity,user);
-//            commodityService.commitProcess(commodity,user);
         } catch (Exception e) {
             throw new FebsException("提交申请失败");
         }
@@ -151,11 +152,9 @@ public class CommodityController extends BaseController {
     @RequiresPermissions("commodity:audit")
     public FebsResponse agreeCurrentProcess(Commodity commodity) throws FebsException {
         User user = getCurrentUser();
-//        List<String> group = commodityService.getGroupId(commodity,user);
         List<String> group = processService.getGroupId(commodity,user);
         if(group.contains(user.getUsername())){
             try {
-//                commodityService.agreeCurrentProcess(commodity,user);
                 processService.agreeCurrentProcess(commodity,user);
             } catch (Exception e) {
                 throw new FebsException("同意流程失败");
@@ -165,7 +164,6 @@ public class CommodityController extends BaseController {
         }
         return new FebsResponse().success();
     }
-
 
     /**导出excel
      * @param query

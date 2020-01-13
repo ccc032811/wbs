@@ -269,41 +269,49 @@
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">回复日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="repTime" lay-verify="required" maxlength="50" autocomplete="off"
-                           class="layui-input" readonly="readonly">
+                    <input type="text" name="repTime"  maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">QFF原因</label>
-                <div class="layui-input-block" id = "reason">
-                    <input type="text" name="reason"  lay-verify="required" autocomplete="off" list="search_reason" class="layui-input" placeholder="请输入">
+                <div class="layui-input-block" id="reason">
+                    <!--<input type="text" name="reason"  lay-verify="required" autocomplete="off" list="search_reason" class="layui-input" placeholder="请输入">
                     <datalist id="search_reason" style="display:none;"></datalist>
+                    <input type="text" name="reason" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">-->
                 </div>
             </div>
         </div>
         <div class="layui-form-item layui-form-item-rigth">
             <div class="layui-inline layui-col-sm4 ">
                 <label class="layui-form-label ">BA</label>
-                <div class="layui-input-block " id="ba">
-                    <select name="ba" id="search_ba" lay-verify="required">
-                        <option value=""></option>
+                <div class="layui-input-block" id = "ba">
+                    <!--<select name="ba" id="search_ba" lay-verify="required">
+                        <option value="">请选择</option>
                     </select>
+                    <input type="text" name="ba" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">-->
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">上报阶段</label>
                 <div class="layui-input-block" id="stage">
-                    <select name="stage" id="search_stage" lay-verify="required">
-                        <option value=""></option>
-                    </select>
+                    <!--  <input type="text" name="stage" lay-verify="required" maxlength="50" autocomplete="off"
+                             class="layui-input " readonly="readonly">
+                      <select name="stage" id="search_stage" lay-verify="required" >
+                          <option value="">请选择</option>
+                      </select>-->
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">采购来源</label>
-                <div class="layui-input-block" id="source">
+                <div class="layui-input-block" id = "source">
+                    <!--<input type="text" name="source" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " readonly="readonly">
                     <select name="source" id="search_source" lay-verify="required">
-                        <option value=""></option>
-                    </select>
+                        <option value="">请选择</option>
+                    </select>-->
                 </div>
             </div>
         </div>
@@ -311,23 +319,25 @@
             <div class="layui-inline layui-col-sm4 ">
                 <label class="layui-form-label ">投诉编号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="compNumber" lay-verify="required" maxlength="50" autocomplete="off"
-                           class="layui-input " readonly="readonly">
+                    <input type="text" id="compNumber" name="compNumber" lay-verify="required" maxlength="50" autocomplete="off"
+                           class="layui-input " placeholder="请输入">
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">注册证号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="register" lay-verify="required" maxlength="50" autocomplete="off"
+                    <input type="text" name="register"  maxlength="50" autocomplete="off"
                            class="layui-input" readonly="readonly">
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">产品分类</label>
                 <div class="layui-input-block" id="classify">
-                    <select name="classify" id="search_classify" lay-verify="required">
-                        <option value=""></option>
-                    </select>
+                    <input type="text" name="classify"  maxlength="50" autocomplete="off"
+                           class="layui-input" readonly="readonly">
+                    <!--<select name="classify" id="search_classify" lay-verify="required">
+                        <option value="">请选择</option>
+                    </select>-->
                 </div>
             </div>
         </div>
@@ -335,15 +345,19 @@
             <div class="layui-inline layui-col-sm6 ">
                 <label class="layui-form-label ">Remark箱号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="getRemark" lay-verify="required" maxlength="50" autocomplete="off"
+                    <input type="text" name="getRemark" maxlength="50" autocomplete="off"
                            class="layui-input " readonly="readonly">
                 </div>
             </div>
-            <div class="layui-inline layui-col-sm6" >
+            <div class="layui-inline layui-col-sm6">
                 <label class="layui-form-label ">罗氏处理意见</label>
-                <div class="layui-input-block" id="rConf">
-                    <input type="text" name="rConf"  lay-verify="required" autocomplete="off" list="search_rConf" class="layui-input" placeholder="请输入" >
-                    <datalist id="search_rConf" style="display:none;"></datalist>
+                <div class="layui-input-block" id = "rConf" >
+                    <!--       <input type="text" name="rConf" maxlength="50" autocomplete="off"
+                                  class="layui-input " readonly="readonly">
+                           <input type="text" name="rConf"  lay-verify="required" autocomplete="off" list="search_rConf" class="layui-input" placeholder="请输入" >
+                           <div style="overflow: auto; height: 30px";>
+                           <datalist id="search_rConf" style="display:none;"></datalist>
+                           </div>-->
                 </div>
             </div>
         </div>
@@ -351,8 +365,8 @@
             <div class="layui-inline layui-col-sm12">
                 <label class="layui-form-label" style="height: 80px;border-right: 1px solid #000;"><div style="margin-top: 20px">仪器工程师检查结果</div></label>
                 <div class="layui-input-block">
-                    <textarea name="checkResult" lay-verify="required" placeholder="请输入"
-                              class="layui-textarea"></textarea>
+                    <textarea id="checkResult" name="checkResult"  lay-verify="required" placeholder="请输入"
+                              class="layui-textarea" ></textarea>
                 </div>
             </div>
         </div>
@@ -360,7 +374,7 @@
             <div class="layui-inline layui-col-sm12" >
                 <label class="layui-form-label " style="height: 80px;"><div style="margin-top: 20px">备注</div></label>
                 <div class="layui-input-block" >
-                    <textarea name="remark" lay-verify="required" placeholder="请输入" class="layui-textarea" ></textarea>
+                    <textarea id="remark" name="remark" lay-verify="required" placeholder="请输入" class="layui-textarea" ></textarea>
                 </div>
 
             </div>
@@ -416,7 +430,7 @@
 </div>
 <img alt="" style="display:none" id="displayImg" src="" />
 
-<script id="rConf_view" type="text/html">
+<!--<script id="rConf_view" type="text/html">
     <input type="text" id = "rConf_value" name="rConf" lay-verify="required" autocomplete="off" class="layui-input" readonly>
 </script>
 <script id="ba_view" type="text/html">
@@ -433,7 +447,7 @@
 </script>
 <script id="reason_view" type="text/html">
     <input type="text" id = "reason_value" name="reason" lay-verify="required" autocomplete="off" class="layui-input" readonly>
-</script>
+</script>-->
 
 
 <script data-th-inline="javascript">
@@ -453,13 +467,53 @@
         var ba = "BA";
         var stage = "QFF上报阶段";
         var source = "采购来源";
-        var classify = "产品分类";
+        // var classify = "产品分类";
         var rConf ="罗氏QA处理意见";
         var reason = "QFF原因";
         var relevance = "qff_commodity";
 
         //表单渲染
         form.render();
+
+        //页面渲染，放在初始化界面之前
+        if(currentUser.roleId == '86'){ //罗氏
+            $('#rConf').append(' <input type="text" name="rConf"  lay-verify="required" maxlength="50" autocomplete="off" list="search_rConf" class="layui-input" placeholder="请输入" >\n' +
+                '                    <div style="overflow: auto; height: 30px";>\n' +
+                '                    <datalist id="search_rConf" style="display:none;"></datalist>\n' +
+                '                    </div>')
+            $('#reason').append('<input type="text" name="reason"  lay-verify="required" maxlength="50" autocomplete="off" list="search_reason" class="layui-input" placeholder="请输入">\n' +
+                '                    <datalist id="search_reason" style="display:none;"></datalist>')
+
+            $('#ba').append('<select name="ba" id="search_ba" lay-verify="required">\n' +
+                '                        <option value="">请选择</option>\n' +
+                '                    </select>')
+            $('#stage').append(' <input type="text" name="stage"  maxlength="50" autocomplete="off"\n' +
+                '                           class="layui-input " readonly="readonly">')
+            $('#source').append('<input type="text" name="source"  maxlength="50" autocomplete="off"\n' +
+                '                           class="layui-input " readonly="readonly">')
+            $('#compNumber').attr("lay-verify","required");
+            $('#checkResult').attr("lay-verify","required");
+            $('#remark').attr("lay-verify","required");
+
+        }else if(currentUser.roleId == '87'){  //康德乐
+            $('#rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
+                '                           class="layui-input " readonly="readonly">')
+            $('#reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
+                '                           class="layui-input " readonly="readonly">')
+            $('#ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
+                '                           class="layui-input " readonly="readonly">')
+
+            $('#stage').append('<select name="stage" id="search_stage" lay-verify="required" >\n' +
+                '                        <option value="">请选择</option>\n' +
+                '                    </select>')
+            $('#source').append('<select name="source" id="search_source" lay-verify="required">\n' +
+                '                        <option value="">请选择</option>\n' +
+                '                    </select>')
+            $('#checkResult').attr("readonly","readonly");
+            $('#remark').attr("readonly","readonly");
+            $('#compNumber').attr("readonly","readonly");
+        }
+
         initDeliveryValue();
 
         //给表单赋值
@@ -507,7 +561,7 @@
             ,data:{id:commodity.id,type:currentUser.deptName,relevance:relevance}
             ,done: function(res){
                 $('#uploader-list').append('<div class="image-container" id="container'+res.data.index+'"><div class="delete-css"><button id="upload_img_'+res.data.index+'" class="layui-btn layui-btn-danger layui-btn-xs">删除</button></div>\n' +
-                    '<img  class="layui-upload-img" id="showImg'+res.data.index+'" style="width: 150px; margin:10px;cursor:pointer;" src="'+ 'http://127.0.0.1:10086/'+ res.data.value +'" name = "'+ res.data.value+'" ></div>')
+                    '<img  class="layui-upload-img" id="showImg'+res.data.index+'" style="width: 150px; margin:10px;cursor:pointer;" src="'+ 'http://106.14.99.137:8084/ '+ res.data.value +'" name = "'+ res.data.value+'" ></div>')
                 $("#upload_img_" + res.data.index).bind('click', function () {
                     delete files[res.data.index];
                     $("#container"+res.data.index).remove();
@@ -614,6 +668,7 @@
 
         //提交更新
         form.on('submit(delivery-form-submit)', function (data) {
+            $('#submit').attr("style","display:none;");
             if (febs.nativeEqual(data.field, commodity)) {
                 febs.alert.warn('数据未作任何修改！');
                 return false;
@@ -658,9 +713,13 @@
         $.get(ctx +"opinion/getOpinion/"+ba,function(res){
             var data=res.data;
             var dom=$("#search_ba");
-            var html='<option value=""></option>';
+            var html = '<option value=""></option>';
             $.each(data,function(index,item){
-                html+='<option value="'+item.name+'">'+item.name+'</option>'
+                if(item.name == commodity.ba){
+                    html+='<option selected value="'+item.name+'">'+item.name+'</option>'
+                }else {
+                    html+='<option value="'+item.name+'">'+item.name+'</option>'
+                }
             });
             dom.html(html);
             form.render("select");
@@ -671,7 +730,11 @@
             var dom=$("#search_stage");
             var html='<option value=""></option>';
             $.each(data,function(index,item){
-                html+='<option value="'+item.name+'">'+item.name+'</option>'
+                if(item.name == commodity.stage){
+                    html+='<option selected value="'+item.name+'">'+item.name+'</option>'
+                }else {
+                    html+='<option value="'+item.name+'">'+item.name+'</option>'
+                }
             });
             dom.html(html);
             form.render("select");
@@ -682,13 +745,16 @@
             var dom=$("#search_source");
             var html='<option value=""></option>';
             $.each(data,function(index,item){
-                html+='<option value="'+item.name+'">'+item.name+'</option>'
+                if(item.name == commodity.source){
+                    html+='<option selected value="'+item.name+'">'+item.name+'</option>'
+                }else {
+                    html+='<option value="'+item.name+'">'+item.name+'</option>'
+                }
             });
             dom.html(html);
             form.render("select");
         });
-
-        $.get(ctx +"opinion/getOpinion/"+classify,function(res){
+     /*   $.get(ctx +"opinion/getOpinion/"+classify,function(res){
             var data=res.data;
             var dom=$("#search_classify");
             var html='<option value=""></option>';
@@ -741,7 +807,7 @@
                 document.getElementById('reason').innerHTML = html;
                 $("#reason_value").attr ("value",commodity.reason)
             });
-        }
+        }*/
 
 
     });

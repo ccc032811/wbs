@@ -1,5 +1,6 @@
 package com.neefull.fsp.web.job.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.sql.DataSourceDefinition;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +33,7 @@ import java.util.List;
  */
 @Slf4j
 @Service("JobService")
+
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements IJobService {
 

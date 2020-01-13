@@ -7,15 +7,12 @@ import com.neefull.fsp.web.common.entity.QueryRequest;
 import com.neefull.fsp.web.common.exception.FebsException;
 import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.qff.entity.Query;
-import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.qff.entity.Roche;
 import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.service.IRocheService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
-import com.sun.xml.internal.fastinfoset.util.FixedEntryStringIntMap;
 import com.wuwenze.poi.ExcelKit;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -90,6 +87,9 @@ public class RocheController extends BaseController {
     @GetMapping("/deleteRoche/{id}")
     @RequiresPermissions("refund:del")
     public FebsResponse updateRocheStatus(@PathVariable Integer id) throws FebsException {
+        Roche roche = new Roche();
+        roche.setId(id);
+        processService.deleteInstance(roche);
         Integer count = rocheService.updateRocheStatus(id, ProcessConstant.HAVE_ABNORMAL);
         if(count!=1){
             throw new FebsException("删除罗氏内部QFF失败");
@@ -113,7 +113,6 @@ public class RocheController extends BaseController {
     }
 
 
-
     /**查询流程
      * @param roche
      * @return
@@ -135,7 +134,6 @@ public class RocheController extends BaseController {
         User user = getCurrentUser();
         try {
             processService.commitProcess(roche,user);
-//            rocheService.commitProcess(roche,user);
         } catch (Exception e) {
             throw new FebsException("提交申请失败");
         }
@@ -152,11 +150,9 @@ public class RocheController extends BaseController {
     public FebsResponse agreeCurrentProcess(Roche roche) throws FebsException {
         User user = getCurrentUser();
         List<String> group = processService.getGroupId(roche,user);
-//        List<String> group = rocheService.getGroup(roche);
         if(group.contains(user.getUsername())){
             try {
                 processService.agreeCurrentProcess(roche,user);
-//                rocheService.agreeCurrentProcess(roche,user);
             } catch (Exception e) {
                 throw new FebsException("同意流程失败");
             }
@@ -165,7 +161,6 @@ public class RocheController extends BaseController {
         }
         return new FebsResponse().success();
     }
-
 
     /**导出excel
      * @param query

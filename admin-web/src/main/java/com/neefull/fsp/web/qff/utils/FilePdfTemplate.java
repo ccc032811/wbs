@@ -1,14 +1,11 @@
+/*
 package com.neefull.fsp.web.qff.utils;
+
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.*;
-import com.neefull.fsp.web.qff.config.SendMailProperties;
-import com.neefull.fsp.web.qff.config.TemplateProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,21 +13,25 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
+*/
 /**
  * @Author: chengchengchu
  * @Date: 2019/12/11  14:51
- */
+ *//*
+
 
 @Component
 public class FilePdfTemplate {
 
-    /**生成pdf
+    */
+/**生成pdf
      * @param map   数据信息
      * @param templatePath  模板地址
      * @param downLoadPath  生成pdf文件夹地址
      * @param newPDFPath    pdf的url
      * @return
-     */
+     *//*
+
     public String createPdf(Map<String,String> map,String templatePath,String downLoadPath,String newPDFPath ){
         File dir = new File(downLoadPath);
         if (!dir.exists()) {
@@ -78,3 +79,4 @@ public class FilePdfTemplate {
 
 
 }
+*/

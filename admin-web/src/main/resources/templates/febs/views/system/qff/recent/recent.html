@@ -4,7 +4,7 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body febs-table-full">
-                    <form class="layui-form layui-table-form" lay-filter="recent-table-form">
+                    <form class="layui-form layui-table-form" lay-filter="recent-table-form" style="margin-top: 20px" >
                         <div class="layui-row">
                             <div class="layui-col-md10 ">
                                 <div class="layui-form-item">
@@ -56,6 +56,8 @@
         </div>
     </div>
 </div>
+<div id = "loader"></div>
+
 <script type="text/html" id="recent-status">
     {{# if(d.status == '1'){d.status = '新建'}}
     <span class="layui-badge febs-tag-volcano">{{ d.status }}</span>
@@ -132,16 +134,28 @@
 
         upload.render({
             elem:'#upload'
-            ,url:ctx+'file/resolver'
+            ,url: ctx+'file/resolver'
             ,accept:'file'
             ,exts:'xlsx'
             ,multiple:true
             ,auto:true
+            ,before: function(obj){
+                layer.open({
+                    type:1
+                    ,title: false
+                    ,closeBtn:0
+                    ,area:['100px','100px']
+                    ,shadeClose:false
+                    ,content:'<image  src="http://106.14.99.137:8084/loading.gif" style="height: 100px;width: 100px;background-color: #8D8D8D"></image>'
+                })
+            }
             ,done:function (res) {
                 if(res.code ==200){
+                    layer.closeAll('page');
                     febs.alert.success('操作成功');
                     tableIns.reload({where: getQueryParams(), page: {curr: 1}});
                 }
+
             }
             ,error:function (res) {
                 febs.view.loadBar.error();
@@ -164,6 +178,7 @@
                 params.pageNum = $view.find(".layui-laypage-em").next().html();
                 febs.download(ctx + 'recent/excel',params, '近效期QFF.xlsx');
             }
+
         });
 
 

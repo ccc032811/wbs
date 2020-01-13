@@ -10,6 +10,7 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.StringUtils;
@@ -59,8 +60,11 @@ public class ProcessServiceImpl implements IProcessService {
 
         if(object instanceof Commodity){
             Commodity commodity = (Commodity) object;
-            editCommodity(commodity);
-
+            if(commodity.getId()==null){
+                commodityService.addCommodity(commodity);
+            }else {
+                editCommodity(commodity);
+            }
             String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
             //启动流程
             runtimeService.startProcessInstanceByKey(properties.getCommodityProcess(), businessKey,variable);
@@ -69,16 +73,22 @@ public class ProcessServiceImpl implements IProcessService {
             commodityService.updateCommodityStatus(commodity.getId(), ProcessConstant.UNDER_REVIEW);
         }else if(object instanceof Refund){
             Refund refund = (Refund) object;
-            editRefund(refund);
-
+            if(refund.getId()==null){
+                refundService.addRefund(refund);
+            }else {
+                editRefund(refund);
+            }
             String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
             runtimeService.startProcessInstanceByKey(properties.getRefundProcess(),businessKey);
             agreeCurrentProcess(refund,user);
             refundService.updateRefundStatus(refund.getId(), ProcessConstant.UNDER_REVIEW);
         }else if(object instanceof Recent){
             Recent recent = (Recent) object;
-            recentService.editRecent(recent);
-
+            if(recent.getId()==null){
+                recentService.addRecent(recent);
+            }else {
+                recentService.editRecent(recent);
+            }
             String businessKey = Recent.class.getSimpleName()+":"+recent.getId();
             runtimeService.startProcessInstanceByKey(properties.getRecentProcess(),businessKey,variable);
             agreeCurrentProcess(recent,user);
@@ -240,6 +250,39 @@ public class ProcessServiceImpl implements IProcessService {
 
         List<Task> list = taskService.createTaskQuery().taskCandidateUser(name).list();
         return list.size();
+    }
+
+    @Override
+    public void deleteInstance(Object object) {
+
+        if(object instanceof Commodity){
+            Commodity commodity = (Commodity) object;
+            String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
+            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
+            delete(processInstance);
+        }else if(object instanceof Recent){
+            Recent recent = (Recent) object;
+            String businessKey = Recent.class.getSimpleName()+":"+recent.getId();
+            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
+            delete(processInstance);
+        }else if(object instanceof Refund) {
+            Refund refund = (Refund) object;
+            String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
+            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
+            delete(processInstance);
+        }else if(object instanceof Roche) {
+            Roche roche = (Roche) object;
+            String businessKey = Roche.class.getSimpleName() + ":" + roche.getId();
+            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
+            delete(processInstance);
+        }
+
+    }
+
+    private void delete(ProcessInstance processInstance){
+        if(processInstance!=null){
+            runtimeService.deleteProcessInstance(processInstance.getProcessInstanceId(),null);
+        }
     }
 
 
