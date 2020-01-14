@@ -3,10 +3,8 @@ package com.neefull.fsp.web.qff.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
-import com.neefull.fsp.web.common.entity.QueryRequest;
 import com.neefull.fsp.web.common.exception.FebsException;
 import com.neefull.fsp.web.qff.entity.ProcessHistory;
-import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Roche;
 import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.service.IRocheService;
@@ -68,13 +66,13 @@ public class RocheController extends BaseController {
     }
 
     /**查询罗氏内部发起QFF
-     * @param query
+     * @param roche
      * @return
      */
     @GetMapping("/list")
     @RequiresPermissions("refund:view")
-    public FebsResponse getRochePage(Query query){
-        IPage<Roche> pageInfo = rocheService.getRochePage(query);
+    public FebsResponse getRochePage(Roche roche){
+        IPage<Roche> pageInfo = rocheService.getRochePage(roche);
         Map<String, Object> dataTable = getDataTable(pageInfo);
         return new FebsResponse().success().data(dataTable);
     }
@@ -163,13 +161,13 @@ public class RocheController extends BaseController {
     }
 
     /**导出excel
-     * @param query
+     * @param roche
      * @param response
      */
     @GetMapping("excel")
     @RequiresPermissions("roche:down")
-    public void download(Query query, HttpServletResponse response){
-        IPage<Roche> rochePage = rocheService.getRochePage(query);
+    public void download(Roche roche, HttpServletResponse response){
+        IPage<Roche> rochePage = rocheService.getRochePage(roche);
         List<Roche> rocheList = rochePage.getRecords();
         ExcelKit.$Export(Roche.class, response).downXlsx(rocheList, false);
     }

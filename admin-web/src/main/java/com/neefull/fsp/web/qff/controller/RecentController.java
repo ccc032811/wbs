@@ -10,7 +10,6 @@ import com.neefull.fsp.web.qff.service.IRecentService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import com.wuwenze.poi.ExcelKit;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -66,13 +65,13 @@ public class RecentController extends BaseController {
     }
 
     /**查询近效期QFF
-     * @param query
+     * @param recent
      * @return
      */
     @GetMapping("/list")
     @RequiresPermissions("recent:view")
-    public FebsResponse getRecentPage(Query query){
-        IPage<Recent> pageInfo = recentService.getRecentPage(query);
+    public FebsResponse getRecentPage(Recent recent){
+        IPage<Recent> pageInfo = recentService.getRecentPage(recent);
         Map<String, Object> dataTable = getDataTable(pageInfo);
         return new FebsResponse().success().data(dataTable);
     }
@@ -161,13 +160,13 @@ public class RecentController extends BaseController {
     }
 
     /**导出excel
-     * @param query
+     * @param recent
      * @param response
      */
     @GetMapping("excel")
     @RequiresPermissions("recent:down")
-    public void download(Query query, HttpServletResponse response){
-        IPage<RecentExcelImport> recentPage = recentService.getRecentExcelImportPage(query);
+    public void download(Recent recent, HttpServletResponse response){
+        IPage<RecentExcelImport> recentPage = recentService.getRecentExcelImportPage(recent);
         List<RecentExcelImport> excelImportList = recentPage.getRecords();
         ExcelKit.$Export(RecentExcelImport.class, response).downXlsx(excelImportList, false);
     }

@@ -7,21 +7,15 @@ import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
 import com.neefull.fsp.web.qff.entity.Commodity;
 import com.neefull.fsp.web.qff.entity.ProcessHistory;
-import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.service.ICommodityService;
-import com.neefull.fsp.web.qff.service.IDateImageService;
 import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
-import com.neefull.fsp.web.system.entity.Dept;
 import com.neefull.fsp.web.system.entity.User;
 import com.wuwenze.poi.ExcelKit;
-import org.activiti.engine.runtime.ProcessInstance;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
@@ -72,13 +66,13 @@ public class CommodityController extends BaseController {
     }
 
     /**获取养护QFF操作的所有信息
-     * @param query
+     * @param commodity
      * @return
      */
     @GetMapping("/list")
     @RequiresPermissions("commodity:view")
-    public FebsResponse getCommodityPage(Query query){
-        IPage<Commodity> pageInfo = commodityService.getCommodityPage(query);
+    public FebsResponse getCommodityPage(Commodity commodity){
+        IPage<Commodity> pageInfo = commodityService.getCommodityPage(commodity);
         Map<String, Object> dataTable = getDataTable(pageInfo);
         return new FebsResponse().success().data(dataTable);
     }
@@ -166,13 +160,13 @@ public class CommodityController extends BaseController {
     }
 
     /**导出excel
-     * @param query
+     * @param commodity
      * @param response
      */
     @GetMapping("excel")
     @RequiresPermissions("commodity:down")
-    public void download(Query query, HttpServletResponse response){
-        IPage<Commodity> commodityPage = commodityService.getCommodityPage(query);
+    public void download(Commodity commodity, HttpServletResponse response){
+        IPage<Commodity> commodityPage = commodityService.getCommodityPage(commodity);
         List<Commodity> commodityList = commodityPage.getRecords();
         ExcelKit.$Export(Commodity.class, response).downXlsx(commodityList, false);
     }

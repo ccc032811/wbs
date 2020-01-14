@@ -189,6 +189,27 @@ public class Refund implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updateTime;
 
+    /**
+     * 开始时间
+     */
+    @TableField(exist = false)
+    private String startTime;
+    /**
+     * 结束时间
+     */
+    @TableField(exist = false)
+    private String endTime;
+    /**
+     * 当前页面数据量
+     */
+    @TableField(exist = false)
+    private Integer pageSize;
+    /**
+     * 当前页码
+     */
+    @TableField(exist = false)
+    private Integer pageNum;
+
 
     public Integer getId() {
         return id;
@@ -405,4 +426,37 @@ public class Refund implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public Integer getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
+
 }

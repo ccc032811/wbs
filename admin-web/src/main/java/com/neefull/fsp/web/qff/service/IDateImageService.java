@@ -2,8 +2,6 @@ package com.neefull.fsp.web.qff.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.qff.entity.DateImage;
-import com.neefull.fsp.web.qff.entity.ImageQuery;
-import com.neefull.fsp.web.system.entity.User;
 
 import java.util.List;
 

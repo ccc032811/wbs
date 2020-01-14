@@ -3,33 +3,16 @@ package com.neefull.fsp.web.qff.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.neefull.fsp.web.qff.config.ProcessInstanceProperties;
 import com.neefull.fsp.web.qff.entity.*;
 import com.neefull.fsp.web.qff.mapper.RecentExcelImportMapper;
 import com.neefull.fsp.web.qff.mapper.RecentMapper;
-import com.neefull.fsp.web.qff.service.IDateImageService;
 import com.neefull.fsp.web.qff.service.IRecentService;
-import com.neefull.fsp.web.qff.utils.ProcessConstant;
-import com.neefull.fsp.web.system.entity.User;
-import org.activiti.engine.HistoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
-import org.activiti.engine.history.HistoricTaskInstance;
-import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.IdentityLink;
-import org.activiti.engine.task.Task;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 
 /**近效期QFF
  * @Author: chengchengchu
@@ -59,9 +42,9 @@ public class RecentServiceImpl extends ServiceImpl<RecentMapper, Recent> impleme
     }
 
     @Override
-    public IPage<Recent> getRecentPage(Query query) {
-        Page<Recent> page = new Page<>(query.getPageNum(),query.getPageSize());
-        IPage<Recent> pageInfo = recentMapper.getRecentPage(page,query);
+    public IPage<Recent> getRecentPage(Recent recent) {
+        Page<Recent> page = new Page<>(recent.getPageNum(),recent.getPageSize());
+        IPage<Recent> pageInfo = recentMapper.getRecentPage(page,recent);
         return pageInfo;
     }
 
@@ -78,9 +61,9 @@ public class RecentServiceImpl extends ServiceImpl<RecentMapper, Recent> impleme
     }
 
     @Override
-    public IPage<RecentExcelImport> getRecentExcelImportPage(Query query) {
-        Page<RecentExcelImport> page = new Page<>(query.getPageNum(),query.getPageSize());
-        IPage<RecentExcelImport> pageInfo = recentExcelImportMapper.getRecentExcelImportPage(page,query);
+    public IPage<RecentExcelImport> getRecentExcelImportPage(Recent recent) {
+        Page<RecentExcelImport> page = new Page<>(recent.getPageNum(),recent.getPageSize());
+        IPage<RecentExcelImport> pageInfo = recentExcelImportMapper.getRecentExcelImportPage(page,recent);
         return pageInfo;
     }
 

@@ -5,15 +5,12 @@ import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
 import com.neefull.fsp.web.qff.entity.ProcessHistory;
-import com.neefull.fsp.web.qff.entity.Query;
-import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.service.IRefundService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import com.wuwenze.poi.ExcelKit;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -69,13 +66,13 @@ public class RefundController extends BaseController {
     }
 
     /**查询退货QFF
-     * @param query
+     * @param refund
      * @return
      */
     @GetMapping("/list")
     @RequiresPermissions("refund:view")
-    public FebsResponse getRefundPage(Query query){
-        IPage<Refund> pageInfo = refundService.getRefundPage(query);
+    public FebsResponse getRefundPage(Refund refund){
+        IPage<Refund> pageInfo = refundService.getRefundPage(refund);
         Map<String, Object> dataTable = getDataTable(pageInfo);
         return new FebsResponse().success().data(dataTable);
     }
@@ -164,13 +161,13 @@ public class RefundController extends BaseController {
     }
 
     /**导出excel
-     * @param query
+     * @param refund
      * @param response
      */
     @GetMapping("excel")
     @RequiresPermissions("refund:down")
-    public void download(Query query, HttpServletResponse response){
-        IPage<Refund> refundPage = refundService.getRefundPage(query);
+    public void download(Refund refund, HttpServletResponse response){
+        IPage<Refund> refundPage = refundService.getRefundPage(refund);
         List<Refund> refundList = refundPage.getRecords();
         ExcelKit.$Export(Refund.class, response).downXlsx(refundList, false);
     }

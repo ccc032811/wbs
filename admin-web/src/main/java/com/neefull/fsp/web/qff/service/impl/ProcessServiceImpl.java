@@ -10,12 +10,10 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -329,13 +327,13 @@ public class ProcessServiceImpl implements IProcessService {
     }
 
     private void editCommodity(Commodity commodity){
-        String format = DateFormatUtils.format(new Date(), "yyyy/MM/dd HH:mm:ss");
+        String format = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
         commodity.setRepTime(format);
         commodityService.editCommodity(commodity);
     }
 
     private void editRefund(Refund refund){
-        String format = DateFormatUtils.format(new Date(), "yyyy/MM/dd HH:mm:ss");
+        String format = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
         refund.setRepTime(format);
         refundService.editRefund(refund);
     }

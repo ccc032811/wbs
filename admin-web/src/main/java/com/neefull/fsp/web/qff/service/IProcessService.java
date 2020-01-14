@@ -1,7 +1,5 @@
 package com.neefull.fsp.web.qff.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.neefull.fsp.web.qff.entity.Commodity;
 import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.system.entity.User;
 

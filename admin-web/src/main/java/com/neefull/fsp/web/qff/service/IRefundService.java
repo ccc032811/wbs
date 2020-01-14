@@ -2,14 +2,8 @@ package com.neefull.fsp.web.qff.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.neefull.fsp.web.common.entity.QueryRequest;
-import com.neefull.fsp.web.qff.entity.ProcessHistory;
-import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Refund;
-import com.neefull.fsp.web.system.entity.User;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.List;
 
 /**退货QFF
  * @Author: chengchengchu
@@ -33,10 +27,10 @@ public interface IRefundService extends IService<Refund> {
     Integer editRefund(Refund refund);
 
     /**查询退货QFF
-     * @param query
+     * @param refund
      * @return
      */
-    IPage<Refund> getRefundPage( Query query);
+    IPage<Refund> getRefundPage(Refund refund);
 
     /**删除退货QFF
      * @param

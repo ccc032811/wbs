@@ -2,19 +2,11 @@ package com.neefull.fsp.web.qff.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.web.qff.config.ProcessInstanceProperties;
 import com.neefull.fsp.web.qff.entity.DateImage;
-import com.neefull.fsp.web.qff.entity.ImageQuery;
 import com.neefull.fsp.web.qff.mapper.DateImageMapper;
 import com.neefull.fsp.web.qff.service.IDateImageService;
-import com.neefull.fsp.web.system.entity.User;
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.TaskService;
-import org.activiti.engine.identity.UserQuery;
-import org.activiti.engine.task.Task;
-import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

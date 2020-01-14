@@ -5,6 +5,7 @@ import com.neefull.fsp.web.qff.config.SendMailProperties;
 import com.neefull.fsp.web.qff.config.TemplateProperties;
 import com.neefull.fsp.web.qff.entity.Commodity;
 import com.neefull.fsp.web.qff.service.ICommodityService;
+import com.neefull.fsp.web.qff.utils.FilePdfTemplate;
 import com.sun.mail.util.MailSSLSocketFactory;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
@@ -39,8 +40,8 @@ public class CommodityListener extends BaseController implements JavaDelegate{
     private TemplateProperties templateProperties;
     @Autowired
     private ICommodityService conserveService;
-    /*@Autowired
-    private FilePdfTemplate template;*/
+    @Autowired
+    private FilePdfTemplate template;
 
     @Override
     public void execute(DelegateExecution execution) {

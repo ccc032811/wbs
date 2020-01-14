@@ -3,12 +3,7 @@ package com.neefull.fsp.web.qff.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.qff.entity.Commodity;
-import com.neefull.fsp.web.qff.entity.ProcessHistory;
-import com.neefull.fsp.web.qff.entity.Query;
-import com.neefull.fsp.web.system.entity.User;
-import org.activiti.engine.task.IdentityLink;
 
-import java.util.List;
 
 /**
  * @Author: chengchengchu
@@ -31,10 +26,10 @@ public interface ICommodityService extends IService<Commodity> {
     Integer editCommodity(Commodity commodity);
 
     /**获取养护操作的信息
-     * @param query
+     * @param commodity
      * @return
      */
-    IPage<Commodity> getCommodityPage(Query query);
+    IPage<Commodity> getCommodityPage(Commodity commodity);
 
     /**删除养护QFF
      * @param id

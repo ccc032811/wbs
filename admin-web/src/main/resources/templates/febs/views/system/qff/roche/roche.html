@@ -1,33 +1,41 @@
-
+<style>
+    .tag-title{
+        margin-left: 40%;
+        font-size :20px;
+        margin-top: -20px;
+        background-color: white;
+        position: fixed;
+    }
+</style>
 <div class="layui-fluid layui-anim febs-anim" id="fbs-roche" lay-title="罗氏内部发起QFF">
     <div class="layui-row febs-container">
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-body febs-table-full">
-                    <form class="layui-form layui-table-form" lay-filter="roche-table-form" style="margin-top: 20px" >
+                    <form class="layui-form layui-table-form" lay-filter="roche-table-form" style="margin-top: 15px" >
                         <div class="layui-row">
-                            <div class="layui-col-md10 ">
-                                <div class="layui-form-item">
+                            <div class="layui-col-md10" style="height: 43px">
+                                <div class="layui-form-item" style="margin-left: 15px;">
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm" style="border-right: 1px solid white;">物料号</label>
+                                        <label class="layui-form-label" style="border-right: 1px solid white;">物料号</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="materCode" autocomplete="off" class="layui-input" placeholder="请输入物料号">
+                                            <input type="text" name="materCode" autocomplete="off" class="layui-input" placeholder="请输入物料编号">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm" style="border-right: 1px solid white;">批次号</label>
+                                        <label class="layui-form-label" style="border-right: 1px solid white;">批次号</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="batch" autocomplete="off" class="layui-input" placeholder="请输入罗氏批号">
+                                            <input type="text" name="batch" autocomplete="off" class="layui-input" placeholder="请输入批号/序列号">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm" style="border-right: 1px solid white;">日期区间</label>
+                                        <label class="layui-form-label" style="border-right: 1px solid white;">日期区间</label>
                                         <div class="layui-input-inline">
                                             <input type="text" name="searchTime" id="searchTime" class="layui-input" placeholder="请选择时间">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm" style="border-right: 1px solid white;">状态</label>
+                                        <label class="layui-form-label" style="border-right: 1px solid white;">状态</label>
                                         <div class="layui-input-inline">
                                             <select name="status">
                                                 <option value="">全部</option>
@@ -40,12 +48,115 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area" style=" border-left: 1px solid white;border-top: 1px solid white;height: 40px">
+                            <div id="check" class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area" style=" border-left: 1px solid white;border-top: 1px solid white;height: 40px">
                                 <div class="layui-btn layui-btn-normal" id="query" >
                                     <i class="layui-icon ">查询</i>
                                 </div>
                                 <div class="layui-btn layui-btn-danger " id="reset" >
                                     <i class="layui-icon ">清空</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-collapse" lay-accordion lay-filter="navi" style="border:0px solid white">
+                            <div class="layui-colla-item" >
+                                <div class="layui-colla-content" style="border:0px solid white">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">运输单号</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="transport"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入运输单号" >
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">NO编号</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="number"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入NO编号">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">发起人</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="sponsor"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入发起人">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">申请日期</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="reqDate" id="reqDate" class="layui-input"  autocomplete="off" placeholder="请选择时间">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">原因</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="reason"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入原因">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">物料名称</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="materName" maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入物料名称">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">受影响数量</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="quantity"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入受影响数量">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">行动</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="actions"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入行动">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">期望完成日期</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="exceptDate" id="exceptDate" autocomplete="off" class="layui-input" placeholder="请选择时间"  >
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">实际完成日期</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="completeDate" id="completeDate" autocomplete="off" class="layui-input" placeholder="请选择时间">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">后续行动</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="follow"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入后续行动">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">期望完成日期</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="exceptedDate" id="exceptedDate" autocomplete="off" class="layui-input" placeholder="请选择时间" >
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label" style="border-right: 1px solid white;">实际完成日期</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="actualDate" id="actualDate" autocomplete="off"  class="layui-input" placeholder="请选择时间">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item ">
+                                        <div style="float: right;margin-right: 3%" >
+                                            <div class="layui-btn layui-btn-normal" id="queryBtn" >
+                                                <i class="layui-icon">查询</i>
+                                            </div>
+                                            <div class="layui-btn layui-btn-danger" id="cleanBtn" >
+                                                <i class="layui-icon">清空</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tag" class="layui-colla-title" style="background-color: white;height:5px;border-top: 1px solid #DCDCDC" >
+                                    <i class="layui-icon tag-title" >&#xe61a;</i>
                                 </div>
                             </div>
                         </div>
@@ -80,8 +191,9 @@
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
-    layui.use([ 'jquery', 'laydate', 'form', 'table', 'febs'], function () {
+    layui.use([ 'jquery', 'laydate', 'form', 'table', 'febs','element'], function () {
         var $ = layui.jquery,
+            element = layui.element,
             laydate = layui.laydate,
             febs = layui.febs,
             form = layui.form,
@@ -89,19 +201,64 @@
             $view = $('#fbs-roche'),
             $query = $view.find('#query'),
             $reset = $view.find('#reset'),
+            $queryBtn = $view.find('#queryBtn'),
+            $cleanBtn = $view.find('#cleanBtn'),
             $searchForm = $view.find('form'),
             tableIns;
 
 
         //初始化表单
         form.render();
+        element.render('collapse');
         //初始化表格
         initTable();
         //设置时间样式
         laydate.render({
-            elem: '#searchTime',
-            range: true,
-            trigger: 'click'
+            elem: '#searchTime'
+            ,range: true
+            ,trigger: 'click'
+        });
+        laydate.render({
+            elem: '#reqDate'
+            ,trigger: 'click'
+            ,showBottom: false
+        });
+
+        laydate.render({
+            elem: '#exceptDate'
+            ,trigger: 'click'
+            ,showBottom: false
+        });
+
+        laydate.render({
+            elem: '#completeDate'
+            ,trigger: 'click'
+            ,showBottom: false
+        });
+
+        laydate.render({
+            elem: '#exceptedDate'
+            ,trigger: 'click'
+            ,showBottom: false
+        });
+
+        laydate.render({
+            elem: '#actualDate'
+            ,trigger: 'click'
+            ,showBottom: false
+        });
+
+
+        element.on('collapse(navi)', function(data){
+            if(data.show == true){
+                $('#tag').html('');
+                $('#tag').append('<i  class="layui-icon tag-title">&#xe619;</i>')
+                $('#check').attr("style","display:none;")
+            }else if(data.show == false){
+                $('#tag').html('');
+                $('#tag').append('<i  class="layui-icon tag-title" >&#xe61a;</i>')
+                $('#check').attr("style","display:inline")
+            }
         });
 
 
@@ -143,8 +300,13 @@
             $searchForm[0].reset();
             tableIns.reload({where: getQueryParams(), page: {curr: 1}});
         });
-
-
+        $queryBtn.on('click',function () {
+            tableIns.reload({where: getQueryParams(), page: {curr: 1}});
+        });
+        $cleanBtn.on('click',function () {
+            $searchForm[0].reset();
+            tableIns.reload({where: getQueryParams(), page: {curr: 1}});
+        });
         table.on('toolbar(rocheTable)', function(obj){
             var layEvent = obj.event;
             if (layEvent === 'download') {
@@ -204,8 +366,21 @@
             return {
                 startTime: createTimeFrom,
                 endTime: createTimeTo,
-                mater: $searchForm.find('input[name="materCode"]').val().trim(),
+                materCode: $searchForm.find('input[name="materCode"]').val().trim(),
                 batch: $searchForm.find('input[name="batch"]').val().trim(),
+                transport: $searchForm.find('input[name="transport"]').val().trim(),
+                number: $searchForm.find('input[name="number"]').val().trim(),
+                sponsor: $searchForm.find('input[name="sponsor"]').val().trim(),
+                reqDate: $searchForm.find('input[name="reqDate"]').val().trim(),
+                reason: $searchForm.find('input[name="reason"]').val().trim(),
+                materName: $searchForm.find('input[name="materName"]').val().trim(),
+                quantity: $searchForm.find('input[name="quantity"]').val().trim(),
+                actions: $searchForm.find('input[name="actions"]').val().trim(),
+                exceptDate: $searchForm.find('input[name="exceptDate"]').val().trim(),
+                completeDate: $searchForm.find('input[name="completeDate"]').val().trim(),
+                follow: $searchForm.find('input[name="follow"]').val().trim(),
+                exceptedDate: $searchForm.find('input[name="exceptedDate"]').val().trim(),
+                actualDate: $searchForm.find('input[name="actualDate"]').val().trim(),
                 status: $searchForm.find("select[name='status']").val(),
                 invalidate_ie_cache: new Date()
             };

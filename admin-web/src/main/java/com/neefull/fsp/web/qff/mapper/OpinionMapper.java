@@ -2,8 +2,6 @@ package com.neefull.fsp.web.qff.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.neefull.fsp.web.qff.entity.Opinion;
-import com.neefull.fsp.web.system.entity.Dept;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 

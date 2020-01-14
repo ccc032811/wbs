@@ -2,13 +2,9 @@ package com.neefull.fsp.web.qff.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.neefull.fsp.web.qff.entity.ProcessHistory;
-import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.entity.RecentExcelImport;
-import com.neefull.fsp.web.system.entity.User;
 
-import java.util.List;
 
 /**近效期QFF
  * @Author: chengchengchu
@@ -30,10 +26,10 @@ public interface IRecentService extends IService<Recent> {
     Integer editRecent(Recent recent);
 
     /**查询近效期QFF
-     * @param query
+     * @param recent
      * @return
      */
-    IPage<Recent> getRecentPage(Query query);
+    IPage<Recent> getRecentPage(Recent recent);
 
     /**删除近效期QFF
      * @param id
@@ -48,8 +44,8 @@ public interface IRecentService extends IService<Recent> {
     Recent queryRecentById(Integer id);
 
     /**导出excel
-     * @param query
+     * @param recent
      * @return
      */
-    IPage<RecentExcelImport> getRecentExcelImportPage(Query query);
+    IPage<RecentExcelImport> getRecentExcelImportPage(Recent recent);
 }

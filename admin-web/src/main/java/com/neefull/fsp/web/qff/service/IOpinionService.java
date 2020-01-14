@@ -1,11 +1,8 @@
 package com.neefull.fsp.web.qff.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.neefull.fsp.web.common.entity.DeptTree;
-import com.neefull.fsp.web.common.entity.QueryRequest;
 import com.neefull.fsp.web.qff.entity.Opinion;
 import com.neefull.fsp.web.qff.entity.OpinionTree;
-import com.neefull.fsp.web.system.entity.Dept;
 
 import java.util.List;
 

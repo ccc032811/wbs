@@ -1,6 +1,5 @@
 package com.neefull.fsp.web.qff.entity;
 
-import com.neefull.fsp.web.system.entity.Dept;
 import lombok.Data;
 
 import java.io.Serializable;

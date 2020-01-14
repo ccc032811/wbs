@@ -7,17 +7,56 @@
 
     <select id="getRochePage" resultType="com.neefull.fsp.web.qff.entity.Roche">
         select * from qff_roche where 1=1
-        <if test="query.mater!=null and query.mater!=''">
-            and mater_code like concat('%',#{query.mater},'%')
+        <if test="roche.materCode!=null and roche.materCode!=''">
+            and mater_code like concat('%',#{roche.materCode},'%')
         </if>
-        <if test="query.batch!=null and query.batch!=''">
-            and batch like concat('%',#{query.batch},'%')
+        <if test="roche.batch!=null and roche.batch!=''">
+            and batch like concat('%',#{roche.batch},'%')
         </if>
-        <if test="query.startTime!=null and query.startTime!='' and query.endTime!=null and query.endTime!=''">
-            and req_date between  #{query.startTime} and #{query.endTime}
+        <if test="roche.transport!=null and roche.transport!=''">
+            and transport like concat('%',#{roche.transport},'%')
         </if>
-        <if test="query.status!=null and query.status!=''">
-            and status = #{query.status}
+        <if test="roche.number!=null and roche.number!=''">
+            and number like concat('%',#{roche.number},'%')
+        </if>
+        <if test="roche.sponsor!=null and roche.sponsor!=''">
+            and sponsor like concat('%',#{roche.sponsor},'%')
+        </if>
+        <if test="roche.reqDate!=null and roche.reqDate!=''">
+            and req_date like concat('%',#{roche.reqDate},'%')
+        </if>
+        <if test="roche.reason!=null and roche.reason!=''">
+            and reason like concat('%',#{roche.reason},'%')
+        </if>
+        <if test="roche.materName!=null and roche.materName!=''">
+            and mater_name like concat('%',#{roche.materName},'%')
+        </if>
+        <if test="roche.quantity!=null and roche.quantity!=''">
+            and quantity like concat('%',#{roche.quantity},'%')
+        </if>
+        <if test="roche.actions!=null and roche.actions!=''">
+            and actions like concat('%',#{roche.actions},'%')
+        </if>
+        <if test="roche.exceptDate!=null and roche.exceptDate!=''">
+            and except_date like concat('%',#{roche.exceptDate},'%')
+        </if>
+        <if test="roche.completeDate!=null and roche.completeDate!=''">
+            and complete_date like concat('%',#{roche.completeDate},'%')
+        </if>
+        <if test="roche.follow!=null and roche.follow!=''">
+            and follow like concat('%',#{roche.follow},'%')
+        </if>
+        <if test="roche.exceptedDate!=null and roche.exceptedDate!=''">
+            and excepted_date like concat('%',#{roche.exceptedDate},'%')
+        </if>
+        <if test="roche.actualDate!=null and roche.actualDate!=''">
+            and actual_date like concat('%',#{roche.actualDate},'%')
+        </if>
+        <if test="roche.startTime!=null and roche.startTime!='' and roche.endTime!=null and roche.endTime!=''">
+            and req_date between  #{roche.startTime} and #{roche.endTime}
+        </if>
+        <if test="roche.status!=null and roche.status!=''">
+            and status = #{roche.status}
         </if>
         and status != 4 order by req_date desc
     </select>

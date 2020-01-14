@@ -7,6 +7,7 @@ import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.entity.Roche;
 import com.neefull.fsp.web.qff.service.IRecentService;
 import com.neefull.fsp.web.qff.service.IRocheService;
+import com.neefull.fsp.web.qff.utils.FilePdfTemplate;
 import com.sun.mail.util.MailSSLSocketFactory;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
@@ -36,8 +37,8 @@ public class RochedListener implements JavaDelegate {
     private TemplateProperties templateProperties;
     @Autowired
     private IRocheService rocheService;
-  /*  @Autowired
-    private FilePdfTemplate template;*/
+    @Autowired
+    private FilePdfTemplate template;
 
     @Override
     public void execute(DelegateExecution execution) {

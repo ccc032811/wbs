@@ -52,7 +52,7 @@
             var num = data.data;
             if(num==0){
                 $("#num").append('<span style="color: red"><h2>当前没有待办任务</h2></span>')
-                $("#bubbling").append(num)
+                $('#bubbling').attr("style","display:none;")
             }else {
                 $("#num").append('<span style="color: red"><h2>当前有'+num+'条待办任务</h2></span>')
                 $("#bubbling").append(num)

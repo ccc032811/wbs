@@ -89,7 +89,7 @@
     .layui-form-item-rigth{
         border-right: 1px solid #000;
     }
-    .layui-col-sm4,.layui-col-sm6 {
+    .layui-col-sm4 {
         border-left: 1px solid #000;
         border-top: 1px solid #000;
         height: 39px;
@@ -197,8 +197,6 @@
                 <div class="layui-input-block" id="actions">
                     <input type="text" name="actions"  maxlength="50" autocomplete="off"
                            class="layui-input"  readonly="readonly" >
-                    <!--<input type="text" name="actions"   autocomplete="off" list="search_actions" class="layui-input" placeholder="请输入" >
-                    <datalist id="search_actions" style="display:none;"></datalist>-->
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
@@ -212,7 +210,7 @@
                 <label class="layui-form-label ">实际完成日期</label>
                 <div class="layui-input-block">
                     <input type="text" name="completeDate" id="completeDate" class="layui-input"
-                           placeholder="请选择时间" readonly="readonly" >
+                           placeholder="请选择时间"  >
                 </div>
             </div>
         </div>
@@ -235,7 +233,7 @@
                 <label class="layui-form-label ">实际完成日期</label>
                 <div class="layui-input-block">
                     <input type="text" name="actualDate" id="actualDate" class="layui-input"
-                           placeholder="请选择时间" readonly="readonly" >
+                           placeholder="请选择时间" >
                 </div>
             </div>
         </div>
@@ -254,13 +252,6 @@
             <div class="site-demo-flow" id="image_show" style="overflow: auto; display: flex">
 
             </div>
-           <!-- <img data-th-src="@{febs/images/image_add.png}" width="100px" height="100px" id="chose">
-            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;width: 88%">
-                预览图：
-                <div class="layui-upload-list uploader-list" style="overflow: auto; display: flex" id="uploader-list" >
-
-                </div>
-            </blockquote>-->
         </div>
         <div class="layui-form-item" style="margin-top: 30px">
             <div class="timeline-main-line" id="process">
@@ -280,14 +271,9 @@
 </div>
 <img alt="" style="display:none" id="displayImg" src="" />
 
-<!--
-<script id="actions_view" type="text/html">
-    <input type="text" id = "actions_value" name="actions" lay-verify="required" autocomplete="off" class="layui-input" readonly>
-</script>
--->
 
 <script data-th-inline="javascript">
-    layui.use(['febs', 'form','laydate', 'upload','layer','laytpl'], function () {
+    layui.use(['febs', 'form','laydate', 'upload','layer'], function () {
         var $ = layui.$,
             febs = layui.febs,
             laydate = layui.laydate,

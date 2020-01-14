@@ -3,10 +3,7 @@ package com.neefull.fsp.web.qff.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.neefull.fsp.web.common.entity.QueryRequest;
-import com.neefull.fsp.web.qff.entity.Query;
 import com.neefull.fsp.web.qff.entity.Roche;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -21,10 +18,10 @@ public interface RocheMapper extends BaseMapper<Roche> {
 
     /**查询罗氏内部QFF
      * @param page
-     * @param query
+     * @param roche
      * @return
      */
-    IPage<Roche> getRochePage(Page<Roche> page,  Query query);
+    IPage<Roche> getRochePage(Page page, Roche roche);
 
     /**删除罗氏内部QFF
      * @param id
