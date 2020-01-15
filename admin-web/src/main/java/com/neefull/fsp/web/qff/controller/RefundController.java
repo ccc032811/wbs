@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
+import com.neefull.fsp.web.qff.aspect.Qff;
 import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.qff.service.IProcessService;
@@ -11,8 +12,10 @@ import com.neefull.fsp.web.qff.service.IRefundService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import com.wuwenze.poi.ExcelKit;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +28,8 @@ import java.util.Map;
  * @Author: chengchengchu
  * @Date: 2019/11/29  16:12
  */
-
+@Slf4j
+@Validated
 @RestController
 @RequestMapping("/refund")
 public class RefundController extends BaseController {
@@ -41,6 +45,7 @@ public class RefundController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("新增退货QFF")
     @PostMapping("/add")
     public FebsResponse addRefund(Refund refund) throws FebsException {
         Integer count = refundService.addRefund(refund);
@@ -55,6 +60,7 @@ public class RefundController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("更新退货QFF")
     @PostMapping("/edit")
     @RequiresPermissions("refund:audit")
     public FebsResponse editRefund(Refund refund) throws FebsException {
@@ -82,6 +88,7 @@ public class RefundController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("删除退货QFF")
     @GetMapping("/deleteRefund/{id}")
     @RequiresPermissions("refund:del")
     public FebsResponse updateRefundStatus(@PathVariable Integer id) throws FebsException {
@@ -125,6 +132,7 @@ public class RefundController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("提交退货QFF流程")
     @PostMapping("/commit")
     @RequiresPermissions("refund:audit")
     public FebsResponse commitProcess(Refund refund) throws FebsException {
@@ -143,6 +151,7 @@ public class RefundController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("同意退货QFF任务")
     @PostMapping("/agree")
     @RequiresPermissions("refund:audit")
     public FebsResponse agreeCurrentProcess(Refund refund) throws FebsException {

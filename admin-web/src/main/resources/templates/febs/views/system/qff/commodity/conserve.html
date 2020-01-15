@@ -14,7 +14,7 @@
                 <div class="layui-card-body febs-table-full">
                     <form class="layui-form layui-table-form" lay-filter="conserve-table-form" style="margin-top: 15px;" >
                         <div class="layui-row">
-                            <div class="layui-col-md10" style="height: 43px">
+                            <div class="layui-col-md12" >
                                 <div class="layui-form-item" style="margin-left: 15px;">
                                     <div class="layui-inline">
                                         <label class="layui-form-label" style="border-right: 1px solid white;">物料号</label>
@@ -46,20 +46,22 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div id="check" class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px">
-                                <div class="layui-btn layui-btn-normal" id="query" >
-                                    <i class="layui-icon ">查询</i>
-                                </div>
-                                <div class="layui-btn layui-btn-danger " id="reset" >
-                                    <i class="layui-icon ">清空</i>
+                                    <div style="float: right;margin-right: 3%">
+                                        <div id="conserve-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                            <div class="layui-btn layui-btn-normal" id="query" >
+                                                <i class="layui-icon ">查询</i>
+                                            </div>
+                                            <div class="layui-btn layui-btn-danger " id="reset" >
+                                                <i class="layui-icon ">清空</i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-collapse" lay-accordion lay-filter="navi" style="border:0px solid white">
+                        <div class="layui-collapse" lay-accordion lay-filter="conserve-navi" style="border:0px solid white">
                             <div class="layui-colla-item" >
-                                <div class="layui-colla-content" style="border:0px solid white">
+                                <div class="layui-colla-content" style="border:0px solid white;">
                                     <div class="layui-form-item ">
                                         <div class="layui-inline  ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">运输单号</label>
@@ -91,8 +93,6 @@
                                                 <input type="text" name="pMater"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入药厂物料号" >
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="layui-form-item ">
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">罗氏批号</label>
                                             <div class="layui-input-inline">
@@ -123,8 +123,6 @@
                                                 <input type="text" name="quarantine"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入异常总数" >
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="layui-form-item ">
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">发起日期</label>
                                             <div class="layui-input-inline">
@@ -155,8 +153,6 @@
                                                 <input type="text" name="source"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入采购来源" >
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="layui-form-item ">
                                         <div class="layui-inline  ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">投诉编号</label>
                                             <div class="layui-input-inline">
@@ -200,7 +196,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="tag" class="layui-colla-title" style="background-color: white;height:5px;border-top: 1px solid #DCDCDC" >
+                                <div id="conserve-tag" class="layui-colla-title" style="background-color: white;height:5px;width: 0px" >
                                     <i class="layui-icon tag-title" >&#xe61a;</i>
                                 </div>
                             </div>
@@ -284,15 +280,15 @@
             ,showBottom: false
         });
 
-        element.on('collapse(navi)', function(data){
+        element.on('collapse(conserve-navi)', function(data){
             if(data.show == true){
-                $('#tag').html('');
-                $('#tag').append('<i  class="layui-icon tag-title">&#xe619;</i>')
-                $('#check').attr("style","display:none;")
+                $('#conserve-tag').html('');
+                $('#conserve-tag').append('<i  class="layui-icon tag-title">&#xe619;</i>')
+                $('#conserve-check').attr("style","display:none;")
             }else if(data.show == false){
-                $('#tag').html('');
-                $('#tag').append('<i  class="layui-icon tag-title" >&#xe61a;</i>')
-                $('#check').attr("style","display:inline")
+                $('#conserve-tag').html('');
+                $('#conserve-tag').append('<i  class="layui-icon tag-title" >&#xe61a;</i>')
+                $('#conserve-check').attr("style","display:inline")
             }
 
         });
@@ -313,7 +309,7 @@
                     {field: 'plant', title: '工厂',align:'center'},
                     {field: 'kMater', title: '康德乐物料号',align:'center'},
                     {field: 'rMater', title: '罗氏物料号',align:'center'},
-                    {field: 'quarantine', title: '异常总数',align:'center'},
+                    {field: 'quarantine', title: '异常数',align:'center',width: 90},
                     {field: 'initDate', title: '发起日期',align:'center'},
                     {field: 'repTime', title: '回复日期',align:'center'},
                     {field: 'rConf', title: '罗氏QA处理意见',align:'center'},

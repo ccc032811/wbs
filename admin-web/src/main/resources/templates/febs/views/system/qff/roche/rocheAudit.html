@@ -149,7 +149,7 @@
             <div class="layui-inline layui-col-sm4 ">
                 <label class="layui-form-label ">申请日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="reqDate" id="reqDate" class="layui-input"  autocomplete="off"
+                    <input type="text" name="reqDate" id="audit-reqDate" class="layui-input"  autocomplete="off"
                            placeholder="请选择时间" readonly="readonly" >
                 </div>
             </div>
@@ -202,14 +202,14 @@
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">期望完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="exceptDate" id="exceptDate" class="layui-input"
+                    <input type="text" name="exceptDate" id="audit-exceptDate" class="layui-input"
                            placeholder="请选择时间" readonly="readonly" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">实际完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="completeDate" id="completeDate" class="layui-input"
+                    <input type="text" name="completeDate" id="audit-completeDate" class="layui-input"
                            placeholder="请选择时间"  >
                 </div>
             </div>
@@ -225,14 +225,14 @@
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">期望完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="exceptedDate" id="exceptedDate" class="layui-input"
+                    <input type="text" name="exceptedDate" id="audit-exceptedDate" class="layui-input"
                            placeholder="请选择时间" readonly="readonly" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">实际完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="actualDate" id="actualDate" class="layui-input"
+                    <input type="text" name="actualDate" id="audit-actualDate" class="layui-input"
                            placeholder="请选择时间" >
                 </div>
             </div>
@@ -284,40 +284,40 @@
 
         var relevance = "qff_roche";
 
+       /* laydate.render({
+            elem: '#audit-reqDate',
+            trigger: 'click'
+            ,min:0
+            ,showBottom: false
+        });*/
+
         laydate.render({
-            elem: '#reqDate',
+            elem: '#audit-exceptDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false
         });
 
+       /* laydate.render({
+            elem: '#audit-completeDate',
+            trigger: 'click'
+            ,min:0
+            ,showBottom: false
+        });
+*/
         laydate.render({
-            elem: '#exceptDate',
+            elem: '#audit-exceptedDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false
         });
 
-        laydate.render({
-            elem: '#completeDate',
+       /* laydate.render({
+            elem: '#audit-actualDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false
-        });
-
-        laydate.render({
-            elem: '#exceptedDate',
-            trigger: 'click'
-            ,min:0
-            ,showBottom: false
-        });
-
-        laydate.render({
-            elem: '#actualDate',
-            trigger: 'click'
-            ,min:0
-            ,showBottom: false
-        });
+        });*/
 
         //表单渲染
         form.render();

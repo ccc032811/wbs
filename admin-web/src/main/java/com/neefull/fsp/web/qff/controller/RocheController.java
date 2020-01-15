@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
+import com.neefull.fsp.web.qff.aspect.Qff;
 import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.qff.entity.Roche;
 import com.neefull.fsp.web.qff.service.IProcessService;
@@ -11,8 +12,10 @@ import com.neefull.fsp.web.qff.service.IRocheService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import com.wuwenze.poi.ExcelKit;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +28,8 @@ import java.util.Map;
  * @Author: chengchengchu
  * @Date: 2019/11/29  16:11
  */
-
+@Slf4j
+@Validated
 @RestController
 @RequestMapping("/roche")
 public class RocheController extends BaseController {
@@ -41,6 +45,7 @@ public class RocheController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("新增罗氏内部发起QFF")
     @PostMapping("/add")
     public FebsResponse addRoche(Roche roche) throws FebsException {
         Integer count = rocheService.addRoche(roche);
@@ -55,6 +60,7 @@ public class RocheController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("更新罗氏内部发起QFF")
     @PostMapping("/edit")
     @RequiresPermissions("roche:audit")
     public FebsResponse editRoche(Roche roche) throws FebsException {
@@ -82,6 +88,7 @@ public class RocheController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("删除罗氏内部QFF")
     @GetMapping("/deleteRoche/{id}")
     @RequiresPermissions("refund:del")
     public FebsResponse updateRocheStatus(@PathVariable Integer id) throws FebsException {
@@ -126,6 +133,7 @@ public class RocheController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("提交罗氏内部QFF流程")
     @PostMapping("/commit")
     @RequiresPermissions("refund:audit")
     public FebsResponse commitProcess(Roche roche) throws FebsException {
@@ -143,6 +151,7 @@ public class RocheController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("同意罗氏内部QFF任务")
     @PostMapping("/agree")
     @RequiresPermissions("refund:audit")
     public FebsResponse agreeCurrentProcess(Roche roche) throws FebsException {

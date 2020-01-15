@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neefull.fsp.web.qff.mapper.QffLogMapper">
+    <select id="queryLogs" resultType="com.neefull.fsp.web.qff.entity.QffLog">
+        select * from qff_log where 1=1
+        <if test="qffLog.username!=null and qffLog.username!=''">
+            and username like concat('%',#{qffLog.username},'%')
+        </if>
+        order by create_time desc
+    </select>
+</mapper>

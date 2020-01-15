@@ -4,14 +4,17 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
+import com.neefull.fsp.web.qff.aspect.Qff;
 import com.neefull.fsp.web.qff.entity.*;
 import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.service.IRecentService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import com.wuwenze.poi.ExcelKit;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +27,8 @@ import java.util.Map;
  * @Author: chengchengchu
  * @Date: 2019/11/29  16:09
  */
-
+@Slf4j
+@Validated
 @RestController
 @RequestMapping("/recent")
 public class RecentController extends BaseController {
@@ -40,6 +44,7 @@ public class RecentController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("新增近效期QFF")
     @PostMapping("/add")
     public FebsResponse addRecent(Recent recent) throws FebsException {
         Integer count = recentService.addRecent(recent);
@@ -54,6 +59,7 @@ public class RecentController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("更新近效期QFF")
     @PostMapping("/edit")
     @RequiresPermissions("recent:audit")
     public FebsResponse editRecent(Recent recent) throws FebsException {
@@ -81,6 +87,7 @@ public class RecentController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("删除近效期QFF")
     @GetMapping("/deleteRecent/{id}")
     @RequiresPermissions("recent:del")
     public FebsResponse updateRecentStatus(@PathVariable Integer id) throws FebsException {
@@ -125,6 +132,7 @@ public class RecentController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("提交近效期QFF流程")
     @PostMapping("/commit")
     @RequiresPermissions("recent:audit")
     public FebsResponse commitProcess(Recent recent) throws FebsException {
@@ -142,6 +150,7 @@ public class RecentController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("同意近效期QFF任务")
     @PostMapping("/agree")
     @RequiresPermissions("recent:audit")
     public FebsResponse agreeCurrentProcess(Recent recent) throws FebsException {

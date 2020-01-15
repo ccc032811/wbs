@@ -1,0 +1,106 @@
+<div class="layui-fluid layui-anim febs-anim" id="qff-log" lay-title="系统日志">
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="log-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">操作人</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="username" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 table-action-area">
+                                <div id="conserve-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                    <div class="layui-btn layui-btn-normal" id="query" >
+                                        <i class="layui-icon ">查询</i>
+                                    </div>
+                                    <div class="layui-btn layui-btn-danger " id="reset" >
+                                        <i class="layui-icon ">清空</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table lay-filter="qffLogTable" lay-data="{id: 'qffLogTable'}"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="log-time">
+    <div>
+        {{# if (d.time < 500) { }}
+        <span class="layui-badge febs-tag-green">{{d.time}} ms</span>
+        {{# } else if (d.time < 1000) { }}
+        <span class="layui-badge febs-tag-cyan">{{d.time}} ms</span>
+        {{# } else if (d.time < 1500) { }}
+        <span class="layui-badge febs-tag-orange">{{d.time}} ms</span>
+        {{# } else { }}
+        <span class="layui-badge febs-tag-red">{{d.time}} ms</span>
+        {{# } }}
+    </div>
+</script>
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['jquery', 'form', 'table', 'febs'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            form = layui.form,
+            table = layui.table,
+            $view = $('#qff-log'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $searchForm = $view.find('form'),
+            tableIns;
+
+
+        form.render();
+        initTable();
+
+
+        table.on('sort(qffLogTable)', function (obj) {
+            tableIns.reload({
+                where: $.extend(getQueryParams())
+            });
+        });
+
+        $query.on('click', function () {
+            tableIns.reload({where: getQueryParams(), page: {curr: 1}});
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            tableIns.reload({where: getQueryParams(), page: {curr: 1}});
+        });
+
+        function initTable() {
+            tableIns = febs.table.init({
+                elem: $view.find('table'),
+                id: 'qffLogTable',
+                url: ctx + 'qffLog/list',
+                cols: [[
+                    {type: 'checkbox'},
+                    {field: 'username', title: '操作人'},
+                    {field: 'operation', title: '操作描述'},
+                    {field: 'time', title: '耗时', templet: "#log-time", sort: true},
+                    {field: 'method', title: '操作方法'},
+                    {field: 'request', title: '请求参数'},
+                    {field: 'response', title: '返回参数'},
+                    {field: 'createTime', title: '创建时间', minWidth: 180}
+                ]]
+            });
+        }
+
+        function getQueryParams() {
+            return {
+                username: $searchForm.find('input[name="username"]').val().trim(),
+                invalidate_ie_cache: new Date()
+            };
+        }
+    })
+</script>

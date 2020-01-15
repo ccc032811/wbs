@@ -204,7 +204,7 @@
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label " >回复日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="repDate" id="repDate" class="layui-input" placeholder="请选择时间">
+                    <input type="text" name="repDate" id="recent-repDate" class="layui-input" placeholder="请选择时间">
                 </div>
             </div>
         </div>
@@ -263,7 +263,7 @@
         var relevance = "qff_recent";
 
         laydate.render({
-            elem: '#repDate',
+            elem: '#recent-repDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false

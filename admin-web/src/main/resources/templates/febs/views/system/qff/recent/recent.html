@@ -14,7 +14,7 @@
                 <div class="layui-card-body febs-table-full">
                     <form class="layui-form layui-table-form" lay-filter="recent-table-form" style="margin-top: 15px" >
                         <div class="layui-row">
-                            <div class="layui-col-md10" style="height: 43px">
+                            <div class="layui-col-md12">
                                 <div class="layui-form-item" style="margin-left: 15px;">
                                     <div class="layui-inline">
                                         <label class="layui-form-label"  style="border-right: 1px solid white;">物料号</label>
@@ -46,18 +46,20 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div id="check" class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area" style=" border-left: 1px solid white;border-top: 1px solid white;height: 40px">
-                                <div class="layui-btn layui-btn-normal" id="query" >
-                                    <i class="layui-icon ">查询</i>
-                                </div>
-                                <div class="layui-btn layui-btn-danger " id="reset" >
-                                    <i class="layui-icon ">清空</i>
+                                    <div style="float: right;margin-right: 3%">
+                                        <div id="recent-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                            <div class="layui-btn layui-btn-normal" id="query" >
+                                                <i class="layui-icon ">查询</i>
+                                            </div>
+                                            <div class="layui-btn layui-btn-danger " id="reset" >
+                                                <i class="layui-icon ">清空</i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-collapse" lay-accordion lay-filter="navi" style="border:0px solid white">
+                        <div class="layui-collapse" lay-accordion lay-filter="recent-navi" style="border:0px solid white">
                             <div class="layui-colla-item" >
                                 <div class="layui-colla-content" style="border:0px solid white">
                                     <div class="layui-form-item">
@@ -91,8 +93,6 @@
                                                 <input type="text" name="sapBatch" maxlength="50" autocomplete="off" class="layui-input "  placeholder="请输入SAP 批次" >
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="layui-form-item">
                                         <div class="layui-inline">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">工厂</label>
                                             <div class="layui-input-inline">
@@ -135,7 +135,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="tag" class="layui-colla-title" style="background-color: white;height:5px;border-top: 1px solid #DCDCDC" >
+                                <div id="recent-tag" class="layui-colla-title" style="background-color: white;height:5px;width: 0px" >
                                     <i class="layui-icon tag-title" >&#xe61a;</i>
                                 </div>
                             </div>
@@ -210,15 +210,15 @@
             ,showBottom: false
         });
 
-        element.on('collapse(navi)', function(data){
+        element.on('collapse(recent-navi)', function(data){
             if(data.show == true){
-                $('#tag').html('');
-                $('#tag').append('<i  class="layui-icon tag-title">&#xe619;</i>')
-                $('#check').attr("style","display:none;")
+                $('#recent-tag').html('');
+                $('#recent-tag').append('<i  class="layui-icon tag-title">&#xe619;</i>')
+                $('#recent-check').attr("style","display:none;")
             }else if(data.show == false){
-                $('#tag').html('');
-                $('#tag').append('<i  class="layui-icon tag-title" >&#xe61a;</i>')
-                $('#check').attr("style","display:inline")
+                $('#recent-tag').html('');
+                $('#recent-tag').append('<i  class="layui-icon tag-title" >&#xe61a;</i>')
+                $('#recent-check').attr("style","display:inline")
             }
         });
 
@@ -233,14 +233,14 @@
                 defaultToolbar: ['filter','print'],    //显示默认的三个工具，需要哪个写哪个的单词'filter','exports','print'*/
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'transport', title: '运输单号',align:'center',width: 110},
-                    {field: 'kMater', title: '康德乐物料号',align:'center',width: 110},
-                    {field: 'rMater', title: '罗氏物料号',align:'center',width: 110},
-                    {field: 'name', title: '产品名称',align:'center',width:95},
-                    {field: 'useLife', title: '有效期',align:'center',width: 110},
-                    {field: 'batch', title: '批号',align:'center',width: 110},
-                    {field: 'sapBatch', title: 'SAP 批次',align:'center',width: 200},
-                    {field: 'factory', title: '工厂',align:'center',width: 200},
+                    {field: 'transport', title: '运输单号',align:'center'},
+                    {field: 'kMater', title: '康德乐物料号',align:'center'},
+                    {field: 'rMater', title: '罗氏物料号',align:'center'},
+                    {field: 'name', title: '产品名称',align:'center'},
+                    {field: 'useLife', title: '有效期',align:'center'},
+                    {field: 'batch', title: '批号',align:'center'},
+                    {field: 'sapBatch', title: 'SAP 批次',align:'center'},
+                    {field: 'factory', title: '工厂',align:'center',width: 70},
                     {title: '处理阶段', templet: '#recent-status',width: 90},
                     {title: '操作', toolbar: '#recent-option',align:'center',width: 162}
                 ]]

@@ -16,11 +16,13 @@ import com.sun.mail.util.MailSSLSocketFactory;
 import com.wuwenze.poi.ExcelKit;
 import com.wuwenze.poi.handler.ExcelReadHandler;
 import com.wuwenze.poi.pojo.ExcelErrorField;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,7 +38,8 @@ import java.util.*;
  * @Author: chengchengchu
  * @Date: 2019/12/16  16:23
  */
-
+@Slf4j
+@Validated
 @RestController
 @RequestMapping("/file")
 public class FileController extends BaseController {

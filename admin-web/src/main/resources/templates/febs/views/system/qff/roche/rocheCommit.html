@@ -74,7 +74,7 @@
             <div class="layui-inline layui-col-sm4 ">
                 <label class="layui-form-label ">申请日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="reqDate" id="reqDate" class="layui-input" placeholder="请选择时间"  autocomplete="off">
+                    <input type="text" name="reqDate" id="commit-reqDate" class="layui-input" placeholder="请选择时间"  autocomplete="off">
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
@@ -126,13 +126,13 @@
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">期望完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="exceptDate" id="exceptDate" class="layui-input" placeholder="请选择时间"  autocomplete="off" >
+                    <input type="text" name="exceptDate" id="commit-exceptDate" class="layui-input" placeholder="请选择时间"  autocomplete="off" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">实际完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="completeDate" id="completeDate" class="layui-input" placeholder="请选择时间"  autocomplete="off" >
+                    <input type="text" name="completeDate" id="commit-completeDate" class="layui-input" placeholder="请选择时间"  autocomplete="off" >
                 </div>
             </div>
         </div>
@@ -147,13 +147,13 @@
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">期望完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="exceptedDate" id="exceptedDate" class="layui-input" placeholder="请选择时间"  autocomplete="off" >
+                    <input type="text" name="exceptedDate" id="commit-exceptedDate" class="layui-input" placeholder="请选择时间"  autocomplete="off" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">实际完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="actualDate" id="actualDate" class="layui-input" placeholder="请选择时间"  autocomplete="off" >
+                    <input type="text" name="actualDate" id="commit-actualDate" class="layui-input" placeholder="请选择时间"  autocomplete="off" >
                 </div>
             </div>
         </div>
@@ -187,7 +187,7 @@
         </div>
         <div class="layui-form-item">
             <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="roche:audit">
-                <button class="layui-btn" lay-submit="" lay-filter="roche-form-submit" id="submit" >提交</button>
+                <button class="layui-btn" lay-submit="" lay-filter="roche-form-audit" id="audit" >提交</button>
             </div>
             <br>
             <div style="float: right">
@@ -214,35 +214,35 @@
         var actions = "Actions行动";
 
         laydate.render({
-            elem: '#reqDate',
+            elem: '#commit-reqDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false
         });
 
         laydate.render({
-            elem: '#exceptDate',
+            elem: '#commit-exceptDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false
         });
 
         laydate.render({
-            elem: '#completeDate',
+            elem: '#commit-completeDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false
         });
 
         laydate.render({
-            elem: '#exceptedDate',
+            elem: '#commit-exceptedDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false
         });
 
         laydate.render({
-            elem: '#actualDate',
+            elem: '#commit-actualDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false
@@ -250,6 +250,7 @@
 
         //表单渲染
         form.render();
+
 
         upload.render({
             elem: '#chose'  //绑定
@@ -286,9 +287,7 @@
 
 
         function deleteImage(url){
-            febs.get(ctx + "file/deleteImage/"+url, function (res) {
-
-            })
+            febs.get(ctx + "file/deleteImage/"+url, function (res) {})
         }
 
         $.get(ctx +"opinion/getOpinion/"+actions,function(res){
@@ -299,8 +298,8 @@
         });
 
         //提交更新
-        form.on('submit(roche-form-submit)', function (data) {
-            $('#submit').attr("style","display:none;");
+        form.on('submit(roche-form-audit)', function (data) {
+            $('#audit').attr("style","display:none;");
             for (var i = 0; i<=images.length-1;i++){
                 if(images[i]!= undefined)
                     imageList+=images[i]+",";

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
+import com.neefull.fsp.web.qff.aspect.Qff;
 import com.neefull.fsp.web.qff.entity.Commodity;
 import com.neefull.fsp.web.qff.entity.ProcessHistory;
 import com.neefull.fsp.web.qff.service.ICommodityService;
@@ -12,8 +13,10 @@ import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
 import com.neefull.fsp.web.system.entity.User;
 import com.wuwenze.poi.ExcelKit;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +28,8 @@ import java.util.Map;
  * @Author: chengchengchu
  * @Date: 2019/12/6  18:50
  */
-
+@Slf4j
+@Validated
 @RestController
 @RequestMapping("/commodity")
 public class CommodityController extends BaseController {
@@ -36,11 +40,12 @@ public class CommodityController extends BaseController {
     private IProcessService processService;
 
 
-    /**新增养护QFF
+    /**新增QFF
      * @param commodity
      * @return
      * @throws FebsException
      */
+    @Qff("新增QFF")
     @PostMapping("/add")
     public FebsResponse addCommodity(Commodity commodity) throws FebsException {
         Integer count = commodityService.addCommodity(commodity);
@@ -50,11 +55,12 @@ public class CommodityController extends BaseController {
         return new FebsResponse().success();
     }
 
-    /**更新养护QFF
+    /**更新QFF
      * @param commodity
      * @return
      * @throws FebsException
      */
+    @Qff("更新QFF")
     @PostMapping("/edit")
     @RequiresPermissions("commodity:audit")
     public FebsResponse editCommodity(Commodity commodity) throws FebsException {
@@ -65,7 +71,7 @@ public class CommodityController extends BaseController {
         return new FebsResponse().success();
     }
 
-    /**获取养护QFF操作的所有信息
+    /**查询QFF
      * @param commodity
      * @return
      */
@@ -77,10 +83,11 @@ public class CommodityController extends BaseController {
         return new FebsResponse().success().data(dataTable);
     }
 
-    /**删除养护QFF
+    /**删除QFF
      * @param id
      * @return
      */
+    @Qff("删除QFF")
     @GetMapping("/deleteCommodity/{id}")
     @RequiresPermissions("commodity:del")
     public FebsResponse updateCommodityStatus(@PathVariable Integer id) throws FebsException {
@@ -94,7 +101,7 @@ public class CommodityController extends BaseController {
         return new FebsResponse().success();
     }
 
-    /**根据编号查询
+    /**根据QFF ID查询
      * @param id
      * @return
      * @throws FebsException
@@ -109,7 +116,7 @@ public class CommodityController extends BaseController {
 
     }
 
-    /**查询流程
+    /**查询QFF流程
      * @param commodity
      * @return
      */
@@ -119,11 +126,12 @@ public class CommodityController extends BaseController {
         return new FebsResponse().success().data(list);
     }
 
-    /**提交流程
+    /**提交QFF流程
      * @param commodity
      * @return
      * @throws FebsException
      */
+    @Qff("提交QFF流程")
     @PostMapping("/commit")
     @RequiresPermissions("commodity:audit")
     public FebsResponse commitProcess(Commodity commodity) throws FebsException {
@@ -137,11 +145,12 @@ public class CommodityController extends BaseController {
         return new FebsResponse().success();
     }
 
-    /**同意当前任务
+    /**同意当前QFF任务
      * @param commodity
      * @return
      * @throws FebsException
      */
+    @Qff("同意当前QFF任务")
     @PostMapping("/agree")
     @RequiresPermissions("commodity:audit")
     public FebsResponse agreeCurrentProcess(Commodity commodity) throws FebsException {
@@ -159,7 +168,7 @@ public class CommodityController extends BaseController {
         return new FebsResponse().success();
     }
 
-    /**导出excel
+    /**导出QFF excel
      * @param commodity
      * @param response
      */
