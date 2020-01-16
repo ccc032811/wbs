@@ -120,14 +120,14 @@
             <div class="layui-inline layui-col-sm4 ">
                 <label class="layui-form-label ">生产日期</label>
                 <div class="layui-input-block">
-                    <input type="text" id="manuDate" name="manuDate" lay-verify="required" maxlength="50" autocomplete="off"
+                    <input type="text" id="demo-manuDate" name="manuDate" lay-verify="required" maxlength="50" autocomplete="off"
                            class="layui-input " >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">有效期</label>
                 <div class="layui-input-block">
-                    <input type="text" id="expiryDate" name="expiryDate" lay-verify="required" maxlength="50" autocomplete="off"
+                    <input type="text" id="demo-expiryDate" name="expiryDate" lay-verify="required" maxlength="50" autocomplete="off"
                            class="layui-input " >
                 </div>
             </div>
@@ -143,14 +143,14 @@
             <div class="layui-inline layui-col-sm4 ">
                 <label class="layui-form-label ">发起日期</label>
                 <div class="layui-input-block">
-                    <input type="text" id="initDate" name="initDate" lay-verify="required" maxlength="50" autocomplete="off"
+                    <input type="text" id="demo-initDate" name="initDate" lay-verify="required" maxlength="50" autocomplete="off"
                            class="layui-input " >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">回复日期</label>
                 <div class="layui-input-block">
-                    <input type="text" id="repTime" name="repTime"  maxlength="50" autocomplete="off"
+                    <input type="text" id="demo-repTime" name="repTime"  maxlength="50" autocomplete="off"
                            class="layui-input " readonly>
                 </div>
             </div>
@@ -212,21 +212,21 @@
         var stage = "QFF上报阶段";
 
         laydate.render({
-            elem: '#initDate',
+            elem: '#demo-initDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false
         });
 
         laydate.render({
-            elem: '#manuDate',
+            elem: '#demo-manuDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false
         });
 
         laydate.render({
-            elem: '#expiryDate',
+            elem: '#demo-expiryDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false

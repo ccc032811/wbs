@@ -48,10 +48,10 @@
                                     </div>
                                     <div style="float: right;margin-right: 3%">
                                         <div id="wrapper-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
-                                            <div class="layui-btn layui-btn-normal" id="query" >
+                                            <div class="layui-btn layui-btn-normal" id="wrapper-query" >
                                                 <i class="layui-icon ">查询</i>
                                             </div>
-                                            <div class="layui-btn layui-btn-danger " id="reset" >
+                                            <div class="layui-btn layui-btn-danger " id="wrapper-reset" >
                                                 <i class="layui-icon ">清空</i>
                                             </div>
                                         </div>
@@ -108,13 +108,13 @@
                                         <div class="layui-inline  ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">生产日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="manuDate" name="manuDate" maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入生产日期" >
+                                                <input type="text" id="wrapper-manuDate" name="manuDate" maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入生产日期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">有效期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="expiryDate" name="expiryDate"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入有效期" >
+                                                <input type="text" id="wrapper-expiryDate" name="expiryDate"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入有效期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
@@ -126,13 +126,13 @@
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">发起日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="initDate" name="initDate"  maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入发起日期" >
+                                                <input type="text" id="wrapper-initDate" name="initDate"  maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入发起日期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">回复日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="repTime" name="repTime"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入回复日期" >
+                                                <input type="text" id="wrapper-repTime" name="repTime"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入回复日期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
@@ -186,10 +186,10 @@
                                     </div>
                                     <div class="layui-form-item ">
                                         <div style="float: right;margin-right: 3%" >
-                                            <div class="layui-btn layui-btn-normal" id="queryBtn" >
+                                            <div class="layui-btn layui-btn-normal" id="wrapper-queryBtn" >
                                                 <i class="layui-icon">查询</i>
                                             </div>
-                                            <div class="layui-btn layui-btn-danger" id="cleanBtn" >
+                                            <div class="layui-btn layui-btn-danger" id="wrapper-cleanBtn" >
                                                 <i class="layui-icon">清空</i>
                                             </div>
                                         </div>
@@ -219,15 +219,15 @@
     {{# } }}
 </script>
 <script type="text/html" id="wrapper-option">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail" shiro:hasPermission="commodity:view">查看</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="wrapper-detail" shiro:hasPermission="commodity:view">查看</a>
     {{# if(d.status != '3'){d.status = '完结'}}
-    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="commodity:audit">审核</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="commodity:del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="wrapper-edit" shiro:hasPermission="commodity:audit">审核</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="wrapper-del" shiro:hasPermission="commodity:del">删除</a>
     {{#}}}
 </script>
 <script type="text/html" id="toolbarCheck">
     <div class="layui-btn-container">
-        <button  class="layui-btn layui-btn-sm" lay-event="download" shiro:hasPermission="commodity:down">导出Excel文件</button>
+        <button  class="layui-btn layui-btn-sm" lay-event="wrapper-download" shiro:hasPermission="commodity:down">导出Excel文件</button>
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
@@ -239,10 +239,10 @@
             form = layui.form,
             table = layui.table,
             $view = $('#fbs-wrapper'),
-            $query = $view.find('#query'),
-            $reset = $view.find('#reset'),
-            $queryBtn = $view.find('#queryBtn'),
-            $cleanBtn = $view.find('#cleanBtn'),
+            $query = $view.find('#wrapper-query'),
+            $reset = $view.find('#wrapper-reset'),
+            $queryBtn = $view.find('#wrapper-queryBtn'),
+            $cleanBtn = $view.find('#wrapper-cleanBtn'),
             $searchForm = $view.find('form'),
             tableIns;
         var stage = '分包';
@@ -254,27 +254,27 @@
         initTable();
         //设置时间样式
         laydate.render({
-            elem: '#searchTime'
+            elem: '#wrapper-searchTime'
             ,range: true
             ,trigger: 'click'
         });
         laydate.render({
-            elem: '#manuDate'
+            elem: '#wrapper-manuDate'
             ,trigger: 'click'
             ,showBottom: false
         });
         laydate.render({
-            elem: '#expiryDate'
+            elem: '#wrapper-expiryDate'
             ,trigger: 'click'
             ,showBottom: false
         });
         laydate.render({
-            elem: '#initDate'
+            elem: '#wrapper-initDate'
             ,trigger: 'click'
             ,showBottom: false
         });
         laydate.render({
-            elem: '#repTime'
+            elem: '#wrapper-repTime'
             ,trigger: 'click'
             ,showBottom: false
         });
@@ -338,7 +338,7 @@
 
         table.on('toolbar(wrapperTable)', function(obj){
             var layEvent = obj.event;
-            if (layEvent === 'download') {
+            if (layEvent === 'wrapper-download') {
                 var params = $.extend(getQueryParams(),{stage:stage});
                 params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
                 params.pageNum = $view.find(".layui-laypage-em").next().html();
@@ -350,17 +350,17 @@
         table.on('tool(wrapperTable)', function (obj) {
             var data = obj.data,
                 layEvent = obj.event;
-            if (layEvent === 'detail') {
+            if (layEvent === 'wrapper-detail') {
                 febs.modal.view('具体信息', 'system/qff/commodity/wrapperShow/' + data.id, {
                     area:  [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '85%']
                 });
             }
-            if (layEvent === 'edit') {
+            if (layEvent === 'wrapper-edit') {
                 febs.modal.view('审核', 'system/qff/commodity/wrapperAudit/' + data.id, {
                     area:  [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '90%']
                 });
             }
-            if (layEvent === 'del') {
+            if (layEvent === 'wrapper-del') {
                 febs.modal.confirm('删除该条数据','确定删除该条数据？', function () {
                     delCommodity(data.id);
                 });

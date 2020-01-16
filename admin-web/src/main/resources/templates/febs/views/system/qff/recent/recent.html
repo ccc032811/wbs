@@ -167,7 +167,7 @@
 </script>
 <script type="text/html" id="toolbarCheck">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" id="upload" shiro:hasPermission="recent:import">导入Excel文件</button>
+        <button class="layui-btn layui-btn-sm" lay-event="upload" id="recent-upload" shiro:hasPermission="recent:import">导入Excel文件</button>
         <button class="layui-btn layui-btn-sm" lay-event="download" shiro:hasPermission="recent:down">导出Excel文件</button>
     </div>
 </script>
@@ -247,30 +247,33 @@
             });
         }
 
-        upload.render({
-            elem:'#upload'
+
+        var uploadInst = upload.render({
+            elem:'#recent-upload'
             ,url: ctx+'file/resolver'
             ,accept:'file'
             ,exts:'xlsx'
             ,multiple:true
             ,auto:true
+            ,size:1024*2//kb
             ,before: function(obj){
+
                 layer.open({
                     type:1
                     ,title: false
                     ,closeBtn:0
                     ,area:['100px','100px']
                     ,shadeClose:false
-                    ,content:'<image  src="http://106.14.99.137:8084/loading.gif" style="height: 100px;width: 100px;background-color: #8D8D8D"></image>'
+                    ,content:'<image  src="http://127.0.0.1:10086/loadingup.gif" style="height: 100px;width: 100px;background-color: #C2BE9E></image>'
                 })
             }
             ,done:function (res) {
                 if(res.code ==200){
                     layer.closeAll('page');
                     febs.alert.success('操作成功');
-                    tableIns.reload({where: getQueryParams(), page: {curr: 1}});
+                    // tableIns.reload({where: getQueryParams(), page: {curr: 1}});
+                    location.reload()
                 }
-
             }
             ,error:function (res) {
                 febs.view.loadBar.error();
@@ -304,6 +307,14 @@
                 params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
                 params.pageNum = $view.find(".layui-laypage-em").next().html();
                 febs.download(ctx + 'recent/excel',params, '近效期QFF.xlsx');
+            }
+            if (layEvent === 'upload'){
+                /*uploadInst.reload({
+                    accept: 'file' //只允许上传图片
+                    ,exts:'xlsx' //只筛选图片
+                    ,size: 1024*2 //限定大小
+                });*/
+                console.log("测试")
             }
         });
 
@@ -370,7 +381,5 @@
                 invalidate_ie_cache: new Date()
             };
         }
-
-
     })
 </script>

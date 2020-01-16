@@ -231,28 +231,35 @@
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">QFF原因</label>
-                <div class="layui-input-block" id="reason">
-
+                <div class="layui-input-block" id="conserve-reason">
+                    <input type="text" name="reason"  lay-verify="required" maxlength="50" autocomplete="off" list="conserve-search-reason" class="layui-input" placeholder="请输入">
+                    <datalist id="conserve-search-reason" style="display:none;"></datalist>
                 </div>
             </div>
         </div>
         <div class="layui-form-item layui-form-item-rigth">
             <div class="layui-inline layui-col-sm4 ">
                 <label class="layui-form-label ">BA</label>
-                <div class="layui-input-block" id = "ba">
-
+                <div class="layui-input-block" id = "conserve-ba">
+                    <select name="ba" id="conserve-search-ba" lay-verify="required">
+                        <option value="">请选择</option>
+                    </select>
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">上报阶段</label>
-                <div class="layui-input-block" id="stage">
-
+                <div class="layui-input-block" id="conserve-stage">
+                    <select name="stage" id="conserve-search-stage" lay-verify="required" >
+                        <option value="">请选择</option>
+                    </select>
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">采购来源</label>
-                <div class="layui-input-block" id = "source">
-
+                <div class="layui-input-block" id = "conserve-source">
+                    <select name="source" id="conserve-search-source" lay-verify="required">
+                        <option value="">请选择</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -260,7 +267,7 @@
             <div class="layui-inline layui-col-sm4 ">
                 <label class="layui-form-label ">投诉编号</label>
                 <div class="layui-input-block">
-                    <input type="text" id="compNumber" name="compNumber" maxlength="50" autocomplete="off"
+                    <input type="text" id="conserve-compNumber" name="compNumber" maxlength="50" autocomplete="off"
                            class="layui-input " placeholder="请输入" >
                 </div>
             </div>
@@ -290,8 +297,11 @@
             </div>
             <div class="layui-inline layui-col-sm6">
                 <label class="layui-form-label ">罗氏处理意见</label>
-                <div class="layui-input-block" id = "rConf" >
-
+                <div class="layui-input-block" id = "conserve-rConf" >
+                    <input type="text" name="rConf"  lay-verify="required" maxlength="50" autocomplete="off" list="conserve-search-rConf" class="layui-input" placeholder="请输入" >
+                    <div style="overflow: auto; height: 30px";>
+                        <datalist id="conserve-search-rConf" style="display:none;"></datalist>
+                    </div>
                 </div>
             </div>
         </div>
@@ -299,7 +309,7 @@
             <div class="layui-inline layui-col-sm12">
                 <label class="layui-form-label" style="height: 80px;border-right: 1px solid #000;"><div style="margin-top: 20px">仪器工程师检查结果</div></label>
                 <div class="layui-input-block">
-                    <textarea id="checkResult" name="checkResult"  placeholder="请输入"
+                    <textarea id="conserve-checkResult" name="checkResult"  placeholder="请输入"
                               class="layui-textarea" ></textarea>
                 </div>
             </div>
@@ -308,7 +318,7 @@
             <div class="layui-inline layui-col-sm12" >
                 <label class="layui-form-label " style="height: 80px;"><div style="margin-top: 20px">备注</div></label>
                 <div class="layui-input-block" >
-                    <textarea id="remark" name="remark"  placeholder="请输入" class="layui-textarea" ></textarea>
+                    <textarea id="conserve-remark" name="remark"  placeholder="请输入" class="layui-textarea" ></textarea>
                 </div>
 
             </div>
@@ -316,25 +326,24 @@
         <div class="layui-form-item"><div style="border-top: 1px solid #000;margin-top: 1px"></div></div>
 
         <div class="layui-form-item" style="border: 0;padding-top: 20px">
-            <div class="site-demo-flow" id="image_show" style="overflow: auto; display: flex">
+            <div class="site-demo-flow" id="conserve-image-show" style="overflow: auto; display: flex">
 
             </div>
-            <img data-th-src="@{febs/images/image_add.png}" width="100px" height="100px" id="chose">
+            <img data-th-src="@{febs/images/image_add.png}" width="100px" height="100px" id="conserve-chose">
             <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;width: 88%">
-                预览图：
-                <div class="layui-upload-list uploader-list" style="overflow: auto; display: flex" id="uploader-list" >
+                <div class="layui-upload-list uploader-list" style="overflow: auto; display: flex" id="conserve-uploader-list" >
 
                 </div>
             </blockquote>
         </div>
 
         <div class="layui-form-item" style="margin-top: 30px">
-            <div class="timeline-main-line" id="process">
+            <div class="timeline-main-line" id="conserve-process">
             </div>
         </div>
         <div class="layui-form-item">
             <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="commodity:audit">
-                <button class="layui-btn" lay-submit="" lay-filter="conserve-form-submit" id="submit" >提交</button>
+                <button class="layui-btn" lay-submit="" lay-filter="conserve-form-submit" id="conserve-submit" >提交</button>
             </div>
             <br>
             <div style="float: right">
@@ -343,7 +352,7 @@
         </div>
     </form>
 </div>
-<img alt="" style="display:none" id="displayImg" src=""/>
+<img alt="" style="display:none" id="conserve-displayImg" src=""/>
 
 <script data-th-inline="javascript">
     layui.use(['febs', 'form','upload','layer'], function () {
@@ -368,43 +377,32 @@
         //表单渲染
         form.render();
 
+
         //页面渲染，放在初始化界面之前
         if(currentUser.roleId == '86'){ //罗氏
-            $('#rConf').append(' <input type="text" name="rConf"  lay-verify="required" maxlength="50" autocomplete="off" list="search_rConf" class="layui-input" placeholder="请输入" >\n' +
-                '                    <div style="overflow: auto; height: 30px";>\n' +
-                '                    <datalist id="search_rConf" style="display:none;"></datalist>\n' +
-                '                    </div>')
-            $('#reason').append('<input type="text" name="reason"  lay-verify="required" maxlength="50" autocomplete="off" list="search_reason" class="layui-input" placeholder="请输入">\n' +
-                '                    <datalist id="search_reason" style="display:none;"></datalist>')
-
-            $('#ba').append('<select name="ba" id="search_ba" lay-verify="required">\n' +
-                '                        <option value="">请选择</option>\n' +
-                '                    </select>')
-            $('#stage').append(' <input type="text" name="stage"  maxlength="50" autocomplete="off"\n' +
+            $('#conserve-stage').html('');
+            $('#conserve-stage').append(' <input type="text" name="stage"  maxlength="50" autocomplete="off"\n' +
                 '                           class="layui-input " readonly="readonly">')
-            $('#source').append('<input type="text" name="source"  maxlength="50" autocomplete="off"\n' +
+            $('#conserve-source').html('')
+            $('#conserve-source').append('<input type="text" name="source"  maxlength="50" autocomplete="off"\n' +
                 '                           class="layui-input " readonly="readonly">')
-            $('#compNumber').attr("lay-verify","required");
-            $('#checkResult').attr("lay-verify","required");
-            $('#remark').attr("lay-verify","required");
+            $('#conserve-compNumber').attr("lay-verify","required");
+            $('#conserve-checkResult').attr("lay-verify","required");
+            $('#conserve-remark').attr("lay-verify","required");
 
         }else if(currentUser.roleId == '87'){  //康德乐
-            $('#rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
+            $('#conserve-rConf').html('')
+            $('#conserve-rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
                 '                           class="layui-input " readonly="readonly">')
-            $('#reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
+            $('#conserve-reason').html('')
+            $('#conserve-reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
                 '                           class="layui-input " readonly="readonly">')
-            $('#ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
+            $('#conserve-ba').html('')
+            $('#conserve-ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
                 '                           class="layui-input " readonly="readonly">')
-
-            $('#stage').append('<select name="stage" id="search_stage" lay-verify="required" >\n' +
-                '                        <option value="">请选择</option>\n' +
-                '                    </select>')
-            $('#source').append('<select name="source" id="search_source" lay-verify="required">\n' +
-                '                        <option value="">请选择</option>\n' +
-                '                    </select>')
-            $('#checkResult').attr("readonly","readonly");
-            $('#remark').attr("readonly","readonly");
-            $('#compNumber').attr("readonly","readonly");
+            $('#conserve-checkResult').attr("readonly","readonly");
+            $('#conserve-remark').attr("readonly","readonly");
+            $('#conserve-compNumber').attr("readonly","readonly");
         }
 
 
@@ -444,7 +442,7 @@
 
 
         upload.render({
-            elem: '#chose'  //绑定
+            elem: '#conserve-chose'  //绑定
             ,url: ctx+ 'file/uploadImage'  //上传url
             ,accept: "images"     //设置文件的类型
             // ,number: 2         //设置上传文件数量
@@ -452,7 +450,7 @@
             ,size:2048       //设置文件大小
             ,auto:true            //是否自动上传
             ,done: function(res){
-                $('#uploader-list').append('<div class="image-container" id="container'+res.data.index+'"><div class="delete-css"><button id="upload_img_'+res.data.index+'" class="layui-btn layui-btn-danger layui-btn-xs">删除</button></div>\n' +
+                $('#conserve-uploader-list').append('<div class="image-container" id="container'+res.data.index+'"><div class="delete-css"><button id="upload_img_'+res.data.index+'" class="layui-btn layui-btn-danger layui-btn-xs">删除</button></div>\n' +
                     '<img  class="layui-upload-img" id="showImg'+res.data.index+'" style="width: 150px; margin:10px;cursor:pointer;" src="'+ 'http://127.0.0.1:10086/'+res.data.value +'" name = "'+ res.data.value+'" ></div>')
                 $("#upload_img_" + res.data.index).bind('click', function () {
                     delete files[res.data.index];
@@ -486,13 +484,13 @@
         $.get(ctx +"file/findImages/"+commodity.id+"/"+relevance,function (res) {
             var data = res.data;
             $.each(data,function (index, item) {
-                $('#image_show').append('<a href="javascript:amplificationImg(\''+index+'\',\''+item+'\')"><img name=" '+index+'"src = " '+item+' "style="width:150px;height:auto;"></a>')
+                $('#conserve-image-show').append('<a href="javascript:amplificationImg(\''+index+'\',\''+item+'\')"><img name=" '+index+'"src = " '+item+' "style="width:150px;height:auto;"></a>')
             })
         });
         window.amplificationImg = function (name, url) {
-            $("#displayImg").attr("src", url);
-            var height =$("#displayImg").height();//拿的图片原来宽高，建议自定义宽高
-            var width = $("#displayImg").width();
+            $("#conserve-displayImg").attr("src", url);
+            var height =$("#conserve-displayImg").height();//拿的图片原来宽高，建议自定义宽高
+            var width = $("#conserve-displayImg").width();
             var winHeight = $(window).height() - 100;  // 浏览器可视部分高度
             var winWidth = $(window).width() - 120;  // 浏览器可视部分宽度
             if (height > winHeight || width > winWidth) {
@@ -519,13 +517,13 @@
         $.get(ctx + "commodity/queryHistory", commodity ,function (data) {
             var data = data.data;
             if(data[0]==null){
-                $("#process").append('<div class="timeline-item-no-start">\n' +
+                $("#conserve-process").append('<div class="timeline-item-no-start">\n' +
                     '                    <div class="timeline-item-cricle-fail">'+1+'</div>\n' +
                     '                    <div class="timeline-item-name-fail">xxx审核</div>\n' +
                     '                </div>')
             }else {
 
-                $("#process").append('<div class="timeline-item-start">\n' +
+                $("#conserve-process").append('<div class="timeline-item-start">\n' +
                     '                    <div class="timeline-item-timestamp">'+data[0].date+'</div>\n' +
                     '                    <div class="timeline-item-cricle-success">'+1+'</div>\n' +
                     '                    <div class="timeline-item-name">'+data[0].name+'</div>\n' +
@@ -544,14 +542,14 @@
         });
 
          function success(data,index){
-             $("#process").append('<div class="timeline-item-success">\n' +
+             $("#conserve-process").append('<div class="timeline-item-success">\n' +
                  '                    <div class="timeline-item-timestamp">'+data.date+'</div>\n' +
                  '                    <div class="timeline-item-cricle-success">'+index+'</div>\n' +
                  '                    <div class="timeline-item-name">'+data.name+'</div>\n' +
                  '                </div>')
          }
          function error(index){
-             $("#process").append('<div class="timeline-item-fail">\n' +
+             $("#conserve-process").append('<div class="timeline-item-fail">\n' +
                  '                    <div class="timeline-item-cricle-fail">'+index+'</div>\n' +
                  '                    <div class="timeline-item-name-fail">xxx审核</div>\n' +
                  '                </div>')
@@ -560,7 +558,7 @@
 
         //提交更新
         form.on('submit(conserve-form-submit)', function (data) {
-            $('#submit').attr("style","display:none;");
+            $('#conserve-submit').attr("style","display:none;");
             if (febs.nativeEqual(data.field, commodity)) {
                 febs.alert.warn('数据未作任何修改！');
                 return false;
@@ -573,14 +571,14 @@
             if(commodity.status ==1){
                 febs.post(ctx + 'commodity/commit', data.field , function (data) {
                     layer.closeAll();
-                    $('#fbs-conserve').find('#query').click();
+                    $('#fbs-conserve').find('#conserve-query').click();
                     febs.alert.success('数据修改成功');
                 });
             }
             if(commodity.status ==2){
                 febs.post(ctx + 'commodity/agree', data.field , function (data) {
                     layer.closeAll();
-                    $('#fbs-conserve').find('#query').click();
+                    $('#fbs-conserve').find('#conserve-query').click();
                     febs.alert.success('数据修改成功');
                 });
             }
@@ -591,20 +589,20 @@
         $.get(ctx +"opinion/getOpinion/"+rConf,function(res){
             var data = res.data;
             $.each(data,function(index,item){
-                $("#search_rConf").append('<option value="'+item.name+'"></option>')
+                $("#conserve-search-rConf").append('<option value="'+item.name+'"></option>')
             });
         });
 
         $.get(ctx +"opinion/getOpinion/"+reason,function(res){
             var data = res.data;
             $.each(data,function(index,item){
-                $("#search_reason").append('<option value="'+item.name+'"></option>')
+                $("#conserve-search-reason").append('<option value="'+item.name+'"></option>')
             });
         });
 
         $.get(ctx +"opinion/getOpinion/"+ba,function(res){
             var data=res.data;
-            var dom=$("#search_ba");
+            var dom=$("#conserve-search-ba");
             var html = '<option value=""></option>';
             $.each(data,function(index,item){
                 if(item.name == commodity.ba){
@@ -619,7 +617,7 @@
 
         $.get(ctx +"opinion/getOpinion/"+stage,function(res){
             var data=res.data;
-            var dom=$("#search_stage");
+            var dom=$("#conserve-search-stage");
             var html='<option value=""></option>';
             $.each(data,function(index,item){
                 if(item.name == commodity.stage){
@@ -634,7 +632,7 @@
 
         $.get(ctx +"opinion/getOpinion/"+source,function(res){
             var data=res.data;
-            var dom=$("#search_source");
+            var dom=$("#conserve-search-source");
             var html='<option value=""></option>';
             $.each(data,function(index,item){
                 if(item.name == commodity.source){
@@ -659,6 +657,48 @@
         });*/
 
 
+
+
+
+        /*  //页面渲染，放在初始化界面之前
+          if(currentUser.roleId == '86'){ //罗氏
+              $('#conserve-rConf').append(' <input type="text" name="rConf"  lay-verify="required" maxlength="50" autocomplete="off" list="search_rConf" class="layui-input" placeholder="请输入" >\n' +
+                  '                    <div style="overflow: auto; height: 30px";>\n' +
+                  '                    <datalist id="search_rConf" style="display:none;"></datalist>\n' +
+                  '                    </div>')
+              $('#conserve-reason').append('<input type="text" name="reason"  lay-verify="required" maxlength="50" autocomplete="off" list="search_reason" class="layui-input" placeholder="请输入">\n' +
+                  '                    <datalist id="search_reason" style="display:none;"></datalist>')
+
+              $('#conserve-ba').append('<select name="ba" id="search_ba" lay-verify="required">\n' +
+                  '                        <option value="">请选择</option>\n' +
+                  '                    </select>')
+              $('#conserve-stage').append(' <input type="text" name="stage"  maxlength="50" autocomplete="off"\n' +
+                  '                           class="layui-input " readonly="readonly">')
+              $('#conserve-source').append('<input type="text" name="source"  maxlength="50" autocomplete="off"\n' +
+                  '                           class="layui-input " readonly="readonly">')
+              $('#conserve-compNumber').attr("lay-verify","required");
+              $('#conserve-checkResult').attr("lay-verify","required");
+              $('#conserve-remark').attr("lay-verify","required");
+
+          }else if(currentUser.roleId == '87'){  //康德乐
+              $('#conserve-rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
+                  '                           class="layui-input " readonly="readonly">')
+              $('#conserve-reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
+                  '                           class="layui-input " readonly="readonly">')
+              $('#conserve-ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
+                  '                           class="layui-input " readonly="readonly">')
+
+              $('#conserve-stage').append('<select name="stage" id="search_stage" lay-verify="required" >\n' +
+                  '                        <option value="">请选择</option>\n' +
+                  '                    </select>')
+              $('#conserve-source').append('<select name="source" id="search_source" lay-verify="required">\n' +
+                  '                        <option value="">请选择</option>\n' +
+                  '                    </select>')
+              $('#conserve-checkResult').attr("readonly","readonly");
+              $('#conserve-remark').attr("readonly","readonly");
+              $('#conserve-compNumber').attr("readonly","readonly");
+          }
+  */
 
     });
 </script>

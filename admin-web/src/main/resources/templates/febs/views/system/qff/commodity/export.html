@@ -48,10 +48,10 @@
                                     </div>
                                     <div style="float: right;margin-right: 3%">
                                         <div id="export-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
-                                            <div class="layui-btn layui-btn-normal" id="query" >
+                                            <div class="layui-btn layui-btn-normal" id="export-query" >
                                                 <i class="layui-icon ">查询</i>
                                             </div>
-                                            <div class="layui-btn layui-btn-danger " id="reset" >
+                                            <div class="layui-btn layui-btn-danger " id="export-reset" >
                                                 <i class="layui-icon ">清空</i>
                                             </div>
                                         </div>
@@ -108,13 +108,13 @@
                                         <div class="layui-inline  ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">生产日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="manuDate" name="manuDate" maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入生产日期" >
+                                                <input type="text" id="export-manuDate" name="manuDate" maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入生产日期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">有效期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="expiryDate" name="expiryDate"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入有效期" >
+                                                <input type="text" id="export-expiryDate" name="expiryDate"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入有效期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
@@ -126,13 +126,13 @@
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">发起日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="initDate" name="initDate"  maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入发起日期" >
+                                                <input type="text" id="export-initDate" name="initDate"  maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入发起日期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">回复日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="repTime" name="repTime"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入回复日期" >
+                                                <input type="text" id="export-repTime" name="repTime"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入回复日期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
@@ -186,10 +186,10 @@
                                     </div>
                                     <div class="layui-form-item ">
                                         <div style="float: right;margin-right: 3%" >
-                                            <div class="layui-btn layui-btn-normal" id="queryBtn" >
+                                            <div class="layui-btn layui-btn-normal" id="export-queryBtn" >
                                                 <i class="layui-icon">查询</i>
                                             </div>
-                                            <div class="layui-btn layui-btn-danger" id="cleanBtn" >
+                                            <div class="layui-btn layui-btn-danger" id="export-cleanBtn" >
                                                 <i class="layui-icon">清空</i>
                                             </div>
                                         </div>
@@ -219,15 +219,15 @@
     {{# } }}
 </script>
 <script type="text/html" id="export-option">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail" shiro:hasPermission="commodity:view">查看</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="export-detail" shiro:hasPermission="commodity:view">查看</a>
     {{# if(d.status != '3'){d.status = '完结'}}
-    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="commodity:audit">审核</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="commodity:del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="export-edit" shiro:hasPermission="commodity:audit">审核</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="export-del" shiro:hasPermission="commodity:del">删除</a>
     {{#}}}
 </script>
 <script type="text/html" id="toolbarCheck">
     <div class="layui-btn-container">
-        <button  class="layui-btn layui-btn-sm" lay-event="download" shiro:hasPermission="commodity:down">导出Excel文件</button>
+        <button  class="layui-btn layui-btn-sm" lay-event="export-download" shiro:hasPermission="commodity:down">导出Excel文件</button>
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
@@ -239,10 +239,10 @@
             form = layui.form,
             table = layui.table,
             $view = $('#fbs-export'),
-            $query = $view.find('#query'),
-            $reset = $view.find('#reset'),
-            $queryBtn = $view.find('#queryBtn'),
-            $cleanBtn = $view.find('#cleanBtn'),
+            $query = $view.find('#export-query'),
+            $reset = $view.find('#export-reset'),
+            $queryBtn = $view.find('#export-queryBtn'),
+            $cleanBtn = $view.find('#export-cleanBtn'),
             $searchForm = $view.find('form'),
             tableIns;
         var stage = '出库';
@@ -254,27 +254,27 @@
         initTable();
         //设置时间样式
         laydate.render({
-            elem: '#searchTime'
+            elem: '#export-searchTime'
             ,range: true
             ,trigger: 'click'
         });
         laydate.render({
-            elem: '#manuDate'
+            elem: '#export-manuDate'
             ,trigger: 'click'
             ,showBottom: false
         });
         laydate.render({
-            elem: '#expiryDate'
+            elem: '#export-expiryDate'
             ,trigger: 'click'
             ,showBottom: false
         });
         laydate.render({
-            elem: '#initDate'
+            elem: '#export-initDate'
             ,trigger: 'click'
             ,showBottom: false
         });
         laydate.render({
-            elem: '#repTime'
+            elem: '#export-repTime'
             ,trigger: 'click'
             ,showBottom: false
         });
@@ -338,7 +338,7 @@
 
         table.on('toolbar(exportTable)', function(obj){
             var layEvent = obj.event;
-            if (layEvent === 'download') {
+            if (layEvent === 'export-download') {
                 var params = $.extend(getQueryParams(),{stage:stage});
                 params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
                 params.pageNum = $view.find(".layui-laypage-em").next().html();
@@ -351,17 +351,17 @@
         table.on('tool(exportTable)', function (obj) {
             var data = obj.data,
                 layEvent = obj.event;
-            if (layEvent === 'detail') {
+            if (layEvent === 'export-detail') {
                 febs.modal.view('具体信息', 'system/qff/commodity/exportShow/' + data.id, {
                     area:  [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '85%']
                 });
             }
-            if (layEvent === 'edit') {
+            if (layEvent === 'export-edit') {
                 febs.modal.view('审核', 'system/qff/commodity/exportAudit/' + data.id, {
                     area:  [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '90%']
                 });
             }
-            if (layEvent === 'del') {
+            if (layEvent === 'export-del') {
                 febs.modal.confirm('删除该条数据','确定删除该条数据？', function () {
                     delCommodity(data.id);
                 });

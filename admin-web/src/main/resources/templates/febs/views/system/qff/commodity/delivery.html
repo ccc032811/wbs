@@ -48,10 +48,10 @@
                                     </div>
                                     <div style="float: right;margin-right: 3%">
                                         <div id="delivery-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
-                                            <div class="layui-btn layui-btn-normal" id="query" >
+                                            <div class="layui-btn layui-btn-normal" id="delivery-query" >
                                                 <i class="layui-icon ">查询</i>
                                             </div>
-                                            <div class="layui-btn layui-btn-danger " id="reset" >
+                                            <div class="layui-btn layui-btn-danger " id="delivery-reset" >
                                                 <i class="layui-icon ">清空</i>
                                             </div>
                                         </div>
@@ -108,13 +108,13 @@
                                         <div class="layui-inline  ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">生产日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="manuDate" name="manuDate" maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入生产日期" >
+                                                <input type="text" id="delivery-manuDate" name="manuDate" maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入生产日期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">有效期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="expiryDate" name="expiryDate"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入有效期" >
+                                                <input type="text" id="delivery-expiryDate" name="expiryDate"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入有效期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
@@ -126,13 +126,13 @@
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">发起日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="initDate" name="initDate"  maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入发起日期" >
+                                                <input type="text" id="delivery-initDate" name="initDate"  maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入发起日期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">回复日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="repTime" name="repTime"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入回复日期" >
+                                                <input type="text" id="delivery-repTime" name="repTime"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入回复日期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
@@ -187,10 +187,10 @@
                                     </div>
                                     <div class="layui-form-item ">
                                         <div style="float: right;margin-right: 3%" >
-                                            <div class="layui-btn layui-btn-normal" id="queryBtn" >
+                                            <div class="layui-btn layui-btn-normal" id="delivery-queryBtn" >
                                                 <i class="layui-icon">查询</i>
                                             </div>
-                                            <div class="layui-btn layui-btn-danger" id="cleanBtn" >
+                                            <div class="layui-btn layui-btn-danger" id="delivery-cleanBtn" >
                                                 <i class="layui-icon">清空</i>
                                             </div>
                                         </div>
@@ -220,15 +220,15 @@
     {{# } }}
 </script>
 <script type="text/html" id="delivery-option">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail" shiro:hasPermission="commodity:view">查看</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="delivery-detail" shiro:hasPermission="commodity:view">查看</a>
     {{# if(d.status != '3'){d.status = '完结'}}
-    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="commodity:audit">审核</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="commodity:del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="delivery-edit" shiro:hasPermission="commodity:audit">审核</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delivery-del" shiro:hasPermission="commodity:del">删除</a>
     {{#}}}
 </script>
 <script type="text/html" id="toolbarCheck">
     <div class="layui-btn-container">
-        <button  class="layui-btn layui-btn-sm" lay-event="download" shiro:hasPermission="commodity:down">导出Excel文件</button>
+        <button  class="layui-btn layui-btn-sm" lay-event="delivery-download" shiro:hasPermission="commodity:down">导出Excel文件</button>
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
@@ -240,10 +240,10 @@
             form = layui.form,
             table = layui.table,
             $view = $('#fbs-delivery'),
-            $query = $view.find('#query'),
-            $reset = $view.find('#reset'),
-            $queryBtn = $view.find('#queryBtn'),
-            $cleanBtn = $view.find('#cleanBtn'),
+            $query = $view.find('#delivery-query'),
+            $reset = $view.find('#delivery-reset'),
+            $queryBtn = $view.find('#delivery-queryBtn'),
+            $cleanBtn = $view.find('#delivery-cleanBtn'),
             $searchForm = $view.find('form'),
             tableIns;
         var stage = '到货';
@@ -255,27 +255,27 @@
         initTable();
         //设置时间样式
         laydate.render({
-            elem: '#searchTime'
+            elem: '#delivery-searchTime'
             ,range: true
             ,trigger: 'click'
         });
         laydate.render({
-            elem: '#manuDate'
+            elem: '#delivery-manuDate'
             ,trigger: 'click'
             ,showBottom: false
         });
         laydate.render({
-            elem: '#expiryDate'
+            elem: '#delivery-expiryDate'
             ,trigger: 'click'
             ,showBottom: false
         });
         laydate.render({
-            elem: '#initDate'
+            elem: '#delivery-initDate'
             ,trigger: 'click'
             ,showBottom: false
         });
         laydate.render({
-            elem: '#repTime'
+            elem: '#delivery-repTime'
             ,trigger: 'click'
             ,showBottom: false
         });
@@ -340,7 +340,7 @@
 
         table.on('toolbar(deliveryTable)', function(obj){
             var layEvent = obj.event;
-            if (layEvent === 'download') {
+            if (layEvent === 'delivery-download') {
                 var params = $.extend(getQueryParams(),{stage:stage});
                 params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
                 params.pageNum = $view.find(".layui-laypage-em").next().html();
@@ -353,17 +353,17 @@
         table.on('tool(deliveryTable)', function (obj) {
             var data = obj.data,
                 layEvent = obj.event;
-            if (layEvent === 'detail') {
+            if (layEvent === 'delivery-detail') {
                 febs.modal.view('具体信息', 'system/qff/commodity/deliveryShow/' + data.id, {
                     area:  [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '85%']
                 });
             }
-            if (layEvent === 'edit') {
+            if (layEvent === 'delivery-edit') {
                 febs.modal.view('审核', 'system/qff/commodity/deliveryAudit/' + data.id, {
                     area:  [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '90%']
                 });
             }
-            if (layEvent === 'del') {
+            if (layEvent === 'delivery-del') {
                 febs.modal.confirm('删除该条数据', '确定删除该条数据？', function () {
                     delCommodity(data.id);
                 });
