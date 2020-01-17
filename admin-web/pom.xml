@@ -11,7 +11,7 @@
 
     <parent>
         <groupId>com.neefull</groupId>
-        <artifactId>fsp</artifactId>
+        <artifactId>qff</artifactId>
         <version>1.0</version>
     </parent>
 

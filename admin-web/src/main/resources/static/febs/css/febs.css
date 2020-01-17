@@ -99,7 +99,7 @@ body, html, #app-header .layui-nav .layui-nav-item a:not(.layui-nav-child-href),
 }
 
 .febs-sidebar-shrink #app-sidebar .layui-nav-itemed, #app-sidebar .layui-nav-tree .layui-nav-child dd.layui-this, #app-sidebar .layui-nav-tree .layui-nav-child dd.layui-this a, #app-sidebar .layui-nav-tree .layui-this, #app-sidebar .layui-nav-tree .layui-this > a, .layui-nav-tree .layui-this > a:hover {
-    background-color: #F7F8F8
+    background-color: #CDCDCD;
 }
 
 #app-sidebar .layui-logo span, #app-sidebar .layui-nav-tree .layui-nav-child dd.layui-this, #app-sidebar .layui-nav-tree .layui-nav-child dd.layui-this a, #app-sidebar .layui-nav-tree .layui-this, #app-sidebar .layui-nav-tree .layui-this > a, .layui-nav-tree .layui-this > a:hover, .layui-layer-prompt .layui-layer-btn a.layui-layer-btn0, .layui-layer-admin-modal .layui-layer-btn a.layui-layer-btn0 {
@@ -3843,9 +3843,11 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
     background-color: #393e46 !important
 }
 
+/*
 .febs-theme-white {
     background-color: #fff !important
 }
+*/
 
 .febs-theme-white .layui-logo span {
     color: #1890ff !important;
@@ -3868,13 +3870,13 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
     background-color: #fff !important
 }
 
-#app-sidebar.febs-theme-white .layui-nav-tree .layui-this {
+/*#app-sidebar.febs-theme-white .layui-nav-tree .layui-this {
     background-color: #fff !important
-}
+}*/
 
 .febs-theme-white .layui-nav-tree .layui-nav-child dd.layui-this a {
-    background-color: #e6f7ff !important;
-    color: #1890ff !important
+    background-color: #CDCDCD !important;
+    color: #8D8D8D !important
 }
 
 .febs-theme-white .layui-nav-itemed .layui-nav-child {

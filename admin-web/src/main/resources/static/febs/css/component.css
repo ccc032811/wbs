@@ -21,9 +21,12 @@
 	-moz-box-shadow: #d4d2d2 0px 0px 10px;
 	position: absolute;
 	left: 50%;
-	top:50%;
-	margin-left: -450px;
-	margin-top: -250px;
+	top:40%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
 }
 .logo_box h3{
 	text-align: center;
@@ -144,7 +147,7 @@
 	background: #0096e6;
 }
 
-/*lable标签的大小、位置、背景颜色更改，在css选择时，“+”代表相邻元素，即当前元素的下一元素*/
+/*lable锟斤拷签锟侥达拷小锟斤拷位锟矫★拷锟斤拷锟斤拷锟斤拷色锟斤拷锟侥ｏ拷锟斤拷css选锟斤拷时锟斤拷锟斤拷+锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷元锟截ｏ拷锟斤拷锟斤拷前元锟截碉拷锟斤拷一元锟斤拷*/
 #color-input-red +label{
 	display: block;
 	width: 20px;
@@ -156,8 +159,8 @@
 	border: 1px solid #858585;
 }
 
-/*当input框为选中状态时，lable标签的样式，其中在css选择时，“：”表示当前input框的值，即checked；
-      该部分主要对显示的“对号”的大限居中方式，显示颜色进行了设置*/
+/*锟斤拷input锟斤拷为选锟斤拷状态时锟斤拷lable锟斤拷签锟斤拷锟斤拷式锟斤拷锟斤拷锟斤拷锟斤拷css选锟斤拷时锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷示锟斤拷前input锟斤拷锟街碉拷锟斤拷锟絚hecked锟斤拷
+      锟矫诧拷锟斤拷锟斤拷要锟斤拷锟斤拷示锟侥★拷锟皆号★拷锟侥达拷锟睫撅拷锟叫凤拷式锟斤拷锟斤拷示锟斤拷色锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷*/
 #color-input-red:checked +label::before{
 	display: block;
 	content: "\2714";

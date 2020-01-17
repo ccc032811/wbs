@@ -15,6 +15,7 @@
         width: 100%;
         height: 45px
     }
+
 </style>
 <div class="layui-layout layui-layout-admin" id="febs-layout">
     <div class="layui-header layui-anim febs-anim-down" id="app-header" style="background-color: #00A1DD;">
@@ -74,7 +75,7 @@
     </div>
 
     <!-- 侧边菜单 -->
-    <div class="layui-side" id="app-sidebar">
+    <div class="layui-side febs-theme-white" id="app-sidebar">
         <div class="layui-side-scroll">
             <div id="logo-img" style="cursor: pointer;text-align:center">
                 <img data-th-src="@{febs/images/cardinal_logo_small.png}" width="245px" height="50px">
@@ -84,7 +85,7 @@
                     template
                     lay-api="getMenus"
                     lay-done="layui.element.render('nav','febs-sidebar');layui.febs.sidebarFocus()">
-                <img data-th-src="@{febs/images/navi_qff.png}" width="125px" height="125px" style="padding-left: 50px">
+                <img data-th-src="@{febs/images/navi_qff.png}" width="125px" height="125px" style="padding-left: 50px;margin-top: 30px">
                 <ul class="layui-nav layui-nav-tree" lay-filter="febs-sidebar" lay-shrink="all">
                     {{#
                     function __createSlidebar(data,index){
@@ -94,7 +95,7 @@
                         layui.each(data,function(i,child){
                         var left = index == 0 ? 50 : 50 + index * 20;
                         html += '
-                        <dd><a style="padding-left:' + left + 'px;background-color:#fff;color: #000;" target="'+(child.target||'')+'"
+                        <dd><a style="padding-left:' + left + 'px;" target="'+(child.target||'')+'"
                                lay-href="'+ (child.href||'') +'">' + child.title + '</a>';
                             if(child.childs) html += __createSlidebar(child.childs,index+1);
                             html += '
@@ -109,9 +110,9 @@
                     layui.each(d.childs, function(i,child){
                     }}
                     <li class="layui-nav-item">
-                        <a lay-href="{{child.href||''}}" target="{{child.target||''}}" title="{{child.title}}" style="color: #000"><i
+                        <a lay-href="{{child.href||''}}" target="{{child.target||''}}" title="{{child.title}}" ><i
                                 class="layui-icon {{child.icon}}"></i>{{child.title}} {{# if(child.notice){ }}<span
-                                class="layui-badge">{{ child.notice }}</span>{{# } }}</a>
+                                class="layui-badge" >{{ child.notice }}</span>{{# } }}</a>
                         {{ __createSlidebar(child.childs,0) }}
                     </li>
                     {{# }) }}
@@ -122,7 +123,7 @@
     <!-- 主体内容 -->
     <div class="layui-body" id="febs-body" style="padding-top:95px"></div>
     <!-- 脚-->
-    <div class="layui-header layui-anim febs-anim-down" id="app-foot"  style="background-color: #00A1DD;" >
+    <div class="layui-header layui-anim febs-anim-down " id="app-foot"  style="background-color: #00A1DD;" >
         <div id = "title" style="margin-top: 13px;margin-left: 44%;" >
             <div style="margin-right: 5%">
                 <div style="border: 5px;border-left: 1px solid #000;border-right:1px solid #000;float: right;width: 80px"><div style="margin-left: 14px">隐私保护</div></div>
@@ -145,7 +146,7 @@
 
         var element = layui.element;
 
-        initTheme();
+   /*     initTheme();*/
 
         $view.find('#user-avatar').attr('src', ctx + "febs/images/avatar/" + currentUser.avatar);
 
@@ -167,7 +168,7 @@
             febs.navigate("/user/profile");
         });
 
-        function initTheme() {
+     /*   function initTheme() {
             var theme = currentUser.theme;
             var $sidebar = $('#app-sidebar');
             if (theme === 'black') {
@@ -176,7 +177,7 @@
             if (theme === 'white') {
                 $sidebar.addClass('febs-theme-white');
             }
-        }
+        }*/
 
         $(function () {
             var time = new Date();

@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.neefull</groupId>
-    <artifactId>fsp</artifactId>
+    <artifactId>qff</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
     <properties>
@@ -63,6 +63,8 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+
     </dependencies>
 
 
