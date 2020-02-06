@@ -41,7 +41,8 @@
                         <dd><a class="layui-nav-child-href" id="user-profile">个人中心</a></dd>
                         <dd><a class="layui-nav-child-href" id="password-update">密码修改</a></dd>
                         <hr/>
-                        <dd><a class="layui-nav-child-href" data-th-href="@{logout}">退出登录</a></dd>
+                        <!--<dd><a class="layui-nav-child-href" data-th-href="@{logout}">退出登录</a></dd>-->
+                        <dd><a class="layui-nav-child-href" onclick="redirt()">退出登录</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -134,7 +135,6 @@
         <div style="margin-left: 80%;float: right">
 
         </div>
-
     </div>
 </div>
 
@@ -168,6 +168,7 @@
             febs.navigate("/user/profile");
         });
 
+        
      /*   function initTheme() {
             var theme = currentUser.theme;
             var $sidebar = $('#app-sidebar');
@@ -179,11 +180,17 @@
             }
         }*/
 
+     
         $(function () {
             var time = new Date();
             var year = time.getFullYear();
             $('#title').append('版权所有 @ 上药康德乐有限公司 '+year+' 保留一切权力');
         })
+        
+        window.redirt=function () {
+            window.location.href = 'http://106.14.99.137:8081/login'
+            // window.open("http://192.168.0.100:8081/login");
+        }
 
     });
 </script>

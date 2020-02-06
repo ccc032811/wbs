@@ -89,10 +89,15 @@
     .layui-form-item-rigth{
         border-right: 1px solid #000;
     }
-    .layui-col-sm4 {
+    .layui-col-sm4,.layui-col-sm6 {
         border-left: 1px solid #000;
         border-top: 1px solid #000;
         height: 39px;
+    }
+    .layui-col-sm12{
+        border-left: 1px solid #000;
+        border-top: 1px solid #000;
+        height: 100px;
     }
     .layui-form-label {
         float: left;
@@ -108,7 +113,7 @@
     .layui-input-block{
         height: 39px;
     }
-    .layui-input{
+    .layui-input, .layui-textarea {
         width: 100%;
     }
     .layui-form-item .layui-inline {
@@ -206,6 +211,15 @@
                 <div class="layui-input-block">
                     <input type="text" name="repDate" id="recent-repDate" class="layui-input" placeholder="请选择时间">
                 </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth" >
+            <div class="layui-inline layui-col-sm12" >
+                <label class="layui-form-label " style="height: 80px;"><div style="margin-top: 20px">变更记录</div></label>
+                <div class="layui-input-block" >
+                    <textarea id="" name=""  placeholder="请输入" class="layui-textarea" ></textarea>
+                </div>
+
             </div>
         </div>
         <div class="layui-form-item"><div style="border-top: 1px solid #000;margin-top: 1px"></div></div>

@@ -76,7 +76,7 @@ public class RocheController extends BaseController {
      * @return
      */
     @GetMapping("/list")
-    @RequiresPermissions("refund:view")
+    @RequiresPermissions("roche:view")
     public FebsResponse getRochePage(Roche roche){
         IPage<Roche> pageInfo = rocheService.getRochePage(roche);
         Map<String, Object> dataTable = getDataTable(pageInfo);
@@ -90,7 +90,7 @@ public class RocheController extends BaseController {
      */
     @Qff("删除罗氏内部QFF")
     @GetMapping("/deleteRoche/{id}")
-    @RequiresPermissions("refund:del")
+    @RequiresPermissions("roche:del")
     public FebsResponse updateRocheStatus(@PathVariable Integer id) throws FebsException {
         Roche roche = new Roche();
         roche.setId(id);
@@ -108,7 +108,7 @@ public class RocheController extends BaseController {
      * @throws FebsException
      */
     @GetMapping("/queryRoche")
-    @RequiresPermissions("refund:view")
+    @RequiresPermissions("roche:view")
     public FebsResponse queryRocheById(Integer id) throws FebsException {
         Roche roche = rocheService.queryRocheById(id);
         if(roche==null){
@@ -135,7 +135,7 @@ public class RocheController extends BaseController {
      */
     @Qff("提交罗氏内部QFF流程")
     @PostMapping("/commit")
-    @RequiresPermissions("refund:audit")
+    @RequiresPermissions("roche:audit")
     public FebsResponse commitProcess(Roche roche) throws FebsException {
         User user = getCurrentUser();
         try {
@@ -153,7 +153,7 @@ public class RocheController extends BaseController {
      */
     @Qff("同意罗氏内部QFF任务")
     @PostMapping("/agree")
-    @RequiresPermissions("refund:audit")
+    @RequiresPermissions("roche:audit")
     public FebsResponse agreeCurrentProcess(Roche roche) throws FebsException {
         User user = getCurrentUser();
         List<String> group = processService.getGroupId(roche,user);

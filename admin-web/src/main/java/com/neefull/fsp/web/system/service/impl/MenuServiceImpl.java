@@ -99,6 +99,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         shiroRealm.clearCache();
     }
 
+    @Override
+    public List<Menu> findUserPermissionList(String userName) {
+
+        return this.baseMapper.findUserPermissionList(userName);
+    }
+
     private List<MenuTree<Menu>> convertMenus(List<Menu> menus) {
         List<MenuTree<Menu>> trees = new ArrayList<>();
         menus.forEach(menu -> {

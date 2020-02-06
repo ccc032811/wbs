@@ -50,6 +50,20 @@
         ORDER BY
         m.order_num
     </select>
+    <select id="findUserPermissionList" resultType="com.neefull.fsp.web.system.entity.Menu">
+        SELECT
+        m.perms
+        FROM
+        role r
+        LEFT JOIN user_role ur ON (r.role_id = ur.role_id)
+        LEFT JOIN t_user u ON (u.user_id = ur.user_id)
+        LEFT JOIN role_menu rm ON (rm.role_id = r.role_id)
+        LEFT JOIN menu m ON (m.menu_id = rm.menu_id)
+        WHERE
+            u.username = #{userName}
+          AND m.perms is not null
+          AND m.perms &lt;&gt; ''
+    </select>
 
     <!-- 递归删除菜单，findMenuChildren为自定义的 MySQL函数，作用为根据当前 menuId递归查找出其所有下级菜单或按钮-->
     <delete id="deleteMenus" parameterType="string">

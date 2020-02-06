@@ -1,6 +1,7 @@
 package com.neefull.fsp.web.system.controller;
 
 import com.neefull.fsp.web.common.authentication.ShiroHelper;
+import com.neefull.fsp.web.common.authentication.ShiroRealm;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsConstant;
 import com.neefull.fsp.web.common.utils.DateUtil;
@@ -11,6 +12,7 @@ import com.neefull.fsp.web.system.service.IAuthFreelancerService;
 import com.neefull.fsp.web.system.service.IProjectService;
 import com.neefull.fsp.web.system.service.IUserService;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.ExpiredSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * @author pei.wang
@@ -40,6 +46,7 @@ public class ViewController extends BaseController {
     private IAuthFreelancerService authFreelancerService;
     @Autowired
     private IProjectService projectService;
+
 
     @GetMapping("login")
     @ResponseBody
@@ -69,9 +76,10 @@ public class ViewController extends BaseController {
         AuthorizationInfo authorizationInfo = shiroHelper.getCurrentuserAuthorizationInfo();
         User user = super.getCurrentUser();
         user.setPassword("It's a secret");
-        model.addAttribute("user", userService.findByName(user.getUsername())); // 获取实时的用户信息
+        model.addAttribute("user", userService.findByName(user.getUsername()));
         model.addAttribute("permissions", authorizationInfo.getStringPermissions());
         model.addAttribute("roles", authorizationInfo.getRoles());
+
         return "index";
     }
 

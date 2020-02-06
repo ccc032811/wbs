@@ -31,4 +31,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @param menuId menuId
      */
     void deleteMenus(String menuId);
+
+    List<Menu> findUserPermissionList(String userName);
 }

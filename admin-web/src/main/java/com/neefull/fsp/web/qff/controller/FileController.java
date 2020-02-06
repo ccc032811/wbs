@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
+import com.neefull.fsp.web.qff.aspect.Qff;
 import com.neefull.fsp.web.qff.config.ProcessInstanceProperties;
 import com.neefull.fsp.web.qff.config.SendMailProperties;
 import com.neefull.fsp.web.qff.entity.Recent;
@@ -141,6 +142,7 @@ public class FileController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Qff("解析近效期QFF")
     @PostMapping("/resolver")
     @RequiresPermissions("recent:import")
     public FebsResponse uploadExcel(MultipartFile file) throws FebsException {

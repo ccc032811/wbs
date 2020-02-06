@@ -105,6 +105,9 @@ public class LoginController extends BaseController {
         return new FebsResponse().success().data(data);
     }
 
+
+
+
     @GetMapping("images/captcha")
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
         CaptchaUtil.outPng(110, 34, 4, Captcha.TYPE_ONLY_NUMBER, request, response);
