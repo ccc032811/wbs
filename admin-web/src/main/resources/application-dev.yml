@@ -12,8 +12,8 @@ spring:
       hikari:
         connection-timeout: 30000
         max-lifetime: 1800000
-        max-pool-size: 15
-        min-idle: 5
+        max-pool-size: 6
+        min-idle: 6
         connection-test-query: select 1
         pool-name: FebsHikariCP
       # 配置默认数据源

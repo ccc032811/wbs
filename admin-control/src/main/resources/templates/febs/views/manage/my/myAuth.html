@@ -1,0 +1,68 @@
+<style>
+    .item{
+        width: 20px;
+        height: 20px;
+        position: relative;
+        top: 35px;
+        right:-10px;
+        text-align: center;
+        color: #00A1DD
+    }
+</style>
+<div class="layui-fluid layui-anim febs-anim" id="fbs-serve" lay-title="我的工作台">
+    <div style="height: 60px;width: 100%">
+        <div  style="margin-top: 20px;margin-left: 15px;float: left">
+            <img data-th-src="@{febs/images/star.png}" width="30px" height="30px">
+        </div>
+       <div style="margin-top: 28px;margin-left: 5px;float: left">
+           <span >常用服务</span>
+       </div>
+    </div>
+    <div class="layui-row febs-container" style="border-top: 1px solid #CDCDCD;height: 970px">
+        <div class="layui-card-body febs-table-full" id = "serve-menu" >
+
+        <!--    <div style="height: 100px; width: 280px;border:1px solid #000;float:left;margin-left: 15px;background-color: white"  shiro:hasPermission="manage:auth">
+                <div style="height: 100px;width: 60px;float: left;">
+                    <img src="febs/images/qff_build.png" width="100px" height="80px" style="margin-top: 20px;margin-left: 5px; ">
+                </div>
+                <div style="height: 100px;width: 220px;float: left;">
+                    <a class="item" href="http://192.168.0.101:8083" onclick="skip()"><h2>QFF管理系统</h2></a>
+                </div>
+            </div>
+-->
+        </div>
+    </div>
+</div>
+
+
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['febs'], function () {
+        var $ = layui.$,
+            febs = layui.febs;
+
+
+        $.get(ctx+ "serveMenu/queryServe", null , function (date) {
+            var menus = date.data;
+            $.each(menus, function (index, item) {
+                if(currentUser.permissionSet.includes(item.perms)){
+
+                    $("#serve-menu").append('<div style="height: 100px; width: 280px;border:1px solid #000;float:left;margin-left: 15px;margin-top: 10px ;background-color: white" >\n' +
+                        '                <div style="height: 100px;width: 60px;float: left;">\n' +
+                        '                    <img src="febs/images/qff_build.png" width="80px" height="75px" style="margin-top: 17px;margin-left: 5px; ">\n' +
+                        '                </div>\n' +
+                        '                <div style="height: 100px;width: 220px;float: left;">\n' +
+                        '                    <a class="item" href='+item.adress+' onclick="skip()"><h2>'+item.name+'</h2></a>\n' +
+                        '                </div>\n' +
+                        '            </div>')
+                    }
+            })
+        })
+
+      /*  window.skip = function () {
+            window.location.href = 'http://192.168.0.101:8083';
+            // window.open("http://106.14.99.137:8083");
+        };
+*/
+
+    });
+</script>

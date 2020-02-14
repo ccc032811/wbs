@@ -103,6 +103,12 @@ public class Recent implements Serializable {
     @TableField("rep_date")
     private String repDate;
     /**
+     *  变更记录
+     */
+    @TableField("alteration")
+    @ExcelField(value = "变更记录")
+    private String alteration;
+    /**
      *  图片
      */
     @TableField(exist = false)
@@ -252,6 +258,14 @@ public class Recent implements Serializable {
 
     public void setRepDate(String repDate) {
         this.repDate = repDate;
+    }
+
+    public String getAlteration() {
+        return alteration;
+    }
+
+    public void setAlteration(String alteration) {
+        this.alteration = alteration;
     }
 
     public String getImages() {

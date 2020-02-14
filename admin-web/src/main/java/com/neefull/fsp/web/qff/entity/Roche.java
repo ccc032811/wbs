@@ -127,6 +127,12 @@ public class Roche implements Serializable {
     @ExcelField(value = "实际完成日期")
     private String actualDate;
     /**
+     *  变更记录
+     */
+    @TableField("alteration")
+    @ExcelField(value = "变更记录")
+    private String alteration;
+    /**
      *  图片
      */
     @TableField(exist = false)
@@ -295,6 +301,14 @@ public class Roche implements Serializable {
 
     public void setActualDate(String actualDate) {
         this.actualDate = actualDate;
+    }
+
+    public String getAlteration() {
+        return alteration;
+    }
+
+    public void setAlteration(String alteration) {
+        this.alteration = alteration;
     }
 
     public String getImages() {

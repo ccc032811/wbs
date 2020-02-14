@@ -87,7 +87,7 @@
                     lay-api="getMenus"
                     lay-done="layui.element.render('nav','febs-sidebar');layui.febs.sidebarFocus()">
                 <img data-th-src="@{febs/images/navi_qff.png}" width="125px" height="125px" style="padding-left: 50px;margin-top: 30px">
-                <ul class="layui-nav layui-nav-tree" lay-filter="febs-sidebar" lay-shrink="all">
+                <ul class="layui-nav layui-nav-tree" lay-filter="febs-sidebar" lay-shrink="all" style="margin-top: 20px">
                     {{#
                     function __createSlidebar(data,index){
                     if(!data || data.length == 0) return '';
@@ -188,8 +188,8 @@
         })
         
         window.redirt=function () {
-            window.location.href = 'http://106.14.99.137:8081/login'
-            // window.open("http://192.168.0.100:8081/login");
+            window.location.href = 'http://106.14.99.137:8084/login'
+            // window.open("http://192.168.0.101:8084/login");
         }
 
     });

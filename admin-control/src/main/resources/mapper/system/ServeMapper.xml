@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neefull.fsp.web.system.mapper.ServeMapper">
+    <update id="updateStatusById" parameterType="com.neefull.fsp.web.system.entity.ServeMenu">
+        update serve_menu set status = #{status} ,revise_person = #{revisePerson}  where id = #{id}
+    </update>
+
+    <select id="getServeMenu" resultType="com.neefull.fsp.web.system.entity.ServeMenu">
+        select * from serve_menu where 1=1
+        <if test="serveMenu.name!=null and serveMenu.name!=''">
+            and name like concat('%',#{serveMenu.name},'%')
+        </if>
+        <if test="serveMenu.status!=null and serveMenu.status!=''">
+            and status = #{serveMenu.status}
+        </if>
+    </select>
+    <select id="queryServe" resultType="com.neefull.fsp.web.system.entity.ServeMenu">
+        select * from serve_menu s inner join menu m on s.name = m.menu_name where status = '1'
+    </select>
+</mapper>

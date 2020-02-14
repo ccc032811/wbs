@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neefull.fsp.web.system.mapper.UserMapper">
+    <sql id="findUserDetailSql">
+        SELECT
+        u.user_id userId,
+        u.username,
+        u.email,
+        u.mobile,
+        u.status,
+        u.create_time createTime,
+        u.ssex sex,
+        u.dept_id deptId,
+        u.last_login_time lastLoginTime,
+        u.modify_time modifyTime,
+        u.description,
+        u.avatar,
+        d.dept_name deptName,
+        GROUP_CONCAT(r.role_id) roleId,
+        GROUP_CONCAT(r.ROLE_NAME) roleName,
+        u.user_type userType,
+        u.auth_status authStatus
+        FROM
+        t_user u
+        LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
+        LEFT JOIN user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN role r ON r.role_id = ur.role_id
+        WHERE 1 = 1 and u.user_type <![CDATA[ <> ]]> '2'
+        <if test="user.username != null and user.username != ''">
+            AND u.username = #{user.username}
+        </if>
+        <if test="user.deptId != null and user.deptId != ''">
+            AND d.dept_id = #{user.deptId}
+        </if>
+        <if test="user.sex != null and user.sex != ''">
+            AND u.ssex = #{user.sex}
+        </if>
+        <if test="user.status != null and user.status != ''">
+            AND u.status = #{user.status}
+        </if>
+        <if test="user.mobile != null and user.mobile != ''">
+            AND u.mobile = #{user.mobile}
+        </if>
+        <if test="user.createTimeFrom != null and user.createTimeFrom !=''">
+            And u.create_time &gt; #{user.createTimeFrom}
+        </if>
+        <if test="user.createTimeTo!= null and user.createTimeTo !=''">
+            And u.create_time &lt; #{user.createTimeTo}
+        </if>
+        <if test="user.userType != null and user.userType != ''">
+            And u.user_type = #{user.userType}
+        </if>
+        group by u.user_id
+    </sql>
+    <sql id="findSysUserDetailSql">
+        SELECT
+        u.user_id userId,
+        u.username,
+        u.email,
+        u.mobile,
+        u.status,
+        u.create_time createTime,
+        u.ssex sex,
+        u.dept_id deptId,
+        u.last_login_time lastLoginTime,
+        u.modify_time modifyTime,
+        u.description,
+        u.avatar,
+        d.dept_name deptName,
+        GROUP_CONCAT(r.role_id) roleId,
+        GROUP_CONCAT(r.ROLE_NAME) roleName,
+        u.user_type userType,
+        u.auth_status authStatus
+        FROM
+        t_user u
+        LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
+        LEFT JOIN user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN role r ON r.role_id = ur.role_id
+        WHERE u.user_type = '2'
+        <if test="user.username != null and user.username != ''">
+            AND u.username = #{user.username}
+        </if>
+        <if test="user.deptId != null and user.deptId != ''">
+            AND d.dept_id = #{user.deptId}
+        </if>
+        <if test="user.sex != null and user.sex != ''">
+            AND u.ssex = #{user.sex}
+        </if>
+        <if test="user.status != null and user.status != ''">
+            AND u.status = #{user.status}
+        </if>
+        <if test="user.mobile != null and user.mobile != ''">
+            AND u.mobile = #{user.mobile}
+        </if>
+        <if test="user.createTimeFrom != null and user.createTimeFrom !=''">
+            And u.create_time &gt; #{user.createTimeFrom}
+        </if>
+        <if test="user.createTimeTo!= null and user.createTimeTo !=''">
+            And u.create_time &lt; #{user.createTimeTo}
+        </if>
+        group by u.user_id
+    </sql>
+    <select id="findUserDetailPage" parameterType="user" resultType="user">
+        <include refid="findUserDetailSql"/>
+    </select>
+    
+    <select id="getAllUseUserLst" resultType="com.neefull.fsp.web.system.entity.User">
+        select * from t_user where user_type <![CDATA[ <> ]]> '2'
+    </select>
+
+    <select id="findSysUserDetailPage" parameterType="user" resultType="user">
+        <include refid="findSysUserDetailSql"/>
+    </select>
+
+    <select id="findUserDetail" parameterType="user" resultType="user">
+        <include refid="findUserDetailSql"/>
+    </select>
+
+    <select id="findSysUserDetail" parameterType="user" resultType="user">
+        <include refid="findSysUserDetailSql"/>
+    </select>
+
+    <select id="findByName" parameterType="string" resultType="user">
+        SELECT
+        u.user_id userId,
+        u.username,
+        u.email,
+        u.mobile,
+        u.password,
+        u.status,
+        u.create_time createTime,
+        u.ssex sex,
+        u.dept_id deptId,
+        u.last_login_time lastLoginTime,
+        u.modify_time modifyTime,
+        u.description,
+        u.user_type userType,
+        u.avatar,
+        u.theme,
+        u.is_tab isTab,
+        d.dept_name deptName,
+        GROUP_CONCAT(r.role_id) roleId,
+        GROUP_CONCAT(r.ROLE_NAME) roleName
+        FROM
+        t_user u
+        LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
+        LEFT JOIN user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN role r ON r.role_id = ur.role_id
+        WHERE u.username = #{username}
+        group by u.username
+    </select>
+    
+    <update id="updateUserAuthStatus">
+        update t_user set auth_status = #{authStatus},modify_time=NOW() where user_id = #{userId}
+    </update>
+    
+    <select id="getUserDistribution" resultType="Map">
+        SELECT CASE WHEN user_type = '0' THEN '企业用户' WHEN user_type = '1' THEN '自由职业者'
+        WHEN user_type = '2' THEN '系统用户' WHEN user_type is null or user_type = '' THEN '无类型' END 'name',
+        COUNT(1) 'y' FROM t_user GROUP BY user_type
+    </select>
+
+    <insert id="saveReturnPrimaryKey" useGeneratedKeys="true" keyProperty="userId" parameterType="com.neefull.fsp.web.system.entity.User">
+        insert into t_user(user_id,username,password,dept_id,email,mobile,status,create_time,modify_time,ssex,is_tab,
+        theme,avatar,user_type,auth_status,card_status)
+        VALUES (#{userId},#{username},#{password},#{deptId},#{email},#{mobile},#{status},NOW(),NOW(),#{sex},
+        #{isTab},#{theme},#{avatar},#{userType},#{authStatus},#{cardStatus})
+    </insert>
+</mapper>

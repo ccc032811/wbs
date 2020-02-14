@@ -182,6 +182,13 @@ public class Commodity implements Serializable {
     @ExcelField(value = "产品分类")
     private String classify;
     /**
+     *  变更记录
+     */
+    @TableField("alteration")
+    @ExcelField(value = "变更记录")
+    private String alteration;
+
+    /**
      *  图片
      */
     @TableField(exist = false)
@@ -434,6 +441,14 @@ public class Commodity implements Serializable {
 
     public void setClassify(String classify) {
         this.classify = classify;
+    }
+
+    public String getAlteration() {
+        return alteration;
+    }
+
+    public void setAlteration(String alteration) {
+        this.alteration = alteration;
     }
 
     public String getImages() {

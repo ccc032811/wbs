@@ -41,5 +41,9 @@ public class QffLogController extends BaseController {
         return new FebsResponse().success().data(dataTable);
     }
 
+    @GetMapping("/health")
+    public FebsResponse getHealth(){
+        return new FebsResponse().success().message("1");
+    }
 
 }

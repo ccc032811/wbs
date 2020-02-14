@@ -1,0 +1,77 @@
+<style>
+    #serveMenu-add {
+        padding: 20px 25px 25px 0;
+    }
+
+    #serveMenu-add .layui-form-label {
+        width: 88px;
+    }
+
+    #serveMenu-add .layui-input-block {
+        margin-left: 120px;
+    }
+</style>
+<div class="layui-fluid" id="serveMenu-add">
+    <form class="layui-form" action="" lay-filter="serveMenu-add-form">
+         <div class="layui-form-item">
+             <label class="layui-form-label febs-form-item-require">服务名称：</label>
+             <div class="layui-input-block">
+                 <input type="text" name="name" maxlength="20" lay-verify="range|required"
+                        autocomplete="off" class="layui-input">
+             </div>
+         </div>
+         <div class="layui-form-item">
+             <label class="layui-form-label febs-form-item-require">服务地址：</label>
+             <div class="layui-input-block">
+                 <input type="text" name="adress" maxlength="50" lay-verify="range|required"
+                        autocomplete="off" class="layui-input">
+             </div>
+         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label febs-form-item-require">创建人：</label>
+            <div class="layui-input-block">
+                <input type="text" name="createPerson" maxlength="50" lay-verify="range|required"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+         <div class="layui-form-item">
+             <label class="layui-form-label">修改人：</label>
+             <div class="layui-input-block">
+                 <input type="text" name="revisePerson" maxlength="20" lay-verify="range"
+                        autocomplete="off" class="layui-input">
+             </div>
+         </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-block">
+                <textarea name="remark" maxlength="50" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div   style="text-align: center;">
+                <button class="layui-btn" lay-submit="" lay-filter="serveMenu-add-form-submit" id="submit">提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    layui.use(['jquery', 'febs', 'form', 'validate'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            form = layui.form,
+            $view = $('#serveMenu-add');
+
+        form.render();
+
+        form.on('submit(serveMenu-add-form-submit)', function (data) {
+            febs.post(ctx + 'serveMenu/add', data.field, function () {
+                layer.closeAll();
+                febs.alert.success('新增任务成功');
+                $('#febs-serveMenu').find('#serveMenu-query').click();
+            });
+            return false;
+        });
+
+    });
+</script>

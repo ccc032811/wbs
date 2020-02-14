@@ -33,7 +33,7 @@ public class QffLogServiceImpl extends ServiceImpl<QffLogMapper, QffLog> impleme
     public void addQffLog(ProceedingJoinPoint point,QffLog qffLog) {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
-        com.neefull.fsp.web.common.annotation.Log logAnnotation = method.getAnnotation(com.neefull.fsp.web.common.annotation.Log.class);
+        com.neefull.fsp.web.qff.aspect.Qff logAnnotation = method.getAnnotation(com.neefull.fsp.web.qff.aspect.Qff.class);
         qffLog.setMethod(point.getSignature().getDeclaringTypeName() + "." + point.getSignature().getName());
         if (logAnnotation != null) {
             qffLog.setOperation(logAnnotation.value());
