@@ -28,8 +28,9 @@ spring:
     ssl: true   #是否为ssl连接
     host: smtp.163.com   #smtp服务器地址
     timeout: 1000   #连接超时
-
-
+  mvc:
+    favicon:
+      enabled: true
 mybatis-plus:
   # 实体类扫描路径
   type-aliases-package: com.neefull.fsp.web.system.entity,com.neefull.fsp.web.generator.entity,com.neefull.fsp.web.job.entity
@@ -40,6 +41,7 @@ mybatis-plus:
   global-config:
     # 关闭 mybatis-plus的 banner
     banner: false
+
 
 
 qff:

@@ -71,7 +71,7 @@
         FROM
         menu
         WHERE
-        menu_id IN ( SELECT m.menu_id FROM ( SELECT menu_id FROM t_menu WHERE FIND_IN_SET( menu_id, findMenuChildren (
+        menu_id IN ( SELECT m.menu_id FROM ( SELECT menu_id FROM menu WHERE FIND_IN_SET( menu_id, findAdminMenuChildren (
         #{menuId} ) ) > 0 ) m )
     </delete>
 </mapper>

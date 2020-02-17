@@ -9,12 +9,12 @@
         color: #00A1DD
     }
 </style>
-<div class="layui-fluid layui-anim febs-anim" id="fbs-serve" lay-title="我的工作台">
+<div class="layui-fluid layui-anim febs-anim" id="fbs-serve " lay-title="我的工作台">
     <div style="height: 60px;width: 100%">
         <div  style="margin-top: 20px;margin-left: 15px;float: left">
-            <img data-th-src="@{febs/images/star.png}" width="30px" height="30px">
+            <img data-th-src="@{febs/images/star.png}" width="20px" height="20px">
         </div>
-       <div style="margin-top: 28px;margin-left: 5px;float: left">
+       <div style="margin-top: 22px;margin-left: 5px;float: left">
            <span >常用服务</span>
        </div>
     </div>
@@ -46,7 +46,7 @@
             $.each(menus, function (index, item) {
                 if(currentUser.permissionSet.includes(item.perms)){
 
-                    $("#serve-menu").append('<div style="height: 100px; width: 280px;border:1px solid #000;float:left;margin-left: 15px;margin-top: 10px ;background-color: white" >\n' +
+                    $("#serve-menu").append('<div style="height: 100px; width: 280px;float:left;margin-left: 15px;margin-top: 10px ;box-shadow: 0px 1px 6px 0px #827a7a;" >\n' +
                         '                <div style="height: 100px;width: 60px;float: left;">\n' +
                         '                    <img src="febs/images/qff_build.png" width="80px" height="75px" style="margin-top: 17px;margin-left: 5px; ">\n' +
                         '                </div>\n' +

@@ -1617,9 +1617,9 @@ VALUES (7, 80);
 -- ----------------------------
 -- Function structure for findDeptChildren
 -- ----------------------------
-DROP FUNCTION IF EXISTS `findDeptChildren`;
+DROP FUNCTION IF EXISTS `findAdminDeptChildren`;
 delimiter ;;
-CREATE FUNCTION `findDeptChildren`(rootId INT)
+CREATE FUNCTION `findAdminDeptChildren`(rootId INT)
     RETURNS varchar(4000) CHARSET utf8
 BEGIN
     DECLARE sTemp VARCHAR(4000);
@@ -1630,7 +1630,7 @@ BEGIN
     SET sTemp = CONCAT(sTemp, ',', sTempChd);
     SELECT GROUP_CONCAT(dept_id)
     INTO sTempChd
-    FROM t_dept
+    FROM dept
     WHERE FIND_IN_SET(parent_id, sTempChd) > 0;
     END WHILE;
     RETURN sTemp;
@@ -1641,9 +1641,9 @@ delimiter ;
 -- ----------------------------
 -- Function structure for findMenuChildren
 -- ----------------------------
-DROP FUNCTION IF EXISTS `findMenuChildren`;
+DROP FUNCTION IF EXISTS `findAdminMenuChildren`;
 delimiter ;;
-CREATE FUNCTION `findMenuChildren`(rootId INT)
+CREATE FUNCTION `findAdminMenuChildren`(rootId INT)
     RETURNS varchar(4000) CHARSET utf8
 BEGIN
     DECLARE sTemp VARCHAR(4000);
@@ -1654,7 +1654,7 @@ BEGIN
     SET sTemp = CONCAT(sTemp, ',', sTempChd);
     SELECT GROUP_CONCAT(menu_id)
     INTO sTempChd
-    FROM t_menu
+    FROM menu
     WHERE FIND_IN_SET(parent_id, sTempChd) > 0;
     END WHILE;
     RETURN sTemp;

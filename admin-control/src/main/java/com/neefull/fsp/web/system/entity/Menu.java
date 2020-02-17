@@ -56,6 +56,7 @@ public class Menu implements Serializable {
      * 菜单URL
      */
     @TableField("URL")
+    @NotBlank(message = "{required}")
     @Size(max = 50, message = "{noMoreThan}")
     @ExcelField(value = "URL")
     private String url;
@@ -64,6 +65,7 @@ public class Menu implements Serializable {
      * 权限标识
      */
     @TableField("PERMS")
+    @NotBlank(message = "{required}")
     @Size(max = 50, message = "{noMoreThan}")
     @ExcelField(value = "权限")
     private String perms;
