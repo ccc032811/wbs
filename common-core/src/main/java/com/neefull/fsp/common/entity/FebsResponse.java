@@ -1,5 +1,6 @@
 package com.neefull.fsp.common.entity;
 
+
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.springframework.http.HttpStatus;

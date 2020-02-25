@@ -26,7 +26,6 @@
     </properties>
     <modules>
         <module>admin-web</module>
-        <module>app-service</module>
         <module>common-core</module>
     </modules>
     <dependencies>

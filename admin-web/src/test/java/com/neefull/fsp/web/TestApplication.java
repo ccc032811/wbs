@@ -1,6 +1,9 @@
 package com.neefull.fsp.web;
 
 import com.neefull.fsp.web.common.controller.BaseController;
+import com.neefull.fsp.web.qff.entity.Commodity;
+import com.neefull.fsp.web.system.entity.User;
+import com.neefull.fsp.web.system.service.IUserService;
 import org.activiti.engine.*;
 import org.activiti.engine.repository.Deployment;
 import org.junit.Test;
@@ -9,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 /**
  * @Author: chengchengchu
@@ -29,6 +34,8 @@ public class TestApplication extends BaseController {
     private TaskService taskService;
     @Autowired
     private ProcessEngineConfiguration configuration;
+    @Autowired
+    private IUserService userService;
 
     /**
      * 初始化表单
@@ -66,6 +73,24 @@ public class TestApplication extends BaseController {
 
     }
 
+  /*  commodityProcess: 到货养护分包出库QFF
+    recentProcess: 近效期QFF
+    refundProcess: 退货QFF
+    rocheProcess: 罗氏内部发起QFF
+    */
+    @Test
+    public void start(){
+        String businessKey = Commodity.class.getSimpleName()+":"+14;
+        runtimeService.startProcessInstanceByKey("到货养护分包出库QFF",businessKey);
+    }
+
+
+    @Test
+    public void dfg(){
+        List<User> allUseUserLst = userService.getAllUser();
+
+        System.out.println(allUseUserLst);
+    }
 
 
 
