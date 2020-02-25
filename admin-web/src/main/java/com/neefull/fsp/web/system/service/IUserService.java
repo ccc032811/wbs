@@ -3,8 +3,6 @@ package com.neefull.fsp.web.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.common.entity.QueryRequest;
-import com.neefull.fsp.web.system.entity.TemplateCorp;
-import com.neefull.fsp.web.system.entity.TemplateLancer;
 import com.neefull.fsp.web.system.entity.User;
 
 import java.util.List;
@@ -146,15 +144,7 @@ public interface IUserService extends IService<User> {
      */
     List<Map<String, String>> getUserDistribution();
 
-    /**
-     * 批量导入自由职业者
-     */
-    void batchLancerInsert(List<TemplateLancer> list);
 
-    /**
-     * 批量导入企业用户
-     */
-    void batchCorpInsert(List<TemplateCorp> list);
 
     /**查出部门下所有的用户
      * @param name
@@ -167,4 +157,18 @@ public interface IUserService extends IService<User> {
      * @return
      */
     List<User> findUserByRoleId(Integer id);
+
+
+    List<User> getAllUser();
+
+    /**根据名字 查询用户
+     * @param username
+     * @return
+     */
+    User getUserByName(String username);
+
+    /**插入用户
+     * @param typtUser
+     */
+    void insertUser(User typtUser);
 }

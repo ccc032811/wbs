@@ -51,6 +51,7 @@ public class ProcessServiceImpl implements IProcessService {
     private ProcessInstanceProperties properties;
 
     @Override
+    @Transactional
     public void commitProcess(Object object, User user) {
 
         Map<String,Object> variable = new HashMap<>();
@@ -135,6 +136,7 @@ public class ProcessServiceImpl implements IProcessService {
     }
 
     @Override
+    @Transactional
     public void agreeCurrentProcess(Object object, User user) {
         //设置更新的时间
         Map<String,Object> variable = new HashMap<>();
@@ -236,7 +238,6 @@ public class ProcessServiceImpl implements IProcessService {
                 }else {
                     processHistory.setDate(DateFormatUtils.format(taskInstance.getEndTime(),"yyyy-MM-dd"));
                 }
-
                 list.add(processHistory);
             }
         }
@@ -251,6 +252,7 @@ public class ProcessServiceImpl implements IProcessService {
     }
 
     @Override
+    @Transactional
     public void deleteInstance(Object object) {
 
         if(object instanceof Commodity){
@@ -276,14 +278,14 @@ public class ProcessServiceImpl implements IProcessService {
         }
 
     }
-
+    @Transactional
     private void delete(ProcessInstance processInstance){
         if(processInstance!=null){
             runtimeService.deleteProcessInstance(processInstance.getProcessInstanceId(),null);
         }
     }
 
-
+    @Transactional
     private void addOrEditImages(Object object ,User user) {
         String image = "";
 
@@ -325,13 +327,13 @@ public class ProcessServiceImpl implements IProcessService {
             }
         }
     }
-
+    @Transactional
     private void editCommodity(Commodity commodity){
         String format = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
         commodity.setRepTime(format);
         commodityService.editCommodity(commodity);
     }
-
+    @Transactional
     private void editRefund(Refund refund){
         String format = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
         refund.setRepTime(format);

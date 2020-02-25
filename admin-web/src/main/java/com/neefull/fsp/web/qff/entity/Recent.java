@@ -36,6 +36,7 @@ public class Recent implements Serializable {
      *  运输单号
      */
     @TableField("transport")
+    @ExcelField(value = "运输单号")
     private String transport;
     /**
      *  康德乐物料号

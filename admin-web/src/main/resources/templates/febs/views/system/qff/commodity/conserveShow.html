@@ -320,7 +320,7 @@
             <div class="layui-inline layui-col-sm12" >
                 <label class="layui-form-label " style="height: 80px;"><div style="margin-top: 20px">变更记录</div></label>
                 <div class="layui-input-block" >
-                    <textarea id="" name=""  placeholder="请输入" class="layui-textarea" ></textarea>
+                    <textarea id="" name="alteration" readonly   class="layui-textarea" ></textarea>
                 </div>
 
             </div>
@@ -383,7 +383,8 @@
                 "source": commodity.source,
                 "register": commodity.register,
                 "classify": commodity.classify,
-                "images": commodity.images
+                "images": commodity.images,
+                "alteration":commodity.alteration
             });
         }
 

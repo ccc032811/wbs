@@ -16,7 +16,7 @@ import java.util.Date;
  * @author pei.wang
  */
 @Data
-@TableName("t_log")
+@TableName("qff_log")
 @Excel("系统日志表")
 public class Log implements Serializable {
 

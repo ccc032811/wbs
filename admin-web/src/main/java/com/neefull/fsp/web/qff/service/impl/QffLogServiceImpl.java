@@ -30,6 +30,7 @@ public class QffLogServiceImpl extends ServiceImpl<QffLogMapper, QffLog> impleme
     private QffLogMapper qffLogMapper;
 
     @Override
+    @Transactional
     public void addQffLog(ProceedingJoinPoint point,QffLog qffLog) {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
@@ -38,7 +39,11 @@ public class QffLogServiceImpl extends ServiceImpl<QffLogMapper, QffLog> impleme
         if (logAnnotation != null) {
             qffLog.setOperation(logAnnotation.value());
         }
-        qffLog.setRequest(JSON.toJSONString(point.getArgs()));
+        try {
+            qffLog.setRequest(JSON.toJSONString(point.getArgs()));
+        } catch (Exception e) {
+            qffLog.setRequest("");
+        }
 
         save(qffLog);
 

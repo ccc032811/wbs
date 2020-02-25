@@ -1,18 +1,13 @@
 package com.neefull.fsp.web.system.controller;
 
 import com.neefull.fsp.web.common.authentication.ShiroHelper;
-import com.neefull.fsp.web.common.authentication.ShiroRealm;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsConstant;
 import com.neefull.fsp.web.common.utils.DateUtil;
 import com.neefull.fsp.web.common.utils.FebsUtil;
 import com.neefull.fsp.web.system.entity.*;
-import com.neefull.fsp.web.system.service.IAuthCorpService;
-import com.neefull.fsp.web.system.service.IAuthFreelancerService;
-import com.neefull.fsp.web.system.service.IProjectService;
 import com.neefull.fsp.web.system.service.IUserService;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.ExpiredSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Set;
 
 /**
  * @author pei.wang
@@ -40,12 +31,7 @@ public class ViewController extends BaseController {
     private IUserService userService;
     @Autowired
     private ShiroHelper shiroHelper;
-    @Autowired
-    private IAuthCorpService authCorpService;
-    @Autowired
-    private IAuthFreelancerService authFreelancerService;
-    @Autowired
-    private IProjectService projectService;
+
 
 
     @GetMapping("login")
@@ -157,7 +143,7 @@ public class ViewController extends BaseController {
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/project/detail/{id}")
     @RequiresPermissions("project:view")
     public String systemProjectDetail(@PathVariable String id, Model model) {
-        projectDetailModel(id, model, true);
+
         return FebsUtil.view("system/project/projectDetail");
     }
 
@@ -238,18 +224,6 @@ public class ViewController extends BaseController {
     private void resolveUserModel(String username, Model model, Boolean transform) {
         User user = userService.findByName(username);
         model.addAttribute("user", user);
-        if(User.USERTYPE_FREELANCER.equals(user.getUserType())){   // 0：自由职业者
-            AuthFreelancer authFreelancer = authFreelancerService.findByUserId(user.getUserId());
-            model.addAttribute("authLancer", authFreelancer != null ? authFreelancer : new AuthFreelancer());
-            model.addAttribute("authCorp", new AuthCorp());
-        }else if(User.USERTYPE_CORP.equals(user.getUserType())){   // 1:企业用户
-            AuthCorp authCorp = authCorpService.findByUserId(user.getUserId());
-            model.addAttribute("authLancer", new AuthFreelancer());
-            model.addAttribute("authCorp", authCorp != null ? authCorp : new AuthCorp());
-        }else if(User.USERTYPE_SYSTEM.equals(user.getUserType())){   //2:系统用户
-            model.addAttribute("authLancer", new AuthFreelancer());
-            model.addAttribute("authCorp", new AuthCorp());
-        }
         if (transform) {
             String ssex = user.getSex();
             if (User.SEX_MALE.equals(ssex)) user.setSex("男");
@@ -273,14 +247,5 @@ public class ViewController extends BaseController {
             model.addAttribute("lastLoginTime", DateUtil.getDateFormat(user.getLastLoginTime(), DateUtil.FULL_TIME_SPLIT_PATTERN));
     }
 
-    /**
-     * 项目信息详情页
-     * @param id 项目id
-     * @param model model
-     * @param transform transform
-     */
-    private void projectDetailModel(String id, Model model, Boolean transform){
-        Project project = projectService.getProjectById(id);
-        model.addAttribute("project", project);
-    }
+
 }

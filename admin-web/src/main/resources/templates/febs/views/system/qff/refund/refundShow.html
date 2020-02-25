@@ -298,7 +298,7 @@
             <div class="layui-inline layui-col-sm12" >
                 <label class="layui-form-label " style="height: 80px;"><div style="margin-top: 20px">变更记录</div></label>
                 <div class="layui-input-block" >
-                    <textarea id="" name=""  placeholder="请输入" class="layui-textarea" ></textarea>
+                    <textarea id="" name="alteration" readonly class="layui-textarea" ></textarea>
                 </div>
 
             </div>
@@ -358,7 +358,8 @@
                 "source": refund.source,
                 "register": refund.register,
                 "classify": refund.classify,
-                "images": refund.images
+                "images": refund.images,
+                "alteration":refund.alteration
             });
         }
 

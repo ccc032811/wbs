@@ -56,6 +56,7 @@ public class DateImageServiceImpl extends ServiceImpl<DateImageMapper, DateImage
     }
 
     @Override
+    @Transactional
     public void insertDateImage(Integer dataId, String vest, String relevance, String url) {
         DateImage dateImage = new DateImage();
         dateImage.setImage(url);
@@ -68,6 +69,7 @@ public class DateImageServiceImpl extends ServiceImpl<DateImageMapper, DateImage
     }
 
     @Override
+    @Transactional
     public void updateDateImage(Integer dataId, String vest, String relevance, String image) {
         DateImage dateImage = new DateImage();
         UpdateWrapper<DateImage> updateWrapper = new UpdateWrapper<>();
@@ -80,6 +82,7 @@ public class DateImageServiceImpl extends ServiceImpl<DateImageMapper, DateImage
     }
 
     @Override
+    @Transactional
     public void deleteImage(String url) {
         File file = new File(properties.getImagePath()+url);
         if(file.exists()){

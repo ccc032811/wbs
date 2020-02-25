@@ -21,10 +21,10 @@
         u.user_type userType,
         u.auth_status authStatus
         FROM
-        t_user u
-        LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
-        LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id)
-        LEFT JOIN t_role r ON r.role_id = ur.role_id
+        qff_user u
+        LEFT JOIN qff_dept d ON (u.dept_id = d.dept_id)
+        LEFT JOIN qff_user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN qff_role r ON r.role_id = ur.role_id
         WHERE 1 = 1 and u.user_type <![CDATA[ <> ]]> '2'
         <if test="user.username != null and user.username != ''">
             AND u.username = #{user.username}
@@ -72,10 +72,10 @@
         u.user_type userType,
         u.auth_status authStatus
         FROM
-        t_user u
-        LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
-        LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id)
-        LEFT JOIN t_role r ON r.role_id = ur.role_id
+        qff_user u
+        LEFT JOIN qff_dept d ON (u.dept_id = d.dept_id)
+        LEFT JOIN qff_user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN qff_role r ON r.role_id = ur.role_id
         WHERE u.user_type = '2'
         <if test="user.username != null and user.username != ''">
             AND u.username = #{user.username}
@@ -105,7 +105,7 @@
     </select>
     
     <select id="getAllUseUserLst" resultType="com.neefull.fsp.web.system.entity.User">
-        select * from t_user where user_type <![CDATA[ <> ]]> '2'
+        select * from qff_user where user_type <![CDATA[ <> ]]> '2'
     </select>
 
     <select id="findSysUserDetailPage" parameterType="user" resultType="user">
@@ -142,33 +142,39 @@
         GROUP_CONCAT(r.role_id) roleId,
         GROUP_CONCAT(r.ROLE_NAME) roleName
         FROM
-        t_user u
-        LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
-        LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id)
-        LEFT JOIN t_role r ON r.role_id = ur.role_id
+        qff_user u
+        LEFT JOIN qff_dept d ON (u.dept_id = d.dept_id)
+        LEFT JOIN qff_user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN qff_role r ON r.role_id = ur.role_id
         WHERE u.username = #{username}
         group by u.username
     </select>
     
     <update id="updateUserAuthStatus">
-        update t_user set auth_status = #{authStatus},modify_time=NOW() where user_id = #{userId}
+        update qff_user set auth_status = #{authStatus},modify_time=NOW() where user_id = #{userId}
     </update>
     
     <select id="getUserDistribution" resultType="Map">
         SELECT CASE WHEN user_type = '0' THEN '企业用户' WHEN user_type = '1' THEN '自由职业者'
         WHEN user_type = '2' THEN '系统用户' WHEN user_type is null or user_type = '' THEN '无类型' END 'name',
-        COUNT(1) 'y' FROM t_user GROUP BY user_type
+        COUNT(1) 'y' FROM qff_user GROUP BY user_type
     </select>
 
     <select id="findUserByDepartName" resultType="com.neefull.fsp.web.system.entity.User">
-        select * from t_user u left join t_dept d on u.dept_id = d.dept_id where dept_name = #{name}
+        select * from qff_user u left join qff_dept d on u.dept_id = d.dept_id where dept_name = #{name}
     </select>
     <select id="findUserByRoleId" resultType="com.neefull.fsp.web.system.entity.User">
-        select * from t_user u LEFT JOIN t_user_role ur on u.user_id = ur.user_id where ur.role_id = #{id}
+        select * from qff_user u LEFT JOIN qff_user_role ur on u.user_id = ur.user_id where ur.role_id = #{id}
+    </select>
+    <select id="getAllUser" resultType="com.neefull.fsp.web.system.entity.User">
+        select * from typt_user
+    </select>
+    <select id="getUserByName" resultType="com.neefull.fsp.web.system.entity.User">
+        select * from qff_user where username = #{username}
     </select>
 
     <insert id="saveReturnPrimaryKey" useGeneratedKeys="true" keyProperty="userId" parameterType="com.neefull.fsp.web.system.entity.User">
-        insert into t_user(user_id,username,password,dept_id,email,mobile,status,create_time,modify_time,ssex,is_tab,
+        insert into qff_user(user_id,username,password,dept_id,email,mobile,status,create_time,modify_time,ssex,is_tab,
         theme,avatar,user_type,auth_status,card_status)
         VALUES (#{userId},#{username},#{password},#{deptId},#{email},#{mobile},#{status},NOW(),NOW(),#{sex},
         #{isTab},#{theme},#{avatar},#{userType},#{authStatus},#{cardStatus})

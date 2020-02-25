@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * @author pei.wang
  */
 @Data
-@TableName("t_generator_config")
+@TableName("qff_generator_config")
 public class GeneratorConfig {
 
     public static final String TRIM_YES = "1";

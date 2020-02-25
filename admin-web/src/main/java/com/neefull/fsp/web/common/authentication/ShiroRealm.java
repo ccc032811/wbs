@@ -11,6 +11,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,15 +57,17 @@ public class ShiroRealm extends AuthorizingRealm {
 
         // 获取用户权限集
         List<Menu> permissionList = this.menuService.findUserPermissions(userName);
-        List<Menu> list = this.menuService.findUserPermissionList(userName);
+//        List<Menu> list = this.menuService.findUserPermissionList(userName);
 
         Set<String> permissionSet = permissionList.stream().map(Menu::getPerms).collect(Collectors.toSet());
-        Set<String> permissions = list.stream().map(Menu::getPerms).collect(Collectors.toSet());
-        Set<String> set = new HashSet<>();
-        set.addAll(permissionSet);
-        set.addAll(permissions);
-        simpleAuthorizationInfo.setStringPermissions(set);
-//        simpleAuthorizationInfo.setStringPermissions(permissionSet);
+//        Set<String> permissions = list.stream().map(Menu::getPerms).collect(Collectors.toSet());
+//        Set<String> set = new HashSet<>();
+//        set.addAll(permissionSet);
+//        set.addAll(permissions);
+//        simpleAuthorizationInfo.setStringPermissions(set);
+
+
+        simpleAuthorizationInfo.setStringPermissions(permissionSet);
         return simpleAuthorizationInfo;
     }
 
@@ -99,7 +102,13 @@ public class ShiroRealm extends AuthorizingRealm {
      * 然后调用其 clearCache方法。
      */
     public void clearCache() {
-        PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
-        super.clearCache(principals);
+        RealmSecurityManager rsm = (RealmSecurityManager)SecurityUtils.getSecurityManager();
+        ShiroRealm realm = (ShiroRealm) rsm.getRealms().iterator().next();
+        realm.clearAuthz();
+
+    }
+
+    public void clearAuthz(){
+        this.clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
     }
 }

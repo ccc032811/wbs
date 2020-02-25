@@ -5,6 +5,7 @@
     <userTask activiti:exclusive="true" id="_3" name="康德乐">
       <extensionElements>
         <activiti:taskListener class="com.neefull.fsp.web.qff.listener.CardinalListener" event="create"/>
+        <activiti:executionListener delegateExpression="${rochedListener}" event="start"/>
       </extensionElements>
     </userTask>
     <endEvent id="_4" name="EndEvent"/>

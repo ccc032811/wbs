@@ -47,12 +47,12 @@ public class QffLogAspect {
             return point.proceed();
         }
 
-        HttpServletRequest request = sra.getRequest();
-        log.info("URL : " + request.getRequestURL().toString());
-        log.info("HTTP_METHOD : " + request.getMethod());
-        log.info("IP : " + request.getRemoteAddr());
-        log.info("CLASS_METHOD : " + point.getSignature().getDeclaringTypeName() + "." + point.getSignature().getName());
-        log.info("REQUEST ARGS : " + JSON.toJSONString(point.getArgs()));
+//        HttpServletRequest request = sra.getRequest();
+//        log.info("URL : " + request.getRequestURL().toString());
+//        log.info("HTTP_METHOD : " + request.getMethod());
+//        log.info("IP : " + request.getRemoteAddr());
+//        log.info("CLASS_METHOD : " + point.getSignature().getDeclaringTypeName() + "." + point.getSignature().getName());
+//        log.info("REQUEST ARGS : " + JSON.toJSONString(point.getArgs()));
 
         long startTime = System.currentTimeMillis();
         Object response = null;

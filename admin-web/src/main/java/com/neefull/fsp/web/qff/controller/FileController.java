@@ -8,6 +8,7 @@ import com.neefull.fsp.web.qff.aspect.Qff;
 import com.neefull.fsp.web.qff.config.ProcessInstanceProperties;
 import com.neefull.fsp.web.qff.config.SendMailProperties;
 import com.neefull.fsp.web.qff.entity.Recent;
+import com.neefull.fsp.web.qff.entity.RecentResolver;
 import com.neefull.fsp.web.qff.service.IDateImageService;
 import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.service.IRecentService;
@@ -54,7 +55,7 @@ public class FileController extends BaseController {
     @Autowired
     private ProcessInstanceProperties properties;
 
-    private static final Integer SELECT_NUMBER = 2;
+    private static final Integer SELECT_NUMBER =2;
 
 
     /**查询需要完成任务
@@ -145,19 +146,34 @@ public class FileController extends BaseController {
     @Qff("解析近效期QFF")
     @PostMapping("/resolver")
     @RequiresPermissions("recent:import")
-    public FebsResponse uploadExcel(MultipartFile file) throws FebsException {
+    public FebsResponse resolverExcel(@RequestParam("file") MultipartFile file) throws FebsException {
 
         List<Recent> list = new ArrayList<>();
         List<Integer> errorList = new ArrayList();
 
+        if (file.isEmpty()) {
+            throw new FebsException("导入数据为空");
+        }
         try {
-            ExcelKit.$Import(Recent.class).readXlsx(file.getInputStream(), new ExcelReadHandler<Recent>() {
+            ExcelKit.$Import(RecentResolver.class).readXlsx(file.getInputStream(), new ExcelReadHandler<RecentResolver>() {
                 @Override
-                public void onSuccess(int sheetIndex, int rowIndex, Recent entity) {
+                public void onSuccess(int sheetIndex, int rowIndex, RecentResolver entity) {
                     if(rowIndex > SELECT_NUMBER){
-                        list.add(entity);
-                        recentService.addRecent(entity);
-                        processService.commitProcess(entity,getCurrentUser());
+                        Recent recent = new Recent();
+                        recent.setTransport(entity.getTransport());
+                        recent.setkMater(entity.getkMater());
+                        recent.setrMater(entity.getrMater());
+                        recent.setName(entity.getName());
+                        recent.setUseLife(entity.getUseLife());
+                        recent.setBatch(entity.getBatch());
+                        recent.setSapBatch(entity.getSapBatch());
+                        recent.setFactory(entity.getFactory());
+                        recent.setWareHouse(entity.getWareHouse());
+                        recent.setNumber(entity.getNumber());
+                        recent.setrConf(entity.getrConf());
+                        list.add(recent);
+//                        recentService.addRecent(recent);
+                        processService.commitProcess(recent,getCurrentUser());
                     }
                 }
                 @Override
@@ -168,6 +184,8 @@ public class FileController extends BaseController {
         } catch (IOException e) {
             throw new FebsException("导入文件失败");
         }
+
+
         if(errorList.size()>0){
             String count = null;
             for (int i=0;i<=errorList.size()-1;i++) {

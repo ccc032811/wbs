@@ -18,7 +18,7 @@ import java.util.Date;
  * @author pei.wang
  */
 @Data
-@TableName("t_dept")
+@TableName("qff_dept")
 @Excel("部门信息表")
 public class Dept implements Serializable {
 

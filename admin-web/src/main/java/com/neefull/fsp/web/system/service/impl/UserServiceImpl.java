@@ -1,5 +1,6 @@
 package com.neefull.fsp.web.system.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -16,7 +17,6 @@ import com.neefull.fsp.web.common.utils.SortUtil;
 import com.neefull.fsp.web.system.entity.*;
 import com.neefull.fsp.web.system.mapper.UserMapper;
 import com.neefull.fsp.web.system.service.*;
-import com.neefull.fsp.web.system.utils.MsgContentUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,14 +36,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private IUserRoleService userRoleService;
     @Autowired
     private ShiroRealm shiroRealm;
-    @Autowired
-    private IAuthFreelancerService authFreelancerService;
-    @Autowired
-    private IAuthCorpService authCorpService;
-    @Autowired
-    private IMsgInfoService msgInfoService;
-    @Autowired
-    private IMsgUserService msgUserService;
+
+    @DS("typt")
+    @Override
+    public List<User> getAllUser(){
+        return this.baseMapper.getAllUser();
+    }
+
+    @Override
+    public User getUserByName(String username) {
+        return this.baseMapper.getUserByName(username);
+    }
+
+    @Override
+    public void insertUser(User typtUser) {
+        this.baseMapper.saveReturnPrimaryKey(typtUser);
+    }
 
     @Override
     public User findByName(String username) {
@@ -217,29 +225,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User currentUser = FebsUtil.getCurrentUser();
         User user = new User();
 
-        //新增一条消息
-        MsgInfo msgInfo = MsgContentUtils.getAuthSuccessMsgInfo();
-        msgInfo = msgInfoService.saveReturnPrimaryKey(msgInfo);  //插入操作生成消息id
-
          for(String id:ids)
          {
              long lid = Long.valueOf(id);
              this.baseMapper.updateUserAuthStatus(lid, User.AUTH_STATUS_SUCCESS);
              //再去t_auth_freelancer表和t_auth_corp表更新实名状态
              user = this.baseMapper.selectById(lid);
-             if(User.USERTYPE_FREELANCER.equals(user.getUserType())){  //自由职业者
-                 authFreelancerService.updateLancerAuthStatus(lid);
-             }else if(User.USERTYPE_CORP.equals(user.getUserType())){  //企业用户
-                 AuthCorp authCorp = new AuthCorp();
-                 authCorp.setUserId(lid);
-                 authCorp.setAuthStatus(User.AUTH_STATUS_SUCCESS);
-                 authCorp.setAuthType(AuthCorp.AUTH_TYPE_PERSON);
-                 authCorp.setAuthpassTime(new Date());
-                 authCorp.setAuthpassUser(currentUser.getUserId());
-                authCorpService.updateAuthCorpByUserId(authCorp);
-             }
-            //给每个用户关联上消息id
-            msgUserService.saveMsgUserByUserIdAndMsgId(msgInfo.getId(), lid);
+
          }
     }
 
@@ -252,62 +244,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return this.baseMapper.getUserDistribution();
     }
 
-    /**
-     * 批量导入自由职业者
-     * @param list
-     */
-    @Override
-    @Transactional
-    public void batchLancerInsert(List<TemplateLancer> list) {
-        for(int i=0;i<list.size();i++){
-            User user = createUserInfo(list.get(i).getField2(), list.get(i).getField3(),
-                    list.get(i).getField4(), User.USERTYPE_FREELANCER);
-            //新增自由职业者相关信息
-            AuthFreelancer authFreelancer = new AuthFreelancer();
-            authFreelancer.setUserId(user.getUserId());
-            authFreelancer.setCardNo(list.get(i).getField7());
-            authFreelancer.setBankName(list.get(i).getField8());
-            authFreelancer.setBankCity(list.get(i).getField9());
-            authFreelancer.setBankAbbr(list.get(i).getField10());
-            authFreelancer.setBankLeaf(list.get(i).getField11());
-            authFreelancer.setIdNo(list.get(i).getField5());
-            authFreelancer.setRealName(list.get(i).getField6());
-            authFreelancer.setMobile(list.get(i).getField4());
-            authFreelancer.setAuthStatus(AuthFreelancer.AUTH_STATUS_DEFAULT);
-            authFreelancer.setCreateTime(new Date());
-            authFreelancer.setModifyTime(new Date());
-            authFreelancer.setIdImage1("default");
-            authFreelancerService.save(authFreelancer);
-        }
 
-    }
-
-    /**
-     * 批量导入企业用户
-     * @param list
-     */
-    @Override
-    @Transactional
-    public void batchCorpInsert(List<TemplateCorp> list) {
-        for(int i=0;i<list.size();i++){
-            User user = createUserInfo(list.get(i).getField2(), list.get(i).getField3(),
-                    list.get(i).getField4(),User.USERTYPE_CORP);
-            //新增企业用户相关信息
-            AuthCorp authCorp = new AuthCorp();
-            authCorp.setUserId(user.getUserId());
-            authCorp.setLegalName(list.get(i).getField5());
-            authCorp.setCorpName(list.get(i).getField6());
-            authCorp.setCreditCode(list.get(i).getField7());
-            authCorp.setBankNo(list.get(i).getField8());
-            authCorp.setBankName(list.get(i).getField9());
-            authCorp.setCorpAddress(list.get(i).getField10());
-            authCorp.setLinkNo(list.get(i).getField11());
-            authCorp.setOpenLience(list.get(i).getField12());
-            authCorp.setAuthStatus("1");
-            authCorp.setCreateTime(new Date());
-            authCorpService.save(authCorp);
-        }
-    }
 
     @Override
     public List<User> findUserByDepartName(String name) {

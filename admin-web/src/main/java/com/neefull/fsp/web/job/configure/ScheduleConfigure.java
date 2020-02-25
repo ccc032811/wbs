@@ -25,7 +25,9 @@ public class ScheduleConfigure {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
         // 手动从多数据源中获取 quartz数据源
         DataSource quartz = dynamicRoutingDataSource.getDataSource("quartz");
+        DataSource adminC = dynamicRoutingDataSource.getDataSource("adminC");
         factory.setDataSource(quartz);
+        factory.setDataSource(adminC);
 
         // quartz参数
         Properties prop = new Properties();

@@ -5,7 +5,7 @@
 |     |  _|    ___) | |  __/              |
 |     |_|     |____/  |_|                 |
 |                                         |
-|  FSP edition v2.0                       |
+|  QFF edition v1.0                       |
 |  Spring-Boot-Version: ${spring-boot.version}|
 |  @上海你福软件有限公司                   |
 |-----------------------------------------|

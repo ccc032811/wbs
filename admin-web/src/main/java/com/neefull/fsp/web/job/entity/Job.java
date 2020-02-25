@@ -19,7 +19,7 @@ import java.util.Date;
  * @author pei.wang
  */
 @Data
-@TableName("t_job")
+@TableName("qff_job")
 @Excel("定时任务信息表")
 public class Job implements Serializable {
 

@@ -93,4 +93,15 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     List<User> findUserByRoleId(@Param("id") Integer id);
+
+    /**获取所有的用户
+     * @return
+     */
+    List<User> getAllUser();
+
+    /**根据名字查询用户
+     * @param username
+     * @return
+     */
+    User getUserByName(String username);
 }

@@ -27,6 +27,7 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
 
 
     @Override
+    @Transactional
     public Integer addCommodity(Commodity commodity) {
         commodity.setStatus(ProcessConstant.NEW_BUILD);
         int count = commodityMapper.insert(commodity);
@@ -34,6 +35,7 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
     }
 
     @Override
+    @Transactional
     public Integer editCommodity(Commodity commodity) {
         int count = commodityMapper.updateById(commodity);
         return count;
@@ -47,6 +49,7 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
    }
 
     @Override
+    @Transactional
     public Integer updateCommodityStatus(Integer id,Integer status) {
         Integer count = commodityMapper.updateConserveStatus(id,status);
         return count;

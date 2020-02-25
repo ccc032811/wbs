@@ -248,16 +248,15 @@
         }
 
 
-        var uploadInst = upload.render({
+        upload.render({
             elem:'#recent-upload'
             ,url: ctx+'file/resolver'
-            ,accept:'file'
-            ,exts:'xlsx'
-            ,multiple:true
-            ,auto:true
-            ,size:1024*2//kb
+            ,accept: 'file'
+            ,exts: 'xlsx'
+            ,multiple: false
+            ,auto: true
+            ,size: 1024*2  //kb
             ,before: function(obj){
-
                 layer.open({
                     type:1
                     ,title: false

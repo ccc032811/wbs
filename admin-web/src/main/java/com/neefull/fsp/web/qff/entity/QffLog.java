@@ -15,7 +15,7 @@ import java.util.Date;
  * @Date: 2020/1/15  10:26
  */
 
-@TableName(value = "qff_log")
+@TableName(value = "qff_operation_log")
 public class QffLog implements Serializable {
 
     private static final long serialVersionUID = 5416236827475212476L;

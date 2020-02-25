@@ -27,12 +27,14 @@ public class RefundServiceImpl extends ServiceImpl<RefundMapper, Refund> impleme
     private RefundMapper refundMapper;
 
     @Override
+    @Transactional
     public Integer addRefund(Refund refund){
         int count = refundMapper.insert(refund);
         return count;
     }
 
     @Override
+    @Transactional
     public Integer editRefund(Refund refund) {
         int count = refundMapper.updateById(refund);
         return count;
@@ -46,6 +48,7 @@ public class RefundServiceImpl extends ServiceImpl<RefundMapper, Refund> impleme
     }
 
     @Override
+    @Transactional
     public Integer updateRefundStatus(Integer id,Integer status) {
         Integer count = refundMapper.updateRefundStatus(id,status);
         return count;

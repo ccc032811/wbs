@@ -30,12 +30,14 @@ public class RecentServiceImpl extends ServiceImpl<RecentMapper, Recent> impleme
     private RecentExcelImportMapper recentExcelImportMapper;
 
     @Override
+    @Transactional
     public Integer addRecent(Recent recent) {
         int count = recentMapper.insert(recent);
         return count;
     }
 
     @Override
+    @Transactional
     public Integer editRecent(Recent recent) {
         int count = recentMapper.updateById(recent);
         return count;
@@ -49,6 +51,7 @@ public class RecentServiceImpl extends ServiceImpl<RecentMapper, Recent> impleme
     }
 
     @Override
+    @Transactional
     public Integer updateRecentStatus(Integer id,Integer status) {
         Integer count = recentMapper.updateRecentStatus(id,status);
         return count;

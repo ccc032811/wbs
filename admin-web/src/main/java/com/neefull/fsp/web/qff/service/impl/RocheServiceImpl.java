@@ -29,12 +29,14 @@ public class RocheServiceImpl extends ServiceImpl<RocheMapper, Roche> implements
     private RocheMapper rocheMapper;
 
     @Override
+    @Transactional
     public Integer addRoche(Roche roche) {
         int count = rocheMapper.insert(roche);
         return count;
     }
 
     @Override
+    @Transactional
     public Integer editRoche(Roche roche) {
         UpdateWrapper<Roche> update = new UpdateWrapper<>();
         update.eq("number",roche.getNumber());
@@ -50,6 +52,7 @@ public class RocheServiceImpl extends ServiceImpl<RocheMapper, Roche> implements
     }
 
     @Override
+    @Transactional
     public Integer updateRocheStatus(Integer id,Integer status) {
         Integer count = rocheMapper.updateRocheStatus(id,status);
         return count;

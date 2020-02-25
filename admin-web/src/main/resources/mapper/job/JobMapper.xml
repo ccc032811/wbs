@@ -10,7 +10,7 @@
         status,
         remark,
         create_time createTime
-        from t_job
+        from qff_job
         order by job_id
     </select>
 </mapper>
