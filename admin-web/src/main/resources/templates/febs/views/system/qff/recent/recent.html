@@ -48,10 +48,10 @@
                                     </div>
                                     <div style="float: right;margin-right: 3%">
                                         <div id="recent-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
-                                            <div class="layui-btn layui-btn-normal" id="query" >
+                                            <div class="layui-btn layui-btn-normal" id="recent-query" >
                                                 <i class="layui-icon ">查询</i>
                                             </div>
-                                            <div class="layui-btn layui-btn-danger " id="reset" >
+                                            <div class="layui-btn layui-btn-danger " id="recent-reset" >
                                                 <i class="layui-icon ">清空</i>
                                             </div>
                                         </div>
@@ -126,10 +126,10 @@
                                     </div>
                                     <div class="layui-form-item ">
                                         <div style="float: right;margin-right: 3%" >
-                                            <div class="layui-btn layui-btn-normal" id="queryBtn" >
+                                            <div class="layui-btn layui-btn-normal" id="recent-queryBtn" >
                                                 <i class="layui-icon">查询</i>
                                             </div>
-                                            <div class="layui-btn layui-btn-danger" id="cleanBtn" >
+                                            <div class="layui-btn layui-btn-danger" id="recent-cleanBtn" >
                                                 <i class="layui-icon">清空</i>
                                             </div>
                                         </div>
@@ -159,16 +159,22 @@
     {{# } }}
 </script>
 <script type="text/html" id="recent-option">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail" shiro:hasPermission="recent:view">查看</a>
+    {{# if(d.status == '4'){d.status = '异常'}}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="recent-detail" shiro:hasPermission="recent:view">查看</a>
+    {{# } else if(d.status == '3'){d.status = '异常'}}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="recent-detail" shiro:hasPermission="recent:view">查看</a>
+    {{# } else if(d.status != '4'){d.status = '异常'}}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="recent-detail" shiro:hasPermission="recent:view">查看</a>
     {{# if(d.status != '3'){d.status = '完结'}}
-    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="recent:audit">审核</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="recent:del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="recent-edit" shiro:hasPermission="recent:audit">审核</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="recent-del" shiro:hasPermission="recent:del">删除</a>
+    {{#}}}
     {{#}}}
 </script>
 <script type="text/html" id="toolbarCheck">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="upload" id="recent-upload" shiro:hasPermission="recent:import">导入Excel文件</button>
-        <button class="layui-btn layui-btn-sm" lay-event="download" shiro:hasPermission="recent:down">导出Excel文件</button>
+        <button class="layui-btn layui-btn-sm" lay-event="recent-upload" id="recent-upload" shiro:hasPermission="recent:import">导入Excel文件</button>
+        <button class="layui-btn layui-btn-sm" lay-event="recent-download" shiro:hasPermission="recent:down">导出Excel文件</button>
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
@@ -181,10 +187,10 @@
             form = layui.form,
             table = layui.table,
             $view = $('#fbs-recent'),
-            $query = $view.find('#query'),
-            $reset = $view.find('#reset'),
-            $queryBtn = $view.find('#queryBtn'),
-            $cleanBtn = $view.find('#cleanBtn'),
+            $query = $view.find('#recent-query'),
+            $reset = $view.find('#recent-reset'),
+            $queryBtn = $view.find('#recent-queryBtn'),
+            $cleanBtn = $view.find('#recent-cleanBtn'),
             $searchForm = $view.find('form'),
             tableIns;
 
@@ -240,7 +246,7 @@
                     {field: 'useLife', title: '有效期',align:'center'},
                     {field: 'batch', title: '批号',align:'center'},
                     {field: 'sapBatch', title: 'SAP 批次',align:'center'},
-                    {field: 'factory', title: '工厂',align:'center',width: 70},
+                    {field: 'factory', title: '工厂',align:'center'},
                     {title: '处理阶段', templet: '#recent-status',width: 90},
                     {title: '操作', toolbar: '#recent-option',align:'center',width: 162}
                 ]]
@@ -301,13 +307,13 @@
 
         table.on('toolbar(recentTable)', function(obj){
             var layEvent = obj.event;
-            if (layEvent === 'download') {
+            if (layEvent === 'recent-download') {
                 var params =getQueryParams();
                 params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
                 params.pageNum = $view.find(".layui-laypage-em").next().html();
                 febs.download(ctx + 'recent/excel',params, '近效期QFF.xlsx');
             }
-            if (layEvent === 'upload'){
+            if (layEvent === 'recent-upload'){
                 /*uploadInst.reload({
                     accept: 'file' //只允许上传图片
                     ,exts:'xlsx' //只筛选图片
@@ -321,17 +327,17 @@
         table.on('tool(recentTable)', function (obj) {
             var data = obj.data,
                 layEvent = obj.event;
-            if (layEvent === 'detail') {
+            if (layEvent === 'recent-detail') {
                 febs.modal.view('具体信息', 'system/qff/recent/recentShow/' + data.id, {
                     area:  [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '52%']
                 });
             }
-            if (layEvent === 'edit') {
+            if (layEvent === 'recent-edit') {
                 febs.modal.view('审核', 'system/qff/recent/recentAudit/' + data.id, {
                     area:  [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '70%']
                 });
             }
-            if (layEvent === 'del') {
+            if (layEvent === 'recent-del') {
                 febs.modal.confirm('删除该条数据','确定删除该条数据？', function () {
                     delRecent(data.id);
                 });

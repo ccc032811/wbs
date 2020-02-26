@@ -74,6 +74,6 @@
             <if test="refund.status!=null and refund.status!=''">
                 and status = #{refund.status}
             </if>
-        and status != 4 order by create_time desc
+        order by create_time desc
     </select>
 </mapper>

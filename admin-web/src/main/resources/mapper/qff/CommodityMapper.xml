@@ -80,6 +80,6 @@
             <if test="commodity.status!=null and commodity.status!=''">
                 and status = #{commodity.status}
             </if>
-        and status != 4 order by create_time desc
+        order by create_time desc
     </select>
 </mapper>

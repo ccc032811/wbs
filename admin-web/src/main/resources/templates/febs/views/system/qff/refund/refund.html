@@ -48,10 +48,10 @@
                                     </div>
                                     <div style="float: right;margin-right: 3%">
                                         <div id="refund-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
-                                            <div class="layui-btn layui-btn-normal" id="query" >
+                                            <div class="layui-btn layui-btn-normal" id="refund-query" >
                                                 <i class="layui-icon ">查询</i>
                                             </div>
-                                            <div class="layui-btn layui-btn-danger " id="reset" >
+                                            <div class="layui-btn layui-btn-danger " id="refund-reset" >
                                                 <i class="layui-icon ">清空</i>
                                             </div>
                                         </div>
@@ -174,10 +174,10 @@
                                     </div>
                                     <div class="layui-form-item ">
                                         <div style="float: right;margin-right: 3%" >
-                                            <div class="layui-btn layui-btn-normal" id="queryBtn" >
+                                            <div class="layui-btn layui-btn-normal" id="refund-queryBtn" >
                                                 <i class="layui-icon">查询</i>
                                             </div>
-                                            <div class="layui-btn layui-btn-danger" id="cleanBtn" >
+                                            <div class="layui-btn layui-btn-danger" id="refund-cleanBtn" >
                                                 <i class="layui-icon">清空</i>
                                             </div>
                                         </div>
@@ -207,15 +207,21 @@
     {{# } }}
 </script>
 <script type="text/html" id="refund-option">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail" shiro:hasPermission="refund:view">查看</a>
+    {{# if(d.status == '4'){d.status = '异常'}}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="refund-detail" shiro:hasPermission="refund:view">查看</a>
+    {{# } else if(d.status == '3'){d.status = '异常'}}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="refund-detail" shiro:hasPermission="refund:view">查看</a>
+    {{# } else if(d.status != '4'){d.status = '异常'}}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="refund-detail" shiro:hasPermission="refund:view">查看</a>
     {{# if(d.status != '3'){d.status = '完结'}}
-    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="refund:audit">审核</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="refund:del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="refund-edit" shiro:hasPermission="refund:audit">审核</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="refund-del" shiro:hasPermission="refund:del">删除</a>
+    {{#}}}
     {{#}}}
 </script>
 <script type="text/html" id="toolbarCheck">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="download" shiro:hasPermission="refund:down">导出Excel文件</button>
+        <button class="layui-btn layui-btn-sm" lay-event="refund-download" shiro:hasPermission="refund:down">导出Excel文件</button>
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
@@ -227,10 +233,10 @@
             form = layui.form,
             table = layui.table,
             $view = $('#fbs-refund'),
-            $query = $view.find('#query'),
-            $reset = $view.find('#reset'),
-            $queryBtn = $view.find('#queryBtn'),
-            $cleanBtn = $view.find('#cleanBtn'),
+            $query = $view.find('#refund-query'),
+            $reset = $view.find('#refund-reset'),
+            $queryBtn = $view.find('#refund-queryBtn'),
+            $cleanBtn = $view.find('#refund-cleanBtn'),
             $searchForm = $view.find('form'),
             tableIns;
 
@@ -270,7 +276,7 @@
             if(data.show == true){
                 $('#refund-tag').html('');
                 $('#refund-tag').append('<i  class="layui-icon tag-title">&#xe619;</i>')
-                $('#refund-check').attr("style","display:none;")
+                $('#refund-check').attr("style","display:none")
             }else if(data.show == false){
                 $('#refund-tag').html('');
                 $('#refund-tag').append('<i  class="layui-icon tag-title" >&#xe61a;</i>')
@@ -325,7 +331,7 @@
 
         table.on('toolbar(refundTable)', function(obj){
             var layEvent = obj.event;
-            if (layEvent === 'download') {
+            if (layEvent === 'refund-download') {
                 var params = getQueryParams();
                 params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
                 params.pageNum = $view.find(".layui-laypage-em").next().html();
@@ -337,17 +343,17 @@
         table.on('tool(refundTable)', function (obj) {
             var data = obj.data,
                 layEvent = obj.event;
-            if (layEvent === 'detail') {
+            if (layEvent === 'refund-detail') {
                 febs.modal.view('具体信息', 'system/qff/refund/refundShow/' + data.id, {
                     area:  [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '80%']
                 });
             }
-            if (layEvent === 'edit') {
+            if (layEvent === 'refund-edit') {
                 febs.modal.view('审核', 'system/qff/refund/refundAudit/' + data.id, {
                     area:  [$(window).width() <= 750 ? '90%' : '60%',$(window).width() <= 750 ? '90%' : '90%']
                 });
             }
-            if (layEvent === 'del') {
+            if (layEvent === 'refund-del') {
                 febs.modal.confirm('删除该条数据','确定删除该条数据？', function () {
                     delRefund(data.id);
                 });

@@ -50,6 +50,6 @@
         <if test="recent.status!=null and recent.status!=''">
             and status = #{recent.status}
         </if>
-        and status != 4 order by create_time desc
+    order by create_time desc
     </select>
 </mapper>
