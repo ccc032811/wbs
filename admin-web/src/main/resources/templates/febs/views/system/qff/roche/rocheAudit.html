@@ -362,7 +362,7 @@
         $.get(ctx +"file/findImages/"+roche.id+"/"+relevance,function (res) {
             var data = res.data;
             $.each(data,function (index, item) {
-                $('#image_show').append('<a href="javascript:amplificationImg(\''+index+'\',\''+item+'\')"><img name=" '+index+'"src = " '+item+' "style="width:150px;height:auto;"></a>')
+                $('#image_show').append('<a href="javascript:amplificationImg(\''+index+'\',\''+item+'\')"><img name=" '+index+'"src = " '+item+' "style="width:120px;height:100px;"></a>')
             })
         });
         window.amplificationImg = function (name, url) {
