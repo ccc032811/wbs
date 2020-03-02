@@ -32,7 +32,9 @@ public class OpinionController {
         try {
             return this.opinionService.findOpinion();
         } catch (Exception e) {
-            throw new FebsException("获取失败");
+            String message = "获取意见失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
     }
 
@@ -47,7 +49,9 @@ public class OpinionController {
             List<OpinionTree<Opinion>> opinions = this.opinionService.findOpinions(opinion);
             return new FebsResponse().success().data(opinions);
         } catch (Exception e) {
-            throw new FebsException("获取失败");
+            String message = "查询意见失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
     }
 
@@ -62,7 +66,9 @@ public class OpinionController {
             this.opinionService.createOpinion(opinion);
             return new FebsResponse().success();
         } catch (Exception e) {
-            throw new FebsException("新增失败");
+            String message = "新增意见失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
     }
 
@@ -78,7 +84,9 @@ public class OpinionController {
             this.opinionService.deleteOpinions(ids);
             return new FebsResponse().success();
         } catch (Exception e) {
-            throw new FebsException("删除失败");
+            String message = "删除意见失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
     }
 
@@ -93,7 +101,9 @@ public class OpinionController {
             this.opinionService.updateOpinion(opinion);
             return new FebsResponse().success();
         } catch (Exception e) {
-            throw new FebsException("修改失败");
+            String message = "修改意见失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
     }
 
@@ -102,9 +112,15 @@ public class OpinionController {
      * @return
      */
     @GetMapping("/getOpinion/{name}")
-    public FebsResponse getOpinions(@PathVariable String name){
-        List<Opinion> list = opinionService.getOpinions(name);
-        return new FebsResponse().success().data(list);
+    public FebsResponse getOpinions(@PathVariable String name) throws FebsException {
+        try {
+            List<Opinion> list = opinionService.getOpinions(name);
+            return new FebsResponse().success().data(list);
+        } catch (Exception e) {
+            String message = "根据名字查询意见失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
 

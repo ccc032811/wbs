@@ -48,11 +48,14 @@ public class RocheController extends BaseController {
     @Qff("新增罗氏内部发起QFF")
     @PostMapping("/add")
     public FebsResponse addRoche(Roche roche) throws FebsException {
-        Integer count = rocheService.addRoche(roche);
-        if(count!=1){
-            throw new FebsException("新增罗氏内部发起QFF失败");
+        try {
+            Integer count = rocheService.addRoche(roche);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "新增罗氏内部QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**更新罗氏内部发起QFF
@@ -64,11 +67,14 @@ public class RocheController extends BaseController {
     @PostMapping("/edit")
     @RequiresPermissions("roche:audit")
     public FebsResponse editRoche(Roche roche) throws FebsException {
-        Integer count = rocheService.editRoche(roche);
-        if(count!=1){
-            throw new FebsException("更新罗氏内部发起QFF失败");
+        try {
+            Integer count = rocheService.editRoche(roche);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "更新罗氏内部QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**查询罗氏内部发起QFF
@@ -77,10 +83,16 @@ public class RocheController extends BaseController {
      */
     @GetMapping("/list")
     @RequiresPermissions("roche:view")
-    public FebsResponse getRochePage(Roche roche){
-        IPage<Roche> pageInfo = rocheService.getRochePage(roche);
-        Map<String, Object> dataTable = getDataTable(pageInfo);
-        return new FebsResponse().success().data(dataTable);
+    public FebsResponse getRochePage(Roche roche) throws FebsException {
+        try {
+            IPage<Roche> pageInfo = rocheService.getRochePage(roche);
+            Map<String, Object> dataTable = getDataTable(pageInfo);
+            return new FebsResponse().success().data(dataTable);
+        } catch (Exception e) {
+            String message = "新查询罗氏内部QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
     /**删除罗氏内部QFF
@@ -92,14 +104,17 @@ public class RocheController extends BaseController {
     @GetMapping("/deleteRoche/{id}")
     @RequiresPermissions("roche:del")
     public FebsResponse updateRocheStatus(@PathVariable Integer id) throws FebsException {
-        Roche roche = new Roche();
-        roche.setId(id);
-        processService.deleteInstance(roche);
-        Integer count = rocheService.updateRocheStatus(id, ProcessConstant.HAVE_ABNORMAL);
-        if(count!=1){
-            throw new FebsException("删除罗氏内部QFF失败");
+        try {
+            Roche roche = new Roche();
+            roche.setId(id);
+            processService.deleteInstance(roche);
+            Integer count = rocheService.updateRocheStatus(id, ProcessConstant.HAVE_ABNORMAL);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "删除罗氏内部QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**查询罗氏内部QFF
@@ -110,11 +125,14 @@ public class RocheController extends BaseController {
     @GetMapping("/queryRoche")
     @RequiresPermissions("roche:view")
     public FebsResponse queryRocheById(Integer id) throws FebsException {
-        Roche roche = rocheService.queryRocheById(id);
-        if(roche==null){
-            throw new FebsException("查询罗氏内部发起QFF失败");
+        try {
+            Roche roche = rocheService.queryRocheById(id);
+            return new FebsResponse().success().data(roche);
+        } catch (Exception e) {
+            String message = "查询罗氏内部QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success().data(roche);
     }
 
 
@@ -123,9 +141,15 @@ public class RocheController extends BaseController {
      * @return
      */
     @GetMapping("/queryHistory")
-    public FebsResponse queryHistory(Roche roche){
-        List<ProcessHistory> list = processService.queryHistory(roche);
-        return new FebsResponse().success().data(list);
+    public FebsResponse queryHistory(Roche roche) throws FebsException {
+        try {
+            List<ProcessHistory> list = processService.queryHistory(roche);
+            return new FebsResponse().success().data(list);
+        } catch (Exception e) {
+            String message = "查询罗氏内部QFF流程失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
     /**提交流程
@@ -137,13 +161,15 @@ public class RocheController extends BaseController {
     @PostMapping("/commit")
     @RequiresPermissions("roche:audit")
     public FebsResponse commitProcess(Roche roche) throws FebsException {
-        User user = getCurrentUser();
         try {
+            User user = getCurrentUser();
             processService.commitProcess(roche,user);
+            return new FebsResponse().success();
         } catch (Exception e) {
-            throw new FebsException("提交申请失败");
+            String message = "提交罗氏内部QFF流程失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**同意当前任务
@@ -155,18 +181,20 @@ public class RocheController extends BaseController {
     @PostMapping("/agree")
     @RequiresPermissions("roche:audit")
     public FebsResponse agreeCurrentProcess(Roche roche) throws FebsException {
-        User user = getCurrentUser();
-        List<String> group = processService.getGroupId(roche,user);
-        if(group.contains(user.getUsername())){
-            try {
+        try {
+            User user = getCurrentUser();
+            List<String> group = processService.getGroupId(roche,user);
+            if(group.contains(user.getUsername())){
                 processService.agreeCurrentProcess(roche,user);
-            } catch (Exception e) {
-                throw new FebsException("同意流程失败");
+            }else {
+                throw new FebsException("当前无权限或改数据已审核");
             }
-        }else {
-            throw new FebsException("当前无权限或改数据已审核");
+            return new FebsResponse().success();
+        } catch (FebsException e) {
+            String message = "同意罗氏内部QFF流程失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**导出excel
@@ -175,10 +203,16 @@ public class RocheController extends BaseController {
      */
     @GetMapping("excel")
     @RequiresPermissions("roche:down")
-    public void download(Roche roche, HttpServletResponse response){
-        IPage<Roche> rochePage = rocheService.getRochePage(roche);
-        List<Roche> rocheList = rochePage.getRecords();
-        ExcelKit.$Export(Roche.class, response).downXlsx(rocheList, false);
+    public void download(Roche roche, HttpServletResponse response) throws FebsException {
+        try {
+            IPage<Roche> rochePage = rocheService.getRochePage(roche);
+            List<Roche> rocheList = rochePage.getRecords();
+            ExcelKit.$Export(Roche.class, response).downXlsx(rocheList, false);
+        } catch (Exception e) {
+            String message = "导出罗氏内部QFFexcel失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
 

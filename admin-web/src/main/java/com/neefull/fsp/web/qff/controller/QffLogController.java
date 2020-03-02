@@ -3,6 +3,7 @@ package com.neefull.fsp.web.qff.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
+import com.neefull.fsp.web.common.exception.FebsException;
 import com.neefull.fsp.web.qff.entity.QffLog;
 import com.neefull.fsp.web.qff.service.IQffLogService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,15 +36,18 @@ public class QffLogController extends BaseController {
      */
     @GetMapping("/list")
     @RequiresPermissions("qffLog:view")
-    public FebsResponse queryLogs(QffLog qffLog){
-        IPage<QffLog> qffLogIPage = qffLogService.queryLogs(qffLog);
-        Map<String, Object> dataTable = getDataTable(qffLogIPage);
-        return new FebsResponse().success().data(dataTable);
+    public FebsResponse queryLogs(QffLog qffLog) throws FebsException {
+        try {
+            IPage<QffLog> qffLogIPage = qffLogService.queryLogs(qffLog);
+            Map<String, Object> dataTable = getDataTable(qffLogIPage);
+            return new FebsResponse().success().data(dataTable);
+        } catch (Exception e) {
+            String message = "查询日志失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
-    @GetMapping("/health")
-    public FebsResponse getHealth(){
-        return new FebsResponse().success().message("1");
-    }
+
 
 }

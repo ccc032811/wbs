@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ *新增到货养护包装QFF
  * @Author: chengchengchu
  * @Date: 2019/12/6  18:50
  */
@@ -48,11 +48,14 @@ public class CommodityController extends BaseController {
     @Qff("新增QFF")
     @PostMapping("/add")
     public FebsResponse addCommodity(Commodity commodity) throws FebsException {
-        Integer count = commodityService.addCommodity(commodity);
-        if(count!=1){
-            throw new FebsException("新增到货养护包装QFF操作失败");
+        try {
+            Integer count = commodityService.addCommodity(commodity);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "新增QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**更新QFF
@@ -64,11 +67,14 @@ public class CommodityController extends BaseController {
     @PostMapping("/edit")
     @RequiresPermissions("commodity:audit")
     public FebsResponse editCommodity(Commodity commodity) throws FebsException {
-        Integer count = commodityService.editCommodity(commodity);
-        if(count!=1){
-            throw new FebsException("更新到货养护包装QFF操作失败");
+        try {
+            Integer count = commodityService.editCommodity(commodity);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "更新QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**查询QFF
@@ -77,10 +83,16 @@ public class CommodityController extends BaseController {
      */
     @GetMapping("/list")
     @RequiresPermissions("commodity:view")
-    public FebsResponse getCommodityPage(Commodity commodity){
-        IPage<Commodity> pageInfo = commodityService.getCommodityPage(commodity);
-        Map<String, Object> dataTable = getDataTable(pageInfo);
-        return new FebsResponse().success().data(dataTable);
+    public FebsResponse getCommodityPage(Commodity commodity) throws FebsException {
+        try {
+            IPage<Commodity> pageInfo = commodityService.getCommodityPage(commodity);
+            Map<String, Object> dataTable = getDataTable(pageInfo);
+            return new FebsResponse().success().data(dataTable);
+        } catch (Exception e) {
+            String message = "查询QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
     /**删除QFF
@@ -91,14 +103,17 @@ public class CommodityController extends BaseController {
     @GetMapping("/deleteCommodity/{id}")
     @RequiresPermissions("commodity:del")
     public FebsResponse updateCommodityStatus(@PathVariable Integer id) throws FebsException {
-        Commodity commodity = new Commodity();
-        commodity.setId(id);
-        processService.deleteInstance(commodity);
-        int count = commodityService.updateCommodityStatus(id, ProcessConstant.HAVE_ABNORMAL);
-        if (count!=1){
-            throw new FebsException("删除到货养护包装QFF操作失败");
+        try {
+            Commodity commodity = new Commodity();
+            commodity.setId(id);
+            processService.deleteInstance(commodity);
+            int count = commodityService.updateCommodityStatus(id, ProcessConstant.HAVE_ABNORMAL);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "删除QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**根据QFF ID查询
@@ -108,11 +123,14 @@ public class CommodityController extends BaseController {
      */
     @GetMapping("/queryCommodity/{id}")
     public FebsResponse queryCommodityById(@PathVariable Integer id) throws FebsException {
-        Commodity commodity = commodityService.queryCommodityById(id);
-        if(commodity ==null){
-            throw new FebsException("查询到货养护包装QFF操作失败");
+        try {
+            Commodity commodity = commodityService.queryCommodityById(id);
+            return new FebsResponse().success().data(commodity);
+        } catch (Exception e) {
+            String message = "根据QFF ID查询失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success().data(commodity);
 
     }
 
@@ -121,9 +139,15 @@ public class CommodityController extends BaseController {
      * @return
      */
     @GetMapping("/queryHistory")
-    public FebsResponse queryHistory(Commodity commodity){
-        List<ProcessHistory> list = processService.queryHistory(commodity);
-        return new FebsResponse().success().data(list);
+    public FebsResponse queryHistory(Commodity commodity) throws FebsException {
+        try {
+            List<ProcessHistory> list = processService.queryHistory(commodity);
+            return new FebsResponse().success().data(list);
+        } catch (Exception e) {
+            String message = "查询QFF流程";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
     /**提交QFF流程
@@ -136,13 +160,15 @@ public class CommodityController extends BaseController {
     @RequiresPermissions("commodity:audit")
     public FebsResponse commitProcess(Commodity commodity) throws FebsException {
 
-        User user = getCurrentUser();
         try {
+            User user = getCurrentUser();
             processService.commitProcess(commodity,user);
+            return new FebsResponse().success();
         } catch (Exception e) {
-            throw new FebsException("提交申请失败");
+            String message = "提交QFF流程失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**同意当前QFF任务
@@ -154,18 +180,20 @@ public class CommodityController extends BaseController {
     @PostMapping("/agree")
     @RequiresPermissions("commodity:audit")
     public FebsResponse agreeCurrentProcess(Commodity commodity) throws FebsException {
-        User user = getCurrentUser();
-        List<String> group = processService.getGroupId(commodity,user);
-        if(group.contains(user.getUsername())){
-            try {
+        try {
+            User user = getCurrentUser();
+            List<String> group = processService.getGroupId(commodity,user);
+            if(group.contains(user.getUsername())){
                 processService.agreeCurrentProcess(commodity,user);
-            } catch (Exception e) {
-                throw new FebsException("同意流程失败");
+            }else {
+                throw new FebsException("当前无权限或改数据已审核");
             }
-        }else {
-            throw new FebsException("当前无权限或改数据已审核");
+            return new FebsResponse().success();
+        } catch (FebsException e) {
+            String message = "同意当前QFF任务失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**导出QFF excel
@@ -174,13 +202,17 @@ public class CommodityController extends BaseController {
      */
     @GetMapping("excel")
     @RequiresPermissions("commodity:down")
-    public void download(Commodity commodity, HttpServletResponse response){
-        IPage<Commodity> commodityPage = commodityService.getCommodityPage(commodity);
-        List<Commodity> commodityList = commodityPage.getRecords();
-        ExcelKit.$Export(Commodity.class, response).downXlsx(commodityList, false);
+    public void download(Commodity commodity, HttpServletResponse response) throws FebsException {
+        try {
+            IPage<Commodity> commodityPage = commodityService.getCommodityPage(commodity);
+            List<Commodity> commodityList = commodityPage.getRecords();
+            ExcelKit.$Export(Commodity.class, response).downXlsx(commodityList, false);
+        } catch (Exception e) {
+            String message = "导出QFF excel失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
-
-
 
 //    /**查询用户当前任务
 //     * @return

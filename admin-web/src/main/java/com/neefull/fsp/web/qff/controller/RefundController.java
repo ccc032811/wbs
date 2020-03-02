@@ -48,11 +48,14 @@ public class RefundController extends BaseController {
     @Qff("新增退货QFF")
     @PostMapping("/add")
     public FebsResponse addRefund(Refund refund) throws FebsException {
-        Integer count = refundService.addRefund(refund);
-        if(count!=1){
-            throw new FebsException("新增退货QFF失败");
+        try {
+            Integer count = refundService.addRefund(refund);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "新增退货QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**更新退货QFF
@@ -64,11 +67,14 @@ public class RefundController extends BaseController {
     @PostMapping("/edit")
     @RequiresPermissions("refund:audit")
     public FebsResponse editRefund(Refund refund) throws FebsException {
-        Integer count = refundService.editRefund(refund);
-        if(count!=1){
-            throw new FebsException("更新退货QFF失败");
+        try {
+            Integer count = refundService.editRefund(refund);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "更新退货QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**查询退货QFF
@@ -77,10 +83,16 @@ public class RefundController extends BaseController {
      */
     @GetMapping("/list")
     @RequiresPermissions("refund:view")
-    public FebsResponse getRefundPage(Refund refund){
-        IPage<Refund> pageInfo = refundService.getRefundPage(refund);
-        Map<String, Object> dataTable = getDataTable(pageInfo);
-        return new FebsResponse().success().data(dataTable);
+    public FebsResponse getRefundPage(Refund refund) throws FebsException {
+        try {
+            IPage<Refund> pageInfo = refundService.getRefundPage(refund);
+            Map<String, Object> dataTable = getDataTable(pageInfo);
+            return new FebsResponse().success().data(dataTable);
+        } catch (Exception e) {
+            String message = "查询退货QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
     /**删除退货QFF
@@ -92,14 +104,17 @@ public class RefundController extends BaseController {
     @GetMapping("/deleteRefund/{id}")
     @RequiresPermissions("refund:del")
     public FebsResponse updateRefundStatus(@PathVariable Integer id) throws FebsException {
-        Refund refund = new Refund();
-        refund.setId(id);
-        processService.deleteInstance(refund);
-        Integer count = refundService.updateRefundStatus(id, ProcessConstant.HAVE_ABNORMAL);
-        if(count!=1){
-            throw new FebsException("删除退货QFF");
+        try {
+            Refund refund = new Refund();
+            refund.setId(id);
+            processService.deleteInstance(refund);
+            Integer count = refundService.updateRefundStatus(id, ProcessConstant.HAVE_ABNORMAL);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "删除退货QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**查询退货QFF
@@ -110,11 +125,14 @@ public class RefundController extends BaseController {
     @GetMapping("/queryRefund")
     @RequiresPermissions("refund:view")
     public FebsResponse queryRefundById(Integer id) throws FebsException {
-        Refund refund = refundService.queryRefundById(id);
-        if(refund==null){
-            throw new FebsException("查询退货QFF失败");
+        try {
+            Refund refund = refundService.queryRefundById(id);
+            return new FebsResponse().success().data(refund);
+        } catch (Exception e) {
+            String message = "查询退货QFF失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success().data(refund);
     }
 
     /**查询流程
@@ -122,9 +140,15 @@ public class RefundController extends BaseController {
      * @return
      */
     @GetMapping("/queryHistory")
-    public FebsResponse queryHistory(Refund refund){
-        List<ProcessHistory> list = processService.queryHistory(refund);
-        return new FebsResponse().success().data(list);
+    public FebsResponse queryHistory(Refund refund) throws FebsException {
+        try {
+            List<ProcessHistory> list = processService.queryHistory(refund);
+            return new FebsResponse().success().data(list);
+        } catch (Exception e) {
+            String message = "查询退货QFF流程失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
     /**提交流程
@@ -136,14 +160,15 @@ public class RefundController extends BaseController {
     @PostMapping("/commit")
     @RequiresPermissions("refund:audit")
     public FebsResponse commitProcess(Refund refund) throws FebsException {
-        User user = getCurrentUser();
         try {
+            User user = getCurrentUser();
             processService.commitProcess(refund,user);
-
+            return new FebsResponse().success();
         } catch (Exception e) {
-            throw new FebsException("提交申请失败");
+            String message = "提交退货QFF流程失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**同意当前任务
@@ -155,18 +180,20 @@ public class RefundController extends BaseController {
     @PostMapping("/agree")
     @RequiresPermissions("refund:audit")
     public FebsResponse agreeCurrentProcess(Refund refund) throws FebsException {
-        User user = getCurrentUser();
-        List<String> group = processService.getGroupId(refund,user);
-        if(group.contains(user.getUsername())){
-            try {
+        try {
+            User user = getCurrentUser();
+            List<String> group = processService.getGroupId(refund,user);
+            if(group.contains(user.getUsername())){
                 processService.agreeCurrentProcess(refund,user);
-            } catch (Exception e) {
-                throw new FebsException("同意流程失败");
+            }else {
+                throw new FebsException("当前无权限或改数据已审核");
             }
-        }else {
-            throw new FebsException("当前无权限或改数据已审核");
+            return new FebsResponse().success();
+        } catch (FebsException e) {
+            String message = "同意退货QFF流程失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-        return new FebsResponse().success();
     }
 
     /**导出excel
@@ -175,10 +202,16 @@ public class RefundController extends BaseController {
      */
     @GetMapping("excel")
     @RequiresPermissions("refund:down")
-    public void download(Refund refund, HttpServletResponse response){
-        IPage<Refund> refundPage = refundService.getRefundPage(refund);
-        List<Refund> refundList = refundPage.getRecords();
-        ExcelKit.$Export(Refund.class, response).downXlsx(refundList, false);
+    public void download(Refund refund, HttpServletResponse response) throws FebsException {
+        try {
+            IPage<Refund> refundPage = refundService.getRefundPage(refund);
+            List<Refund> refundList = refundPage.getRecords();
+            ExcelKit.$Export(Refund.class, response).downXlsx(refundList, false);
+        } catch (Exception e) {
+            String message = "导出退货QFFexcel失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
 

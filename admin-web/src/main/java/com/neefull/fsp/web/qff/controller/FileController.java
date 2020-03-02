@@ -62,10 +62,16 @@ public class FileController extends BaseController {
      * @return
      */
     @GetMapping("/findTask")
-    public FebsResponse findTask(){
-        User user = getCurrentUser();
-        Integer count = processService.findTask(user.getUsername());
-        return new FebsResponse().success().data(count);
+    public FebsResponse findTask() throws FebsException {
+        try {
+            User user = getCurrentUser();
+            Integer count = processService.findTask(user.getUsername());
+            return new FebsResponse().success().data(count);
+        } catch (Exception e) {
+            String message = "查询需要完成的任务数失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
     /**查询所有图片
@@ -74,10 +80,16 @@ public class FileController extends BaseController {
      * @return
      */
     @GetMapping("/findImages/{dataId}/{relevance}")
-    public FebsResponse findImageByIdAndForm(@PathVariable Integer dataId ,@PathVariable String relevance){
+    public FebsResponse findImageByIdAndForm(@PathVariable Integer dataId ,@PathVariable String relevance) throws FebsException {
 
-        List<String> list = dateImageService.findImageByIdAndForm(dataId,relevance);
-        return new FebsResponse().success().data(list);
+        try {
+            List<String> list = dateImageService.findImageByIdAndForm(dataId,relevance);
+            return new FebsResponse().success().data(list);
+        } catch (Exception e) {
+            String message = "查询所有图片失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
     /**删除图片
@@ -85,9 +97,15 @@ public class FileController extends BaseController {
      * @return
      */
     @GetMapping("/deleteImage/{url}")
-    public FebsResponse deleteImage(@PathVariable String url){
-        dateImageService.deleteImage(url);
-        return new FebsResponse().success().data("200");
+    public FebsResponse deleteImage(@PathVariable String url) throws FebsException {
+        try {
+            dateImageService.deleteImage(url);
+            return new FebsResponse().success().data("200");
+        } catch (Exception e) {
+            String message = "删除图片失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
     }
 
     /**上传图片

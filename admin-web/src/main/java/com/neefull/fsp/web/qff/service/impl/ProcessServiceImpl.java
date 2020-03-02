@@ -279,14 +279,14 @@ public class ProcessServiceImpl implements IProcessService {
 
     }
     @Transactional
-    private void delete(ProcessInstance processInstance){
+    public void delete(ProcessInstance processInstance){
         if(processInstance!=null){
             runtimeService.deleteProcessInstance(processInstance.getProcessInstanceId(),null);
         }
     }
 
     @Transactional
-    private void addOrEditImages(Object object ,User user) {
+    public void addOrEditImages(Object object ,User user) {
         String image = "";
 
         if (object instanceof Commodity) {
@@ -328,13 +328,13 @@ public class ProcessServiceImpl implements IProcessService {
         }
     }
     @Transactional
-    private void editCommodity(Commodity commodity){
+    public void editCommodity(Commodity commodity){
         String format = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
         commodity.setRepTime(format);
         commodityService.editCommodity(commodity);
     }
     @Transactional
-    private void editRefund(Refund refund){
+    public void editRefund(Refund refund){
         String format = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
         refund.setRepTime(format);
         refundService.editRefund(refund);
