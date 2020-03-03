@@ -34,7 +34,7 @@ BEGIN
     SET sTemp = CONCAT(sTemp, ',', sTempChd);
     SELECT GROUP_CONCAT(dept_id)
     INTO sTempChd
-    FROM t_dept
+    FROM qff_dept
     WHERE FIND_IN_SET(parent_id, sTempChd) > 0;
     END WHILE;
     RETURN sTemp;
@@ -58,7 +58,7 @@ BEGIN
     SET sTemp = CONCAT(sTemp, ',', sTempChd);
     SELECT GROUP_CONCAT(menu_id)
     INTO sTempChd
-    FROM t_menu
+    FROM qff_menu
     WHERE FIND_IN_SET(parent_id, sTempChd) > 0;
     END WHILE;
     RETURN sTemp;
