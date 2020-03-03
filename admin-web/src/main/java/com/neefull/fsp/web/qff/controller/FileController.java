@@ -146,13 +146,14 @@ public class FileController extends BaseController {
         File filePath = new File(properties.getImagePath(), filename);
         try {
             file.transferTo(filePath);
+            Map<String,String> map =new HashMap<>();
+            map.put("index",UUID.randomUUID().toString().replaceAll(StringPool.DASH,StringPool.EMPTY));
+            map.put("value",filename);
+            return new FebsResponse().success().data(map);
         } catch (IOException e) {
             throw new FebsException("文件上传失败");
         }
-        Map<String,String> map =new HashMap<>();
-        map.put("index",UUID.randomUUID().toString().replaceAll(StringPool.DASH,StringPool.EMPTY));
-        map.put("value",filename);
-        return new FebsResponse().success().data(map);
+
 
     }
 

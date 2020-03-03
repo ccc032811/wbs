@@ -126,35 +126,6 @@ public class ViewController extends BaseController {
         return FebsUtil.view("system/message/sendMessage");
     }
 
-    //**************************************项目管理模块 start *********************************************
-    @GetMapping(FebsConstant.VIEW_PREFIX + "system/projectEnrollment")
-    @RequiresPermissions("enrollment:view")
-    public String projectEnrollment() {
-        return FebsUtil.view("system/project/projectEnrollment");
-    }
-
-
-    @GetMapping(FebsConstant.VIEW_PREFIX + "system/project")
-    @RequiresPermissions("project:view")
-    public String systemProject() {
-        return FebsUtil.view("system/project/project");
-    }
-
-    @GetMapping(FebsConstant.VIEW_PREFIX + "system/project/detail/{id}")
-    @RequiresPermissions("project:view")
-    public String systemProjectDetail(@PathVariable String id, Model model) {
-
-        return FebsUtil.view("system/project/projectDetail");
-    }
-
-    @GetMapping(FebsConstant.VIEW_PREFIX + "system/project/settle/{id}")
-    @RequiresPermissions("project:settle")
-    public String systemProjectSettle(@PathVariable String id, Model model) {
-        model.addAttribute("projectId", id);
-        return FebsUtil.view("system/project/projectSettle");
-    }
-    //**************************************项目管理模块 end *********************************************
-
     //**************************************用户管理模块 start *********************************************
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/sysUser")
     @RequiresPermissions("sysuser:view")

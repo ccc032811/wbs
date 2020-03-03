@@ -475,11 +475,8 @@
                 });
                 if(res.code ==200){
                     images.push(res.data.value);
-                    console.log(files);
-                    console.log(images);
                     febs.alert.success('上传成功');
                 }else {
-                    febs.view.loadBar.error();
                     febs.alert.error('上传失败！');
                 }
             }

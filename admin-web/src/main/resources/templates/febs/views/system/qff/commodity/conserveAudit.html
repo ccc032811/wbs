@@ -472,20 +472,20 @@
                     }
                     deleteImage(res.data.value);
                 });
-                if(res.code ==200){
+                if(res.code == 200){
                     images.push(res.data.value);
                     febs.alert.success('上传成功');
                 }else {
-                    febs.view.loadBar.error();
                     febs.alert.error('上传失败！');
                 }
+
             }
         });
 
 
         function deleteImage(url){
             febs.get(ctx + "file/deleteImage/"+url, function (res) {
-                if(res.code ==200){
+                if(res.code === 200){
                     febs.alert.success('删除成功');
                 }
             })
