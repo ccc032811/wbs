@@ -327,12 +327,14 @@ public class ProcessServiceImpl implements IProcessService {
             }
         }
     }
+
     @Transactional
     public void editCommodity(Commodity commodity){
         String format = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
         commodity.setRepTime(format);
         commodityService.editCommodity(commodity);
     }
+
     @Transactional
     public void editRefund(Refund refund){
         String format = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");

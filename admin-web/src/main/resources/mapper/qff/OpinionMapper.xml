@@ -3,7 +3,12 @@
 <mapper namespace="com.neefull.fsp.web.qff.mapper.OpinionMapper">
 
     <delete id="deleteOpinions" parameterType="string">
-        DELETE FROM qff_opinion WHERE id = #{opinionId}
+        DELETE
+        FROM
+            qff_opinion
+        WHERE
+                id IN ( SELECT m.id FROM ( SELECT id FROM qff_opinion WHERE FIND_IN_SET( id, findOpinionChildren (
+                    #{opinionId} ) ) > 0 ) m )
     </delete>
     <select id="getOpinions" resultType="com.neefull.fsp.web.qff.entity.Opinion">
         select * from qff_opinion where parent_id = (select id from qff_opinion where name = #{name})
