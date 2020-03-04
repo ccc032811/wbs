@@ -101,7 +101,7 @@ public class FileController extends BaseController {
     public FebsResponse deleteImage(@PathVariable String url) throws FebsException {
         try {
             dateImageService.deleteImage(url);
-            return new FebsResponse().success().data("200");
+            return new FebsResponse().success();
         } catch (Exception e) {
             String message = "删除图片失败";
             log.error(message,e);

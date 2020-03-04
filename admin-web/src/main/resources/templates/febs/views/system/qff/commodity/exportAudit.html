@@ -350,9 +350,9 @@
             <div class="timeline-main-line" id="export-process">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item febs-hide">
             <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="commodity:audit">
-                <button class="layui-btn" lay-submit="" lay-filter="export-form-submit" id="export-submit" >提交</button>
+                <button class="layui-btn" lay-submit="" lay-filter="export-form-submit" id="export-submit" ></button>
             </div>
             <br>
             <div style="float: right">
@@ -360,6 +360,11 @@
             </div>
         </div>
     </form>
+    <div class="layui-form-item">
+        <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="commodity:audit">
+            <button class="layui-btn" id="export-submit-control" >提交</button>
+        </div>
+    </div>
 </div>
 <img alt="" style="display:none" id="export-displayImg" src="" />
 
@@ -560,6 +565,9 @@
                 '                </div>')
         }
 
+        $view.on('click', '#export-submit-control', function () {
+            $view.find('#export-submit').trigger('click');
+        });
 
         //提交更新
         form.on('submit(export-form-submit)', function (data) {

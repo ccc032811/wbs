@@ -349,7 +349,7 @@
             <div class="timeline-main-line" id="delivery-process">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item febs-hide">
             <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="commodity:audit">
                 <button class="layui-btn" lay-submit="" lay-filter="delivery-form-submit" id="delivery-submit" >提交</button>
             </div>
@@ -359,6 +359,11 @@
             </div>
         </div>
     </form>
+    <div class="layui-form-item ">
+        <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="commodity:audit">
+            <button class="layui-btn"  id="delivery-submit-control" >提交</button>
+        </div>
+    </div>
 </div>
 <img alt="" style="display:none" id="delivery-displayImg" src="" />
 
@@ -561,6 +566,9 @@
                 '                </div>')
         }
 
+        $view.on('click', '#delivery-submit-control', function () {
+            $view.find('#delivery-submit').trigger('click');
+        });
 
         //提交更新
         form.on('submit(delivery-form-submit)', function (data) {
@@ -590,6 +598,7 @@
             }
             return false;
         });
+
 
 
         $.get(ctx +"opinion/getOpinion/"+reason,function(res){

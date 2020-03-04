@@ -350,9 +350,9 @@
             <div class="timeline-main-line" id="conserve-process">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item febs-hide">
             <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="commodity:audit">
-                <button class="layui-btn" lay-submit="" lay-filter="conserve-form-submit" id="conserve-submit" >提交</button>
+                <button class="layui-btn" lay-submit="" lay-filter="conserve-form-submit" id="conserve-submit" ></button>
             </div>
             <br>
             <div style="float: right">
@@ -360,6 +360,11 @@
             </div>
         </div>
     </form>
+    <div class="layui-form-item">
+        <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="commodity:audit">
+            <button class="layui-btn" id="conserve-submit-control" >提交</button>
+        </div>
+    </div>
 </div>
 <img alt="" style="display:none" id="conserve-displayImg" src=""/>
 
@@ -564,6 +569,10 @@
                  '                    <div class="timeline-item-name-fail">xxx审核</div>\n' +
                  '                </div>')
          }
+
+        $view.on('click', '#conserve-submit-control', function () {
+            $view.find('#conserve-submit').trigger('click');
+        });
 
 
         //提交更新

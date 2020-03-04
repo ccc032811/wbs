@@ -350,9 +350,9 @@
             <div class="timeline-main-line" id="wrapper-process">
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item febs-hide">
             <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="commodity:audit">
-                <button class="layui-btn" lay-submit="" lay-filter="wrapper-form-submit" id="wrapper-submit" >提交</button>
+                <button class="layui-btn" lay-submit="" lay-filter="wrapper-form-submit" id="wrapper-submit" ></button>
             </div>
             <br>
             <div style="float: right">
@@ -360,6 +360,11 @@
             </div>
         </div>
     </form>
+    <div class="layui-form-item">
+        <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="commodity:audit">
+            <button class="layui-btn"  id="wrapper-submit-control" >提交</button>
+        </div>
+    </div>
 </div>
 <img alt="" style="display:none" id="wrapper-displayImg" src="" />
 
@@ -564,6 +569,9 @@
                 '                </div>')
         }
 
+        $view.on('click', '#wrapper-submit-control', function () {
+            $view.find('#wrapper-submit').trigger('click');
+        });
 
         //提交更新
         form.on('submit(wrapper-form-submit)', function (data) {

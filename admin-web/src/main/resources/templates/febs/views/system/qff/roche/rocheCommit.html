@@ -184,16 +184,17 @@
 
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item febs-hide">
             <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="roche:audit">
-                <button class="layui-btn" lay-submit="" lay-filter="roche-form-audit" id="audit" >提交</button>
-            </div>
-            <br>
-            <div style="float: right">
-                <input style="border:0;" name="id" type="hidden">
+                <button class="layui-btn" lay-submit="" lay-filter="roche-form-audit" id="audit" ></button>
             </div>
         </div>
     </form>
+    <div class="layui-form-item">
+        <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="roche:audit">
+            <button class="layui-btn"  id="roche-audit" >提交</button>
+        </div>
+    </div>
 </div>
 <img alt="" style="display:none" id="displayImg" src="" />
 <script data-th-inline="javascript">
@@ -291,6 +292,11 @@
             $.each(data,function(index,item){
                 $("#search_actions").append('<option value="'+item.name+'"></option>')
             });
+        });
+
+
+        $view.on('click', '#roche-audit', function () {
+            $view.find('#audit').trigger('click');
         });
 
         //提交更新

@@ -203,14 +203,14 @@
                 <label class="layui-form-label ">期望完成日期</label>
                 <div class="layui-input-block">
                     <input type="text" name="exceptDate" id="audit-exceptDate" class="layui-input"
-                           placeholder="请选择时间" readonly="readonly" >
+                           placeholder="请选择时间" readonly="readonly"   autocomplete="off">
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">实际完成日期</label>
                 <div class="layui-input-block">
                     <input type="text" name="completeDate" id="audit-completeDate" class="layui-input"
-                           placeholder="请选择时间"  >
+                           placeholder="请选择时间"  autocomplete="off" >
                 </div>
             </div>
         </div>
@@ -226,14 +226,14 @@
                 <label class="layui-form-label ">期望完成日期</label>
                 <div class="layui-input-block">
                     <input type="text" name="exceptedDate" id="audit-exceptedDate" class="layui-input"
-                           placeholder="请选择时间" readonly="readonly" >
+                           placeholder="请选择时间" readonly="readonly"  autocomplete="off">
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">实际完成日期</label>
                 <div class="layui-input-block">
                     <input type="text" name="actualDate" id="audit-actualDate" class="layui-input"
-                           placeholder="请选择时间" >
+                           placeholder="请选择时间"   autocomplete="off">
                 </div>
             </div>
         </div>
@@ -267,9 +267,9 @@
 
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item febs-hide" >
             <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="roche:audit">
-                <button class="layui-btn" lay-submit="" lay-filter="roche-form-submit" id="submit" >提交</button>
+                <button class="layui-btn" lay-submit="" lay-filter="roche-form-submit" id="submit" ></button>
             </div>
             <br>
             <div style="float: right">
@@ -277,6 +277,15 @@
             </div>
         </div>
     </form>
+    <div class="layui-form-item">
+        <div  style="margin-top: 75px;text-align: center;" shiro:hasPermission="roche:audit">
+            <button class="layui-btn" id="roche-submit" >提交</button>
+        </div>
+        <br>
+        <div style="float: right">
+            <input style="border:0;" name="id" type="hidden">
+        </div>
+    </div>
 </div>
 <img alt="" style="display:none" id="displayImg" src="" />
 
@@ -307,13 +316,13 @@
             ,showBottom: false
         });
 
-       /* laydate.render({
+        laydate.render({
             elem: '#audit-completeDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false
         });
-*/
+
         laydate.render({
             elem: '#audit-exceptedDate',
             trigger: 'click'
@@ -321,12 +330,12 @@
             ,showBottom: false
         });
 
-       /* laydate.render({
+        laydate.render({
             elem: '#audit-actualDate',
             trigger: 'click'
             ,min:0
             ,showBottom: false
-        });*/
+        });
 
         //表单渲染
         form.render();
@@ -428,6 +437,10 @@
                 '                </div>')
         }
 
+
+        $view.on('click', '#roche-submit', function () {
+            $view.find('#submit').trigger('click');
+        });
 
         //提交更新
         form.on('submit(roche-form-submit)', function (data) {

@@ -8,7 +8,7 @@ spring:
     multipart:
       max-file-size: 2MB # 限制文件上传的大小
   profiles:
-    active: dev
+    active: prod
 
   thymeleaf:
     cache: false
