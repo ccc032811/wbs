@@ -452,14 +452,14 @@
                 febs.post(ctx + 'recent/commit', data.field, function (data) {
                     layer.closeAll();
                     febs.alert.success('数据修改成功');
-                    $('#fbs-recent').find('#query').click();
+                    $('#fbs-recent').find('#recent-query').click();
                 });
             }
             if(recent.status ==2){
                 febs.post(ctx + 'recent/agree', data.field, function (data) {
                     layer.closeAll();
                     febs.alert.success('数据修改成功');
-                    $('#fbs-recent').find('#query').click();
+                    $('#fbs-recent').find('#recent-query').click();
                 });
             }
             return false;

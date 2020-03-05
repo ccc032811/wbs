@@ -566,7 +566,7 @@
                 febs.post(ctx + 'refund/commit', data.field, function (data) {
                     layer.closeAll();
                     febs.alert.success('数据修改成功');
-                    $('#fbs-refund').find('#query').click();
+                    $('#fbs-refund').find('#refund-query').click();
                 });
             }
             if(refund.status ==2){
@@ -574,7 +574,7 @@
                 febs.post(ctx + 'refund/agree', data.field, function (data) {
                     layer.closeAll();
                     febs.alert.success('数据修改成功');
-                    $('#fbs-refund').find('#query').click();
+                    $('#fbs-refund').find('#refund-query').click();
                 });
             }
 
@@ -636,8 +636,8 @@
             dom.html(html);
             form.render("select");
         });
-
 */
+
 
     });
 </script>
