@@ -1,5 +1,6 @@
 package com.neefull.fsp.web.qff.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import sun.misc.BASE64Encoder;
 
 import java.io.*;
@@ -10,7 +11,10 @@ import java.util.Map;
 /**
  * sap webservice的工具类，目的在于实现连接sapwebservice
  */
+@Slf4j
 public abstract class SapWsUtils {
+
+
     private static final String encoding = "UTF-8";
 
     /**
@@ -18,29 +22,28 @@ public abstract class SapWsUtils {
      *
      * @param invoke_ws_url 调用地址
      * @param soapMsg       soap消息
-     * @param userName      用户名
-     * @param password      密码
      * @return 返回的字符串
      * @throws Exception
      */
-    public static StringBuffer callWebService(String invoke_ws_url, String soapMsg, String userName, String password, String contentType) throws Exception {
+    public static StringBuffer callWebService(String invoke_ws_url, String soapMsg) throws Exception {
         // 开启HTTP连接ַ
         InputStreamReader isr = null;
         BufferedReader inReader = null;
         StringBuffer result = null;
         OutputStream outObject = null;
-        String input = userName + ":" + password;
-        BASE64Encoder base = new BASE64Encoder();
-        String encodedPassword = base.encode(input.getBytes(encoding));
+//        String input = userName + ":" + password;
+//        BASE64Encoder base = new BASE64Encoder();
+//        String encodedPassword = base.encode(input.getBytes(encoding));
 
         try {
             URL url = new URL(invoke_ws_url);
             HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-            httpConn.setRequestProperty("Authorization", "Basic " + encodedPassword);
+//            httpConn.setRequestProperty("Authorization", "Basic " + encodedPassword);
+
             // 设置HTTP请求相关信息
             httpConn.setRequestProperty("Content-Length",
                     String.valueOf(soapMsg.getBytes().length));
-            httpConn.setRequestProperty("Content-Type", contentType);
+            httpConn.setRequestProperty("Content-Type",  "text/xml; charset=utf-8");
             httpConn.setRequestMethod("POST");
             httpConn.setDoOutput(true);
             httpConn.setDoInput(true);
@@ -48,8 +51,10 @@ public abstract class SapWsUtils {
             // 进行HTTP请求
             outObject = httpConn.getOutputStream();
             outObject.write(soapMsg.getBytes());
-            System.out.println(httpConn.getResponseMessage());
+//            System.out.println(httpConn.getResponseMessage());
+            log.info(httpConn.getResponseMessage());
             // 获取HTTP响应数据
+
             isr = new InputStreamReader(
                     httpConn.getInputStream(), encoding);
             inReader = new BufferedReader(isr);
@@ -75,6 +80,36 @@ public abstract class SapWsUtils {
         }
         return result;
     }
+
+    /**构建QFF  soap请求报文   固定形式
+     * @param fromDate
+     * @param toDate
+     * @return
+     */
+    public static String getSoapMessage(String fromDate,String toDate){
+
+        StringBuffer message = new StringBuffer("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:soap=\"http://www.shaphar.com/SoapService\">\n" +
+                "   <soapenv:Header/>\n" +
+                "   <soapenv:Body>\n" +
+                "      <soap:REQUEST_DATA>\n" +
+                "         <soap:commonHeader>\n" +
+                "            <soap:BIZTRANSACTIONID>1</soap:BIZTRANSACTIONID>\n" +
+                "            <soap:COUNT>1</soap:COUNT>\n" +
+                "            <soap:CONSUMER>1</soap:CONSUMER>\n" +
+                "            <soap:SRVLEVEL>1</soap:SRVLEVEL>\n" +
+                "            <soap:ACCOUNT>1</soap:ACCOUNT>\n" +
+                "            <soap:PASSWORD>1</soap:PASSWORD>\n" +
+                "            <soap:COMMENTS>1</soap:COMMENTS>\n" +
+                "         </soap:commonHeader>\n" +
+                "         <soap:LIST><![CDATA[<urn:ZCHN_FM_QFF xmlns:urn=\"urn:sap-com:document:sap:rfc:functions:ZCHN_FM_QFF_BS\"><urn:IV_DATE_FROM>"+fromDate+"</urn:IV_DATE_FROM><urn:IV_DATE_TO>"+toDate+"</urn:IV_DATE_TO><urn:ET_QFF><urn:item><urn:QMNUM>1</urn:QMNUM><urn:HERKUNFT>1</urn:HERKUNFT><urn:MAWERK>1</urn:MAWERK><urn:MATNR>1</urn:MATNR><urn:MSTAE>1</urn:MSTAE><urn:CHARG>1</urn:CHARG><urn:IDNLF>1</urn:IDNLF><urn:BISMT>1</urn:BISMT><urn:LICHN>1</urn:LICHN><urn:HSDAT>2019-08-01</urn:HSDAT><urn:VFDAT>2021-08-01</urn:VFDAT><urn:MGEIG>100</urn:MGEIG><urn:QMTXT>1</urn:QMTXT></urn:item></urn:ET_QFF><urn:ET_QFF_ATT><urn:item><urn:QMNUM>1</urn:QMNUM><urn:ATTACHNAME>1</urn:ATTACHNAME><urn:ATTACH>ZQ==</urn:ATTACH></urn:item></urn:ET_QFF_ATT></urn:ZCHN_FM_QFF>]]></soap:LIST>\n" +
+                "      </soap:REQUEST_DATA>\n" +
+                "   </soapenv:Body>\n" +
+                "</soapenv:Envelope>\n");
+
+        return message.toString();
+    }
+
+
 
     /**
      * 根据消息模板组装消息
@@ -111,20 +146,5 @@ public abstract class SapWsUtils {
             }
         }
         return sendMsg;
-    }
-
-
-    public static void main(String[] args) throws Exception {
-/*        Map params = new HashMap();
-        params.put("COMPANY_CODE", "6270");
-        params.put("PLANT_CODE", "");
-        params.put("PRINCIPAL_CODE", "101948");
-        String INVOICE_WS_URL = "http://eccappqas.sphkdl.shaphar.net:8008/sap/bc/srt/rfc/sap/zchn_chp_ws_prnlist/200/zchn_chp_ws_prnlist/zchn_chp_ws_prnlist";
-        String username = "SYSUSER_CHP";
-        String password = "123456";
-        SapWsUtils sapWsUtils = new SapWsUtils();
-        String sendMsg = sapWsUtils.getSoapMsg("ZCHN_CHP_FM_PRNLIST", params);
-        sapWsUtils.callWebService(INVOICE_WS_URL, sendMsg, username, password);*/
-
     }
 }

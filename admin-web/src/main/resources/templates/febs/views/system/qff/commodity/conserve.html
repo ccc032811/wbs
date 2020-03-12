@@ -46,15 +46,15 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div style="float: right;margin-right: 3%">
-                                        <div id="conserve-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                    <div id="conserve-check" style="float: right;margin-right: 3%;border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                        <!--<div  class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">-->
                                             <div class="layui-btn layui-btn-normal" id="conserve-query" >
                                                 <i class="layui-icon ">查询</i>
                                             </div>
                                             <div class="layui-btn layui-btn-danger " id="conserve-reset" >
                                                 <i class="layui-icon ">清空</i>
                                             </div>
-                                        </div>
+                                        <!--</div>-->
                                     </div>
                                 </div>
                             </div>
@@ -289,12 +289,12 @@
         element.on('collapse(conserve-navi)', function(data){
             if(data.show == true){
                 $('#conserve-tag').html('');
-                $('#conserve-tag').append('<i  class="layui-icon tag-title">&#xe619;</i>')
+                $('#conserve-tag').append('<i  class="layui-icon tag-title">&#xe619;</i>');
                 $('#conserve-check').attr("style","display:none")
             }else if(data.show == false){
                 $('#conserve-tag').html('');
-                $('#conserve-tag').append('<i  class="layui-icon tag-title" >&#xe61a;</i>')
-                $('#conserve-check').attr("style","display:inline")
+                $('#conserve-tag').append('<i  class="layui-icon tag-title" >&#xe61a;</i>');
+                $('#conserve-check').attr("style","float: right;margin-right: 3%;border-left: 1px solid white;border-top: 1px solid white;height: 40px;display:inline")
             }
 
         });

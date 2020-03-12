@@ -1,5 +1,6 @@
 package com.neefull.fsp.web.qff.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -58,6 +59,14 @@ public class RefundServiceImpl extends ServiceImpl<RefundMapper, Refund> impleme
     public Refund queryRefundById(Integer id) {
         Refund refund = refundMapper.selectById(id);
         return refund;
+    }
+
+    @Override
+    public Refund queryRefundByNumber(String number) {
+        QueryWrapper<Refund> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("number", number);
+        return refundMapper.selectOne(queryWrapper);
+
     }
 
 

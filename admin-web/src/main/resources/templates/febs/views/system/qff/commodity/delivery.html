@@ -46,15 +46,15 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div style="float: right;margin-right: 3%">
-                                        <div id="delivery-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                    <div id="delivery-check"  style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;float: right;margin-right: 3%">
+                                        <!--<div class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">-->
                                             <div class="layui-btn layui-btn-normal" id="delivery-query" >
                                                 <i class="layui-icon ">查询</i>
                                             </div>
                                             <div class="layui-btn layui-btn-danger " id="delivery-reset" >
                                                 <i class="layui-icon ">清空</i>
                                             </div>
-                                        </div>
+                                        <!--</div>-->
                                     </div>
                                 </div>
                             </div>
@@ -295,7 +295,7 @@
             }else if(data.show == false){
                 $('#delivery-tag').html('');
                 $('#delivery-tag').append('<i  class="layui-icon tag-title" >&#xe61a;</i>')
-                $('#delivery-check').attr("style","display:inline")
+                $('#delivery-check').attr("style","border-left: 1px solid white;border-top: 1px solid white;height: 40px;float: right;margin-right: 3%;display:inline")
             }
 
         });

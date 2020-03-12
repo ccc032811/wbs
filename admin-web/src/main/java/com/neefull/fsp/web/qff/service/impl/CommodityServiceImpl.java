@@ -1,5 +1,6 @@
 package com.neefull.fsp.web.qff.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -61,7 +62,13 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
         return commodity;
     }
 
+    @Override
+    public Commodity queryCommodityByNumber(String number) {
+        QueryWrapper<Commodity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("number", number);
+        return  commodityMapper.selectOne(queryWrapper);
 
+    }
 
 
 }

@@ -31,6 +31,7 @@ public class SpringBeanUtil implements ApplicationContextAware {
         for (String beanDefinitionName : beanDefinitionNames) {
             System.out.println(beanDefinitionName);
         }
-
     }
+
+
 }

@@ -46,15 +46,15 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div style="float: right;margin-right: 3%">
-                                        <div id="roche-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                    <div id="roche-check" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;float: right;margin-right: 3%">
+                                        <!--<div id="roche-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">-->
                                             <div class="layui-btn layui-btn-normal" id="query" >
                                                 <i class="layui-icon ">查询</i>
                                             </div>
                                             <div class="layui-btn layui-btn-danger " id="reset" >
                                                 <i class="layui-icon ">清空</i>
                                             </div>
-                                        </div>
+                                        <!--</div>-->
                                     </div>
                                 </div>
                             </div>
@@ -261,7 +261,7 @@
             }else if(data.show == false){
                 $('#roche-tag').html('');
                 $('#roche-tag').append('<i  class="layui-icon tag-title" >&#xe61a;</i>')
-                $('#roche-check').attr("style","display:inline")
+                $('#roche-check').attr("style","border-left: 1px solid white;border-top: 1px solid white;height: 40px;float: right;margin-right: 3%;display:inline")
             }
         });
 

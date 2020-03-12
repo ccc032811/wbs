@@ -173,7 +173,7 @@
             <div class="layui-inline layui-col-sm4 ">
                 <label class="layui-form-label ">是否是危险品</label>
                 <div class="layui-input-block">
-                    <input type="text" name="isDanger" lay-verify="required" maxlength="50" autocomplete="off"
+                    <input type="text" id="isDanger" lay-verify="required" maxlength="50" autocomplete="off"
                            class="layui-input " readonly="readonly">
                 </div>
             </div>
@@ -465,7 +465,13 @@
         }
 
 
-
+        $(function () {
+            if(commodity.isDanger == '01'){
+                $("#isDanger").attr("value","危险");
+            }else{
+                $("#isDanger").attr("value","不危险");
+            }
+        })
 
 
     });

@@ -46,15 +46,15 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div style="float: right;margin-right: 3%">
-                                        <div id="wrapper-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                    <div id="wrapper-check" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;float: right;margin-right: 3%">
+                                        <!--<div id="wrapper-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">-->
                                             <div class="layui-btn layui-btn-normal" id="wrapper-query" >
                                                 <i class="layui-icon ">查询</i>
                                             </div>
                                             <div class="layui-btn layui-btn-danger " id="wrapper-reset" >
                                                 <i class="layui-icon ">清空</i>
                                             </div>
-                                        </div>
+                                        <!--</div>-->
                                     </div>
                                 </div>
                             </div>
@@ -293,9 +293,8 @@
             }else if(data.show == false){
                 $('#wrapper-tag').html('');
                 $('#wrapper-tag').append('<i  class="layui-icon tag-title" >&#xe61a;</i>')
-                $('#wrapper-check').attr("style","display:inline")
+                $('#wrapper-check').attr("style","border-left: 1px solid white;border-top: 1px solid white;height: 40px;float: right;margin-right: 3%;display:inline")
             }
-
         });
 
         //加载表格数据
@@ -380,8 +379,6 @@
                 $query.click();
             });
         }
-
-
 
         table.on('sort(wrapperTable)', function (obj) {
             tableIns.reload({

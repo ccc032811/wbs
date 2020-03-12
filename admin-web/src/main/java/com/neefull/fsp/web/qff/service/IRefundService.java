@@ -44,4 +44,9 @@ public interface IRefundService extends IService<Refund> {
      */
     Refund queryRefundById(Integer id);
 
+    /**根据ＱＦＦ编号查询
+     * @param number
+     * @return
+     */
+    Refund queryRefundByNumber(String number);
 }

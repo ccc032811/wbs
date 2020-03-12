@@ -59,11 +59,11 @@ public class ProcessServiceImpl implements IProcessService {
 
         if(object instanceof Commodity){
             Commodity commodity = (Commodity) object;
-            if(commodity.getId()==null){
-                commodityService.addCommodity(commodity);
-            }else {
-                editCommodity(commodity);
-            }
+//            if(commodity.getId()==null){
+//                commodityService.addCommodity(commodity);
+//            }else {
+//                editCommodity(commodity);
+//            }
             String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
             //启动流程
             runtimeService.startProcessInstanceByKey(properties.getCommodityProcess(), businessKey,variable);
@@ -72,11 +72,11 @@ public class ProcessServiceImpl implements IProcessService {
             commodityService.updateCommodityStatus(commodity.getId(), ProcessConstant.UNDER_REVIEW);
         }else if(object instanceof Refund){
             Refund refund = (Refund) object;
-            if(refund.getId()==null){
-                refundService.addRefund(refund);
-            }else {
-                editRefund(refund);
-            }
+//            if(refund.getId()==null){
+//                refundService.addRefund(refund);
+//            }else {
+//                editRefund(refund);
+//            }
             String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
             runtimeService.startProcessInstanceByKey(properties.getRefundProcess(),businessKey);
             agreeCurrentProcess(refund,user);

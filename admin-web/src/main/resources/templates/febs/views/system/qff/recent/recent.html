@@ -46,15 +46,15 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div style="float: right;margin-right: 3%">
-                                        <div id="recent-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                    <div id="recent-check" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;float: right;margin-right: 3%">
+                                        <!--<div id="recent-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">-->
                                             <div class="layui-btn layui-btn-normal" id="recent-query" >
                                                 <i class="layui-icon ">查询</i>
                                             </div>
                                             <div class="layui-btn layui-btn-danger " id="recent-reset" >
                                                 <i class="layui-icon ">清空</i>
                                             </div>
-                                        </div>
+                                        <!--</div>-->
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +224,7 @@
             }else if(data.show == false){
                 $('#recent-tag').html('');
                 $('#recent-tag').append('<i  class="layui-icon tag-title" >&#xe61a;</i>')
-                $('#recent-check').attr("style","display:inline")
+                $('#recent-check').attr("style","border-left: 1px solid white;border-top: 1px solid white;height: 40px;float: right;margin-right: 3%;display:inline")
             }
         });
 

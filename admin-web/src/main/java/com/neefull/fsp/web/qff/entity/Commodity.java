@@ -10,6 +10,8 @@ import com.wuwenze.poi.annotation.ExcelField;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.Map;
 
 @TableName(value = "qff_commodity")
 @Excel("到货养护分包出库QFF")
+@XmlRootElement(name = "urn")
 public class Commodity implements Serializable {
 
 
@@ -68,7 +71,7 @@ public class Commodity implements Serializable {
     @ExcelField(value = "罗氏物料号")
     private String rMater;
     /**
-     *  是否是危险品   0不危险  1危险
+     *  是否是危险品   01危险
      */
     @TableField("is_danger")
     @ExcelField(value = "是否是危险品")
@@ -251,6 +254,7 @@ public class Commodity implements Serializable {
         this.transport = transport;
     }
 
+    @XmlElement(name = "QMNUM")
     public String getNumber() {
         return number;
     }
@@ -259,6 +263,7 @@ public class Commodity implements Serializable {
         this.number = number;
     }
 
+    @XmlElement(name = "MAWERK")
     public String getPlant() {
         return plant;
     }
@@ -267,6 +272,7 @@ public class Commodity implements Serializable {
         this.plant = plant;
     }
 
+    @XmlElement(name = "MATNR")
     public String getkMater() {
         return kMater;
     }
@@ -275,6 +281,7 @@ public class Commodity implements Serializable {
         this.kMater = kMater;
     }
 
+    @XmlElement(name = "CHARG")
     public String getkBatch() {
         return kBatch;
     }
@@ -283,6 +290,7 @@ public class Commodity implements Serializable {
         this.kBatch = kBatch;
     }
 
+    @XmlElement(name = "IDNLF")
     public String getrMater() {
         return rMater;
     }
@@ -291,6 +299,7 @@ public class Commodity implements Serializable {
         this.rMater = rMater;
     }
 
+    @XmlElement(name = "MSTAE")
     public String getIsDanger() {
         return isDanger;
     }
@@ -299,6 +308,7 @@ public class Commodity implements Serializable {
         this.isDanger = isDanger;
     }
 
+    @XmlElement(name = "BISMT")
     public String getpMater() {
         return pMater;
     }
@@ -307,6 +317,7 @@ public class Commodity implements Serializable {
         this.pMater = pMater;
     }
 
+    @XmlElement(name = "LICHN")
     public String getrBatch() {
         return rBatch;
     }
@@ -315,6 +326,7 @@ public class Commodity implements Serializable {
         this.rBatch = rBatch;
     }
 
+    @XmlElement(name = "HSDAT")
     public String getManuDate() {
         return manuDate;
     }
@@ -323,6 +335,7 @@ public class Commodity implements Serializable {
         this.manuDate = manuDate;
     }
 
+    @XmlElement(name = "VFDAT")
     public String getExpiryDate() {
         return expiryDate;
     }
@@ -331,6 +344,7 @@ public class Commodity implements Serializable {
         this.expiryDate = expiryDate;
     }
 
+    @XmlElement(name = "MGEIG")
     public String getQuarantine() {
         return quarantine;
     }
@@ -339,6 +353,7 @@ public class Commodity implements Serializable {
         this.quarantine = quarantine;
     }
 
+    @XmlElement(name = "QMTXT")
     public String getGetRemark() {
         return getRemark;
     }
@@ -411,6 +426,7 @@ public class Commodity implements Serializable {
         this.ba = ba;
     }
 
+    @XmlElement(name = "HERKUNFT")
     public String getStage() {
         return stage;
     }

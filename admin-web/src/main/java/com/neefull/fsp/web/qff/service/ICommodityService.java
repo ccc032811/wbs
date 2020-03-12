@@ -44,4 +44,9 @@ public interface ICommodityService extends IService<Commodity> {
     Commodity queryCommodityById(Integer id);
 
 
+    /**根据QFF编号查询
+     * @param number
+     * @return
+     */
+    Commodity queryCommodityByNumber(String number);
 }
