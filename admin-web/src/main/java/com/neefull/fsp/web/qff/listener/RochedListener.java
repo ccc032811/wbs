@@ -91,14 +91,14 @@ public class RochedListener implements JavaDelegate {
         Properties prop = new Properties();
         prop.setProperty("mail.smtp.auth", mailProperties.getAuth());
 //        prop.setProperty("mail.smtp.timeout", mailProperties.getTimeout());
-//        try {
-//            MailSSLSocketFactory sf = new MailSSLSocketFactory();
-//            sf.setTrustAllHosts(true);
-//            prop.put("mail.smtp.ssl.enable", true);
-//            prop.put("mail.smtp.ssl.socketFactory", sf);
-//        } catch (GeneralSecurityException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            MailSSLSocketFactory sf = new MailSSLSocketFactory();
+            sf.setTrustAllHosts(true);
+            prop.put("mail.smtp.ssl.enable", true);
+            prop.put("mail.smtp.ssl.socketFactory", sf);
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
         javaMailSender.setJavaMailProperties(prop);
 
         MimeMessageHelper mimeMessageHelper = null;

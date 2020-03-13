@@ -1,0 +1,646 @@
+2020-02-26 13:33:02.045 febs [main] INFO  com.neefull.fsp.web.QffApplication - Starting QffApplication on DESKTOP-BSUER0M with PID 2192 (D:\ideawork\fps\qff\admin-web\target\classes started by ccc in D:\ideawork\fps\qff)
+2020-02-26 13:33:02.051 febs [main] INFO  com.neefull.fsp.web.QffApplication - The following profiles are active: dev
+2020-02-26 13:33:14.086 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-02-26 13:33:14.087 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-02-26 13:33:14.420 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 297ms. Found 0 repository interfaces.
+2020-02-26 13:33:14.481 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-02-26 13:33:14.485 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-02-26 13:33:14.722 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 205ms. Found 0 repository interfaces.
+2020-02-26 13:33:16.176 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.324 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$89e24305] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.339 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.343 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.357 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$2053d234] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.394 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'febsProperties' of type [com.neefull.fsp.web.common.properties.FebsProperties$$EnhancerBySpringCGLIB$$9f00597] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.407 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroConfig' of type [com.neefull.fsp.web.common.authentication.ShiroConfig$$EnhancerBySpringCGLIB$$e7a13cd6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.516 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatis-plus-com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.529 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatisPlusConfigure' of type [com.neefull.fsp.web.common.configure.MybatisPlusConfigure$$EnhancerBySpringCGLIB$$fc3fbcda] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.537 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'paginationInterceptor' of type [com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.550 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration$$EnhancerBySpringCGLIB$$5e1c3ece] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.562 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceCreator' of type [com.baomidou.dynamic.datasource.DynamicDataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.565 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceProvider' of type [com.baomidou.dynamic.datasource.provider.YmlDynamicDataSourceProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:16.582 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Starting...
+2020-02-26 13:33:17.863 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Start completed.
+2020-02-26 13:33:17.864 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Starting...
+2020-02-26 13:33:18.070 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Start completed.
+2020-02-26 13:33:18.071 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - typt - Starting...
+2020-02-26 13:33:18.225 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - typt - Start completed.
+2020-02-26 13:33:18.225 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 初始共加载 3 个数据源
+2020-02-26 13:33:18.226 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 quartz 成功
+2020-02-26 13:33:18.226 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 base 成功
+2020-02-26 13:33:18.226 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 typt 成功
+2020-02-26 13:33:18.226 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 当前的默认数据源是单数据源，数据源名为 base
+2020-02-26 13:33:18.226 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:18.243 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:18.255 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:20.910 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionFactory' of type [org.apache.ibatis.session.defaults.DefaultSqlSessionFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:20.947 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionTemplate' of type [org.mybatis.spring.SqlSessionTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:20.995 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.005 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [com.sun.proxy.$Proxy114] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.098 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.102 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [com.sun.proxy.$Proxy116] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.107 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleServiceImpl' of type [com.neefull.fsp.web.system.service.impl.UserRoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.268 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userServiceImpl' of type [com.neefull.fsp.web.system.service.impl.UserServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.387 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.390 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [com.sun.proxy.$Proxy119] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.410 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.413 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [com.sun.proxy.$Proxy120] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.419 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuServiceImpl' of type [com.neefull.fsp.web.system.service.impl.RoleMenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.476 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleServiceImpl' of type [com.neefull.fsp.web.system.service.impl.RoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.540 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.542 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [com.sun.proxy.$Proxy123] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.554 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuServiceImpl' of type [com.neefull.fsp.web.system.service.impl.MenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.631 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroRealm' of type [com.neefull.fsp.web.common.authentication.ShiroRealm] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.725 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'redisSessionDAO' of type [org.crazycake.shiro.RedisSessionDAO] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.736 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sessionManager' of type [org.apache.shiro.web.session.mgt.DefaultWebSessionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.760 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'securityManager' of type [org.apache.shiro.web.mgt.DefaultWebSecurityManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:21.805 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'authorizationAttributeSourceAdvisor' of type [org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:33:22.587 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8083 (http)
+2020-02-26 13:33:22.613 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8083"]
+2020-02-26 13:33:22.626 febs [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2020-02-26 13:33:22.627 febs [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.19]
+2020-02-26 13:33:22.936 febs [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2020-02-26 13:33:22.937 febs [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 20728 ms
+2020-02-26 13:33:23.677 febs [main] INFO  c.n.fsp.web.common.xss.XssFilter - ------------ xss filter init ------------
+2020-02-26 13:33:23.909 febs [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2020-02-26 13:33:24.032 febs [main] INFO  org.hibernate.Version - HHH000412: Hibernate Core {5.3.10.Final}
+2020-02-26 13:33:24.035 febs [main] INFO  org.hibernate.cfg.Environment - HHH000206: hibernate.properties not found
+2020-02-26 13:33:24.309 febs [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2020-02-26 13:33:25.928 febs [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2020-02-26 13:33:26.619 febs [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-02-26 13:33:27.339 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2020-02-26 13:33:27.369 febs [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2020-02-26 13:33:27.370 febs [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.1 created.
+2020-02-26 13:33:27.374 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - Using db table-based data access locking (synchronization).
+2020-02-26 13:33:27.379 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - JobStoreCMT initialized.
+2020-02-26 13:33:27.382 febs [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.1) 'FEBS_Scheduler' with instanceId 'DESKTOP-BSUER0M1582695207343'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 20 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+2020-02-26 13:33:27.382 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'FEBS_Scheduler' initialized from an externally provided properties instance.
+2020-02-26 13:33:27.382 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.1
+2020-02-26 13:33:27.385 febs [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@613ba54e
+2020-02-26 13:33:29.123 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService
+2020-02-26 13:33:29.127 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'febsAsyncThreadPool'
+2020-02-26 13:33:30.539 febs [main] INFO  o.a.engine.impl.ProcessEngineImpl - ProcessEngine default created
+2020-02-26 13:33:30.541 febs [main] INFO  o.a.e.i.a.AbstractAsyncJobExecutor - Starting up the default async job executor [org.activiti.spring.SpringAsyncExecutor].
+2020-02-26 13:33:30.543 febs [Thread-62] INFO  o.a.e.i.a.AcquireTimerJobsRunnable - starting to acquire async jobs due
+2020-02-26 13:33:30.543 febs [Thread-63] INFO  o.a.e.i.a.AcquireAsyncJobsDueRunnable - starting to acquire async jobs due
+2020-02-26 13:33:32.522 febs [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2020-02-26 13:33:34.278 febs [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2020-02-26 13:33:34.432 febs [main] INFO  o.s.s.quartz.SchedulerFactoryBean - Will start Quartz Scheduler [FEBS_Scheduler] in 1 seconds
+2020-02-26 13:33:34.449 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8083"]
+2020-02-26 13:33:34.492 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8083 (http) with context path ''
+2020-02-26 13:33:34.496 febs [main] INFO  com.neefull.fsp.web.QffApplication - Started QffApplication in 34.803 seconds (JVM running for 38.301)
+2020-02-26 13:33:34.533 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
+2020-02-26 13:33:34.533 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
+2020-02-26 13:33:34.534 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
+2020-02-26 13:33:34.534 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner -                                                       
+2020-02-26 13:33:34.534 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - FLP系统启动完毕，地址：http://192.168.0.104:8083/login
+2020-02-26 13:33:34.831 febs [RMI TCP Connection(9)-127.0.0.1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-02-26 13:33:34.831 febs [RMI TCP Connection(9)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2020-02-26 13:33:34.855 febs [RMI TCP Connection(9)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 24 ms
+2020-02-26 13:33:35.433 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.SchedulerFactoryBean - Starting Quartz Scheduler now, after delay of 1 seconds
+2020-02-26 13:33:35.517 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  org.quartz.core.QuartzScheduler - Scheduler FEBS_Scheduler_$_DESKTOP-BSUER0M1582695207343 started.
+2020-02-26 13:33:35.550 febs [QuartzScheduler_FEBS_Scheduler-DESKTOP-BSUER0M1582695207343_MisfireHandler] INFO  o.s.s.quartz.LocalDataSourceJobStore - Handling 1 trigger(s) that missed their scheduled fire-time.
+2020-02-26 13:55:47.763 febs [main] INFO  com.neefull.fsp.web.QffApplication - Starting QffApplication on DESKTOP-BSUER0M with PID 10908 (D:\ideawork\fps\qff\admin-web\target\classes started by ccc in D:\ideawork\fps\qff)
+2020-02-26 13:55:47.768 febs [main] INFO  com.neefull.fsp.web.QffApplication - The following profiles are active: prod
+2020-02-26 13:55:49.789 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-02-26 13:55:49.789 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-02-26 13:55:49.909 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 104ms. Found 0 repository interfaces.
+2020-02-26 13:55:49.928 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-02-26 13:55:49.930 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-02-26 13:55:50.012 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 69ms. Found 0 repository interfaces.
+2020-02-26 13:55:50.997 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.147 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$d5829cbd] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.159 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.162 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.176 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$6bf42bec] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.209 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'febsProperties' of type [com.neefull.fsp.web.common.properties.FebsProperties$$EnhancerBySpringCGLIB$$55905f4f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.218 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroConfig' of type [com.neefull.fsp.web.common.authentication.ShiroConfig$$EnhancerBySpringCGLIB$$3341968e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.311 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatis-plus-com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.325 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatisPlusConfigure' of type [com.neefull.fsp.web.common.configure.MybatisPlusConfigure$$EnhancerBySpringCGLIB$$47e01692] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.332 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'paginationInterceptor' of type [com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.345 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration$$EnhancerBySpringCGLIB$$a9bc9886] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.358 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceCreator' of type [com.baomidou.dynamic.datasource.DynamicDataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.360 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceProvider' of type [com.baomidou.dynamic.datasource.provider.YmlDynamicDataSourceProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.372 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Starting...
+2020-02-26 13:55:51.594 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Start completed.
+2020-02-26 13:55:51.595 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Starting...
+2020-02-26 13:55:51.604 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Start completed.
+2020-02-26 13:55:51.604 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - typt - Starting...
+2020-02-26 13:55:51.610 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - typt - Start completed.
+2020-02-26 13:55:51.610 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 初始共加载 3 个数据源
+2020-02-26 13:55:51.611 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 quartz 成功
+2020-02-26 13:55:51.611 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 base 成功
+2020-02-26 13:55:51.611 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 typt 成功
+2020-02-26 13:55:51.611 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 当前的默认数据源是单数据源，数据源名为 base
+2020-02-26 13:55:51.611 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.629 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:51.642 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:52.904 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionFactory' of type [org.apache.ibatis.session.defaults.DefaultSqlSessionFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:52.911 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionTemplate' of type [org.mybatis.spring.SqlSessionTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:52.915 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:52.919 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [com.sun.proxy.$Proxy114] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:52.958 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:52.959 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [com.sun.proxy.$Proxy116] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:52.961 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleServiceImpl' of type [com.neefull.fsp.web.system.service.impl.UserRoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.014 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userServiceImpl' of type [com.neefull.fsp.web.system.service.impl.UserServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.053 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.055 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [com.sun.proxy.$Proxy119] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.065 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.067 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [com.sun.proxy.$Proxy120] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.069 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuServiceImpl' of type [com.neefull.fsp.web.system.service.impl.RoleMenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.092 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleServiceImpl' of type [com.neefull.fsp.web.system.service.impl.RoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.120 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.122 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [com.sun.proxy.$Proxy123] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.127 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuServiceImpl' of type [com.neefull.fsp.web.system.service.impl.MenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.148 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroRealm' of type [com.neefull.fsp.web.common.authentication.ShiroRealm] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.859 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'redisSessionDAO' of type [org.crazycake.shiro.RedisSessionDAO] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.864 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sessionManager' of type [org.apache.shiro.web.session.mgt.DefaultWebSessionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.875 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'securityManager' of type [org.apache.shiro.web.mgt.DefaultWebSecurityManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:53.897 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'authorizationAttributeSourceAdvisor' of type [org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 13:55:54.296 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8083 (http)
+2020-02-26 13:55:54.316 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8083"]
+2020-02-26 13:55:54.326 febs [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2020-02-26 13:55:54.326 febs [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.19]
+2020-02-26 13:55:54.629 febs [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2020-02-26 13:55:54.629 febs [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 6770 ms
+2020-02-26 13:55:55.390 febs [main] INFO  c.n.fsp.web.common.xss.XssFilter - ------------ xss filter init ------------
+2020-02-26 13:55:55.607 febs [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2020-02-26 13:55:55.719 febs [main] INFO  org.hibernate.Version - HHH000412: Hibernate Core {5.3.10.Final}
+2020-02-26 13:55:55.721 febs [main] INFO  org.hibernate.cfg.Environment - HHH000206: hibernate.properties not found
+2020-02-26 13:55:55.945 febs [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2020-02-26 13:55:56.372 febs [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2020-02-26 13:55:56.661 febs [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-02-26 13:55:57.345 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2020-02-26 13:55:57.362 febs [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2020-02-26 13:55:57.362 febs [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.1 created.
+2020-02-26 13:55:57.366 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - Using db table-based data access locking (synchronization).
+2020-02-26 13:55:57.369 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - JobStoreCMT initialized.
+2020-02-26 13:55:57.370 febs [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.1) 'FEBS_Scheduler' with instanceId 'DESKTOP-BSUER0M1582696557347'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 20 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+2020-02-26 13:55:57.370 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'FEBS_Scheduler' initialized from an externally provided properties instance.
+2020-02-26 13:55:57.370 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.1
+2020-02-26 13:55:57.371 febs [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@4daead88
+2020-02-26 13:55:58.156 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService
+2020-02-26 13:55:58.157 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'febsAsyncThreadPool'
+2020-02-26 13:55:58.856 febs [main] INFO  o.a.engine.impl.ProcessEngineImpl - ProcessEngine default created
+2020-02-26 13:55:58.857 febs [main] INFO  o.a.e.i.a.AbstractAsyncJobExecutor - Starting up the default async job executor [org.activiti.spring.SpringAsyncExecutor].
+2020-02-26 13:55:58.858 febs [Thread-27] INFO  o.a.e.i.a.AcquireTimerJobsRunnable - starting to acquire async jobs due
+2020-02-26 13:55:58.858 febs [Thread-28] INFO  o.a.e.i.a.AcquireAsyncJobsDueRunnable - starting to acquire async jobs due
+2020-02-26 13:55:59.028 febs [main] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource D:\ideawork\fps\qff\admin-web\target\classes\processes\recent_process.bpmn20.xml
+2020-02-26 13:55:59.626 febs [main] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource D:\ideawork\fps\qff\admin-web\target\classes\processes\commodity_process.bpmn20.xml
+2020-02-26 13:55:59.776 febs [main] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource D:\ideawork\fps\qff\admin-web\target\classes\processes\roche_process.bpmn20.xml
+2020-02-26 13:55:59.906 febs [main] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource D:\ideawork\fps\qff\admin-web\target\classes\processes\refund_process.bpmn20.xml
+2020-02-26 13:56:01.306 febs [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2020-02-26 13:56:02.370 febs [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2020-02-26 13:56:02.497 febs [main] INFO  o.s.s.quartz.SchedulerFactoryBean - Will start Quartz Scheduler [FEBS_Scheduler] in 1 seconds
+2020-02-26 13:56:02.512 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8083"]
+2020-02-26 13:56:02.553 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8083 (http) with context path ''
+2020-02-26 13:56:02.557 febs [main] INFO  com.neefull.fsp.web.QffApplication - Started QffApplication in 15.959 seconds (JVM running for 18.359)
+2020-02-26 13:56:02.591 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
+2020-02-26 13:56:02.591 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
+2020-02-26 13:56:02.591 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
+2020-02-26 13:56:02.591 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner -                                                       
+2020-02-26 13:56:02.591 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - FLP系统启动完毕，地址：http://192.168.0.104:8083/login
+2020-02-26 13:56:02.733 febs [RMI TCP Connection(6)-127.0.0.1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-02-26 13:56:02.733 febs [RMI TCP Connection(6)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2020-02-26 13:56:02.755 febs [RMI TCP Connection(6)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 22 ms
+2020-02-26 13:56:03.500 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.SchedulerFactoryBean - Starting Quartz Scheduler now, after delay of 1 seconds
+2020-02-26 13:56:03.525 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.LocalDataSourceJobStore - ClusterManager: detected 2 failed or restarted instances.
+2020-02-26 13:56:03.525 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.LocalDataSourceJobStore - ClusterManager: Scanning for instance "ceshi1582538492146"'s failed in-progress jobs.
+2020-02-26 13:56:03.532 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.LocalDataSourceJobStore - ClusterManager: Scanning for instance "DESKTOP-BSUER0M1582695207343"'s failed in-progress jobs.
+2020-02-26 13:56:03.550 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  org.quartz.core.QuartzScheduler - Scheduler FEBS_Scheduler_$_DESKTOP-BSUER0M1582696557347 started.
+2020-02-26 13:56:03.560 febs [QuartzScheduler_FEBS_Scheduler-DESKTOP-BSUER0M1582696557347_MisfireHandler] INFO  o.s.s.quartz.LocalDataSourceJobStore - Handling 1 trigger(s) that missed their scheduled fire-time.
+2020-02-26 13:56:20.174 febs [http-nio-8083-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - Enabling session validation scheduler...
+2020-02-26 13:58:04.583 febs [http-nio-8083-exec-6] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource processes/recent_process.bpmn20.xml
+2020-02-26 13:58:04.586 febs [http-nio-8083-exec-6] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource processes/recent_process.近效期QFF.png
+2020-02-26 13:58:05.730 febs [http-nio-8083-exec-6] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 13:58:05.730 febs [http-nio-8083-exec-6] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 1178ms
+2020-02-26 14:00:00.062 febs [FEBS_Scheduler_Worker-1] INFO  c.n.fsp.web.job.util.ScheduleJob - 任务准备执行，任务ID：5
+2020-02-26 14:00:00.165 febs [FEBS_Scheduler_Worker-1] INFO  c.n.fsp.web.job.util.ScheduleJob - 任务执行完毕，任务ID：5 总共耗时：103 毫秒
+2020-02-26 14:24:43.860 febs [main] INFO  com.neefull.fsp.web.QffApplication - Starting QffApplication on DESKTOP-BSUER0M with PID 9276 (D:\ideawork\fps\qff\admin-web\target\classes started by ccc in D:\ideawork\fps\qff)
+2020-02-26 14:24:43.864 febs [main] INFO  com.neefull.fsp.web.QffApplication - The following profiles are active: prod
+2020-02-26 14:24:45.750 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-02-26 14:24:45.751 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-02-26 14:24:45.869 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 107ms. Found 0 repository interfaces.
+2020-02-26 14:24:45.884 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-02-26 14:24:45.886 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-02-26 14:24:45.963 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 67ms. Found 0 repository interfaces.
+2020-02-26 14:24:46.859 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:46.988 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$3f028f7] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:46.997 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.002 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.013 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$9a61b826] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.043 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'febsProperties' of type [com.neefull.fsp.web.common.properties.FebsProperties$$EnhancerBySpringCGLIB$$83fdeb89] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.050 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroConfig' of type [com.neefull.fsp.web.common.authentication.ShiroConfig$$EnhancerBySpringCGLIB$$61af22c8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.146 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatis-plus-com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.159 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatisPlusConfigure' of type [com.neefull.fsp.web.common.configure.MybatisPlusConfigure$$EnhancerBySpringCGLIB$$764da2cc] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.166 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'paginationInterceptor' of type [com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.177 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration$$EnhancerBySpringCGLIB$$d82a24c0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.190 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceCreator' of type [com.baomidou.dynamic.datasource.DynamicDataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.193 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceProvider' of type [com.baomidou.dynamic.datasource.provider.YmlDynamicDataSourceProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.205 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Starting...
+2020-02-26 14:24:47.390 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Start completed.
+2020-02-26 14:24:47.390 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Starting...
+2020-02-26 14:24:47.396 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Start completed.
+2020-02-26 14:24:47.396 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - typt - Starting...
+2020-02-26 14:24:47.402 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - typt - Start completed.
+2020-02-26 14:24:47.403 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 初始共加载 3 个数据源
+2020-02-26 14:24:47.403 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 quartz 成功
+2020-02-26 14:24:47.403 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 base 成功
+2020-02-26 14:24:47.403 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 typt 成功
+2020-02-26 14:24:47.403 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 当前的默认数据源是单数据源，数据源名为 base
+2020-02-26 14:24:47.403 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.421 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:47.434 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.650 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionFactory' of type [org.apache.ibatis.session.defaults.DefaultSqlSessionFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.659 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionTemplate' of type [org.mybatis.spring.SqlSessionTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.662 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.666 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [com.sun.proxy.$Proxy114] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.707 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.709 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [com.sun.proxy.$Proxy116] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.710 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleServiceImpl' of type [com.neefull.fsp.web.system.service.impl.UserRoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.761 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userServiceImpl' of type [com.neefull.fsp.web.system.service.impl.UserServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.801 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.802 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [com.sun.proxy.$Proxy119] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.810 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.813 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [com.sun.proxy.$Proxy120] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.815 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuServiceImpl' of type [com.neefull.fsp.web.system.service.impl.RoleMenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.837 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleServiceImpl' of type [com.neefull.fsp.web.system.service.impl.RoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.865 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.866 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [com.sun.proxy.$Proxy123] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.872 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuServiceImpl' of type [com.neefull.fsp.web.system.service.impl.MenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:48.892 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroRealm' of type [com.neefull.fsp.web.common.authentication.ShiroRealm] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:49.603 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'redisSessionDAO' of type [org.crazycake.shiro.RedisSessionDAO] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:49.608 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sessionManager' of type [org.apache.shiro.web.session.mgt.DefaultWebSessionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:49.620 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'securityManager' of type [org.apache.shiro.web.mgt.DefaultWebSecurityManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:49.641 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'authorizationAttributeSourceAdvisor' of type [org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:24:50.037 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8083 (http)
+2020-02-26 14:24:50.056 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8083"]
+2020-02-26 14:24:50.067 febs [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2020-02-26 14:24:50.067 febs [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.19]
+2020-02-26 14:24:50.378 febs [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2020-02-26 14:24:50.378 febs [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 6426 ms
+2020-02-26 14:24:51.124 febs [main] INFO  c.n.fsp.web.common.xss.XssFilter - ------------ xss filter init ------------
+2020-02-26 14:24:51.348 febs [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2020-02-26 14:24:51.452 febs [main] INFO  org.hibernate.Version - HHH000412: Hibernate Core {5.3.10.Final}
+2020-02-26 14:24:51.455 febs [main] INFO  org.hibernate.cfg.Environment - HHH000206: hibernate.properties not found
+2020-02-26 14:24:51.672 febs [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2020-02-26 14:24:52.059 febs [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2020-02-26 14:24:52.315 febs [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-02-26 14:24:53.000 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2020-02-26 14:24:53.017 febs [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2020-02-26 14:24:53.018 febs [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.1 created.
+2020-02-26 14:24:53.020 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - Using db table-based data access locking (synchronization).
+2020-02-26 14:24:53.022 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - JobStoreCMT initialized.
+2020-02-26 14:24:53.023 febs [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.1) 'FEBS_Scheduler' with instanceId 'DESKTOP-BSUER0M1582698293001'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 20 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+2020-02-26 14:24:53.023 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'FEBS_Scheduler' initialized from an externally provided properties instance.
+2020-02-26 14:24:53.023 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.1
+2020-02-26 14:24:53.025 febs [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@3dbb7bb
+2020-02-26 14:24:53.798 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService
+2020-02-26 14:24:53.800 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'febsAsyncThreadPool'
+2020-02-26 14:24:54.467 febs [main] INFO  o.a.engine.impl.ProcessEngineImpl - ProcessEngine default created
+2020-02-26 14:24:54.468 febs [main] INFO  o.a.e.i.a.AbstractAsyncJobExecutor - Starting up the default async job executor [org.activiti.spring.SpringAsyncExecutor].
+2020-02-26 14:24:54.469 febs [Thread-26] INFO  o.a.e.i.a.AcquireTimerJobsRunnable - starting to acquire async jobs due
+2020-02-26 14:24:54.469 febs [Thread-27] INFO  o.a.e.i.a.AcquireAsyncJobsDueRunnable - starting to acquire async jobs due
+2020-02-26 14:24:55.716 febs [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2020-02-26 14:24:56.681 febs [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2020-02-26 14:24:56.797 febs [main] INFO  o.s.s.quartz.SchedulerFactoryBean - Will start Quartz Scheduler [FEBS_Scheduler] in 1 seconds
+2020-02-26 14:24:56.811 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8083"]
+2020-02-26 14:24:56.844 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8083 (http) with context path ''
+2020-02-26 14:24:56.848 febs [main] INFO  com.neefull.fsp.web.QffApplication - Started QffApplication in 14.064 seconds (JVM running for 16.976)
+2020-02-26 14:24:56.877 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
+2020-02-26 14:24:56.877 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
+2020-02-26 14:24:56.877 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
+2020-02-26 14:24:56.877 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner -                                                       
+2020-02-26 14:24:56.877 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - FLP系统启动完毕，地址：http://192.168.0.104:8083/login
+2020-02-26 14:24:56.996 febs [RMI TCP Connection(10)-127.0.0.1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-02-26 14:24:56.996 febs [RMI TCP Connection(10)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2020-02-26 14:24:57.018 febs [RMI TCP Connection(10)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 22 ms
+2020-02-26 14:24:57.798 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.SchedulerFactoryBean - Starting Quartz Scheduler now, after delay of 1 seconds
+2020-02-26 14:24:57.806 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.LocalDataSourceJobStore - ClusterManager: detected 1 failed or restarted instances.
+2020-02-26 14:24:57.806 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.LocalDataSourceJobStore - ClusterManager: Scanning for instance "DESKTOP-BSUER0M1582696557347"'s failed in-progress jobs.
+2020-02-26 14:24:57.821 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  org.quartz.core.QuartzScheduler - Scheduler FEBS_Scheduler_$_DESKTOP-BSUER0M1582698293001 started.
+2020-02-26 14:24:57.825 febs [QuartzScheduler_FEBS_Scheduler-DESKTOP-BSUER0M1582698293001_MisfireHandler] INFO  o.s.s.quartz.LocalDataSourceJobStore - Handling 1 trigger(s) that missed their scheduled fire-time.
+2020-02-26 14:25:00.140 febs [http-nio-8083-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - Enabling session validation scheduler...
+2020-02-26 14:47:00.151 febs [http-nio-8083-exec-9] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 14:47:00.151 febs [http-nio-8083-exec-9] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 89ms
+2020-02-26 14:47:23.566 febs [http-nio-8083-exec-4] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 14:47:23.566 febs [http-nio-8083-exec-4] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 18ms
+2020-02-26 14:50:39.584 febs [main] INFO  com.neefull.fsp.web.QffApplication - Starting QffApplication on DESKTOP-BSUER0M with PID 6884 (D:\ideawork\fps\qff\admin-web\target\classes started by ccc in D:\ideawork\fps\qff)
+2020-02-26 14:50:39.588 febs [main] INFO  com.neefull.fsp.web.QffApplication - The following profiles are active: prod
+2020-02-26 14:50:41.307 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-02-26 14:50:41.307 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-02-26 14:50:41.415 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 96ms. Found 0 repository interfaces.
+2020-02-26 14:50:41.430 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-02-26 14:50:41.431 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-02-26 14:50:41.499 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 58ms. Found 0 repository interfaces.
+2020-02-26 14:50:42.311 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.433 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$e8f1d3b1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.442 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.446 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.456 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$7f6362e0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.486 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'febsProperties' of type [com.neefull.fsp.web.common.properties.FebsProperties$$EnhancerBySpringCGLIB$$68ff9643] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.493 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroConfig' of type [com.neefull.fsp.web.common.authentication.ShiroConfig$$EnhancerBySpringCGLIB$$46b0cd82] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.587 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatis-plus-com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.604 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatisPlusConfigure' of type [com.neefull.fsp.web.common.configure.MybatisPlusConfigure$$EnhancerBySpringCGLIB$$5b4f4d86] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.613 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'paginationInterceptor' of type [com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.624 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration$$EnhancerBySpringCGLIB$$bd2bcf7a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.639 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceCreator' of type [com.baomidou.dynamic.datasource.DynamicDataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.643 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceProvider' of type [com.baomidou.dynamic.datasource.provider.YmlDynamicDataSourceProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.654 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Starting...
+2020-02-26 14:50:42.841 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Start completed.
+2020-02-26 14:50:42.841 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Starting...
+2020-02-26 14:50:42.848 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Start completed.
+2020-02-26 14:50:42.848 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - typt - Starting...
+2020-02-26 14:50:42.853 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - typt - Start completed.
+2020-02-26 14:50:42.854 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 初始共加载 3 个数据源
+2020-02-26 14:50:42.854 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 quartz 成功
+2020-02-26 14:50:42.854 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 base 成功
+2020-02-26 14:50:42.854 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 typt 成功
+2020-02-26 14:50:42.854 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 当前的默认数据源是单数据源，数据源名为 base
+2020-02-26 14:50:42.854 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.873 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:42.887 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.085 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionFactory' of type [org.apache.ibatis.session.defaults.DefaultSqlSessionFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.096 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionTemplate' of type [org.mybatis.spring.SqlSessionTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.099 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.102 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [com.sun.proxy.$Proxy114] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.143 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.145 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [com.sun.proxy.$Proxy116] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.146 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleServiceImpl' of type [com.neefull.fsp.web.system.service.impl.UserRoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.199 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userServiceImpl' of type [com.neefull.fsp.web.system.service.impl.UserServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.233 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.235 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [com.sun.proxy.$Proxy119] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.245 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.247 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [com.sun.proxy.$Proxy120] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.248 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuServiceImpl' of type [com.neefull.fsp.web.system.service.impl.RoleMenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.269 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleServiceImpl' of type [com.neefull.fsp.web.system.service.impl.RoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.303 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.304 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [com.sun.proxy.$Proxy123] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.311 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuServiceImpl' of type [com.neefull.fsp.web.system.service.impl.MenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:44.334 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroRealm' of type [com.neefull.fsp.web.common.authentication.ShiroRealm] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:45.054 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'redisSessionDAO' of type [org.crazycake.shiro.RedisSessionDAO] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:45.062 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sessionManager' of type [org.apache.shiro.web.session.mgt.DefaultWebSessionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:45.071 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'securityManager' of type [org.apache.shiro.web.mgt.DefaultWebSecurityManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:45.091 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'authorizationAttributeSourceAdvisor' of type [org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 14:50:45.478 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8083 (http)
+2020-02-26 14:50:45.497 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8083"]
+2020-02-26 14:50:45.505 febs [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2020-02-26 14:50:45.506 febs [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.19]
+2020-02-26 14:50:45.812 febs [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2020-02-26 14:50:45.812 febs [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 6144 ms
+2020-02-26 14:50:46.564 febs [main] INFO  c.n.fsp.web.common.xss.XssFilter - ------------ xss filter init ------------
+2020-02-26 14:50:46.789 febs [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2020-02-26 14:50:46.895 febs [main] INFO  org.hibernate.Version - HHH000412: Hibernate Core {5.3.10.Final}
+2020-02-26 14:50:46.897 febs [main] INFO  org.hibernate.cfg.Environment - HHH000206: hibernate.properties not found
+2020-02-26 14:50:47.115 febs [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2020-02-26 14:50:47.500 febs [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2020-02-26 14:50:47.797 febs [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-02-26 14:50:48.452 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2020-02-26 14:50:48.468 febs [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2020-02-26 14:50:48.469 febs [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.1 created.
+2020-02-26 14:50:48.471 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - Using db table-based data access locking (synchronization).
+2020-02-26 14:50:48.475 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - JobStoreCMT initialized.
+2020-02-26 14:50:48.477 febs [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.1) 'FEBS_Scheduler' with instanceId 'DESKTOP-BSUER0M1582699848453'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 20 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+2020-02-26 14:50:48.477 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'FEBS_Scheduler' initialized from an externally provided properties instance.
+2020-02-26 14:50:48.477 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.1
+2020-02-26 14:50:48.479 febs [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@2e27325d
+2020-02-26 14:50:49.249 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService
+2020-02-26 14:50:49.250 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'febsAsyncThreadPool'
+2020-02-26 14:50:49.930 febs [main] INFO  o.a.engine.impl.ProcessEngineImpl - ProcessEngine default created
+2020-02-26 14:50:49.931 febs [main] INFO  o.a.e.i.a.AbstractAsyncJobExecutor - Starting up the default async job executor [org.activiti.spring.SpringAsyncExecutor].
+2020-02-26 14:50:49.932 febs [Thread-25] INFO  o.a.e.i.a.AcquireTimerJobsRunnable - starting to acquire async jobs due
+2020-02-26 14:50:49.932 febs [Thread-26] INFO  o.a.e.i.a.AcquireAsyncJobsDueRunnable - starting to acquire async jobs due
+2020-02-26 14:50:51.170 febs [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2020-02-26 14:50:52.159 febs [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2020-02-26 14:50:52.278 febs [main] INFO  o.s.s.quartz.SchedulerFactoryBean - Will start Quartz Scheduler [FEBS_Scheduler] in 1 seconds
+2020-02-26 14:50:52.292 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8083"]
+2020-02-26 14:50:52.326 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8083 (http) with context path ''
+2020-02-26 14:50:52.330 febs [main] INFO  com.neefull.fsp.web.QffApplication - Started QffApplication in 13.791 seconds (JVM running for 16.434)
+2020-02-26 14:50:52.359 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
+2020-02-26 14:50:52.359 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
+2020-02-26 14:50:52.359 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
+2020-02-26 14:50:52.359 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner -                                                       
+2020-02-26 14:50:52.359 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - FLP系统启动完毕，地址：http://192.168.0.104:8083/login
+2020-02-26 14:50:52.783 febs [RMI TCP Connection(4)-127.0.0.1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-02-26 14:50:52.783 febs [RMI TCP Connection(4)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2020-02-26 14:50:52.807 febs [RMI TCP Connection(4)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 24 ms
+2020-02-26 14:50:53.279 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.SchedulerFactoryBean - Starting Quartz Scheduler now, after delay of 1 seconds
+2020-02-26 14:50:53.286 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.LocalDataSourceJobStore - ClusterManager: detected 1 failed or restarted instances.
+2020-02-26 14:50:53.287 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.LocalDataSourceJobStore - ClusterManager: Scanning for instance "DESKTOP-BSUER0M1582698293001"'s failed in-progress jobs.
+2020-02-26 14:50:53.307 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  org.quartz.core.QuartzScheduler - Scheduler FEBS_Scheduler_$_DESKTOP-BSUER0M1582699848453 started.
+2020-02-26 14:50:53.315 febs [QuartzScheduler_FEBS_Scheduler-DESKTOP-BSUER0M1582699848453_MisfireHandler] INFO  o.s.s.quartz.LocalDataSourceJobStore - Handling 1 trigger(s) that missed their scheduled fire-time.
+2020-02-26 14:51:00.128 febs [http-nio-8083-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - Enabling session validation scheduler...
+2020-02-26 14:51:13.989 febs [http-nio-8083-exec-4] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 14:51:13.989 febs [http-nio-8083-exec-4] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 164ms
+2020-02-26 15:00:00.039 febs [FEBS_Scheduler_Worker-1] INFO  c.n.fsp.web.job.util.ScheduleJob - 任务准备执行，任务ID：5
+2020-02-26 15:00:00.144 febs [FEBS_Scheduler_Worker-1] INFO  c.n.fsp.web.job.util.ScheduleJob - 任务执行完毕，任务ID：5 总共耗时：105 毫秒
+2020-02-26 15:00:47.740 febs [http-nio-8083-exec-3] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:00:47.740 febs [http-nio-8083-exec-3] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 14ms
+2020-02-26 15:28:52.297 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource processes/commodity_process.bpmn20.xml
+2020-02-26 15:28:52.407 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource processes/commodity_process.到货养护分包出库QFF.png
+2020-02-26 15:28:52.467 febs [http-nio-8083-exec-5] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:28:52.467 febs [http-nio-8083-exec-5] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 214ms
+2020-02-26 15:30:32.090 febs [http-nio-8083-exec-6] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:30:32.090 febs [http-nio-8083-exec-6] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 35ms
+2020-02-26 15:30:39.495 febs [http-nio-8083-exec-8] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:30:39.495 febs [http-nio-8083-exec-8] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 10ms
+2020-02-26 15:31:06.865 febs [http-nio-8083-exec-1] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:31:06.865 febs [http-nio-8083-exec-1] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 25ms
+2020-02-26 15:31:09.106 febs [http-nio-8083-exec-10] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:31:09.106 febs [http-nio-8083-exec-10] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 41ms
+2020-02-26 15:37:29.711 febs [http-nio-8083-exec-4] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:37:29.711 febs [http-nio-8083-exec-4] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 17ms
+2020-02-26 15:37:41.237 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource processes/recent_process.bpmn20.xml
+2020-02-26 15:37:41.240 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource processes/recent_process.近效期QFF.png
+2020-02-26 15:37:41.281 febs [http-nio-8083-exec-5] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:37:41.281 febs [http-nio-8083-exec-5] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 49ms
+2020-02-26 15:37:52.030 febs [main] INFO  com.neefull.fsp.web.QffApplication - Starting QffApplication on DESKTOP-BSUER0M with PID 12056 (D:\ideawork\fps\qff\admin-web\target\classes started by ccc in D:\ideawork\fps\qff)
+2020-02-26 15:37:52.034 febs [main] INFO  com.neefull.fsp.web.QffApplication - The following profiles are active: prod
+2020-02-26 15:37:53.741 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-02-26 15:37:53.742 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-02-26 15:37:53.862 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 108ms. Found 0 repository interfaces.
+2020-02-26 15:37:53.879 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-02-26 15:37:53.881 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2020-02-26 15:37:53.957 febs [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 63ms. Found 0 repository interfaces.
+2020-02-26 15:37:54.769 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource.dynamic-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:54.895 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration' of type [com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration$$EnhancerBySpringCGLIB$$289dcb84] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:54.904 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dsProcessor' of type [com.baomidou.dynamic.datasource.processor.DsHeaderProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:54.909 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDatasourceAnnotationAdvisor' of type [com.baomidou.dynamic.datasource.aop.DynamicDataSourceAnnotationAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:54.918 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$bf0f5ab3] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:54.948 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'febsProperties' of type [com.neefull.fsp.web.common.properties.FebsProperties$$EnhancerBySpringCGLIB$$a8ab8e16] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:54.955 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroConfig' of type [com.neefull.fsp.web.common.authentication.ShiroConfig$$EnhancerBySpringCGLIB$$865cc555] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:55.042 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatis-plus-com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:55.057 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'mybatisPlusConfigure' of type [com.neefull.fsp.web.common.configure.MybatisPlusConfigure$$EnhancerBySpringCGLIB$$9afb4559] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:55.063 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'paginationInterceptor' of type [com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:55.076 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration' of type [com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration$$EnhancerBySpringCGLIB$$fcd7c74d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:55.089 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceCreator' of type [com.baomidou.dynamic.datasource.DynamicDataSourceCreator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:55.092 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dynamicDataSourceProvider' of type [com.baomidou.dynamic.datasource.provider.YmlDynamicDataSourceProvider] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:55.101 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Starting...
+2020-02-26 15:37:55.293 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - base - Start completed.
+2020-02-26 15:37:55.293 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Starting...
+2020-02-26 15:37:55.298 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - quartz - Start completed.
+2020-02-26 15:37:55.298 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - typt - Starting...
+2020-02-26 15:37:55.305 febs [main] INFO  com.zaxxer.hikari.HikariDataSource - typt - Start completed.
+2020-02-26 15:37:55.305 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 初始共加载 3 个数据源
+2020-02-26 15:37:55.305 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 quartz 成功
+2020-02-26 15:37:55.305 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 base 成功
+2020-02-26 15:37:55.305 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 动态数据源-加载 typt 成功
+2020-02-26 15:37:55.305 febs [main] INFO  c.b.d.d.DynamicRoutingDataSource - 当前的默认数据源是单数据源，数据源名为 base
+2020-02-26 15:37:55.305 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.baomidou.dynamic.datasource.DynamicRoutingDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:55.325 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:55.336 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.589 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionFactory' of type [org.apache.ibatis.session.defaults.DefaultSqlSessionFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.598 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sqlSessionTemplate' of type [org.mybatis.spring.SqlSessionTemplate] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.601 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.605 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userMapper' of type [com.sun.proxy.$Proxy114] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.650 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.652 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleMapper' of type [com.sun.proxy.$Proxy116] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.655 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userRoleServiceImpl' of type [com.neefull.fsp.web.system.service.impl.UserRoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.709 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'userServiceImpl' of type [com.neefull.fsp.web.system.service.impl.UserServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.744 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.745 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMapper' of type [com.sun.proxy.$Proxy119] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.755 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.756 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuMapper' of type [com.sun.proxy.$Proxy120] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.758 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleMenuServiceImpl' of type [com.neefull.fsp.web.system.service.impl.RoleMenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.782 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'roleServiceImpl' of type [com.neefull.fsp.web.system.service.impl.RoleServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.810 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [org.mybatis.spring.mapper.MapperFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.811 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuMapper' of type [com.sun.proxy.$Proxy123] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.816 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'menuServiceImpl' of type [com.neefull.fsp.web.system.service.impl.MenuServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:56.836 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'shiroRealm' of type [com.neefull.fsp.web.common.authentication.ShiroRealm] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:57.518 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'redisSessionDAO' of type [org.crazycake.shiro.RedisSessionDAO] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:57.525 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'sessionManager' of type [org.apache.shiro.web.session.mgt.DefaultWebSessionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:57.536 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'securityManager' of type [org.apache.shiro.web.mgt.DefaultWebSecurityManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:57.557 febs [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'authorizationAttributeSourceAdvisor' of type [org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-02-26 15:37:57.955 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8083 (http)
+2020-02-26 15:37:57.977 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8083"]
+2020-02-26 15:37:57.988 febs [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2020-02-26 15:37:57.988 febs [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.19]
+2020-02-26 15:37:58.291 febs [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2020-02-26 15:37:58.291 febs [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 6180 ms
+2020-02-26 15:37:59.054 febs [main] INFO  c.n.fsp.web.common.xss.XssFilter - ------------ xss filter init ------------
+2020-02-26 15:37:59.269 febs [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2020-02-26 15:37:59.371 febs [main] INFO  org.hibernate.Version - HHH000412: Hibernate Core {5.3.10.Final}
+2020-02-26 15:37:59.373 febs [main] INFO  org.hibernate.cfg.Environment - HHH000206: hibernate.properties not found
+2020-02-26 15:37:59.593 febs [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2020-02-26 15:37:59.985 febs [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2020-02-26 15:38:00.301 febs [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-02-26 15:38:00.982 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2020-02-26 15:38:00.998 febs [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2020-02-26 15:38:00.999 febs [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.1 created.
+2020-02-26 15:38:01.003 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - Using db table-based data access locking (synchronization).
+2020-02-26 15:38:01.006 febs [main] INFO  o.s.s.quartz.LocalDataSourceJobStore - JobStoreCMT initialized.
+2020-02-26 15:38:01.007 febs [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.1) 'FEBS_Scheduler' with instanceId 'DESKTOP-BSUER0M1582702680984'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 20 threads.
+  Using job-store 'org.springframework.scheduling.quartz.LocalDataSourceJobStore' - which supports persistence. and is clustered.
+
+2020-02-26 15:38:01.007 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'FEBS_Scheduler' initialized from an externally provided properties instance.
+2020-02-26 15:38:01.007 febs [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.1
+2020-02-26 15:38:01.008 febs [main] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@1f602930
+2020-02-26 15:38:01.781 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService
+2020-02-26 15:38:01.783 febs [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'febsAsyncThreadPool'
+2020-02-26 15:38:02.471 febs [main] INFO  o.a.engine.impl.ProcessEngineImpl - ProcessEngine default created
+2020-02-26 15:38:02.472 febs [main] INFO  o.a.e.i.a.AbstractAsyncJobExecutor - Starting up the default async job executor [org.activiti.spring.SpringAsyncExecutor].
+2020-02-26 15:38:02.474 febs [Thread-26] INFO  o.a.e.i.a.AcquireAsyncJobsDueRunnable - starting to acquire async jobs due
+2020-02-26 15:38:02.474 febs [Thread-25] INFO  o.a.e.i.a.AcquireTimerJobsRunnable - starting to acquire async jobs due
+2020-02-26 15:38:03.719 febs [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2020-02-26 15:38:04.711 febs [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2020-02-26 15:38:04.831 febs [main] INFO  o.s.s.quartz.SchedulerFactoryBean - Will start Quartz Scheduler [FEBS_Scheduler] in 1 seconds
+2020-02-26 15:38:04.845 febs [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8083"]
+2020-02-26 15:38:04.879 febs [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8083 (http) with context path ''
+2020-02-26 15:38:04.884 febs [main] INFO  com.neefull.fsp.web.QffApplication - Started QffApplication in 13.813 seconds (JVM running for 16.644)
+2020-02-26 15:38:04.915 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner -  __    ___   _      ___   _     ____ _____  ____ 
+2020-02-26 15:38:04.915 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - / /`  / / \ | |\/| | |_) | |   | |_   | |  | |_  
+2020-02-26 15:38:04.915 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - \_\_, \_\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ 
+2020-02-26 15:38:04.915 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner -                                                       
+2020-02-26 15:38:04.915 febs [main] INFO  c.n.f.w.c.runner.FebsStartedUpRunner - FLP系统启动完毕，地址：http://192.168.0.104:8083/login
+2020-02-26 15:38:05.413 febs [RMI TCP Connection(6)-127.0.0.1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-02-26 15:38:05.413 febs [RMI TCP Connection(6)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2020-02-26 15:38:05.434 febs [RMI TCP Connection(6)-127.0.0.1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 21 ms
+2020-02-26 15:38:05.833 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.SchedulerFactoryBean - Starting Quartz Scheduler now, after delay of 1 seconds
+2020-02-26 15:38:05.843 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.LocalDataSourceJobStore - ClusterManager: detected 1 failed or restarted instances.
+2020-02-26 15:38:05.843 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  o.s.s.quartz.LocalDataSourceJobStore - ClusterManager: Scanning for instance "DESKTOP-BSUER0M1582699848453"'s failed in-progress jobs.
+2020-02-26 15:38:05.853 febs [Quartz Scheduler [FEBS_Scheduler]] INFO  org.quartz.core.QuartzScheduler - Scheduler FEBS_Scheduler_$_DESKTOP-BSUER0M1582702680984 started.
+2020-02-26 15:38:05.858 febs [QuartzScheduler_FEBS_Scheduler-DESKTOP-BSUER0M1582702680984_MisfireHandler] INFO  o.s.s.quartz.LocalDataSourceJobStore - Handling 1 trigger(s) that missed their scheduled fire-time.
+2020-02-26 15:38:17.959 febs [http-nio-8083-exec-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - Enabling session validation scheduler...
+2020-02-26 15:38:23.241 febs [http-nio-8083-exec-6] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:38:23.241 febs [http-nio-8083-exec-6] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 108ms
+2020-02-26 15:38:27.489 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource processes/recent_process.bpmn20.xml
+2020-02-26 15:38:27.597 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource processes/recent_process.近效期QFF.png
+2020-02-26 15:38:27.665 febs [http-nio-8083-exec-5] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:38:27.665 febs [http-nio-8083-exec-5] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 208ms
+2020-02-26 15:38:29.641 febs [http-nio-8083-exec-8] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:38:29.641 febs [http-nio-8083-exec-8] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 48ms
+2020-02-26 15:38:34.620 febs [http-nio-8083-exec-3] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:38:34.620 febs [http-nio-8083-exec-3] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 22ms
+2020-02-26 15:38:36.492 febs [http-nio-8083-exec-6] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:38:36.492 febs [http-nio-8083-exec-6] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 13ms
+2020-02-26 15:38:58.462 febs [http-nio-8083-exec-4] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:38:58.463 febs [http-nio-8083-exec-4] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 24ms
+2020-02-26 15:40:54.846 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource D:\ideawork\fps\qff\admin-web\target\classes\processes\recent_process.bpmn20.xml
+2020-02-26 15:40:54.849 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource D:\ideawork\fps\qff\admin-web\target\classes\processes\commodity_process.bpmn20.xml
+2020-02-26 15:40:54.852 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource D:\ideawork\fps\qff\admin-web\target\classes\processes\refund_process.退货QFF.png
+2020-02-26 15:40:54.852 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource D:\ideawork\fps\qff\admin-web\target\classes\processes\roche_process.罗氏内部发起QFF.png
+2020-02-26 15:40:54.852 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource D:\ideawork\fps\qff\admin-web\target\classes\processes\recent_process.近效期QFF.png
+2020-02-26 15:40:54.852 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource D:\ideawork\fps\qff\admin-web\target\classes\processes\roche_process.bpmn20.xml
+2020-02-26 15:40:54.854 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource D:\ideawork\fps\qff\admin-web\target\classes\processes\commodity_process.到货养护分包出库QFF.png
+2020-02-26 15:40:54.854 febs [http-nio-8083-exec-5] INFO  o.a.e.i.bpmn.deployer.BpmnDeployer - Processing resource D:\ideawork\fps\qff\admin-web\target\classes\processes\refund_process.bpmn20.xml
+2020-02-26 15:40:55.960 febs [http-nio-8083-exec-5] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:40:55.960 febs [http-nio-8083-exec-5] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 1127ms
+2020-02-26 15:45:13.336 febs [http-nio-8083-exec-4] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:45:13.336 febs [http-nio-8083-exec-4] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 40ms
+2020-02-26 15:57:05.982 febs [http-nio-8083-exec-9] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:57:05.982 febs [http-nio-8083-exec-9] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 18ms
+2020-02-26 15:58:31.100 febs [http-nio-8083-exec-6] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - RESPONSE:{"code":200}
+2020-02-26 15:58:31.100 febs [http-nio-8083-exec-6] INFO  c.n.fsp.web.qff.aspect.QffLogAspect - SPEND TIME : 18ms
+2020-02-26 16:00:00.058 febs [FEBS_Scheduler_Worker-1] INFO  c.n.fsp.web.job.util.ScheduleJob - 任务准备执行，任务ID：5
+2020-02-26 16:00:00.145 febs [FEBS_Scheduler_Worker-1] INFO  c.n.fsp.web.job.util.ScheduleJob - 任务执行完毕，任务ID：5 总共耗时：87 毫秒
+2020-02-26 16:38:17.963 febs [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - Validating all active sessions...
+2020-02-26 16:38:18.011 febs [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - Finished session validation.  No sessions were stopped.
+2020-02-26 17:00:00.034 febs [FEBS_Scheduler_Worker-2] INFO  c.n.fsp.web.job.util.ScheduleJob - 任务准备执行，任务ID：5
+2020-02-26 17:00:00.164 febs [FEBS_Scheduler_Worker-2] INFO  c.n.fsp.web.job.util.ScheduleJob - 任务执行完毕，任务ID：5 总共耗时：130 毫秒
+2020-02-26 17:38:17.961 febs [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - Validating all active sessions...
+2020-02-26 17:38:18.091 febs [SessionValidationThread-1] INFO  o.a.s.s.m.AbstractValidatingSessionManager - Finished session validation.  No sessions were stopped.
+2020-02-26 18:00:00.026 febs [FEBS_Scheduler_Worker-3] INFO  c.n.fsp.web.job.util.ScheduleJob - 任务准备执行，任务ID：5
+2020-02-26 18:00:00.122 febs [FEBS_Scheduler_Worker-3] INFO  c.n.fsp.web.job.util.ScheduleJob - 任务执行完毕，任务ID：5 总共耗时：97 毫秒
