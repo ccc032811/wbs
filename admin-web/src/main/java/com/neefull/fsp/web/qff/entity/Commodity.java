@@ -167,6 +167,12 @@ public class Commodity implements Serializable {
     @ExcelField(value = "名称")
     private String stage;
     /**
+     *  检验单类型
+     */
+    @TableField("type")
+    @ExcelField(value = "检验单类型")
+    private String type;
+    /**
      *  采购来源
      */
     @TableField("source")
@@ -360,6 +366,14 @@ public class Commodity implements Serializable {
 
     public void setGetRemark(String getRemark) {
         this.getRemark = getRemark;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getInitDate() {

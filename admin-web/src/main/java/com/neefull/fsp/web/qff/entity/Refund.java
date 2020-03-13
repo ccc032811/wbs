@@ -99,6 +99,12 @@ public class Refund implements Serializable {
     @ExcelField(value = "Remark箱号/备注")
     private String getRemark;
     /**
+     *  检验单类型
+     */
+    @TableField("type")
+    @ExcelField(value = "检验单类型")
+    private String type;
+    /**
      *  QFF 发起日期
      */
     @TableField("init_date")
@@ -279,6 +285,14 @@ public class Refund implements Serializable {
 
     public void setrBatch(String rBatch) {
         this.rBatch = rBatch;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getManuDate() {

@@ -10,6 +10,7 @@ import com.neefull.fsp.web.qff.config.SendMailProperties;
 import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.entity.RecentResolver;
 import com.neefull.fsp.web.qff.service.IDateImageService;
+import com.neefull.fsp.web.qff.service.IFileService;
 import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.service.IRecentService;
 import com.neefull.fsp.web.qff.utils.MailUtils;
@@ -47,16 +48,11 @@ import java.util.*;
 public class FileController extends BaseController {
 
     @Autowired
+    private IFileService fileService;
+    @Autowired
     private IDateImageService dateImageService;
     @Autowired
     private IProcessService processService;
-    @Autowired
-    private IRecentService recentService;
-    @Autowired
-    private ProcessInstanceProperties properties;
-
-
-    private static final Integer SELECT_NUMBER =2;
 
 
     /**查询需要完成任务
@@ -118,43 +114,13 @@ public class FileController extends BaseController {
     public FebsResponse uploadImage(@RequestParam("file") MultipartFile file) throws FebsException {
 
         try {
-            BufferedImage image = ImageIO.read(file.getInputStream());
-            if (image == null) {
-                throw new RuntimeException();
-            }
-        } catch (Exception e) {
-            throw new FebsException("图片上传类型有误");
-        }
-        String filename = file.getOriginalFilename();
-        String extension = StringUtils.substringAfterLast(filename, StringPool.DOT);
-        filename = UUID.randomUUID().toString() + StringPool.DOT + extension;
-
-        /*String[] paths = properties.getImagePath().split(StringPool.SLASH);
-        String dir = paths[0];
-        for (int i = 0; i < paths.length - 1; i++) {
-            try {
-                dir = dir + "/" + paths[i + 1];
-                File dirFile = new File(dir);
-                if (!dirFile.exists()) {
-                    dirFile.mkdir();
-                    System.out.println("创建目录为：" + dir);
-                }
-            } catch (Exception err) {
-                System.err.println("文件夹创建发生异常");
-            }
-        }*/
-        File filePath = new File(properties.getImagePath(), filename);
-        try {
-            file.transferTo(filePath);
-            Map<String,String> map =new HashMap<>();
-            map.put("index",UUID.randomUUID().toString().replaceAll(StringPool.DASH,StringPool.EMPTY));
-            map.put("value",filename);
+            Map<String,String> map = fileService.uploadImage(file);
             return new FebsResponse().success().data(map);
-        } catch (IOException e) {
-            throw new FebsException("文件上传失败");
+        } catch (Exception e) {
+            String message = "上传图片失败";
+            log.error(message,e);
+            throw new FebsException(message);
         }
-
-
     }
 
 
@@ -168,121 +134,12 @@ public class FileController extends BaseController {
     @RequiresPermissions("recent:import")
     public FebsResponse resolverExcel(@RequestParam("file") MultipartFile file) throws FebsException {
 
-        List<Recent> list = new ArrayList<>();
-        List<Integer> errorList = new ArrayList();
-
-        if (file.isEmpty()) {
-            throw new FebsException("导入数据为空");
-        }
-        try {
-            ExcelKit.$Import(RecentResolver.class).readXlsx(file.getInputStream(), new ExcelReadHandler<RecentResolver>() {
-                @Override
-                public void onSuccess(int sheetIndex, int rowIndex, RecentResolver entity) {
-                    if(rowIndex > SELECT_NUMBER){
-                        Recent recent = new Recent();
-                        recent.setTransport(entity.getTransport());
-                        recent.setkMater(entity.getkMater());
-                        recent.setrMater(entity.getrMater());
-                        recent.setName(entity.getName());
-                        recent.setUseLife(entity.getUseLife());
-                        recent.setBatch(entity.getBatch());
-                        recent.setSapBatch(entity.getSapBatch());
-                        recent.setFactory(entity.getFactory());
-                        recent.setWareHouse(entity.getWareHouse());
-                        recent.setNumber(entity.getNumber());
-                        recent.setrConf(entity.getrConf());
-                        list.add(recent);
-//                        recentService.addRecent(recent);
-                        processService.commitProcess(recent,getCurrentUser());
-                    }
-                }
-                @Override
-                public void onError(int sheetIndex, int rowIndex, List<ExcelErrorField> errorFields) {
-                    errorList.add(rowIndex+1);
-                }
-            });
-        } catch (IOException e) {
-            throw new FebsException("导入文件失败");
-        }
-
-
-        if(errorList.size()>0){
-            String count = null;
-            for (int i=0;i<=errorList.size()-1;i++) {
-                if(i==errorList.size()-1){
-                    count+=errorList.get(i)+"行";
-                }
-                count += errorList.get(i) +"行 ,";
-            }
-            throw new FebsException("导入失败数据,失败行数"+count);
-        }
-        //发送邮件
-
-        StringBuilder content=new StringBuilder("<html><head></head><body><h3>你好</h3>");
-        content.append("<tr><h3>具体详情如下表所示:</h3></tr>");
-        content.append("<table border='5' style='border:solid 1px #000;font-size=10px;'>");
-        content.append("<tr style='background-color: #00A1DD'><td>康德乐物料号</td>" +
-                       "<td>罗氏物料号</td><td>产品物料号</td><td>有效期</td>" +
-                       "<td>批号</td><td>SAP批次</td><td>工厂</td><td>库位</td><td>数量</td></tr>");
-        for (Recent recent : list) {
-            content.append("<tr><td>"+recent.getkMater()+"</td><td>"+recent.getrMater()+"</td>" +
-                           "<td>"+recent.getName()+"</td><td>"+recent.getUseLife()+"</td>" +
-                           "<td>"+recent.getBatch()+"</td><td>"+recent.getSapBatch()+"</td>" +
-                           "<td>"+recent.getFactory()+"</td><td>"+recent.getWareHouse()+"</td><td>"+recent.getNumber()+"</td></tr>");
-        }
-        content.append("</table>");
-        content.append("</body></html>");
-
-        String text = content.toString();
-        sendMail(text);
-
+        fileService.resolverExcel(file,getCurrentUser());
         return new FebsResponse().success();
+
     }
 
-    @Autowired
-    private SendMailProperties mailProperties;
 
-    public  void sendMail(String text) {
-
-        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-        javaMailSender.setHost(mailProperties.getHost());
-        javaMailSender.setDefaultEncoding(mailProperties.getCharset());
-        javaMailSender.setProtocol(mailProperties.getProtocol());
-        javaMailSender.setPort(Integer.parseInt(mailProperties.getPort()));
-        javaMailSender.setUsername("ccc032811@163.com");//发送者的邮箱
-        javaMailSender.setPassword("ccc032811");//发送者的密码
-
-        Properties prop = new Properties();
-        prop.setProperty("mail.smtp.auth", mailProperties.getAuth());
-//        prop.setProperty("mail.smtp.timeout", mailProperties.getTimeout());
-        try {
-            MailSSLSocketFactory sf = new MailSSLSocketFactory();
-            sf.setTrustAllHosts(true);
-            prop.put("mail.smtp.ssl.enable", true);
-            prop.put("mail.smtp.ssl.socketFactory", sf);
-        } catch (
-                GeneralSecurityException e) {
-            e.printStackTrace();
-        }
-        javaMailSender.setJavaMailProperties(prop);
-
-        MimeMessageHelper mimeMessageHelper = null;
-        try {
-            mimeMessageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(), true);
-            mimeMessageHelper.setFrom("ccc032811@163.com");//发送的邮箱地址
-            mimeMessageHelper.setTo("ccc032811@163.com");//接收的邮箱地址
-//            mimeMessageHelper.setTo("wangpei_it@163.com");//接收的邮箱地址
-//            mimeMessageHelper.setCc("");//抄送者的邮箱地址
-            mimeMessageHelper.setSubject("测试Springboot发送带附件的邮件,用来测试的");//邮件名称
-            mimeMessageHelper.setText(text,true);//邮箱文字内容
-
-        } catch (
-                MessagingException e) {
-            e.printStackTrace();
-        }
-
-        javaMailSender.send(mimeMessageHelper.getMimeMessage());
-    }
 
 
 }

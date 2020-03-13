@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,7 @@ import java.util.List;
  * @Date: 2020/3/11  15:34
  */
 @Slf4j
+@Component
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class AcquireSoapMessage extends BaseController {
 
@@ -39,8 +41,9 @@ public class AcquireSoapMessage extends BaseController {
     @Autowired
     private IProcessService processService;
 
-
+    @Transactional
     public void getMessage(){
+
         log.info("*****************Execute query from SAP server.******************");
         long startTime = System.currentTimeMillis();
         //获取更新时间
@@ -66,7 +69,7 @@ public class AcquireSoapMessage extends BaseController {
 
         //对返回数据结果进行截取
         try {
-            String message = XmlUtils.getTagContent(messageBuffer.toString(), "<ET_QFF>", "<ET_QFF>");
+            String message = XmlUtils.getTagContent(messageBuffer.toString(), "<ET_QFF>", "</ET_QFF>");
             String[] split = message.split("<item>");
             List<String> list = new ArrayList<>();
             for (String s : split) {
@@ -75,10 +78,11 @@ public class AcquireSoapMessage extends BaseController {
                     list.add(dom);
                 }
             }
+
             //将数据转换成对象存入数据库中
             for (String s : list) {
                 String stage = XmlUtils.getTagContent(s, "<HERKUNFT>", "</HERKUNFT>");
-                if(StringUtils.isEmpty(stage)){
+                if(stage.equals("05")){
                     Refund refund = new Refund();
                     refund.setNumber(XmlUtils.getTagContent(s,"<QMNUM>","</QMNUM>"));
                     refund.setPlant(XmlUtils.getTagContent(s,"<MAWERK>","</MAWERK>"));
@@ -90,6 +94,7 @@ public class AcquireSoapMessage extends BaseController {
                     refund.setExpiryDate(XmlUtils.getTagContent(s,"<VFDAT>","</VFDAT>"));
                     refund.setQuarantine(XmlUtils.getTagContent(s,"<MGEIG>","</MGEIG>"));
                     refund.setGetRemark(XmlUtils.getTagContent(s,"<QMTXT>","</QMTXT>"));
+                    refund.setType(stage);
 
                     //查询数据库是否有该条数据
                     Refund isRefund = refundService.queryRefundByNumber(refund.getNumber());
@@ -99,8 +104,9 @@ public class AcquireSoapMessage extends BaseController {
                     }else {
                         //对变化的字段进行记录
 
-                    }
 
+
+                    }
                 }else {
                     Commodity commodity = new Commodity();
                     commodity.setNumber(XmlUtils.getTagContent(s,"<QMNUM>","</QMNUM>"));
@@ -115,7 +121,17 @@ public class AcquireSoapMessage extends BaseController {
                     commodity.setExpiryDate(XmlUtils.getTagContent(s,"<VFDAT>","</VFDAT>"));
                     commodity.setQuarantine(XmlUtils.getTagContent(s,"<MGEIG>","</MGEIG>"));
                     commodity.setGetRemark(XmlUtils.getTagContent(s,"<QMTXT>","</QMTXT>"));
-                    commodity.setStage(XmlUtils.getTagContent(s,"<HERKUNFT>","</HERKUNFT>"));
+                    commodity.setType(stage);
+//                    commodity.setStage(XmlUtils.getTagContent(s,"<HERKUNFT>","</HERKUNFT>"));
+                    if(stage.equals("01")){
+                        commodity.setStage("到货");
+                    }else if(stage.equals("09")){
+                        commodity.setStage("养护");
+                    }else if(stage.equals("10")||stage.equals("11")){
+                        commodity.setStage("出库");
+                    }else {
+                        commodity.setStage("其他");
+                    }
 
                     Commodity isCommodity = commodityService.queryCommodityByNumber(commodity.getNumber());
                     if(isCommodity ==null){

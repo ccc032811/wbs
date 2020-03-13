@@ -86,26 +86,26 @@ public class CommodityListener extends BaseController implements JavaDelegate{
         javaMailSender.setDefaultEncoding(mailProperties.getCharset());
         javaMailSender.setProtocol(mailProperties.getProtocol());
         javaMailSender.setPort(Integer.parseInt(mailProperties.getPort()));
-        javaMailSender.setUsername("ccc032811@163.com");//发送者的邮箱
-        javaMailSender.setPassword("ccc032811");//发送者的密码
+        javaMailSender.setUsername(mailProperties.getUsername());//发送者的邮箱
+        javaMailSender.setPassword(mailProperties.getPassword());//发送者的密码
 
         Properties prop = new Properties();
         prop.setProperty("mail.smtp.auth", mailProperties.getAuth());
 //        prop.setProperty("mail.smtp.timeout", mailProperties.getTimeout());
-        try {
-            MailSSLSocketFactory sf = new MailSSLSocketFactory();
-            sf.setTrustAllHosts(true);
-            prop.put("mail.smtp.ssl.enable", true);
-            prop.put("mail.smtp.ssl.socketFactory", sf);
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            MailSSLSocketFactory sf = new MailSSLSocketFactory();
+//            sf.setTrustAllHosts(true);
+//            prop.put("mail.smtp.ssl.enable", true);
+//            prop.put("mail.smtp.ssl.socketFactory", sf);
+//        } catch (GeneralSecurityException e) {
+//            e.printStackTrace();
+//        }
         javaMailSender.setJavaMailProperties(prop);
 
         MimeMessageHelper mimeMessageHelper = null;
         try {
             mimeMessageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(), true);
-            mimeMessageHelper.setFrom("ccc032811@163.com");//发送的邮箱地址
+            mimeMessageHelper.setFrom(mailProperties.getUsername());//发送的邮箱地址
             mimeMessageHelper.setTo("ccc032811@163.com");//接收的邮箱地址
 //            mimeMessageHelper.setTo("wangpei_it@163.com");//接收的邮箱地址
 //            mimeMessageHelper.setCc("");//抄送者的邮箱地址

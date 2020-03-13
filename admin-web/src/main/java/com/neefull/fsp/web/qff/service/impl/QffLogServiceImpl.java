@@ -21,7 +21,6 @@ import java.lang.reflect.Method;
  * @Author: chengchengchu
  * @Date: 2020/1/15  11:08
  */
-@Slf4j
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class QffLogServiceImpl extends ServiceImpl<QffLogMapper, QffLog> implements IQffLogService {
@@ -46,8 +45,8 @@ public class QffLogServiceImpl extends ServiceImpl<QffLogMapper, QffLog> impleme
         }
 
         save(qffLog);
-
     }
+
 
     @Override
     public IPage<QffLog> queryLogs(QffLog qffLog) {
