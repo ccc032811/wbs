@@ -134,8 +134,14 @@ public class FileController extends BaseController {
     @RequiresPermissions("recent:import")
     public FebsResponse resolverExcel(@RequestParam("file") MultipartFile file) throws FebsException {
 
-        fileService.resolverExcel(file,getCurrentUser());
-        return new FebsResponse().success();
+        try {
+            fileService.resolverExcel(file,getCurrentUser());
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "解析失败";
+            log.error(message,e);
+            throw new FebsException(message);
+        }
 
     }
 

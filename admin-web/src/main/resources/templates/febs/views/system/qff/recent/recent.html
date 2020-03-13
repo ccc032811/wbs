@@ -278,7 +278,11 @@
                     febs.alert.success('操作成功');
                     // tableIns.reload({where: getQueryParams(), page: {curr: 1}});
                     location.reload()
+                }else if(res.code ==500){
+                    layer.closeAll('page');
+                    febs.alert.success('解析失败');
                 }
+
             }
             ,error:function (res) {
                 febs.view.loadBar.error();
