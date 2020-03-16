@@ -132,7 +132,7 @@
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">实际完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="completeDate" id="commit-completeDate" class="layui-input" placeholder="请选择时间"  autocomplete="off" readonly = "readonly">
+                    <input type="text" name="completeDate" id="commit-completeDate" class="layui-input" placeholder="请选择时间"  autocomplete="off" >
                 </div>
             </div>
         </div>
@@ -153,7 +153,7 @@
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">实际完成日期</label>
                 <div class="layui-input-block">
-                    <input type="text" name="actualDate" id="commit-actualDate" class="layui-input" placeholder="请选择时间"  autocomplete="off"  readonly = "readonly">
+                    <input type="text" name="actualDate" id="commit-actualDate" class="layui-input" placeholder="请选择时间"  autocomplete="off">
                 </div>
             </div>
         </div>
@@ -234,20 +234,20 @@
             ,showBottom: false
         });
 
-        // laydate.render({
-        //     elem: '#commit-completeDate',
-        //     trigger: 'click'
-        //     ,min:0
-        //     ,showBottom: false
-        // });
-        //
+        laydate.render({
+            elem: '#commit-completeDate',
+            trigger: 'click'
+            ,min:0
+            ,showBottom: false
+        });
 
-        // laydate.render({
-        //     elem: '#commit-actualDate',
-        //     trigger: 'click'
-        //     ,min:0
-        //     ,showBottom: false
-        // });
+
+        laydate.render({
+            elem: '#commit-actualDate',
+            trigger: 'click'
+            ,min:0
+            ,showBottom: false
+        });
 
         //表单渲染
         form.render();

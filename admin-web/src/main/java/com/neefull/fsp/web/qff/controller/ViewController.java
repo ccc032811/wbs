@@ -44,13 +44,13 @@ public class ViewController extends BaseController {
     //***************************************************到货*****************************************************
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "delivery/view")
-    @RequiresPermissions("commodity:view")
+    @RequiresPermissions("delivery:view")
     public String showDelivery(){
         return FebsUtil.view("system/qff/commodity/delivery");
     }
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/qff/commodity/deliveryShow/{id}")
-    @RequiresPermissions("commodity:view")
+    @RequiresPermissions("delivery:view")
     public String getDeliveryShow(@PathVariable Integer id, Model model){
         Commodity commodity = conserveService.queryCommodityById(id);
         model.addAttribute("commodity", commodity);
@@ -58,7 +58,7 @@ public class ViewController extends BaseController {
     }
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/qff/commodity/deliveryAudit/{id}")
-    @RequiresPermissions("commodity:view")
+    @RequiresPermissions("delivery:view")
     public String getDeliveryAudit(@PathVariable Integer id, Model model){
         Commodity commodity = conserveService.queryCommodityById(id);
         model.addAttribute("commodity", commodity);
@@ -68,13 +68,13 @@ public class ViewController extends BaseController {
     //***************************************************养护*****************************************************
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "conserve/view")
-    @RequiresPermissions("commodity:view")
+    @RequiresPermissions("conserve:view")
     public String showConserve(){
         return FebsUtil.view("system/qff/commodity/conserve");
     }
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/qff/commodity/conserveShow/{id}")
-    @RequiresPermissions("commodity:view")
+    @RequiresPermissions("conserve:view")
     public String getConserveShow(@PathVariable Integer id, Model model) {
         Commodity commodity = conserveService.queryCommodityById(id);
         model.addAttribute("commodity", commodity);
@@ -82,23 +82,23 @@ public class ViewController extends BaseController {
     }
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/qff/commodity/conserveAudit/{id}")
-    @RequiresPermissions("commodity:view")
+    @RequiresPermissions("conserve:view")
     public String getConserveAudit(@PathVariable Integer id, Model model) {
         Commodity commodity = conserveService.queryCommodityById(id);
         model.addAttribute("commodity", commodity);
         return FebsUtil.view("system/qff/commodity/conserveAudit");
     }
 
-    //***************************************************分包*****************************************************
+    //***************************************************其他*****************************************************
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "wrapper/view")
-    @RequiresPermissions("commodity:view")
+    @RequiresPermissions("wrapper:view")
     public String showWrapper(){
         return FebsUtil.view("system/qff/commodity/wrapper");
     }
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/qff/commodity/wrapperShow/{id}")
-    @RequiresPermissions("commodity:view")
+    @RequiresPermissions("wrapper:view")
     public String getWrapperShow(@PathVariable Integer id, Model model) {
         Commodity commodity = conserveService.queryCommodityById(id);
         model.addAttribute("commodity", commodity);
@@ -106,7 +106,7 @@ public class ViewController extends BaseController {
     }
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/qff/commodity/wrapperAudit/{id}")
-    @RequiresPermissions("commodity:view")
+    @RequiresPermissions("wrapper:view")
     public String getWrapperAudit(@PathVariable Integer id, Model model) {
         Commodity commodity = conserveService.queryCommodityById(id);
         model.addAttribute("commodity", commodity);
@@ -116,13 +116,13 @@ public class ViewController extends BaseController {
     //***************************************************出库*****************************************************
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "export/view")
-    @RequiresPermissions("commodity:view")
+    @RequiresPermissions("export:view")
     public String showExport(){
         return FebsUtil.view("system/qff/commodity/export");
     }
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/qff/commodity/exportShow/{id}")
-    @RequiresPermissions("commodity:view")
+    @RequiresPermissions("export:view")
     public String getExportShow(@PathVariable Integer id, Model model) {
         Commodity commodity = conserveService.queryCommodityById(id);
         model.addAttribute("commodity", commodity);
@@ -130,7 +130,7 @@ public class ViewController extends BaseController {
     }
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/qff/commodity/exportAudit/{id}")
-    @RequiresPermissions("commodity:view")
+    @RequiresPermissions("export:view")
     public String getExportAudit(@PathVariable Integer id, Model model) {
         Commodity commodity = conserveService.queryCommodityById(id);
         model.addAttribute("commodity", commodity);

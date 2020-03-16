@@ -41,9 +41,8 @@ public abstract class SapWsUtils {
 //            httpConn.setRequestProperty("Authorization", "Basic " + encodedPassword);
 
             // 设置HTTP请求相关信息
-            httpConn.setRequestProperty("Content-Length",
-                    String.valueOf(soapMsg.getBytes().length));
-            httpConn.setRequestProperty("Content-Type",  "text/xml; charset=utf-8");
+            httpConn.setRequestProperty("Content-Length", String.valueOf(soapMsg.getBytes().length));
+            httpConn.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
             httpConn.setRequestMethod("POST");
             httpConn.setDoOutput(true);
             httpConn.setDoInput(true);
@@ -55,8 +54,7 @@ public abstract class SapWsUtils {
             log.info(httpConn.getResponseMessage());
             // 获取HTTP响应数据
 
-            isr = new InputStreamReader(
-                    httpConn.getInputStream(), encoding);
+            isr = new InputStreamReader(httpConn.getInputStream(), encoding);
             inReader = new BufferedReader(isr);
             result = new StringBuffer();
             String inputLine;

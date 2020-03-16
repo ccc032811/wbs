@@ -221,20 +221,20 @@
 </script>
 <script type="text/html" id="delivery-option">
     {{# if(d.status == '4'){d.status = '异常'}}
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="delivery-detail" shiro:hasPermission="commodity:view">查看</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="delivery-detail" shiro:hasPermission="delivery:view">查看</a>
     {{# } else if(d.status == '3'){d.status = '异常'}}
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="delivery-detail" shiro:hasPermission="commodity:view">查看</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="delivery-detail" shiro:hasPermission="delivery:view">查看</a>
     {{# } else if(d.status != '4'){d.status = '异常'}}
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="delivery-detail" shiro:hasPermission="commodity:view">查看</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="delivery-detail" shiro:hasPermission="delivery:view">查看</a>
     {{# if(d.status != '3'){d.status = '完结'}}
-    <a class="layui-btn layui-btn-xs" lay-event="delivery-edit" shiro:hasPermission="commodity:audit">审核</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delivery-del" shiro:hasPermission="commodity:del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="delivery-edit" shiro:hasPermission="delivery:audit">审核</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delivery-del" shiro:hasPermission="delivery:del">删除</a>
     {{#}}}
     {{#}}}
 </script>
 <script type="text/html" id="toolbarCheck">
     <div class="layui-btn-container">
-        <button  class="layui-btn layui-btn-sm" lay-event="delivery-download" shiro:hasPermission="commodity:down">导出Excel文件</button>
+        <button  class="layui-btn layui-btn-sm" lay-event="delivery-download" shiro:hasPermission="delivery:down">导出Excel文件</button>
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">

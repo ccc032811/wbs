@@ -65,7 +65,7 @@ public class CommodityController extends BaseController {
      */
     @Qff("更新QFF")
     @PostMapping("/edit")
-    @RequiresPermissions("commodity:audit")
+//    @RequiresPermissions("commodity:audit")
     public FebsResponse editCommodity(Commodity commodity) throws FebsException {
         try {
             Integer count = commodityService.editCommodity(commodity);
@@ -82,7 +82,7 @@ public class CommodityController extends BaseController {
      * @return
      */
     @GetMapping("/list")
-    @RequiresPermissions("commodity:view")
+//    @RequiresPermissions("commodity:view")
     public FebsResponse getCommodityPage(Commodity commodity) throws FebsException {
         try {
             IPage<Commodity> pageInfo = commodityService.getCommodityPage(commodity);
@@ -101,7 +101,7 @@ public class CommodityController extends BaseController {
      */
     @Qff("删除QFF")
     @GetMapping("/deleteCommodity/{id}")
-    @RequiresPermissions("commodity:del")
+//    @RequiresPermissions("commodity:del")
     public FebsResponse updateCommodityStatus(@PathVariable Integer id) throws FebsException {
         try {
             Commodity commodity = new Commodity();
@@ -157,7 +157,7 @@ public class CommodityController extends BaseController {
      */
     @Qff("提交QFF流程")
     @PostMapping("/commit")
-    @RequiresPermissions("commodity:audit")
+//    @RequiresPermissions("commodity:audit")
     public FebsResponse commitProcess(Commodity commodity) throws FebsException {
 
         try {
@@ -178,7 +178,7 @@ public class CommodityController extends BaseController {
      */
     @Qff("同意当前QFF任务")
     @PostMapping("/agree")
-    @RequiresPermissions("commodity:audit")
+//    @RequiresPermissions("commodity:audit")
     public FebsResponse agreeCurrentProcess(Commodity commodity) throws FebsException {
         try {
             User user = getCurrentUser();
@@ -201,7 +201,7 @@ public class CommodityController extends BaseController {
      * @param response
      */
     @GetMapping("excel")
-    @RequiresPermissions("commodity:down")
+//    @RequiresPermissions("commodity:down")
     public void download(Commodity commodity, HttpServletResponse response) throws FebsException {
         try {
             IPage<Commodity> commodityPage = commodityService.getCommodityPage(commodity);
