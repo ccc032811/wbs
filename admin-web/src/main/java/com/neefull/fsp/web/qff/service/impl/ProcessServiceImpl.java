@@ -278,6 +278,26 @@ public class ProcessServiceImpl implements IProcessService {
         }
 
     }
+
+    @Override
+    public Boolean queryProcessByKey(Object object) {
+        ProcessInstance processInstance = null;
+        if(object instanceof Commodity){
+            Commodity commodity = (Commodity) object;
+            String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
+            processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
+        }else if(object instanceof Refund) {
+            Refund refund = (Refund) object;
+            String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
+            processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
+        }
+        if(processInstance == null){
+            return false;
+        }
+        return true;
+
+    }
+
     @Transactional
     public void delete(ProcessInstance processInstance){
         if(processInstance!=null){

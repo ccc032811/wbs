@@ -94,6 +94,9 @@ public class AcquireSoapMessage extends BaseController {
                     refund.setExpiryDate(XmlUtils.getTagContent(s,"<VFDAT>","</VFDAT>"));
                     refund.setQuarantine(XmlUtils.getTagContent(s,"<MGEIG>","</MGEIG>"));
                     refund.setGetRemark(XmlUtils.getTagContent(s,"<QMTXT>","</QMTXT>"));
+                    refund.setInitDate(XmlUtils.getTagContent(s,"<ERDAT>","</ERDAT>"));
+                    refund.setClassify(XmlUtils.getTagContent(s,"<ZPROCLAS>","</ZPROCLAS>"));
+                    refund.setRegister(XmlUtils.getTagContent(s,"<REGNO>","</REGNO>"));
                     refund.setType(stage);
 
                     //查询数据库是否有该条数据
@@ -104,7 +107,9 @@ public class AcquireSoapMessage extends BaseController {
                     }else {
                         //对变化的字段进行记录
 
-
+                        //重新发起流程
+                        //查询流程是否存在
+                        Boolean isExist = processService.queryProcessByKey(refund);
 
                     }
                 }else {
@@ -121,6 +126,10 @@ public class AcquireSoapMessage extends BaseController {
                     commodity.setExpiryDate(XmlUtils.getTagContent(s,"<VFDAT>","</VFDAT>"));
                     commodity.setQuarantine(XmlUtils.getTagContent(s,"<MGEIG>","</MGEIG>"));
                     commodity.setGetRemark(XmlUtils.getTagContent(s,"<QMTXT>","</QMTXT>"));
+                    commodity.setInitDate(XmlUtils.getTagContent(s,"<ERDAT>","</ERDAT>"));
+                    commodity.setClassify(XmlUtils.getTagContent(s,"<ZPROCLAS>","</ZPROCLAS>"));
+                    commodity.setRegister(XmlUtils.getTagContent(s,"<REGNO>","</REGNO>"));
+                    commodity.setTransport(XmlUtils.getTagContent(s,"<AWBNO>","</AWBNO>"));
                     commodity.setType(stage);
 //                    commodity.setStage(XmlUtils.getTagContent(s,"<HERKUNFT>","</HERKUNFT>"));
                     if(stage.equals("01")){
@@ -141,6 +150,9 @@ public class AcquireSoapMessage extends BaseController {
                         //对变化的字段进行记录
 
 
+                        //重新发起流程
+                        //查询流程是否存在
+                        Boolean isExist = processService.queryProcessByKey(commodity);
                     }
                 }
             }
