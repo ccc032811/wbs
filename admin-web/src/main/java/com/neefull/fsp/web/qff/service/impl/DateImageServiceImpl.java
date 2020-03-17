@@ -33,9 +33,7 @@ public class DateImageServiceImpl extends ServiceImpl<DateImageMapper, DateImage
 
     @Override
     public DateImage queryImage(Integer dataId, String vest,String relevance) {
-        DateImage date = dateImageMapper.queryImage(dataId, vest, relevance);
-
-        return date;
+        return dateImageMapper.queryImage(dataId, vest, relevance);
     }
 
     @Override

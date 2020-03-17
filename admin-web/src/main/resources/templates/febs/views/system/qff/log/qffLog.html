@@ -58,10 +58,8 @@
             $searchForm = $view.find('form'),
             tableIns;
 
-
         form.render();
         initTable();
-
 
         table.on('sort(qffLogTable)', function (obj) {
             tableIns.reload({

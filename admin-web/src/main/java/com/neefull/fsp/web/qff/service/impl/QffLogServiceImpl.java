@@ -51,7 +51,7 @@ public class QffLogServiceImpl extends ServiceImpl<QffLogMapper, QffLog> impleme
     @Override
     public IPage<QffLog> queryLogs(QffLog qffLog) {
         Page<QffLog> page = new Page<>(qffLog.getPageNum(),qffLog.getPageSize());
-        IPage<QffLog> qffLogIPage = qffLogMapper.queryLogs(page,qffLog);
-        return qffLogIPage;
+        return qffLogMapper.queryLogs(page,qffLog);
+
     }
 }

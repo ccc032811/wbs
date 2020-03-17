@@ -38,8 +38,8 @@ public class QffLogController extends BaseController {
     @RequiresPermissions("qffLog:view")
     public FebsResponse queryLogs(QffLog qffLog) throws FebsException {
         try {
-            IPage<QffLog> qffLogIPage = qffLogService.queryLogs(qffLog);
-            Map<String, Object> dataTable = getDataTable(qffLogIPage);
+            IPage<QffLog> qffLogPage = qffLogService.queryLogs(qffLog);
+            Map<String, Object> dataTable = getDataTable(qffLogPage);
             return new FebsResponse().success().data(dataTable);
         } catch (Exception e) {
             String message = "查询日志失败";

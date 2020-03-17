@@ -54,9 +54,6 @@ public class ProcessServiceImpl implements IProcessService {
     @Transactional
     public void commitProcess(Object object, User user) {
 
-        Map<String,Object> variable = new HashMap<>();
-        variable.put("user",user);
-
         if(object instanceof Commodity){
             Commodity commodity = (Commodity) object;
             if(commodity.getId()==null){
@@ -66,7 +63,7 @@ public class ProcessServiceImpl implements IProcessService {
             }
             String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
             //启动流程
-            runtimeService.startProcessInstanceByKey(properties.getCommodityProcess(), businessKey,variable);
+            startProcess(properties.getCommodityProcess(),businessKey,user);
             agreeCurrentProcess(commodity,user);
             //更改状态审核中
             commodityService.updateCommodityStatus(commodity.getId(), ProcessConstant.UNDER_REVIEW);
@@ -78,7 +75,7 @@ public class ProcessServiceImpl implements IProcessService {
                 editRefund(refund);
             }
             String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
-            runtimeService.startProcessInstanceByKey(properties.getRefundProcess(),businessKey);
+            startProcess(properties.getRefundProcess(),businessKey,user);
             agreeCurrentProcess(refund,user);
             refundService.updateRefundStatus(refund.getId(), ProcessConstant.UNDER_REVIEW);
         }else if(object instanceof Recent){
@@ -89,7 +86,7 @@ public class ProcessServiceImpl implements IProcessService {
                 recentService.editRecent(recent);
             }
             String businessKey = Recent.class.getSimpleName()+":"+recent.getId();
-            runtimeService.startProcessInstanceByKey(properties.getRecentProcess(),businessKey,variable);
+            startProcess(properties.getRecentProcess(),businessKey,user);
             agreeCurrentProcess(recent,user);
             recentService.updateRecentStatus(recent.getId(), ProcessConstant.UNDER_REVIEW);
         }else if(object instanceof Roche){
@@ -97,11 +94,19 @@ public class ProcessServiceImpl implements IProcessService {
             rocheService.addRoche(roche);
 
             String businessKey = Roche.class.getSimpleName()+":"+roche.getId();
-            runtimeService.startProcessInstanceByKey(properties.getRocheProcess(), businessKey);
+            startProcess(properties.getRocheProcess(),businessKey,user);
             agreeCurrentProcess(roche,user);
             //更改状态审核中
             rocheService.updateRocheStatus(roche.getId(), ProcessConstant.UNDER_REVIEW);
         }
+    }
+
+    @Transactional
+    protected void startProcess(String definitionKey,String businessKey,User user){
+        Map<String,Object> variable = new HashMap<>();
+        variable.put("user",user);
+
+        runtimeService.startProcessInstanceByKey(definitionKey,businessKey,variable);
     }
 
 
@@ -109,24 +114,29 @@ public class ProcessServiceImpl implements IProcessService {
     public List<String> getGroupId(Object object, User user) {
         List<String> list = new ArrayList<>();
         Task task = null;
+        String businessKey = "";
         if(object instanceof Commodity){
             Commodity commodity = (Commodity) object;
-            String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
-            task = taskService.createTaskQuery().processDefinitionKey(properties.getCommodityProcess()).processInstanceBusinessKey(businessKey).singleResult();
+            businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
+
         }else if(object instanceof Refund){
             Refund refund = (Refund) object;
-            String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
-            task = taskService.createTaskQuery().processDefinitionKey(properties.getRefundProcess()).processInstanceBusinessKey(businessKey).singleResult();
+            businessKey = Refund.class.getSimpleName()+":"+refund.getId();
+
         }else if(object instanceof Recent){
             Recent recent = (Recent) object;
-            String businessKey = Recent.class.getSimpleName()+":"+recent.getId();
-            task = taskService.createTaskQuery().processDefinitionKey(properties.getRecentProcess()).processInstanceBusinessKey(businessKey).singleResult();
+            businessKey = Recent.class.getSimpleName()+":"+recent.getId();
+
         }else if (object instanceof Roche){
             Roche roche = (Roche) object;
-            String businessKey = Roche.class.getSimpleName()+":"+roche.getId();
-            task = taskService.createTaskQuery().processDefinitionKey(properties.getRocheProcess()).processInstanceBusinessKey(businessKey).singleResult();
+            businessKey = Roche.class.getSimpleName()+":"+roche.getId();
+
         }
-        if(StringUtils.isNotEmpty(task.getId())){
+        if(StringUtils.isNotEmpty(businessKey)){
+            task = taskService.createTaskQuery().processInstanceBusinessKey(businessKey).singleResult();
+        }
+
+        if(task != null){
             List<IdentityLink> identityLinksForTask = taskService.getIdentityLinksForTask(task.getId());
             for (IdentityLink identityLink : identityLinksForTask) {
                 list.add(identityLink.getUserId());
@@ -139,18 +149,13 @@ public class ProcessServiceImpl implements IProcessService {
     @Transactional
     public void agreeCurrentProcess(Object object, User user) {
         //设置更新的时间
-        Map<String,Object> variable = new HashMap<>();
-        variable.put("user",user);
 
         if(object instanceof Commodity){
             Commodity commodity = (Commodity) object;
             editCommodity(commodity);
 
             String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
-            Task task = taskService.createTaskQuery().processDefinitionKey(properties.getCommodityProcess()).processInstanceBusinessKey(businessKey).singleResult();
-            taskService.claim(task.getId(),user.getUsername());
-            taskService.complete(task.getId(),variable);
-            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, properties.getCommodityProcess()).singleResult();
+            ProcessInstance processInstance = getNewProcessInstance(businessKey, properties.getCommodityProcess(), user);
             if(processInstance==null){
                 commodityService.updateCommodityStatus(commodity.getId(),ProcessConstant.HAS_FINISHED);
             }
@@ -159,13 +164,10 @@ public class ProcessServiceImpl implements IProcessService {
             }
         }else if(object instanceof Recent){
             Recent recent = (Recent) object;
-
             recentService.editRecent(recent);
+
             String businessKey = Recent.class.getSimpleName()+":"+recent.getId();
-            Task task = taskService.createTaskQuery().processDefinitionKey(properties.getRecentProcess()).processInstanceBusinessKey(businessKey).singleResult();
-            taskService.claim(task.getId(),user.getUsername());
-            taskService.complete(task.getId(),variable);
-            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, properties.getRecentProcess()).singleResult();
+            ProcessInstance processInstance = getNewProcessInstance(businessKey, properties.getRecentProcess(), user);
             if(processInstance==null){
                 recentService.updateRecentStatus(recent.getId(),ProcessConstant.HAS_FINISHED);
             }
@@ -177,10 +179,7 @@ public class ProcessServiceImpl implements IProcessService {
             editRefund(refund);
 
             String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
-            Task task = taskService.createTaskQuery().processDefinitionKey(properties.getRefundProcess()).processInstanceBusinessKey(businessKey).singleResult();
-            taskService.claim(task.getId(),user.getUsername());
-            taskService.complete(task.getId(),variable);
-            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, properties.getRefundProcess()).singleResult();
+            ProcessInstance processInstance = getNewProcessInstance(businessKey, properties.getRefundProcess(), user);
             if(processInstance==null){
                 refundService.updateRefundStatus(refund.getId(),ProcessConstant.HAS_FINISHED);
             }
@@ -192,10 +191,7 @@ public class ProcessServiceImpl implements IProcessService {
             rocheService.editRoche(roche);
 
             String businessKey = Roche.class.getSimpleName()+":"+roche.getId();
-            Task task = taskService.createTaskQuery().processDefinitionKey(properties.getRocheProcess()).processInstanceBusinessKey(businessKey).singleResult();
-            taskService.claim(task.getId(),user.getUsername());
-            taskService.complete(task.getId(),variable);
-            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey, properties.getRocheProcess()).singleResult();
+            ProcessInstance processInstance = getNewProcessInstance(businessKey, properties.getRocheProcess(), user);
             if(processInstance==null){
                 rocheService.updateRocheStatus(roche.getId(),ProcessConstant.HAS_FINISHED);
             }
@@ -205,30 +201,39 @@ public class ProcessServiceImpl implements IProcessService {
         }
     }
 
+    @Transactional
+    protected ProcessInstance getNewProcessInstance(String businessKey,String definitionKey,User user){
+        Map<String,Object> variable = new HashMap<>();
+        variable.put("user",user);
+
+        Task task = taskService.createTaskQuery().processInstanceBusinessKey(businessKey).singleResult();
+        taskService.claim(task.getId(),user.getUsername());
+        taskService.complete(task.getId(),variable);
+        return  queryProcessInstance(businessKey);
+    }
+
     @Override
     public List<ProcessHistory> queryHistory(Object object) {
         List<ProcessHistory> list = new ArrayList<>();
-        List<HistoricTaskInstance> taskInstances = null;
+        String businessKey = "";
         if(object instanceof Commodity){
             Commodity commodity = (Commodity) object;
-            String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
-            taskInstances = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(businessKey).processDefinitionKey(properties.getCommodityProcess()).orderByHistoricTaskInstanceStartTime().asc().list();
+            businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
 
         }else if(object instanceof Recent){
             Recent recent = (Recent) object;
-            String businessKey = Recent.class.getSimpleName()+":"+recent.getId();
-            taskInstances = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(businessKey).processDefinitionKey(properties.getRecentProcess()).orderByHistoricTaskInstanceStartTime().asc().list();
+            businessKey = Recent.class.getSimpleName()+":"+recent.getId();
 
         }else if(object instanceof Refund){
             Refund refund = (Refund) object;
-            String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
-            taskInstances = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(businessKey).processDefinitionKey(properties.getRefundProcess()).orderByHistoricTaskInstanceStartTime().asc().list();
+            businessKey = Refund.class.getSimpleName()+":"+refund.getId();
 
         }else if(object instanceof Roche){
             Roche roche = (Roche) object;
-            String businessKey = Roche.class.getSimpleName()+":"+roche.getId();
-            taskInstances = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(businessKey).processDefinitionKey(properties.getRocheProcess()).orderByHistoricTaskInstanceStartTime().asc().list();
+            businessKey = Roche.class.getSimpleName()+":"+roche.getId();
+
         }
+        List<HistoricTaskInstance> taskInstances = queryHistoryList(businessKey);
         if(taskInstances!=null){
             for (HistoricTaskInstance taskInstance : taskInstances) {
                 ProcessHistory processHistory = new ProcessHistory();
@@ -244,6 +249,11 @@ public class ProcessServiceImpl implements IProcessService {
         return list;
     }
 
+    private List<HistoricTaskInstance> queryHistoryList(String businessKey){
+        return historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(businessKey).orderByHistoricTaskInstanceStartTime().asc().list();
+    }
+
+
     @Override
     public Integer findTask(String name) {
 
@@ -254,52 +264,56 @@ public class ProcessServiceImpl implements IProcessService {
     @Override
     @Transactional
     public void deleteInstance(Object object) {
-
+        ProcessInstance processInstance = null;
+        String businessKey = "";
         if(object instanceof Commodity){
             Commodity commodity = (Commodity) object;
-            String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
-            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
-            delete(processInstance);
+            businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
         }else if(object instanceof Recent){
             Recent recent = (Recent) object;
-            String businessKey = Recent.class.getSimpleName()+":"+recent.getId();
-            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
-            delete(processInstance);
+            businessKey = Recent.class.getSimpleName()+":"+recent.getId();
         }else if(object instanceof Refund) {
             Refund refund = (Refund) object;
-            String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
-            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
-            delete(processInstance);
+            businessKey = Refund.class.getSimpleName()+":"+refund.getId();
         }else if(object instanceof Roche) {
             Roche roche = (Roche) object;
-            String businessKey = Roche.class.getSimpleName() + ":" + roche.getId();
-            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
-            delete(processInstance);
+            businessKey = Roche.class.getSimpleName() + ":" + roche.getId();
+        }
+        if(StringUtils.isNotEmpty(businessKey)){
+            processInstance = queryProcessInstance(businessKey);
         }
 
+        delete(processInstance);
     }
 
     @Override
     public Boolean queryProcessByKey(Object object) {
         ProcessInstance processInstance = null;
+        String businessKey = "";
         if(object instanceof Commodity){
             Commodity commodity = (Commodity) object;
-            String businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
-            processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
+            businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
         }else if(object instanceof Refund) {
             Refund refund = (Refund) object;
-            String businessKey = Refund.class.getSimpleName()+":"+refund.getId();
-            processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
+            businessKey = Refund.class.getSimpleName()+":"+refund.getId();
+        }
+        if(StringUtils.isNotEmpty(businessKey)){
+            processInstance = queryProcessInstance(businessKey);
         }
         if(processInstance == null){
             return false;
         }
         return true;
+    }
+
+
+    private ProcessInstance queryProcessInstance(String businessKey){
+        return runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(businessKey).singleResult();
 
     }
 
     @Transactional
-    public void delete(ProcessInstance processInstance){
+    protected void delete(ProcessInstance processInstance){
         if(processInstance!=null){
             runtimeService.deleteProcessInstance(processInstance.getProcessInstanceId(),null);
         }
@@ -349,14 +363,14 @@ public class ProcessServiceImpl implements IProcessService {
     }
 
     @Transactional
-    public void editCommodity(Commodity commodity){
+    protected void editCommodity(Commodity commodity){
         String format = DateFormatUtils.format(new Date(), "yyyy-MM-dd");
         commodity.setRepTime(format);
         commodityService.editCommodity(commodity);
     }
 
     @Transactional
-    public void editRefund(Refund refund){
+    protected void editRefund(Refund refund){
         String format = DateFormatUtils.format(new Date(), "yyyy-MM-dd");
         refund.setRepTime(format);
         refundService.editRefund(refund);
