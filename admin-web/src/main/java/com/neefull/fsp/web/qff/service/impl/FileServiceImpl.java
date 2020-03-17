@@ -54,19 +54,19 @@ public class FileServiceImpl implements IFileService {
     @Transactional
     public Map<String, String> uploadImage(MultipartFile file) {
 
-        try {
-            BufferedImage image = ImageIO.read(file.getInputStream());
-            if (image == null) {
-                throw new RuntimeException();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            BufferedImage image = ImageIO.read(file.getInputStream());
+//            if (image == null) {
+//                throw new RuntimeException();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         String filename = file.getOriginalFilename();
         String extension = StringUtils.substringAfterLast(filename, StringPool.DOT);
         filename = UUID.randomUUID().toString() + StringPool.DOT + extension;
-
+        //创建文件存储路径
 //        String[] paths = properties.getImagePath().split(StringPool.SLASH);
 //        String dir = paths[0];
 //        for (int i = 0; i < paths.length - 1; i++) {
@@ -81,6 +81,7 @@ public class FileServiceImpl implements IFileService {
 //                System.err.println("文件夹创建发生异常");
 //            }
 //        }
+
         File filePath = new File(properties.getImagePath(), filename);
         Map<String,String> map =new HashMap<>();
         try {

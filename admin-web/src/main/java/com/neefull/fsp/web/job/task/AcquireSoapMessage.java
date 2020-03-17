@@ -7,6 +7,7 @@ import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.qff.service.ICommodityService;
 import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.service.IRefundService;
+import com.neefull.fsp.web.qff.utils.MailUtils;
 import com.neefull.fsp.web.qff.utils.SapWsUtils;
 import com.neefull.fsp.web.qff.utils.XmlUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -110,7 +111,10 @@ public class AcquireSoapMessage extends BaseController {
                         //重新发起流程
                         //查询流程是否存在
                         Boolean isExist = processService.queryProcessByKey(refund);
-
+                        if(isExist){
+                            processService.deleteInstance(refund);
+                        }
+                        processService.commitProcess(refund,getCurrentUser());
                     }
                 }else {
                     Commodity commodity = new Commodity();
@@ -153,6 +157,12 @@ public class AcquireSoapMessage extends BaseController {
                         //重新发起流程
                         //查询流程是否存在
                         Boolean isExist = processService.queryProcessByKey(commodity);
+                        if(isExist){
+                            //流程存在  删除原先的流程
+                            processService.deleteInstance(commodity);
+                        }
+                        //提交新流程
+                        processService.commitProcess(commodity,getCurrentUser());
                     }
                 }
             }
@@ -162,6 +172,9 @@ public class AcquireSoapMessage extends BaseController {
 
         //对返回的数据附件进行存储
 
+
+
+        //发送邮件
 
 
     }

@@ -19,7 +19,7 @@ public class MailUtils {
     @Autowired
     private SendMailProperties mailProperties;
 
-    public  void sendMail(String text) {
+    public void sendMail(String text) {
 
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost(mailProperties.getHost());
