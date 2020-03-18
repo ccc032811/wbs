@@ -335,6 +335,7 @@
                         }
                         deleteImage(res.data.value);
                     });
+                    images.push(res.data.value);
                     febs.alert.success('上传成功');
                 }else if(res.code ===500){
                     febs.alert.error("上传失败，请重新上传！")
