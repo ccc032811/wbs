@@ -395,8 +395,8 @@
             });
         };
 
-        $.get(ctx + "refund/queryHistory",refund,function (data) {
-            var data = data.data;
+        $.get(ctx + "refund/queryHistory",refund,function (res) {
+            var data = res.data;
             if(data[0]==null){
                 $("#process").append('<div class="timeline-item-no-start">\n' +
                     '                    <div class="timeline-item-cricle-fail">'+1+'</div>\n' +

@@ -8,6 +8,8 @@ import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.qff.service.IRecentService;
 import com.neefull.fsp.web.qff.service.IRefundService;
 import com.neefull.fsp.web.qff.utils.FilePdfTemplate;
+import com.neefull.fsp.web.system.entity.User;
+import com.neefull.fsp.web.system.service.IUserService;
 import com.sun.mail.util.MailSSLSocketFactory;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
@@ -20,9 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import java.security.GeneralSecurityException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**退货QFF
  * @Author: chengchengchu
@@ -39,7 +39,8 @@ public class RefundListener implements JavaDelegate {
     private IRefundService refundService;
     @Autowired
     private FilePdfTemplate template;
-
+    @Autowired
+    private IUserService userService;
 
     @Override
     public void execute(DelegateExecution execution) {
@@ -72,14 +73,20 @@ public class RefundListener implements JavaDelegate {
 //        template.createPdf(map,templateProperties.getConserveTemplatePath(),templateProperties.getConserveDownLoadPath(),url);
         //获取图片地址
 
+        List<User> userList = userService.findUserByRoleId(87);
+        List<String> userMails = new ArrayList<>();
+        for (User user : userList) {
+            userMails.add(user.getEmail());
+        }
+        String[] mails = userMails.toArray(new String[0]);
 
         //发送带附件的邮件
-        sendMai();
+        sendMai(mails);
 
     }
 
     @Async
-    public void sendMai(){
+    public void sendMai(String[] mails ){
         //配置
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost(mailProperties.getHost());
@@ -106,7 +113,7 @@ public class RefundListener implements JavaDelegate {
         try {
             mimeMessageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(), true);
             mimeMessageHelper.setFrom(mailProperties.getUsername());//发送的邮箱地址
-            mimeMessageHelper.setTo("ccc032811@163.com");//接收的邮箱地址
+            mimeMessageHelper.setTo(mails);//接收的邮箱地址
 //            mimeMessageHelper.setTo("wangpei_it@163.com");//接收的邮箱地址
 //            mimeMessageHelper.setCc("");//抄送者的邮箱地址
             mimeMessageHelper.setSubject("测试Springboot发送带附件的邮件,用来测试的");//邮件名称

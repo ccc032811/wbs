@@ -26,6 +26,7 @@ public class TyptUser {
             User user = userService.getUserByName(typtUser.getUsername());
             if(user==null){
                 typtUser.setSex("2");
+                typtUser.setRoleId("");
                 userService.insertUser(typtUser);
             }else {
                 userService.updateById(typtUser);

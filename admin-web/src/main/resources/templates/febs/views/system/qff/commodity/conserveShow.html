@@ -420,8 +420,8 @@
             });
         };
 
-        $.get(ctx + "commodity/queryHistory",commodity ,function (data) {
-            var data = data.data;
+        $.get(ctx + "commodity/queryHistory",commodity ,function (res) {
+            var data = res.data;
             if(data[0]==null){
                 $("#conserve-process-show").append('<div class="timeline-item-no-start">\n' +
                     '                    <div class="timeline-item-cricle-fail">'+1+'</div>\n' +

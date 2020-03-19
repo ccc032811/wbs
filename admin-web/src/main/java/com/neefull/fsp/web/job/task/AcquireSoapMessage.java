@@ -1,8 +1,10 @@
 package com.neefull.fsp.web.job.task;
 
 import com.neefull.fsp.web.common.controller.BaseController;
+import com.neefull.fsp.web.qff.config.SendMailProperties;
 import com.neefull.fsp.web.qff.config.SoapUrlProperties;
 import com.neefull.fsp.web.qff.entity.Commodity;
+import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.entity.Refund;
 import com.neefull.fsp.web.qff.service.ICommodityService;
 import com.neefull.fsp.web.qff.service.IProcessService;
@@ -10,6 +12,8 @@ import com.neefull.fsp.web.qff.service.IRefundService;
 import com.neefull.fsp.web.qff.utils.MailUtils;
 import com.neefull.fsp.web.qff.utils.SapWsUtils;
 import com.neefull.fsp.web.qff.utils.XmlUtils;
+import com.neefull.fsp.web.system.entity.User;
+import com.neefull.fsp.web.system.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -41,6 +45,10 @@ public class AcquireSoapMessage extends BaseController {
     private IRefundService refundService;
     @Autowired
     private IProcessService processService;
+    @Autowired
+    private SendMailProperties mailProperties;
+    @Autowired
+    private IUserService userService;
 
     @Transactional
     public void getMessage(){
@@ -53,6 +61,10 @@ public class AcquireSoapMessage extends BaseController {
         c.add(Calendar.DATE,-1);
         Date time = c.getTime();
         String toDate = DateFormatUtils.format(time, "yyyy-MM-dd");
+
+//        String fromDate = "2019-05-01";
+//        String toDate = "2019-05-31";
+
         //构建请求报文
         String soapMessage = SapWsUtils.getSoapMessage(fromDate, toDate);
         log.info("请求报文为："+soapMessage);
@@ -69,7 +81,12 @@ public class AcquireSoapMessage extends BaseController {
         log.info("*****************Finish query from SAP server.******************");
 
         //对返回数据结果进行截取
+
         try {
+            List<Refund> refundList = new ArrayList<>();
+            List<Commodity> commodityList = new ArrayList<>();
+
+
             String message = XmlUtils.getTagContent(messageBuffer.toString(), "<ET_QFF>", "</ET_QFF>");
             String[] split = message.split("<item>");
             List<String> list = new ArrayList<>();
@@ -110,12 +127,14 @@ public class AcquireSoapMessage extends BaseController {
 
                         //重新发起流程
                         //查询流程是否存在
-                        Boolean isExist = processService.queryProcessByKey(refund);
+                        Boolean isExist = processService.queryProcessByKey(isRefund);
                         if(isExist){
-                            processService.deleteInstance(refund);
+                            processService.deleteInstance(isRefund);
                         }
-                        processService.commitProcess(refund,getCurrentUser());
+                        processService.commitProcess(isRefund,getCurrentUser());
                     }
+
+                    refundList.add(refund);
                 }else {
                     Commodity commodity = new Commodity();
                     commodity.setNumber(XmlUtils.getTagContent(s,"<QMNUM>","</QMNUM>"));
@@ -135,7 +154,7 @@ public class AcquireSoapMessage extends BaseController {
                     commodity.setRegister(XmlUtils.getTagContent(s,"<REGNO>","</REGNO>"));
                     commodity.setTransport(XmlUtils.getTagContent(s,"<AWBNO>","</AWBNO>"));
                     commodity.setType(stage);
-//                    commodity.setStage(XmlUtils.getTagContent(s,"<HERKUNFT>","</HERKUNFT>"));
+    //                    commodity.setStage(XmlUtils.getTagContent(s,"<HERKUNFT>","</HERKUNFT>"));
                     if(stage.equals("01")){
                         commodity.setStage("到货");
                     }else if(stage.equals("09")){
@@ -156,25 +175,64 @@ public class AcquireSoapMessage extends BaseController {
 
                         //重新发起流程
                         //查询流程是否存在
-                        Boolean isExist = processService.queryProcessByKey(commodity);
+                        Boolean isExist = processService.queryProcessByKey(isCommodity);
                         if(isExist){
                             //流程存在  删除原先的流程
-                            processService.deleteInstance(commodity);
+                            processService.deleteInstance(isCommodity);
                         }
                         //提交新流程
-                        processService.commitProcess(commodity,getCurrentUser());
+                        processService.commitProcess(isCommodity,getCurrentUser());
                     }
+                    commodityList.add(commodity);
                 }
             }
+
+
+            //对返回的数据附件进行存储
+
+
+            //发送邮件
+            //拼接文件内容
+            StringBuilder content=new StringBuilder("<html><head></head><body><h3>您好。当前从SAP系统获取数据如下：</h3>");
+            content.append("<tr><h3>具体详情如下表所示:</h3></tr>");
+            content.append("<table border='5' style='border:solid 1px #000;font-size=10px;'>");
+            content.append("<tr style='background-color: #00A1DD'><td>运输单号</td>" +
+                    "<td>QFF编号</td><td>Plant工厂</td><td>KDL Material物料</td>" +
+                    "<td>康德乐SAP 批次</td><td>罗氏物料号</td><td>药厂物料号</td><td>罗氏批号</td><td>生产日期</td>" +
+                    "<td>有效期</td><td>异常总数</td><td>Remark箱号/备注</td></tr>");
+            for (Refund refund : refundList) {
+
+                content.append("<tr><td>"+refund.getTransport()+"</td><td>"+refund.getNumber()+"</td>" +
+                        "<td>"+refund.getPlant()+"</td><td>"+refund.getkMater()+"</td>" +
+                        "<td>"+refund.getkBatch()+"</td><td>"+refund.getrMater()+"</td>" +
+                        "<td>"+" "+"</td><td>"+refund.getrBatch()+"</td><td>"+refund.getManuDate()+"</td>" +
+                        "<td>"+refund.getExpiryDate()+"</td><td>"+refund.getQuarantine()+"</td><td>"+refund.getRemark()+"</td></tr>");
+            }
+            for (Commodity commodity : commodityList) {
+                content.append("<tr><td>"+commodity.getTransport()+"</td><td>"+commodity.getNumber()+"</td>" +
+                        "<td>"+commodity.getPlant()+"</td><td>"+commodity.getkMater()+"</td>" +
+                        "<td>"+commodity.getkBatch()+"</td><td>"+commodity.getrMater()+"</td>" +
+                        "<td>"+commodity.getpMater()+"</td><td>"+commodity.getrBatch()+"</td><td>"+commodity.getManuDate()+"</td>" +
+                        "<td>"+commodity.getExpiryDate()+"</td><td>"+commodity.getQuarantine()+"</td><td>"+commodity.getRemark()+"</td></tr>");
+            }
+            content.append("</table>");
+            content.append("</body></html>");
+
+            String text = content.toString();
+            //查询收件人
+            List<User> userList = userService.findUserByRoleId(86);
+            List<String> userMails = new ArrayList<>();
+            for (User user : userList) {
+                userMails.add(user.getEmail());
+            }
+            String[] mails = userMails.toArray(new String[0]);
+
+            //发送邮件
+            MailUtils.sendMail(text,mailProperties,mails);
+
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-
-        //对返回的数据附件进行存储
-
-
-
-        //发送邮件
 
 
     }

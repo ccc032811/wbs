@@ -8,6 +8,8 @@ import com.neefull.fsp.web.qff.entity.Roche;
 import com.neefull.fsp.web.qff.service.IRecentService;
 import com.neefull.fsp.web.qff.service.IRocheService;
 import com.neefull.fsp.web.qff.utils.FilePdfTemplate;
+import com.neefull.fsp.web.system.entity.User;
+import com.neefull.fsp.web.system.service.IUserService;
 import com.sun.mail.util.MailSSLSocketFactory;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
@@ -20,9 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import java.security.GeneralSecurityException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * @Author: chengchengchu
@@ -39,6 +39,9 @@ public class RochedListener implements JavaDelegate {
     private IRocheService rocheService;
     @Autowired
     private FilePdfTemplate template;
+    @Autowired
+    private IUserService userService;
+
 
     @Override
     public void execute(DelegateExecution execution) {
@@ -72,13 +75,20 @@ public class RochedListener implements JavaDelegate {
         //获取图片地址
 
 
+        List<User> userList = userService.findUserByRoleId(87);
+        List<String> userMails = new ArrayList<>();
+        for (User user : userList) {
+            userMails.add(user.getEmail());
+        }
+        String[] mails = userMails.toArray(new String[0]);
+
         //发送带附件的邮件
-        sendMai();
+        sendMai(mails);
 
     }
 
     @Async
-    public void sendMai(){
+    public void sendMai(String[] mails ){
         //配置
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost(mailProperties.getHost());
@@ -105,7 +115,7 @@ public class RochedListener implements JavaDelegate {
         try {
             mimeMessageHelper = new MimeMessageHelper(javaMailSender.createMimeMessage(), true);
             mimeMessageHelper.setFrom(mailProperties.getUsername());//发送的邮箱地址
-            mimeMessageHelper.setTo("ccc032811@163.com");//接收的邮箱地址
+            mimeMessageHelper.setTo(mails);//接收的邮箱地址
 //            mimeMessageHelper.setTo("wangpei_it@163.com");//接收的邮箱地址
 //            mimeMessageHelper.setCc("");//抄送者的邮箱地址
             mimeMessageHelper.setSubject("抢购抢购抢购抢购抢购抢购抢购抢购");//邮件名称
