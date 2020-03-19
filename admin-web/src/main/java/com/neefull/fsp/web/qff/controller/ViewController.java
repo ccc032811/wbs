@@ -37,7 +37,7 @@ public class ViewController extends BaseController {
 
     @GetMapping(FebsConstant.VIEW_PREFIX + "qff/mycommission")
     public String showCommission(){
-        return FebsUtil.view("system/qff/other/mycommission");
+        return FebsUtil.view("index");
     }
 
 
