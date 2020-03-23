@@ -1,7 +1,6 @@
 package com.neefull.fsp.web.qff.service;
 
-import com.neefull.fsp.web.qff.entity.Commodity;
-import com.neefull.fsp.web.qff.entity.ProcessHistory;
+import com.neefull.fsp.web.qff.entity.*;
 import com.neefull.fsp.web.system.entity.User;
 
 import java.util.List;
@@ -53,4 +52,13 @@ public interface IProcessService  {
      * @return
      */
     Boolean queryProcessByKey(Object object);
+
+
+    List<Commodity>  queryCommodityTaskByName(List<Commodity> records, User user);
+
+    List<Recent> queryRecentTaskByName(List<Recent> records, User user);
+
+    List<Refund> queryRefundTaskByName(List<Refund> records, User user);
+
+    List<Roche> queryRocheTaskByName(List<Roche> records, User user);
 }

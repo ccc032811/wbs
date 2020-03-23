@@ -85,14 +85,15 @@ public class CommodityController extends BaseController {
 //    @RequiresPermissions("commodity:view")
     public FebsResponse getCommodityPage(Commodity commodity) throws FebsException {
         try {
-            IPage<Commodity> pageInfo = commodityService.getCommodityPage(commodity);
+            IPage<Commodity> pageInfo = commodityService.getCommodityPage(commodity,getCurrentUser());
             Map<String, Object> dataTable = getDataTable(pageInfo);
             return new FebsResponse().success().data(dataTable);
         } catch (Exception e) {
             String message = "查询QFF失败";
             log.error(message,e);
             throw new FebsException(message);
-        }
+    }
+
     }
 
     /**删除QFF
@@ -204,7 +205,7 @@ public class CommodityController extends BaseController {
 //    @RequiresPermissions("commodity:down")
     public void download(Commodity commodity, HttpServletResponse response) throws FebsException {
         try {
-            IPage<Commodity> commodityPage = commodityService.getCommodityPage(commodity);
+            IPage<Commodity> commodityPage = commodityService.getCommodityPage(commodity,getCurrentUser());
             List<Commodity> commodityList = commodityPage.getRecords();
             ExcelKit.$Export(Commodity.class, response).downXlsx(commodityList, false);
         } catch (Exception e) {

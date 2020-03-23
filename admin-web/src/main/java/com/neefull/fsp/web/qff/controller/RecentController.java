@@ -85,7 +85,7 @@ public class RecentController extends BaseController {
     @RequiresPermissions("recent:view")
     public FebsResponse getRecentPage(Recent recent) throws FebsException {
         try {
-            IPage<Recent> pageInfo = recentService.getRecentPage(recent);
+            IPage<Recent> pageInfo = recentService.getRecentPage(recent,getCurrentUser());
             Map<String, Object> dataTable = getDataTable(pageInfo);
             return new FebsResponse().success().data(dataTable);
         } catch (Exception e) {

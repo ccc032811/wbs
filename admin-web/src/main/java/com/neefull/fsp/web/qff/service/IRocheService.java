@@ -3,6 +3,7 @@ package com.neefull.fsp.web.qff.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.qff.entity.Roche;
+import com.neefull.fsp.web.system.entity.User;
 
 
 /**罗氏内部发起QFF
@@ -29,7 +30,7 @@ public interface IRocheService extends IService<Roche> {
      * @param roche
      * @return
      */
-    IPage<Roche> getRochePage(Roche roche);
+    IPage<Roche> getRochePage(Roche roche, User user);
 
     /**删除罗氏内部QFF
      * @param id

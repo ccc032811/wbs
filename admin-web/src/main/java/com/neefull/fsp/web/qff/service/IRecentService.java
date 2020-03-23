@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.qff.entity.Recent;
 import com.neefull.fsp.web.qff.entity.RecentExcelImport;
+import com.neefull.fsp.web.system.entity.User;
 
 
 /**近效期QFF
@@ -29,7 +30,7 @@ public interface IRecentService extends IService<Recent> {
      * @param recent
      * @return
      */
-    IPage<Recent> getRecentPage(Recent recent);
+    IPage<Recent> getRecentPage(Recent recent, User user);
 
     /**删除近效期QFF
      * @param id

@@ -232,29 +232,35 @@
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">采购来源</label>
-                <div class="layui-input-block" id="source">
-
+                <div class="layui-input-block" id="refund-source">
+                    <select name="ba" id="refund_search_source" >
+                        <option value="">请选择</option>
+                    </select>
                 </div>
             </div>
         </div>
         <div class="layui-form-item layui-form-item-rigth">
             <div class="layui-inline layui-col-sm4 ">
                 <label class="layui-form-label ">BA</label>
-                <div class="layui-input-block" id="ba">
-
+                <div class="layui-input-block" id="refund-ba">
+                    <select name="ba" id="refund_search_ba" lay-verify="required">
+                        <option value="">请选择</option>
+                    </select>
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">投诉编号</label>
-                <div class="layui-input-block">
-                    <input type="text" id="compNumber" name="compNumber" lay-verify="required" maxlength="50" autocomplete="off"
+                <div class="layui-input-block" >
+                    <input type="text" id="refund-compNumber" name="compNumber" lay-verify="required" maxlength="50" autocomplete="off"
                            class="layui-input" placeholder="请输入">
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">退货原因</label>
-                <div class="layui-input-block" id="reason">
-
+                <div class="layui-input-block" id="refund-reason">
+                    <select name="reason" id="refund_search_reason" lay-verify="required">
+                        <option value="">请选择</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -268,8 +274,11 @@
             </div>
             <div class="layui-inline layui-col-sm6">
                 <label class="layui-form-label ">罗氏处理意见</label>
-                <div class="layui-input-block" id="rConf">
-
+                <div class="layui-input-block" id="refund-rConf">
+                    <input type="text" name="rConf"  lay-verify="required" maxlength="50" autocomplete="off" list="refund_search_rConf" class="layui-input" placeholder="请输入" >
+                    <div style="overflow: auto; height: 30px";>
+                        <datalist id="refund_search_rConf" style="display:none;"></datalist>
+                    </div>
                 </div>
             </div>
         </div>
@@ -277,8 +286,8 @@
             <div class="layui-inline layui-col-sm12">
                 <label class="layui-form-label" style="height: 80px;border-right: 1px solid #000;"><div style="margin-top: 20px">仪器工程师检查结果</div></label>
                 <div class="layui-input-block">
-                    <textarea id="checkResult" name="checkResult"  placeholder="请输入"
-                              class="layui-textarea" ></textarea>
+                    <textarea id="refund-checkResult" name="checkResult"  placeholder="请输入"
+                              class="layui-textarea" lay-verify="required"></textarea>
                 </div>
             </div>
         </div>
@@ -286,7 +295,8 @@
             <div class="layui-inline layui-col-sm12" >
                 <label class="layui-form-label " style="height: 80px;"><div style="margin-top: 20px">备注</div></label>
                 <div class="layui-input-block" >
-                    <textarea id="remark" name="remark"  placeholder="请输入" class="layui-textarea" ></textarea>
+                    <textarea id="refund-remark" name="remark"  placeholder="请输入"
+                              class="layui-textarea" lay-verify="required"></textarea>
                 </div>
             </div>
         </div>
@@ -359,44 +369,30 @@
         //表单渲染
         form.render();
 
-        //页面渲染，放在初始化界面之前
-        if(currentUser.roleId == '86'){ //罗氏
-            $('#rConf').append(' <input type="text" name="rConf"  lay-verify="required" maxlength="50" autocomplete="off" list="search_rConf" class="layui-input" placeholder="请输入" >\n' +
-                '                    <div style="overflow: auto; height: 30px";>\n' +
-                '                    <datalist id="search_rConf" style="display:none;"></datalist>\n' +
-                '                    </div>')
-            $('#reason').append('<input type="text" name="reason"  lay-verify="required" maxlength="50" autocomplete="off" list="search_reason" class="layui-input" placeholder="请输入">\n' +
-                '                    <datalist id="search_reason" style="display:none;"></datalist>')
-
-            $('#ba').append('<select name="ba" id="search_ba" lay-verify="required">\n' +
-                '                        <option value="">请选择</option>\n' +
-                '                    </select>')
-            $('#stage').append(' <input type="text" name="stage"  maxlength="50" autocomplete="off"\n' +
+        // //页面渲染，放在初始化界面之前
+        if(refund.rConf!==""&&refund.rConf!==null){
+            $('#refund-rConf').html('');
+            $('#refund-rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
+                '                           class="layui-input " readonly="readonly">');
+        }
+        if(refund.reason!==""&&refund.reason!==null){
+            $('#refund-reason').html('')
+            $('#refund-reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
                 '                           class="layui-input " readonly="readonly">')
-            $('#source').append('<input type="text" name="source"  maxlength="50" autocomplete="off"\n' +
+        }
+        if(refund.ba!==""&&refund.ba!==null){
+            $('#refund-ba').html('')
+            $('#refund-ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
                 '                           class="layui-input " readonly="readonly">')
-            $('#compNumber').attr("lay-verify","required");
-            $('#checkResult').attr("lay-verify","required");
-            $('#remark').attr("lay-verify","required");
-
-        }else if(currentUser.roleId == '87'){  //康德乐
-            $('#rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">')
-            $('#reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">')
-            $('#ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">')
-
-            $('#stage').append('<select name="stage" id="search_stage" lay-verify="required" >\n' +
-                '                        <option value="">请选择</option>\n' +
-                '                    </select>')
-            $('#source').append('<select name="source" id="search_source" lay-verify="required">\n' +
-                '                        <option value="">请选择</option>\n' +
-                '                    </select>')
-            $('#checkResult').attr("readonly","readonly");
-            $('#remark').attr("readonly","readonly");
-            $('#compNumber').attr("readonly","readonly");
-
+        }
+        if(refund.checkResult!==""&&refund.checkResult!==null){
+            $('#refund-checkResult').attr("readonly","readonly");
+        }
+        if(refund.remark!==""&&refund.remark!==null){
+            $('#refund-remark').attr("readonly","readonly");
+        }
+        if(refund.compNumber!==""&&refund.compNumber!==null){
+            $('#refund-compNumber').attr("readonly","readonly");
         }
 
 
@@ -558,18 +554,18 @@
                 return false;
             }
             for (var i = 0; i<=images.length-1;i++){
-                if(images[i]!= undefined)
+                if(images[i]!== undefined)
                     imageList+=images[i]+",";
             }
             data.field.images = imageList;
-            if(refund.status ==1){
+            if(refund.status ===1){
                 febs.post(ctx + 'refund/commit', data.field, function (data) {
                     layer.closeAll();
                     febs.alert.success('数据修改成功');
                     $('#fbs-refund').find('#refund-query').click();
                 });
             }
-            if(refund.status ==2){
+            if(refund.status ===2){
 
                 febs.post(ctx + 'refund/agree', data.field, function (data) {
                     layer.closeAll();
@@ -584,24 +580,32 @@
 
         $.get(ctx +"opinion/getOpinion/"+reason,function(res){
             var data = res.data;
+            var dom=$("#refund_search_reason");
+            var html='<option value=""></option>';
             $.each(data,function(index,item){
-                $("#search_reason").append('<option value="'+item.name+'"></option>')
+                if(item.name === refund.reason){
+                    html+='<option selected value="'+item.name+'">'+item.name+'</option>'
+                }else {
+                    html+='<option value="'+item.name+'">'+item.name+'</option>'
+                }
             });
+            dom.html(html);
+            form.render("select");
         });
 
         $.get(ctx +"opinion/getOpinion/"+rConf,function(res){
             var data = res.data;
             $.each(data,function(index,item){
-                $("#search_rConf").append('<option value="'+item.name+'"></option>')
+                $("#refund_search_rConf").append('<option value="'+item.name+'"></option>')
             });
         });
 
         $.get(ctx +"opinion/getOpinion/"+ba,function(res){
             var data=res.data;
-            var dom=$("#search_ba");
+            var dom=$("#refund_search_ba");
             var html='<option value=""></option>';
             $.each(data,function(index,item){
-                if(item.name == refund.ba){
+                if(item.name === refund.ba){
                     html+='<option selected value="'+item.name+'">'+item.name+'</option>'
                 }else {
                     html+='<option value="'+item.name+'">'+item.name+'</option>'
@@ -613,10 +617,8 @@
 
         $.get(ctx +"opinion/getOpinion/"+source,function(res){
             var data=res.data;
-            var dom=$("#search_source");
-            var html='<option value=""></option>';
-            $.each(data,function(index,item){
-                if(item.name == refund.source){
+            var dom=$("#refund_search_source");
+                if(item.name ===  refund.source){
                     html+='<option selected value="'+item.name+'">'+item.name+'</option>'
                 }else {
                     html+='<option value="'+item.name+'">'+item.name+'</option>'
@@ -625,19 +627,6 @@
             dom.html(html);
             form.render("select");
         });
-
-        /*$.get(ctx +"opinion/getOpinion/"+classify,function(res){
-            var data=res.data;
-            var dom=$("#search_classify");
-            var html='<option value=""></option>';
-            $.each(data,function(index,item){
-                html+='<option value="'+item.name+'">'+item.name+'</option>'
-            });
-            dom.html(html);
-            form.render("select");
-        });
-*/
-
 
     });
 </script>

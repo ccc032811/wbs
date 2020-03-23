@@ -31,7 +31,7 @@
                                     <div class="layui-inline">
                                         <label class="layui-form-label" style="border-right: 1px solid white;">日期区间</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="searchTime" id="searchTime" class="layui-input" placeholder="请选择时间">
+                                            <input type="text" name="searchTime" id="export-searchTime" class="layui-input" placeholder="请选择时间">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
@@ -48,11 +48,11 @@
                                     </div>
                                     <div id="export-check" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;float: right;margin-right: 3%">
                                         <!--<div id="export-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">-->
-                                            <div class="layui-btn layui-btn-normal" id="export-query" >
-                                                <i class="layui-icon ">查询</i>
+                                            <div class="layui-btn layui-btn-normal layui-btn-sm" id="export-query" >
+                                                <i class="layui-icon">&#xe848;</i> 查询
                                             </div>
-                                            <div class="layui-btn layui-btn-danger " id="export-reset" >
-                                                <i class="layui-icon ">清空</i>
+                                            <div class="layui-btn layui-btn-danger layui-btn-sm " id="export-reset" >
+                                                <i class="layui-icon">&#xe79b;</i> 清空
                                             </div>
                                         <!--</div>-->
                                     </div>
@@ -186,11 +186,11 @@
                                     </div>
                                     <div class="layui-form-item ">
                                         <div style="float: right;margin-right: 3%" >
-                                            <div class="layui-btn layui-btn-normal" id="export-queryBtn" >
-                                                <i class="layui-icon">查询</i>
+                                            <div class="layui-btn layui-btn-normal layui-btn-sm" id="export-queryBtn" >
+                                                <i class="layui-icon">&#xe848;</i> 查询
                                             </div>
-                                            <div class="layui-btn layui-btn-danger" id="export-cleanBtn" >
-                                                <i class="layui-icon">清空</i>
+                                            <div class="layui-btn layui-btn-danger layui-btn-sm" id="export-cleanBtn" >
+                                                <i class="layui-icon">&#xe79b;</i> 清空
                                             </div>
                                         </div>
                                     </div>
@@ -219,21 +219,20 @@
     {{# } }}
 </script>
 <script type="text/html" id="export-option">
-    {{# if(d.status == '4'){d.status = '异常'}}
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="export-detail" shiro:hasPermission="export:view">查看</a>
-    {{# } else if(d.status == '3'){d.status = '异常'}}
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="export-detail" shiro:hasPermission="export:view">查看</a>
-    {{# } else if(d.status != '4'){d.status = '异常'}}
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="export-detail" shiro:hasPermission="export:view">查看</a>
-    {{# if(d.status != '3'){d.status = '完结'}}
-    <a class="layui-btn layui-btn-xs" lay-event="export-edit" shiro:hasPermission="export:audit">审核</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="export-del" shiro:hasPermission="export:del">删除</a>
+    {{#  if(d.status == '4'){d.status = '异常'}}
+    {{#} else if(d.status != '3'){d.status = '完结'}}
+    {{#  if(d.isAllow == '1'){d.status = '可审核'}}
+    <a class="layui-btn layui-btn-xs" lay-event="export-edit"  shiro:hasPermission="export:audit">审核</a>
     {{#}}}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="export-del" shiro:hasPermission="export:del">删除</a>
     {{#}}}
 </script>
 <script type="text/html" id="toolbarCheck">
     <div class="layui-btn-container">
-        <button  class="layui-btn layui-btn-sm" lay-event="export-download" shiro:hasPermission="export:down">导出Excel文件</button>
+        <button  class="layui-btn layui-btn-sm" lay-event="export-download" shiro:hasPermission="export:down">
+            <i class="layui-icon">&#xe7a8;</i> 导出Excel
+        </button>
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
@@ -263,26 +262,27 @@
             elem: '#export-searchTime'
             ,range: true
             ,trigger: 'click'
+            ,btns: ['clear']
         });
         laydate.render({
             elem: '#export-manuDate'
             ,trigger: 'click'
-            ,showBottom: false
+            ,btns: ['clear']
         });
         laydate.render({
             elem: '#export-expiryDate'
             ,trigger: 'click'
-            ,showBottom: false
+            ,btns: ['clear']
         });
         laydate.render({
             elem: '#export-initDate'
             ,trigger: 'click'
-            ,showBottom: false
+            ,btns: ['clear']
         });
         laydate.render({
             elem: '#export-repTime'
             ,trigger: 'click'
-            ,showBottom: false
+            ,btns: ['clear']
         });
 
         element.on('collapse(export-navi)', function(data){

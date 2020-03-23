@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Ref;
 import java.util.*;
 
 /**
@@ -114,24 +115,8 @@ public class ProcessServiceImpl implements IProcessService {
     public List<String> getGroupId(Object object, User user) {
         List<String> list = new ArrayList<>();
         Task task = null;
-        String businessKey = "";
-        if(object instanceof Commodity){
-            Commodity commodity = (Commodity) object;
-            businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
+        String businessKey = getBusinessKey(object);
 
-        }else if(object instanceof Refund){
-            Refund refund = (Refund) object;
-            businessKey = Refund.class.getSimpleName()+":"+refund.getId();
-
-        }else if(object instanceof Recent){
-            Recent recent = (Recent) object;
-            businessKey = Recent.class.getSimpleName()+":"+recent.getId();
-
-        }else if (object instanceof Roche){
-            Roche roche = (Roche) object;
-            businessKey = Roche.class.getSimpleName()+":"+roche.getId();
-
-        }
         if(StringUtils.isNotEmpty(businessKey)){
             task = taskService.createTaskQuery().processInstanceBusinessKey(businessKey).singleResult();
         }
@@ -215,24 +200,9 @@ public class ProcessServiceImpl implements IProcessService {
     @Override
     public List<ProcessHistory> queryHistory(Object object) {
         List<ProcessHistory> list = new ArrayList<>();
-        String businessKey = "";
-        if(object instanceof Commodity){
-            Commodity commodity = (Commodity) object;
-            businessKey = Commodity.class.getSimpleName()+":"+commodity.getId();
 
-        }else if(object instanceof Recent){
-            Recent recent = (Recent) object;
-            businessKey = Recent.class.getSimpleName()+":"+recent.getId();
+        String businessKey = getBusinessKey(object);
 
-        }else if(object instanceof Refund){
-            Refund refund = (Refund) object;
-            businessKey = Refund.class.getSimpleName()+":"+refund.getId();
-
-        }else if(object instanceof Roche){
-            Roche roche = (Roche) object;
-            businessKey = Roche.class.getSimpleName()+":"+roche.getId();
-
-        }
         List<HistoricTaskInstance> taskInstances = queryHistoryList(businessKey);
         if(taskInstances!=null){
             for (HistoricTaskInstance taskInstance : taskInstances) {
@@ -256,15 +226,27 @@ public class ProcessServiceImpl implements IProcessService {
 
     @Override
     public Integer findTask(String name) {
-
-        List<Task> list = taskService.createTaskQuery().taskCandidateUser(name).list();
+        List<Task> list = queryTaskByUserName(name);
         return list.size();
+    }
+
+    private List<Task> queryTaskByUserName(String name){
+        return taskService.createTaskQuery().taskCandidateUser(name).list();
     }
 
     @Override
     @Transactional
     public void deleteInstance(Object object) {
         ProcessInstance processInstance = null;
+        String businessKey = getBusinessKey(object);
+        if(StringUtils.isNotEmpty(businessKey)){
+            processInstance = queryProcessInstance(businessKey);
+        }
+
+        delete(processInstance);
+    }
+
+    private String getBusinessKey(Object object){
         String businessKey = "";
         if(object instanceof Commodity){
             Commodity commodity = (Commodity) object;
@@ -279,11 +261,7 @@ public class ProcessServiceImpl implements IProcessService {
             Roche roche = (Roche) object;
             businessKey = Roche.class.getSimpleName() + ":" + roche.getId();
         }
-        if(StringUtils.isNotEmpty(businessKey)){
-            processInstance = queryProcessInstance(businessKey);
-        }
-
-        delete(processInstance);
+        return businessKey;
     }
 
     @Override
@@ -304,6 +282,95 @@ public class ProcessServiceImpl implements IProcessService {
             return false;
         }
         return true;
+    }
+
+
+    @Override
+    public List<Commodity> queryCommodityTaskByName(List<Commodity> commodityList, User user) {
+        List<Task> tasks = queryTaskByUserName(user.getUsername());
+        for (Task task : tasks) {
+            ProcessInstance processInstance = getProcessInstanceById(task.getProcessInstanceId());
+            String businessKey = processInstance.getBusinessKey();
+            String id = splitKey(businessKey, Commodity.class.getSimpleName());
+            if(StringUtils.isNotEmpty(id)&&!id.equals("null")){
+                for (Commodity commodity : commodityList) {
+                    if(commodity.getId()==Integer.parseInt(id)){
+                        commodity.setIsAllow(1);
+                    }
+                }
+            }
+        }
+        return commodityList;
+    }
+
+    private ProcessInstance getProcessInstanceById(String ProcessInstanceId){
+        return  runtimeService.createProcessInstanceQuery().processInstanceId(ProcessInstanceId).singleResult();
+    }
+
+    private String splitKey(String businessKey,String beanName){
+        String id = "";
+        if (businessKey.startsWith(beanName)){
+            if (StringUtils.isNotBlank(businessKey)) {
+                id = businessKey.split("\\:")[1].toString();
+            }
+        }
+        return id;
+    }
+
+
+
+    @Override
+    public List<Recent> queryRecentTaskByName(List<Recent> recentList, User user) {
+        List<Task> tasks = queryTaskByUserName(user.getUsername());
+        for (Task task : tasks) {
+            ProcessInstance processInstance = getProcessInstanceById(task.getProcessInstanceId());
+            String businessKey = processInstance.getBusinessKey();
+            String id = splitKey(businessKey, Recent.class.getSimpleName());
+            if(StringUtils.isNotEmpty(id)&&!id.equals("null")){
+                for (Recent recent : recentList) {
+                    if(recent.getId()==Integer.parseInt(id)){
+                        recent.setIsAllow(1);
+                    }
+                }
+            }
+        }
+        return recentList;
+    }
+
+    @Override
+    public List<Refund> queryRefundTaskByName(List<Refund> refundList, User user) {
+        List<Task> tasks = queryTaskByUserName(user.getUsername());
+        for (Task task : tasks) {
+            ProcessInstance processInstance = getProcessInstanceById(task.getProcessInstanceId());
+            String businessKey = processInstance.getBusinessKey();
+            String id = splitKey(businessKey, Refund.class.getSimpleName());
+            if(StringUtils.isNotEmpty(id)&&!id.equals("null")){
+                for (Refund refund : refundList) {
+                    if(refund.getId()==Integer.parseInt(id)){
+                        refund.setIsAllow(1);
+                    }
+                }
+            }
+        }
+        return refundList;
+    }
+
+    @Override
+    public List<Roche> queryRocheTaskByName(List<Roche> rocheList, User user) {
+        List<Task> tasks = queryTaskByUserName(user.getUsername());
+        for (Task task : tasks) {
+            ProcessInstance processInstance = getProcessInstanceById(task.getProcessInstanceId());
+            String businessKey = processInstance.getBusinessKey();
+            String id = splitKey(businessKey, Roche.class.getSimpleName());
+            if(StringUtils.isNotEmpty(id)&&!id.equals("null")){
+                for (Roche roche : rocheList) {
+                    if(roche.getId()==Integer.parseInt(id)){
+                        roche.setIsAllow(1);
+                    }
+                }
+            }
+        }
+        return rocheList;
     }
 
 

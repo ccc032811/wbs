@@ -221,6 +221,12 @@ public class Refund implements Serializable {
      */
     @TableField(exist = false)
     private Integer pageNum;
+    /**
+     * 是否能审核
+     */
+    @TableField(exist = false)
+    private Integer isAllow;
+
 
 
     public Integer getId() {
@@ -487,4 +493,11 @@ public class Refund implements Serializable {
         this.pageNum = pageNum;
     }
 
+    public Integer getIsAllow() {
+        return isAllow;
+    }
+
+    public void setIsAllow(Integer isAllow) {
+        this.isAllow = isAllow;
+    }
 }

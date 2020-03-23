@@ -6,12 +6,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.web.qff.entity.*;
 import com.neefull.fsp.web.qff.mapper.RecentExcelImportMapper;
 import com.neefull.fsp.web.qff.mapper.RecentMapper;
+import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.service.IRecentService;
+import com.neefull.fsp.web.system.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
 
 /**近效期QFF
@@ -26,6 +29,8 @@ public class RecentServiceImpl extends ServiceImpl<RecentMapper, Recent> impleme
 
     @Autowired
     private RecentMapper recentMapper;
+    @Autowired
+    private IProcessService processService;
     @Autowired
     private RecentExcelImportMapper recentExcelImportMapper;
 
@@ -44,9 +49,12 @@ public class RecentServiceImpl extends ServiceImpl<RecentMapper, Recent> impleme
     }
 
     @Override
-    public IPage<Recent> getRecentPage(Recent recent) {
+    public IPage<Recent> getRecentPage(Recent recent, User user) {
         Page<Recent> page = new Page<>(recent.getPageNum(),recent.getPageSize());
         IPage<Recent> pageInfo = recentMapper.getRecentPage(page,recent);
+        List<Recent> records = pageInfo.getRecords();
+        List<Recent> newRecent = processService.queryRecentTaskByName(records,user);
+        pageInfo.setRecords(newRecent);
         return pageInfo;
     }
 

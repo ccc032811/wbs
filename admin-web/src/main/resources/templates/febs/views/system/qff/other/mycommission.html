@@ -50,7 +50,7 @@
 
         $.get(ctx +"file/findTask",function (data) {
             var num = data.data;
-            if(num==0){
+            if(num===0){
                 $("#num").append('<span style="color: red"><h2>当前没有待办任务</h2></span>')
                 $('#bubbling').attr("style","display:none;")
             }else {

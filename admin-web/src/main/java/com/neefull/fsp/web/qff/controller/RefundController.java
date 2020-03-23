@@ -85,7 +85,7 @@ public class RefundController extends BaseController {
     @RequiresPermissions("refund:view")
     public FebsResponse getRefundPage(Refund refund) throws FebsException {
         try {
-            IPage<Refund> pageInfo = refundService.getRefundPage(refund);
+            IPage<Refund> pageInfo = refundService.getRefundPage(refund,getCurrentUser());
             Map<String, Object> dataTable = getDataTable(pageInfo);
             return new FebsResponse().success().data(dataTable);
         } catch (Exception e) {
@@ -204,7 +204,7 @@ public class RefundController extends BaseController {
     @RequiresPermissions("refund:down")
     public void download(Refund refund, HttpServletResponse response) throws FebsException {
         try {
-            IPage<Refund> refundPage = refundService.getRefundPage(refund);
+            IPage<Refund> refundPage = refundService.getRefundPage(refund,getCurrentUser());
             List<Refund> refundList = refundPage.getRecords();
             ExcelKit.$Export(Refund.class, response).downXlsx(refundList, false);
         } catch (Exception e) {

@@ -85,7 +85,7 @@ public class AcquireSoapMessage extends BaseController {
         try {
             List<Refund> refundList = new ArrayList<>();
             List<Commodity> commodityList = new ArrayList<>();
-
+            String date = DateFormatUtils.format(new Date(), "yyyy-MM-dd");
 
             String message = XmlUtils.getTagContent(messageBuffer.toString(), "<ET_QFF>", "</ET_QFF>");
             String[] split = message.split("<item>");
@@ -124,14 +124,67 @@ public class AcquireSoapMessage extends BaseController {
                         processService.commitProcess(refund,getCurrentUser());
                     }else {
                         //对变化的字段进行记录
+                        Boolean rstart = false;
+                        StringBuilder alteration = new StringBuilder();
 
-                        //重新发起流程
-                        //查询流程是否存在
-                        Boolean isExist = processService.queryProcessByKey(isRefund);
-                        if(isExist){
-                            processService.deleteInstance(isRefund);
+                        if(!refund.getPlant().equals(isRefund.getPlant())){
+                            alteration.append("Plant工厂: " +date+ "   由"+isRefund.getPlant()+"变更为"+refund.getPlant()+" 。  ");
+                            rstart = true;
                         }
-                        processService.commitProcess(isRefund,getCurrentUser());
+                        if(!refund.getkMater().equals(isRefund.getkMater())){
+                            alteration.append("KDLMaterial物料: " +date+ "   由"+isRefund.getkMater()+"变更为"+refund.getkMater()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!refund.getkBatch().equals(isRefund.getkBatch())){
+                            alteration.append("康德乐SAP批次: " +date+ "   由"+isRefund.getkBatch()+"变更为"+refund.getkBatch()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!refund.getrMater().equals(isRefund.getrMater())){
+                            alteration.append("罗氏物料号: " +date+ "   由"+isRefund.getrMater()+"变更为"+refund.getrMater()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!refund.getrBatch().equals(isRefund.getrBatch())){
+                            alteration.append("罗氏批号: " +date+ "   由"+isRefund.getrBatch()+"变更为"+refund.getrBatch()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!refund.getManuDate().equals(isRefund.getManuDate())){
+                            alteration.append("生产日期: " +date+ "   由"+isRefund.getManuDate()+"变更为"+refund.getManuDate()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!refund.getExpiryDate().equals(isRefund.getExpiryDate())){
+                            alteration.append("有效期: " +date+ "   由"+isRefund.getExpiryDate()+"变更为"+refund.getExpiryDate()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!refund.getQuarantine().equals(isRefund.getQuarantine())){
+                            alteration.append("异常总数: " +date+ "   由"+isRefund.getQuarantine()+"变更为"+refund.getQuarantine()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!refund.getGetRemark().equals(isRefund.getGetRemark())){
+                            alteration.append("Remark箱号: " +date+ "   由"+isRefund.getGetRemark()+"变更为"+refund.getGetRemark()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!refund.getClassify().equals(isRefund.getClassify())){
+                            alteration.append("产品分类: " +date+ "   由"+isRefund.getClassify()+"变更为"+refund.getClassify()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!refund.getRegister().equals(isRefund.getRegister())){
+                            alteration.append("注册证号: " +date+ "   由"+isRefund.getRegister()+"变更为"+refund.getRegister()+" 。  ");
+                            rstart = true;
+                        }
+                        if(rstart == true){
+                            //重新发起流程
+                            //查询流程是否存在
+                            Boolean isExist = processService.queryProcessByKey(isRefund);
+                            if(isExist){
+                                processService.deleteInstance(isRefund);
+                            }
+                            refund.setId(isRefund.getId());
+                            refund.setAlteration(alteration.toString());
+                            refundService.editRefund(refund);
+
+                            processService.commitProcess(refund,getCurrentUser());
+                        }
+
                     }
 
                     refundList.add(refund);
@@ -171,17 +224,66 @@ public class AcquireSoapMessage extends BaseController {
                         processService.commitProcess(commodity,getCurrentUser());
                     }else {
                         //对变化的字段进行记录
+                        Boolean rstart = false;
+                        StringBuilder alteration = new StringBuilder();
 
-
-                        //重新发起流程
-                        //查询流程是否存在
-                        Boolean isExist = processService.queryProcessByKey(isCommodity);
-                        if(isExist){
-                            //流程存在  删除原先的流程
-                            processService.deleteInstance(isCommodity);
+                        if(!commodity.getPlant().equals(isCommodity.getPlant())){
+                            alteration.append("Plant工厂: " +date+ "   由"+isCommodity.getPlant()+"变更为"+commodity.getPlant()+" 。  ");
+                            rstart = true;
                         }
-                        //提交新流程
-                        processService.commitProcess(isCommodity,getCurrentUser());
+                        if(!commodity.getkMater().equals(isCommodity.getkMater())){
+                            alteration.append("KDLMaterial物料: " +date+ "   由"+isCommodity.getkMater()+"变更为"+commodity.getkMater()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!commodity.getkBatch().equals(isCommodity.getkBatch())){
+                            alteration.append("康德乐SAP批次: " +date+ "   由"+isCommodity.getkBatch()+"变更为"+commodity.getkBatch()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!commodity.getrMater().equals(isCommodity.getrMater())){
+                            alteration.append("罗氏物料号: " +date+ "   由"+isCommodity.getrMater()+"变更为"+commodity.getrMater()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!commodity.getrBatch().equals(isCommodity.getrBatch())){
+                            alteration.append("罗氏批号: " +date+ "   由"+isCommodity.getrBatch()+"变更为"+commodity.getrBatch()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!commodity.getManuDate().equals(isCommodity.getManuDate())){
+                            alteration.append("生产日期: " +date+ "   由"+isCommodity.getManuDate()+"变更为"+commodity.getManuDate()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!commodity.getExpiryDate().equals(isCommodity.getExpiryDate())){
+                            alteration.append("有效期: " +date+ "   由"+isCommodity.getExpiryDate()+"变更为"+commodity.getExpiryDate()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!commodity.getQuarantine().equals(isCommodity.getQuarantine())){
+                            alteration.append("异常总数: " +date+ "   由"+isCommodity.getQuarantine()+"变更为"+commodity.getQuarantine()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!commodity.getGetRemark().equals(isCommodity.getGetRemark())){
+                            alteration.append("Remark箱号: " +date+ "   由"+isCommodity.getGetRemark()+"变更为"+commodity.getGetRemark()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!commodity.getClassify().equals(isCommodity.getClassify())){
+                            alteration.append("产品分类: " +date+ "   由"+isCommodity.getClassify()+"变更为"+commodity.getClassify()+" 。  ");
+                            rstart = true;
+                        }
+                        if(!commodity.getRegister().equals(isCommodity.getRegister())){
+                            alteration.append("注册证号: " +date+ "   由"+isCommodity.getRegister()+"变更为"+commodity.getRegister()+" 。  ");
+                            rstart = true;
+                        }
+                        if(rstart == true){
+                            //重新发起流程
+                            //查询流程是否存在
+                            Boolean isExist = processService.queryProcessByKey(isCommodity);
+                            if(isExist){
+                                processService.deleteInstance(isCommodity);
+                            }
+                            commodity.setId(isCommodity.getId());
+                            commodity.setAlteration(alteration.toString());
+                            commodityService.editCommodity(commodity);
+
+                            processService.commitProcess(commodity,getCurrentUser());
+                        }
                     }
                     commodityList.add(commodity);
                 }

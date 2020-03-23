@@ -31,7 +31,7 @@
                                     <div class="layui-inline">
                                         <label class="layui-form-label"  style="border-right: 1px solid white;">日期区间</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="searchTime" id="searchTime" class="layui-input" placeholder="请选择时间">
+                                            <input type="text" name="searchTime" id="refund-searchTime" class="layui-input" placeholder="请选择时间">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
@@ -48,11 +48,11 @@
                                     </div>
                                     <div id="refund-check" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;float: right;margin-right: 3%">
                                         <!--<div id="refund-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">-->
-                                            <div class="layui-btn layui-btn-normal" id="refund-query" >
-                                                <i class="layui-icon ">查询</i>
+                                            <div class="layui-btn layui-btn-normal layui-btn-sm" id="refund-query" >
+                                                <i class="layui-icon">&#xe848;</i> 查询
                                             </div>
-                                            <div class="layui-btn layui-btn-danger " id="refund-reset" >
-                                                <i class="layui-icon ">清空</i>
+                                            <div class="layui-btn layui-btn-danger layui-btn-sm" id="refund-reset" >
+                                                <i class="layui-icon">&#xe79b;</i> 清空
                                             </div>
                                         <!--</div>-->
                                     </div>
@@ -96,13 +96,13 @@
                                         <div class="layui-inline  ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">生产日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="manuDate" name="manuDate" maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入生产日期" >
+                                                <input type="text" id="refund-manuDate" name="manuDate" maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入生产日期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">有效期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="expiryDate" name="expiryDate"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入有效期" >
+                                                <input type="text" id="refund-expiryDate" name="expiryDate"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入有效期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
@@ -114,13 +114,13 @@
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">发起日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="initDate" name="initDate"  maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入发起日期" >
+                                                <input type="text" id="refund-initDate" name="initDate"  maxlength="50" autocomplete="off" class="layui-input " placeholder="请输入发起日期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">回复日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="repTime" name="repTime"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入回复日期" >
+                                                <input type="text" id="refund-repTime" name="repTime"  maxlength="50" autocomplete="off" class="layui-input" placeholder="请输入回复日期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline ">
@@ -174,11 +174,11 @@
                                     </div>
                                     <div class="layui-form-item ">
                                         <div style="float: right;margin-right: 3%" >
-                                            <div class="layui-btn layui-btn-normal" id="refund-queryBtn" >
-                                                <i class="layui-icon">查询</i>
+                                            <div class="layui-btn layui-btn-normal layui-btn-sm" id="refund-queryBtn" >
+                                                <i class="layui-icon">&#xe848;</i> 查询
                                             </div>
-                                            <div class="layui-btn layui-btn-danger" id="refund-cleanBtn" >
-                                                <i class="layui-icon">清空</i>
+                                            <div class="layui-btn layui-btn-danger layui-btn-sm" id="refund-cleanBtn" >
+                                                <i class="layui-icon">&#xe79b;</i> 清空
                                             </div>
                                         </div>
                                     </div>
@@ -207,21 +207,20 @@
     {{# } }}
 </script>
 <script type="text/html" id="refund-option">
-    {{# if(d.status == '4'){d.status = '异常'}}
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="refund-detail" shiro:hasPermission="refund:view">查看</a>
-    {{# } else if(d.status == '3'){d.status = '异常'}}
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="refund-detail" shiro:hasPermission="refund:view">查看</a>
-    {{# } else if(d.status != '4'){d.status = '异常'}}
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="refund-detail" shiro:hasPermission="refund:view">查看</a>
-    {{# if(d.status != '3'){d.status = '完结'}}
-    <a class="layui-btn layui-btn-xs" lay-event="refund-edit" shiro:hasPermission="refund:audit">审核</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="refund-del" shiro:hasPermission="refund:del">删除</a>
+    {{#  if(d.status == '4'){d.status = '异常'}}
+    {{#} else if(d.status != '3'){d.status = '完结'}}
+    {{#  if(d.isAllow == '1'){d.status = '可审核'}}
+    <a class="layui-btn layui-btn-xs" lay-event="refund-edit"  shiro:hasPermission="refund:audit">审核</a>
     {{#}}}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="refund-del" shiro:hasPermission="refund:del">删除</a>
     {{#}}}
 </script>
 <script type="text/html" id="toolbarCheck">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="refund-download" shiro:hasPermission="refund:down">导出Excel文件</button>
+        <button class="layui-btn layui-btn-sm" lay-event="refund-download" shiro:hasPermission="refund:down">
+            <i class="layui-icon">&#xe7a8;</i> 导出Excel
+        </button>
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
@@ -247,29 +246,30 @@
         initTable();
         //设置时间样式
         laydate.render({
-            elem: '#searchTime'
+            elem: '#refund-searchTime'
             ,range: true
             ,trigger: 'click'
+            ,btns: ['clear']
         });
         laydate.render({
-            elem: '#manuDate'
+            elem: '#refund-manuDate'
             ,trigger: 'click'
-            ,showBottom: false
+            ,btns: ['clear']
         });
         laydate.render({
-            elem: '#expiryDate'
+            elem: '#refund-expiryDate'
             ,trigger: 'click'
-            ,showBottom: false
+            ,btns: ['clear']
         });
         laydate.render({
-            elem: '#initDate'
+            elem: '#refund-initDate'
             ,trigger: 'click'
-            ,showBottom: false
+            ,btns: ['clear']
         });
         laydate.render({
-            elem: '#repTime'
+            elem: '#refund-repTime'
             ,trigger: 'click'
-            ,showBottom: false
+            ,btns: ['clear']
         });
 
         element.on('collapse(refund-navi)', function(data){

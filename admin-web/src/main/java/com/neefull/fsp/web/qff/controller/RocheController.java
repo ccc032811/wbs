@@ -85,7 +85,7 @@ public class RocheController extends BaseController {
     @RequiresPermissions("roche:view")
     public FebsResponse getRochePage(Roche roche) throws FebsException {
         try {
-            IPage<Roche> pageInfo = rocheService.getRochePage(roche);
+            IPage<Roche> pageInfo = rocheService.getRochePage(roche,getCurrentUser());
             Map<String, Object> dataTable = getDataTable(pageInfo);
             return new FebsResponse().success().data(dataTable);
         } catch (Exception e) {
@@ -205,7 +205,7 @@ public class RocheController extends BaseController {
     @RequiresPermissions("roche:down")
     public void download(Roche roche, HttpServletResponse response) throws FebsException {
         try {
-            IPage<Roche> rochePage = rocheService.getRochePage(roche);
+            IPage<Roche> rochePage = rocheService.getRochePage(roche,getCurrentUser());
             List<Roche> rocheList = rochePage.getRecords();
             ExcelKit.$Export(Roche.class, response).downXlsx(rocheList, false);
         } catch (Exception e) {

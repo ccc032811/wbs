@@ -31,7 +31,7 @@
                                     <div class="layui-inline">
                                         <label class="layui-form-label"  style="border-right: 1px solid white;">日期区间</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="searchTime" id="searchTime" class="layui-input" placeholder="请选择时间">
+                                            <input type="text" name="searchTime" id="recent-searchTime" class="layui-input" placeholder="请选择时间">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
@@ -48,11 +48,11 @@
                                     </div>
                                     <div id="recent-check" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;float: right;margin-right: 3%">
                                         <!--<div id="recent-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">-->
-                                            <div class="layui-btn layui-btn-normal" id="recent-query" >
-                                                <i class="layui-icon ">查询</i>
+                                            <div class="layui-btn layui-btn-normal layui-btn-sm"  id="recent-query" >
+                                                <i class="layui-icon">&#xe848;</i> 查询
                                             </div>
-                                            <div class="layui-btn layui-btn-danger " id="recent-reset" >
-                                                <i class="layui-icon ">清空</i>
+                                            <div class="layui-btn layui-btn-danger layui-btn-sm " id="recent-reset" >
+                                                <i class="layui-icon">&#xe79b;</i> 清空
                                             </div>
                                         <!--</div>-->
                                     </div>
@@ -84,7 +84,7 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">有效期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="useLife" name="useLife"  maxlength="50" autocomplete="off" class="layui-input"  placeholder="请输入有效期" >
+                                                <input type="text" id="recent-useLife" name="useLife"  maxlength="50" autocomplete="off" class="layui-input"  placeholder="请输入有效期" >
                                             </div>
                                         </div>
                                         <div class="layui-inline">
@@ -120,17 +120,17 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label" style="border-right: 1px solid white;">回复日期</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" id="repDate" name="repDate"  autocomplete="off" class="layui-input" placeholder="请选择时间">
+                                                <input type="text" id="recent-repDate" name="repDate"  autocomplete="off" class="layui-input" placeholder="请选择时间">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="layui-form-item ">
                                         <div style="float: right;margin-right: 3%" >
-                                            <div class="layui-btn layui-btn-normal" id="recent-queryBtn" >
-                                                <i class="layui-icon">查询</i>
+                                            <div class="layui-btn layui-btn-normal layui-btn-sm" id="recent-queryBtn" >
+                                                <i class="layui-icon">&#xe848;</i> 查询
                                             </div>
-                                            <div class="layui-btn layui-btn-danger" id="recent-cleanBtn" >
-                                                <i class="layui-icon">清空</i>
+                                            <div class="layui-btn layui-btn-danger layui-btn-sm" id="recent-cleanBtn" >
+                                                <i class="layui-icon">&#xe79b;</i> 清空
                                             </div>
                                         </div>
                                     </div>
@@ -159,22 +159,23 @@
     {{# } }}
 </script>
 <script type="text/html" id="recent-option">
-    {{# if(d.status == '4'){d.status = '异常'}}
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="recent-detail" shiro:hasPermission="recent:view">查看</a>
-    {{# } else if(d.status == '3'){d.status = '异常'}}
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="recent-detail" shiro:hasPermission="recent:view">查看</a>
-    {{# } else if(d.status != '4'){d.status = '异常'}}
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="recent-detail" shiro:hasPermission="recent:view">查看</a>
-    {{# if(d.status != '3'){d.status = '完结'}}
-    <a class="layui-btn layui-btn-xs" lay-event="recent-edit" shiro:hasPermission="recent:audit">审核</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="recent-del" shiro:hasPermission="recent:del">删除</a>
+    {{#  if(d.status == '4'){d.status = '异常'}}
+    {{#} else if(d.status != '3'){d.status = '完结'}}
+    {{#  if(d.isAllow == '1'){d.status = '可审核'}}
+    <a class="layui-btn layui-btn-xs" lay-event="recent-edit"  shiro:hasPermission="recent:audit">审核</a>
     {{#}}}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="recent-del" shiro:hasPermission="recent:del">删除</a>
     {{#}}}
 </script>
 <script type="text/html" id="toolbarCheck">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="recent-upload" id="recent-upload" shiro:hasPermission="recent:import">导入Excel文件</button>
-        <button class="layui-btn layui-btn-sm" lay-event="recent-download" shiro:hasPermission="recent:down">导出Excel文件</button>
+        <button class="layui-btn layui-btn-sm" lay-event="recent-upload" id="recent-upload" shiro:hasPermission="recent:import">
+            <i class="layui-icon">&#xe7aa;</i> 导入Excel
+        </button>
+        <button class="layui-btn layui-btn-sm" lay-event="recent-download" shiro:hasPermission="recent:down">
+            <i class="layui-icon">&#xe7a8;</i> 导出Excel
+        </button>
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
@@ -201,19 +202,20 @@
         initTable();
         //设置时间样式
         laydate.render({
-            elem: '#searchTime'
+            elem: '#recent-searchTime'
             ,range: true
             ,trigger: 'click'
+            ,btns: ['clear']
         });
         laydate.render({
-            elem: '#useLife'
+            elem: '#recent-useLife'
             ,trigger: 'click'
-            ,showBottom: false
+            ,btns: ['clear']
         });
         laydate.render({
-            elem: '#repDate'
+            elem: '#recent-repDate'
             ,trigger: 'click'
-            ,showBottom: false
+            ,btns: ['clear']
         });
 
         element.on('collapse(recent-navi)', function(data){

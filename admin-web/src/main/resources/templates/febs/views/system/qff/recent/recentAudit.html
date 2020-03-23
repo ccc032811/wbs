@@ -284,7 +284,7 @@
             elem: '#recent-repDate',
             trigger: 'click'
             ,min:0
-            ,showBottom: false
+            ,btns: ['clear']
         });
 
         //表单渲染
@@ -444,18 +444,18 @@
                 return false;
             }
             for (var i = 0; i<=images.length-1;i++){
-                if(images[i]!= undefined)
+                if(images[i]!== undefined)
                     imageList+=images[i]+",";
             }
             data.field.images = imageList;
-            if(recent.status ==1){
+            if(recent.status ===1){
                 febs.post(ctx + 'recent/commit', data.field, function (data) {
                     layer.closeAll();
                     febs.alert.success('数据修改成功');
                     $('#fbs-recent').find('#recent-query').click();
                 });
             }
-            if(recent.status ==2){
+            if(recent.status ===2){
                 febs.post(ctx + 'recent/agree', data.field, function (data) {
                     layer.closeAll();
                     febs.alert.success('数据修改成功');
@@ -466,7 +466,7 @@
         });
 
 
-        if(recent.rConf != ""){
+        if(recent.rConf !== ""){
             var gettpl = document.getElementById('rConf_view').innerHTML;
             laytpl(gettpl).render(recent, function(html){
                 document.getElementById('rConf').innerHTML = html;

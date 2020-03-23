@@ -7,11 +7,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.web.qff.entity.Commodity;
 import com.neefull.fsp.web.qff.mapper.CommodityMapper;
 import com.neefull.fsp.web.qff.service.ICommodityService;
+import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.utils.ProcessConstant;
+import com.neefull.fsp.web.system.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 /**
@@ -25,6 +29,8 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
 
     @Autowired
     private CommodityMapper commodityMapper;
+    @Autowired
+    private IProcessService processService;
 
 
     @Override
@@ -43,9 +49,13 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
     }
 
     @Override
-    public IPage<Commodity> getCommodityPage(Commodity commodity) {
+    public IPage<Commodity> getCommodityPage(Commodity commodity, User user) {
         Page<Commodity> page = new Page<>(commodity.getPageNum(),commodity.getPageSize());
         IPage<Commodity> pageInfo = commodityMapper.getConservePage(page,commodity);
+        //获取查询的数据
+        List<Commodity> records = pageInfo.getRecords();
+        List<Commodity> newCommodity = processService.queryCommodityTaskByName(records,user);
+        pageInfo.setRecords(newCommodity);
         return pageInfo;
    }
 

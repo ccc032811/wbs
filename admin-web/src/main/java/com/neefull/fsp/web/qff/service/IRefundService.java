@@ -3,6 +3,7 @@ package com.neefull.fsp.web.qff.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.qff.entity.Refund;
+import com.neefull.fsp.web.system.entity.User;
 
 
 /**退货QFF
@@ -30,7 +31,7 @@ public interface IRefundService extends IService<Refund> {
      * @param refund
      * @return
      */
-    IPage<Refund> getRefundPage(Refund refund);
+    IPage<Refund> getRefundPage(Refund refund, User user);
 
     /**删除退货QFF
      * @param

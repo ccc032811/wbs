@@ -257,7 +257,7 @@
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label ">采购来源</label>
                 <div class="layui-input-block" id = "conserve-source">
-                    <select name="source" id="conserve-search-source" lay-verify="required">
+                    <select name="source" id="conserve-search-source" >
                         <option value="">请选择</option>
                     </select>
                 </div>
@@ -268,7 +268,7 @@
                 <label class="layui-form-label ">投诉编号</label>
                 <div class="layui-input-block">
                     <input type="text" id="conserve-compNumber" name="compNumber" maxlength="50" autocomplete="off"
-                           class="layui-input " placeholder="请输入" >
+                           class="layui-input " placeholder="请输入" lay-verify="required" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
@@ -310,7 +310,7 @@
                 <label class="layui-form-label" style="height: 80px;border-right: 1px solid #000;"><div style="margin-top: 20px">仪器工程师检查结果</div></label>
                 <div class="layui-input-block">
                     <textarea id="conserve-checkResult" name="checkResult"  placeholder="请输入"
-                              class="layui-textarea" ></textarea>
+                              class="layui-textarea" lay-verify="required"></textarea>
                 </div>
             </div>
         </div>
@@ -318,7 +318,8 @@
             <div class="layui-inline layui-col-sm12" >
                 <label class="layui-form-label " style="height: 80px;"><div style="margin-top: 20px">备注</div></label>
                 <div class="layui-input-block" >
-                    <textarea id="conserve-remark" name="remark"  placeholder="请输入" class="layui-textarea" ></textarea>
+                    <textarea id="conserve-remark" name="remark"  placeholder="请输入"
+                              class="layui-textarea" lay-verify="required"></textarea>
                 </div>
 
             </div>
@@ -391,30 +392,29 @@
         form.render();
 
 
-        //页面渲染，放在初始化界面之前
-        if(currentUser.roleId === '86'){ //罗氏
-            $('#conserve-stage').html('');
-            $('#conserve-stage').append(' <input type="text" name="stage"  maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">')
-            $('#conserve-source').html('')
-            $('#conserve-source').append('<input type="text" name="source"  maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">')
-            $('#conserve-compNumber').attr("lay-verify","required");
-            $('#conserve-checkResult').attr("lay-verify","required");
-            $('#conserve-remark').attr("lay-verify","required");
-
-        }else if(currentUser.roleId === '87'){  //康德乐
-            $('#conserve-rConf').html('')
+        // //页面渲染，放在初始化界面之前
+        if(commodity.rConf!==null&&commodity.rConf!==""){
+            $('#conserve-rConf').html('');
             $('#conserve-rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">')
+                '                           class="layui-input " readonly="readonly">');
+        }
+        if(commodity.reason!==null&&commodity.reason!==""){
             $('#conserve-reason').html('')
             $('#conserve-reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
                 '                           class="layui-input " readonly="readonly">')
+        }
+        if(commodity.ba!==null&&commodity.ba!==""){
             $('#conserve-ba').html('')
             $('#conserve-ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
                 '                           class="layui-input " readonly="readonly">')
+        }
+        if(commodity.checkResult!==null&&commodity.checkResult!==""){
             $('#conserve-checkResult').attr("readonly","readonly");
+        }
+        if(commodity.remark!==null&&commodity.remark!==""){
             $('#conserve-remark').attr("readonly","readonly");
+        }
+        if(commodity.compNumber!==null&&commodity.compNumber!==""){
             $('#conserve-compNumber').attr("readonly","readonly");
         }
 
@@ -458,8 +458,8 @@
         upload.render({
             elem: '#conserve-chose'  //绑定
             ,url: ctx+ 'file/uploadImage'  //上传url
-            // ,accept: "images"     //设置文件的类型
-            ,accept: "file"     //设置文件的类型
+            ,accept: "images"     //设置文件的类型
+            // ,accept: "file"     //设置文件的类型
             // ,number: 2         //设置上传文件数量
             ,multiple: true       //设置多文件上传
             ,size:2048       //设置文件大小
@@ -583,18 +583,18 @@
                 return false;
             }
             for (var i = 0; i<=images.length-1;i++){
-                if(images[i]!= undefined)
+                if(images[i]!== undefined)
                 imageList+=images[i]+",";
             }
             data.field.images = imageList;
-            if(commodity.status ==1){
+            if(commodity.status ===1){
                 febs.post(ctx + 'commodity/commit', data.field , function (data) {
                     layer.closeAll();
                     $('#fbs-conserve').find('#conserve-query').click();
                     febs.alert.success('数据修改成功');
                 });
             }
-            if(commodity.status ==2){
+            if(commodity.status ===2){
                 febs.post(ctx + 'commodity/agree', data.field , function (data) {
                     layer.closeAll();
                     $('#fbs-conserve').find('#conserve-query').click();
@@ -624,7 +624,7 @@
             var dom=$("#conserve-search-ba");
             var html = '<option value=""></option>';
             $.each(data,function(index,item){
-                if(item.name == commodity.ba){
+                if(item.name === commodity.ba){
                     html+='<option selected value="'+item.name+'">'+item.name+'</option>'
                 }else {
                     html+='<option value="'+item.name+'">'+item.name+'</option>'
@@ -639,7 +639,7 @@
             var dom=$("#conserve-search-stage");
             var html='<option value=""></option>';
             $.each(data,function(index,item){
-                if(item.name == commodity.stage){
+                if(item.name === commodity.stage){
                     html+='<option selected value="'+item.name+'">'+item.name+'</option>'
                 }else {
                     html+='<option value="'+item.name+'">'+item.name+'</option>'
@@ -654,7 +654,7 @@
             var dom=$("#conserve-search-source");
             var html='<option value=""></option>';
             $.each(data,function(index,item){
-                if(item.name == commodity.source){
+                if(item.name === commodity.source){
                     html+='<option selected value="'+item.name+'">'+item.name+'</option>'
                 }else {
                     html+='<option value="'+item.name+'">'+item.name+'</option>'
@@ -665,7 +665,7 @@
         });
 
         $(function () {
-            if(commodity.isDanger == '01'){
+            if(commodity.isDanger === '01'){
                 $("#isDanger").attr("value","危险");
             }else{
                 $("#isDanger").attr("value","不危险");

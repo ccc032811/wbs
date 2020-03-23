@@ -7,12 +7,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neefull.fsp.web.qff.entity.*;
 import com.neefull.fsp.web.qff.mapper.RocheMapper;
+import com.neefull.fsp.web.qff.service.IProcessService;
 import com.neefull.fsp.web.qff.service.IRocheService;
+import com.neefull.fsp.web.system.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
 
 /**罗氏内部发起QFF
@@ -27,6 +30,8 @@ public class RocheServiceImpl extends ServiceImpl<RocheMapper, Roche> implements
 
     @Autowired
     private RocheMapper rocheMapper;
+    @Autowired
+    private IProcessService processService;
 
     @Override
     @Transactional
@@ -45,9 +50,12 @@ public class RocheServiceImpl extends ServiceImpl<RocheMapper, Roche> implements
     }
 
     @Override
-    public IPage<Roche> getRochePage(Roche roche) {
+    public IPage<Roche> getRochePage(Roche roche, User user) {
         Page<Roche> page = new Page<>(roche.getPageNum(),roche.getPageSize());
         IPage<Roche> pageInfo = rocheMapper.getRochePage(page,roche);
+        List<Roche> records = pageInfo.getRecords();
+        List<Roche> newRoche = processService.queryRocheTaskByName(records,user);
+        pageInfo.setRecords(newRoche);
         return pageInfo;
     }
 
