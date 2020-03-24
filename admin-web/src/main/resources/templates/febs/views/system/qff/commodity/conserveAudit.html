@@ -388,38 +388,46 @@
         var reason = "QFF原因";
         var relevance = "qff_commodity";
 
+
+        $(function () {
+            if(commodity.rConf!==null&&commodity.rConf!==""){
+                $('#conserve-rConf').html('');
+                $('#conserve-rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
+                    '                           class="layui-input " readonly="readonly">');
+            }
+            if(commodity.reason!==null&&commodity.reason!==""){
+                $('#conserve-reason').html('')
+                $('#conserve-reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
+                    '                           class="layui-input " readonly="readonly">')
+            }
+            if(commodity.ba!==null&&commodity.ba!==""){
+                $('#conserve-ba').html('')
+                $('#conserve-ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
+                    '                           class="layui-input " readonly="readonly">')
+            }
+            if(commodity.checkResult!==null&&commodity.checkResult!==""){
+                $('#conserve-checkResult').attr("readonly","readonly");
+            }
+            if(commodity.remark!==null&&commodity.remark!==""){
+                $('#conserve-remark').attr("readonly","readonly");
+            }
+            if(commodity.compNumber!==null&&commodity.compNumber!==""){
+                $('#conserve-compNumber').attr("readonly","readonly");
+            }
+        })
+
+        $(function () {
+            if(commodity.isDanger === '01'){
+                $("#isDanger").attr("value","危险");
+            }else{
+                $("#isDanger").attr("value","不危险");
+            }
+        })
+
         //表单渲染
         form.render();
-
-
-        // //页面渲染，放在初始化界面之前
-        if(commodity.rConf!==null&&commodity.rConf!==""){
-            $('#conserve-rConf').html('');
-            $('#conserve-rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">');
-        }
-        if(commodity.reason!==null&&commodity.reason!==""){
-            $('#conserve-reason').html('')
-            $('#conserve-reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">')
-        }
-        if(commodity.ba!==null&&commodity.ba!==""){
-            $('#conserve-ba').html('')
-            $('#conserve-ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">')
-        }
-        if(commodity.checkResult!==null&&commodity.checkResult!==""){
-            $('#conserve-checkResult').attr("readonly","readonly");
-        }
-        if(commodity.remark!==null&&commodity.remark!==""){
-            $('#conserve-remark').attr("readonly","readonly");
-        }
-        if(commodity.compNumber!==null&&commodity.compNumber!==""){
-            $('#conserve-compNumber').attr("readonly","readonly");
-        }
-
-
         initConserveValue();
+
         //给表单赋值
         function initConserveValue() {
             form.val("conserve-detail-form", {
@@ -664,24 +672,21 @@
             form.render("select");
         });
 
-        $(function () {
-            if(commodity.isDanger === '01'){
-                $("#isDanger").attr("value","危险");
-            }else{
-                $("#isDanger").attr("value","不危险");
-            }
-        })
 
-       /* $.get(ctx +"opinion/getOpinion/"+classify,function(res){
-            var data=res.data;
-            var dom=$("#search_classify");
-            var html='<option value=""></option>';
-            $.each(data,function(index,item){
-                html+='<option value="'+item.name+'">'+item.name+'</option>'
-            });
-            dom.html(html);
-            form.render("select");
-        });*/
+
+
+
+
+        /* $.get(ctx +"opinion/getOpinion/"+classify,function(res){
+             var data=res.data;
+             var dom=$("#search_classify");
+             var html='<option value=""></option>';
+             $.each(data,function(index,item){
+                 html+='<option value="'+item.name+'">'+item.name+'</option>'
+             });
+             dom.html(html);
+             form.render("select");
+         });*/
 
         /*  //页面渲染，放在初始化界面之前
           if(currentUser.roleId == '86'){ //罗氏

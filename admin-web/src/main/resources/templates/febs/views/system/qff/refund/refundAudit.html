@@ -366,36 +366,37 @@
         var reason = "退货原因";
         var relevance = "qff_refund";
 
+
+        $(function () {
+            if(refund.rConf!==""&&refund.rConf!==null){
+                $('#refund-rConf').html('');
+                $('#refund-rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
+                    '                           class="layui-input " readonly="readonly">');
+            }
+            if(refund.reason!==""&&refund.reason!==null){
+                $('#refund-reason').html('')
+                $('#refund-reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
+                    '                           class="layui-input " readonly="readonly">')
+            }
+            if(refund.ba!==""&&refund.ba!==null){
+                $('#refund-ba').html('')
+                $('#refund-ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
+                    '                           class="layui-input " readonly="readonly">')
+            }
+            if(refund.checkResult!==""&&refund.checkResult!==null){
+                $('#refund-checkResult').attr("readonly","readonly");
+            }
+            if(refund.remark!==""&&refund.remark!==null){
+                $('#refund-remark').attr("readonly","readonly");
+            }
+            if(refund.compNumber!==""&&refund.compNumber!==null){
+                $('#refund-compNumber').attr("readonly","readonly");
+            }
+        })
+
+
         //表单渲染
         form.render();
-
-        // //页面渲染，放在初始化界面之前
-        if(refund.rConf!==""&&refund.rConf!==null){
-            $('#refund-rConf').html('');
-            $('#refund-rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">');
-        }
-        if(refund.reason!==""&&refund.reason!==null){
-            $('#refund-reason').html('')
-            $('#refund-reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">')
-        }
-        if(refund.ba!==""&&refund.ba!==null){
-            $('#refund-ba').html('')
-            $('#refund-ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">')
-        }
-        if(refund.checkResult!==""&&refund.checkResult!==null){
-            $('#refund-checkResult').attr("readonly","readonly");
-        }
-        if(refund.remark!==""&&refund.remark!==null){
-            $('#refund-remark').attr("readonly","readonly");
-        }
-        if(refund.compNumber!==""&&refund.compNumber!==null){
-            $('#refund-compNumber').attr("readonly","readonly");
-        }
-
-
         initConserveValue();
 
         //给表单赋值
@@ -618,7 +619,9 @@
         $.get(ctx +"opinion/getOpinion/"+source,function(res){
             var data=res.data;
             var dom=$("#refund_search_source");
-                if(item.name ===  refund.source){
+            var html='<option value=""></option>';
+            $.each(data,function(index,item){
+                if(item.name === commodity.source){
                     html+='<option selected value="'+item.name+'">'+item.name+'</option>'
                 }else {
                     html+='<option value="'+item.name+'">'+item.name+'</option>'
@@ -627,6 +630,7 @@
             dom.html(html);
             form.render("select");
         });
+
 
     });
 </script>

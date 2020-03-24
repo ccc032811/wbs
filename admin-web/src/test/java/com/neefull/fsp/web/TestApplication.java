@@ -76,7 +76,7 @@ public class TestApplication extends BaseController {
     public void initBuild01() {
         //部署流程图
         Deployment deploy = repositoryService.createDeployment()
-                .addClasspathResource("processes/recent_process.bpmn20.xml")
+                .addClasspathResource("processes/refund_process.bpmn20.xml")
                 .deploy();
         System.out.println(deploy.getId());
 

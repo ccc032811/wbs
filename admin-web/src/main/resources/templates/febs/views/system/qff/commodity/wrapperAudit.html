@@ -392,36 +392,46 @@
         var reason = "QFF原因";
         var relevance = "qff_commodity";
 
+
+        $(function () {
+            if(commodity.isDanger === '01'){
+                $("#isDanger").attr("value","危险");
+            }else{
+                $("#isDanger").attr("value","不危险");
+            }
+        })
+
+        $(function () {
+            if(commodity.rConf!==""&&commodity.rConf!==null){
+                $('#wrapper-rConf').html('');
+                $('#wrapper-rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
+                    '                           class="layui-input " readonly="readonly">');
+            }
+            if(commodity.reason!==""&&commodity.reason!==null){
+                $('#wrapper-reason').html('')
+                $('#wrapper-reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
+                    '                           class="layui-input " readonly="readonly">')
+            }
+            if(commodity.ba!==""&&commodity.ba!==null){
+                $('#wrapper-ba').html('')
+                $('#wrapper-ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
+                    '                           class="layui-input " readonly="readonly">')
+            }
+            if(commodity.checkResult!==""&&commodity.checkResult!==null){
+                $('#wrapper-checkResult').attr("readonly","readonly");
+            }
+            if(commodity.remark!==""&&commodity.remark!==null){
+                $('#wrapper-remark').attr("readonly","readonly");
+            }
+            if(commodity.compNumber!==""&&commodity.compNumber!==null){
+                $('#wrapper-compNumber').attr("readonly","readonly");
+            }
+
+        })
+
+
         //表单渲染
         form.render();
-
-        // //页面渲染，放在初始化界面之前
-        if(commodity.rConf!==""&&commodity.rConf!==null){
-            $('#wrapper-rConf').html('');
-            $('#wrapper-rConf').append('<input type="text" name="rConf" maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">');
-        }
-        if(commodity.reason!==""&&commodity.reason!==null){
-            $('#wrapper-reason').html('')
-            $('#wrapper-reason').append('<input type="text" name="reason"  maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">')
-        }
-        if(commodity.ba!==""&&commodity.ba!==null){
-            $('#wrapper-ba').html('')
-            $('#wrapper-ba').append('<input type="text" name="ba"  maxlength="50" autocomplete="off"\n' +
-                '                           class="layui-input " readonly="readonly">')
-        }
-        if(commodity.checkResult!==""&&commodity.checkResult!==null){
-            $('#wrapper-checkResult').attr("readonly","readonly");
-        }
-        if(commodity.remark!==""&&commodity.remark!==null){
-            $('#wrapper-remark').attr("readonly","readonly");
-        }
-        if(commodity.compNumber!==""&&commodity.compNumber!==null){
-            $('#wrapper-compNumber').attr("readonly","readonly");
-        }
-
-
         initWrapperValue();
 
         //给表单赋值
@@ -663,13 +673,10 @@
             dom.html(html);
             form.render("select");
         });
-        $(function () {
-            if(commodity.isDanger === '01'){
-                $("#isDanger").attr("value","危险");
-            }else{
-                $("#isDanger").attr("value","不危险");
-            }
-        })
+
+
+
+
 
     });
 </script>

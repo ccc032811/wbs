@@ -318,7 +318,6 @@ public class ProcessServiceImpl implements IProcessService {
     }
 
 
-
     @Override
     public List<Recent> queryRecentTaskByName(List<Recent> recentList, User user) {
         List<Task> tasks = queryTaskByUserName(user.getUsername());
