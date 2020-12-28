@@ -1,0 +1,135 @@
+<!--<div class="layui-fluid layui-anim febs-anim" id="scan-header" lay-title="扫描记录查询">-->
+    <!--<div class="layui-row febs-container">-->
+        <!--<div class="layui-col-md12">-->
+            <!--<div class="layui-card">-->
+                <!--<div class="layui-card-body febs-table-full">-->
+                    <!--<form class="layui-form layui-table-form" lay-filter="scan-header">-->
+                        <!--<div class="layui-row">-->
+                            <!--<div class="layui-col-md10">-->
+                                <!--<div class="layui-form-item">-->
+                                    <!--<div class="layui-inline">-->
+                                        <!--<label class="layui-form-label layui-form-label-sm">DN号</label>-->
+                                        <!--<div class="layui-input-inline">-->
+                                            <!--<input type="text" name="delivery" autocomplete="off" class="layui-input">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="layui-inline">-->
+                                        <!--<label class="layui-form-label layui-form-label-sm">工厂编号</label>-->
+                                        <!--<div class="layui-input-inline">-->
+                                            <!--<input type="text" name="plant" autocomplete="off" class="layui-input">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="layui-col-md2 table-action-area">-->
+                                <!--<div id="conserve-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">-->
+                                    <!--<div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="scan-header-query">-->
+                                        <!--<i class="layui-icon">&#xe848;</i>-->
+                                    <!--</div>-->
+                                    <!--<div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="scan-header-reset">-->
+                                        <!--<i class="layui-icon">&#xe79b;</i>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</form>-->
+                    <!--<table lay-filter="scanHeaderTable" lay-data="{id: 'scanHeaderTable'}"></table>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<script type="text/html" id="scan-header-status">-->
+    <!--<div>-->
+        <!--{{# if (d.status == '1') { }}-->
+        <!--<span class="febs-tag-magenta layui-badge">未审核</span>-->
+        <!--{{# } else if (d.status == null) { }}-->
+        <!--<span class="febs-tag-magenta layui-badge">未审核</span>-->
+        <!--{{# } else if (d.status == '2') { }}-->
+        <!--<span class="febs-tag-green layui-badge">审核通过</span>-->
+        <!--{{# } else if (d.status == '3') { }}-->
+        <!--<span class="febs-tag-green layui-badge">审核通过</span>-->
+        <!--{{# } }}-->
+    <!--</div>-->
+<!--</script>-->
+<!--<script type="text/html" id="header-option">-->
+
+    <!--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="scan-header-view">查看</a>-->
+
+
+<!--</script>-->
+<!--<script data-th-inline="none" type="text/javascript">-->
+    <!--layui.use(['jquery', 'form', 'table', 'febs'], function () {-->
+        <!--var $ = layui.jquery,-->
+            <!--febs = layui.febs,-->
+            <!--form = layui.form,-->
+            <!--table = layui.table,-->
+            <!--$view = $('#scan-header'),-->
+            <!--$query = $view.find('#scan-header-query'),-->
+            <!--$reset = $view.find('#scan-header-reset'),-->
+            <!--$searchForm = $view.find('form'),-->
+            <!--tableIns;-->
+
+        <!--form.render();-->
+        <!--initTable();-->
+
+
+
+        <!--$query.on('click', function () {-->
+            <!--var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});-->
+            <!--tableIns.reload({where: params, page: {curr: 1}});-->
+        <!--});-->
+
+        <!--$reset.on('click', function () {-->
+            <!--$searchForm[0].reset();-->
+            <!--var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});-->
+            <!--tableIns.reload({where: params, page: {curr: 1}});-->
+        <!--});-->
+
+        <!--function initTable() {-->
+            <!--tableIns = febs.table.init({-->
+                <!--elem: $view.find('table'),-->
+                <!--id: 'scanHeaderTable',-->
+                <!--url: ctx + 'scan/smsScan/getScanInfoList',-->
+                <!--where:{-->
+                    <!--time:new Date(),-->
+                    <!--plants:currentUser.factoryName-->
+
+                <!--},-->
+                <!--cols: [[-->
+                    <!--{field: 'delivery',align:'center',title: 'DN号',minWidth:200},-->
+                    <!--{field: 'plant',align:'center',title: '工厂',minWidth:200},-->
+                    <!--{field: 'soldParty',align:'center',title: '售达方代码',minWidth:200},-->
+                    <!--{field: 'shipParty',align:'center',title: '送达方代码',minWidth:200},-->
+                    <!--{title: '状态',align:'center',minWidth:200, templet: "#scan-header-status",width: 200},-->
+                    <!--{title: '操作', toolbar: '#header-option',align:'center',width: 120}-->
+                <!--]],-->
+                <!--done:function (res,curr,count) {-->
+                    <!--$(".layui-table-header .layui-table thead tr th").css("border","1px solid white").css("background-color","#E8E8E8");-->
+                    <!--$(".layui-table-body .layui-table-col-special .layui-table-cell .layui-btn").css("margin-top","4px");-->
+                <!--}-->
+            <!--});-->
+        <!--}-->
+
+
+        <!--table.on('tool(scanHeaderTable)', function (obj) {-->
+            <!--var data = obj.data,-->
+                <!--layEvent = obj.event;-->
+            <!--if (layEvent === 'scan-header-view') {-->
+                <!--febs.modal.open('扫描信息详情', 'sms/scanDetail/' + data.delivery, {-->
+                    <!--area:  [$(window).width() <= 750 ? '85%' : '75%',$(window).width() <= 750 ? '85%' : '75%']-->
+                <!--});-->
+            <!--}-->
+        <!--});-->
+
+
+
+        <!--function getQueryParams() {-->
+            <!--return {-->
+                <!--delivery: $searchForm.find('input[name="delivery"]').val().trim(),-->
+                <!--plant: $searchForm.find('input[name="plant"]').val().trim(),-->
+                <!--invalidate_ie_cache: new Date()-->
+            <!--};-->
+        <!--}-->
+    <!--})-->
+<!--</script>-->

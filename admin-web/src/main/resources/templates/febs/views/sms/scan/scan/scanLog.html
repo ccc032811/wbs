@@ -1,0 +1,114 @@
+<div class="layui-fluid layui-anim febs-anim" id="scan-log" lay-title="DN获取记录查询">
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="scan-log-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">DN号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="delivery" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">工厂编号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="plant" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 table-action-area">
+                                <div id="conserve-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                    <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="scan-log-query">
+                                        <i class="layui-icon">&#xe848;</i>
+                                    </div>
+                                    <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="scan-log-reset">
+                                        <i class="layui-icon">&#xe79b;</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table lay-filter="scanLogTable" lay-data="{id: 'scanLogTable'}"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="scan-log-status">
+    <div>
+        {{# if (d.status == '1') { }}
+        <span class="febs-tag-magenta layui-badge">未解析</span>
+        {{# } else if (d.status == '2') { }}
+        <span class="febs-tag-green layui-badge">已解析</span>
+        {{# } }}
+    </div>
+</script>
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['jquery', 'form', 'table', 'febs'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            form = layui.form,
+            table = layui.table,
+            $view = $('#scan-log'),
+            $query = $view.find('#scan-log-query'),
+            $reset = $view.find('#scan-log-reset'),
+            $searchForm = $view.find('form'),
+            tableIns;
+
+        form.render();
+        initTable();
+
+        table.on('sort(scanLogTable)', function (obj) {
+            tableIns.reload({
+                where: $.extend(getQueryParams())
+            });
+        });
+
+        $query.on('click', function () {
+            var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});
+            tableIns.reload({where: params, page: {curr: 1}});
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});
+            tableIns.reload({where: params, page: {curr: 1}});
+        });
+
+        function initTable() {
+            tableIns = febs.table.init({
+                elem: $view.find('table'),
+                id: 'scanLogTable',
+                url: ctx + 'scan/smsScan/queryScanLogList',
+                where:{
+                    time:new Date(),
+                    plants:currentUser.factoryName
+                },
+                cols: [[
+                    {field: 'delivery', title: 'DN号',align:'center',width: 150},
+                    {field: 'deliveryResponse',align:'center', title: 'DN返回结果',minWidth:1000},
+                    {field: 'plant',align:'center', title: '工厂',width:100},
+                    {field: 'status', title: '状态',align:'center', templet: "#scan-log-status",width: 100},
+                    {field: 'createTime',align:'center', title: '入库时间',width: 200}
+                ]],
+                done:function (res,curr,count) {
+                    $(".layui-table-header .layui-table thead tr th").css("border","1px solid white").css("background-color","#E8E8E8");
+                    $(".layui-table-body .layui-table-col-special .layui-table-cell .layui-btn").css("float","left").css("margin-top","4px");
+                }
+            });
+        }
+
+        function getQueryParams() {
+            return {
+                delivery: $searchForm.find('input[name="delivery"]').val().trim(),
+                plant: $searchForm.find('input[name="plant"]').val().trim(),
+                invalidate_ie_cache: new Date()
+            };
+        }
+    })
+</script>

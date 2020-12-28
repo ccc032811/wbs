@@ -1,0 +1,157 @@
+<style  type="text/css">
+    #dn-header-show {
+        padding: 20px 25px 25px 0;
+    }
+
+    #conserve-detail .layui-treeSelect .ztree li a, .ztree li span {
+        margin: 0 0 2px 3px !important;
+    }
+
+    /* 覆盖样式 */
+    .layui-form-item ,.layui-form-item .layui-inline{
+        margin-bottom: 0;
+    }
+    .layui-form-item-rigth{
+        border-right: 1px solid #000;
+    }
+    .layui-col-sm4{
+        border-left: 1px solid #000;
+        border-top: 1px solid #000;
+    }
+    .layui-input-block{
+        border-left: 1px solid #000;
+    }
+    .layui-col-sm4 {
+        height: 39px;
+    }
+    .layui-form-label {
+        text-align: center;
+    }
+    .layui-form-item-rigth,.layui-inline,.layui-form-label,.layui-input-block,.layui-input{
+        height: 55px;
+    }
+
+</style>
+
+<div class="layui-fluid"  lay-title="DN Header具体信息">
+
+    <form class="layui-form " action="" lay-filter="dn-header-show" id="dn-header-show" >
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">DN号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="delivery" autocomplete="off" class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">售达方代码</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="soldParty" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">售达方名称</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="soldPartyName" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">送达方代码</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="shipParty"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">送达方名称</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="shipPartyName"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">送货地址</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="address"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">销售订单号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" id="salesOrder"  autocomplete="off" class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">药厂DO号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="rocheDelivery"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">药厂送达方代码</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="rocheShipParty" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">药厂送达方名称</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="rocheShipPartyName" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">药厂订单号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="rocheOrder" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">药厂客户</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="rocheCustomerOrder" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item"><div style="border-top: 1px solid #000;margin-top: 1px"></div></div>
+    </form>
+
+</div>
+
+
+<script data-th-inline="javascript">
+    layui.use([ 'form','layer','jquery'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            header = [[${header}]];
+
+
+        form.render();
+        initConserveValue();
+
+
+        function initConserveValue() {
+            form.val("dn-header-show", {
+                "id":header.id,
+                "delivery": header.delivery,
+                "soldParty": header.soldParty,
+                "soldPartyName": header.soldPartyName,
+                "shipParty": header.shipParty,
+                "shipPartyName": header.shipPartyName,
+                "address": header.address,
+                "salesOrder": header.salesOrder,
+                "rocheDelivery": header.rocheDelivery,
+                "rocheShipParty": header.rocheShipParty,
+                "rocheShipPartyName": header.rocheShipPartyName,
+                "rocheOrder": header.rocheOrder,
+                "rocheCustomerOrder": header.rocheCustomerOrder
+            });
+        }
+
+
+
+    });
+</script>

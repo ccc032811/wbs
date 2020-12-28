@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neefull.fsp.web.system.mapper.FactoryMapper">
+
+    <select id="getFactoryPage" resultType="com.neefull.fsp.web.system.entity.Factory">
+        select * from sms_factory where 1=1
+        <if test="factory.factoryName != null and factory.factoryName != ''">
+            AND factory_name like concat('%',#{factory.factoryName},'%')
+        </if>
+        <if test="factory.factoryCode != null and factory.factoryCode != ''">
+            AND factory_code like concat('%',#{factory.factoryCode},'%')
+        </if>
+        <if test="factory.status != null and factory.status != ''">
+            AND status = #{factory.status}
+        </if>
+        order by update_time desc
+    </select>
+</mapper>

@@ -1,6 +1,7 @@
 package com.neefull.fsp.web.monitor.service.impl;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -50,9 +51,6 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
         if (StringUtils.isNotBlank(log.getOperation())) {
             queryWrapper.lambda().like(Log::getOperation, log.getOperation());
         }
-        if (StringUtils.isNotBlank(log.getLocation())) {
-            queryWrapper.lambda().like(Log::getLocation, log.getLocation());
-        }
         if (StringUtils.isNotBlank(log.getCreateTimeFrom()) && StringUtils.isNotBlank(log.getCreateTimeTo())) {
             queryWrapper.lambda()
                     .ge(Log::getCreateTime, log.getCreateTimeFrom())
@@ -81,23 +79,24 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
             // 注解上的描述
             log.setOperation(logAnnotation.value());
         }
-        // 请求的类名
-        String className = point.getTarget().getClass().getName();
-        // 请求的方法名
-        String methodName = signature.getName();
-        log.setMethod(className + "." + methodName + "()");
         // 请求的方法参数值
-        Object[] args = point.getArgs();
-        // 请求的方法参数名称
-        LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
-        String[] paramNames = u.getParameterNames(method);
-        if (args != null && paramNames != null) {
-            StringBuilder params = new StringBuilder();
-            params = handleParams(params, args, Arrays.asList(paramNames));
-            log.setParams(params.toString());
+        String param = JSON.toJSONString(point.getArgs());
+
+        try {
+            log.setParams(param);
+        } catch (Exception e) {
+            log.setParams("");
         }
+
+        // 请求的方法参数名称
+//        LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
+//        String[] paramNames = u.getParameterNames(method);
+//        if (args != null && paramNames != null) {
+//            StringBuilder params = new StringBuilder();
+//            params = handleParams(params, args, Arrays.asList(paramNames));
+//            log.setParams(params.toString());
+//        }
         log.setCreateTime(new Date());
-        log.setLocation(AddressUtil.getCityInfo(log.getIp()));
         // 保存系统日志
         save(log);
     }

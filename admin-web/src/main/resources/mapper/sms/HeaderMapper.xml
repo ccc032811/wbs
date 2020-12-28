@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neefull.fsp.web.sms.mapper.HeaderMapper">
+    
+    <resultMap id="headerDetail" type="com.neefull.fsp.web.sms.entity.Header">
+        <id column="h_id" property="id"/>
+        <result column="delivery" property="delivery"/>
+        <result column="sold_party" property="soldParty"/>
+        <result column="sold_party_name" property="soldPartyName"/>
+        <result column="ship_party" property="shipParty"/>
+        <result column="ship_party_name" property="shipPartyName"/>
+        <result column="address" property="address"/>
+        <result column="sales_order" property="salesOrder"/>
+        <result column="roche_delivery" property="rocheDelivery"/>
+        <result column="roche_ship_party" property="rocheShipParty"/>
+        <result column="roche_ship_party_name" property="rocheShipPartyName"/>
+        <result column="roche_order" property="rocheOrder"/>
+        <result column="roche_customer_order" property="rocheCustomerOrder"/>
+        <result column="h_plant" property="plant"/>
+        <result column="verify_user" property="verifyUser"/>
+        <result column="verify_date" property="verifyDate"/>
+        <result column="status" property="status"/>
+        <result column="down_user" property="downUser"/>
+        <result column="down_time" property="downTime"/>
+        <result column="del_user" property="delUser"/>
+        <result column="del_time" property="delTime"/>
+        <result column="guid" property="guid"/>
+        <result column="verify_code" property="verifyCode"/>
+        <result column="error_msg" property="errorMessage"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <collection property="detailList" ofType="com.neefull.fsp.web.sms.entity.Detail" javaType="list">
+            <id column="id" property="id"/>
+            <result column="roche_delivery" property="rocheDelivery"/>
+            <result column="delivery" property="delivery"/>
+            <result column="delivery_item" property="deliveryItem"/>
+            <result column="roche_delivery_item" property="rocheDeliveryItem"/>
+            <result column="roche_delivery_item_code" property="rocheDeliveryItemCode"/>
+            <result column="material" property="material"/>
+            <result column="roche_material" property="rocheMaterial"/>
+            <result column="material_description" property="materialDescription"/>
+            <result column="material_description_en" property="materialDescriptionEn"/>
+            <result column="roche_material_description" property="rocheMaterialDescription"/>
+            <result column="plant" property="plant"/>
+            <result column="batch" property="batch"/>
+            <result column="roche_batch" property="rocheBatch"/>
+            <result column="serial_number" property="serialNumber"/>
+            <result column="quantity" property="quantity"/>
+            <result column="uom" property="uom"/>
+            <result column="roche_uom" property="rocheUom"/>
+            <result column="expiry_date" property="expiryDate"/>
+            <result column="if_batch_management" property="ifBatchManagement"/>
+            <result column="if_serial_number_management" property="ifSerialNumberManagement"/>
+            <result column="if_expiry_date_management" property="ifExpiryDateManagement"/>
+            <result column="save_mode" property="saveMode"/>
+            <result column="save_mode_description" property="saveModeDescription"/>
+            <result column="guid" property="guid"/>
+            <result column="dummy_code" property="dummyCode"/>
+            <result column="dummy_desc" property="dummyDesc"/>
+            <result column="dummy_is_batch_management" property="dummyIsBatchManagement"/>
+            <result column="dummy_is_serial_number_management" property="dummyIsSerialNumberManagement"/>
+            <result column="dummy_is_expriy_date_management" property="dummyIsExpriyDateManagement"/>
+            <result column="dummy_roche_batch" property="dummyRocheBatch"/>
+            <result column="dummy_serial_number" property="dummySerialNumber"/>
+            <result column="dummy_expiry_date" property="dummyExpiryDate"/>
+            <result column="must_scan_mode" property="mustScanMode"/>
+            <result column="error_message" property="errorMessage"/>
+            <result column="create_time" property="createTime"/>
+            <result column="update_time" property="updateTime"/>
+        </collection>
+    </resultMap>
+    
+    
+    <update id="updateStatusByDelivery">
+        update sms_header set status = #{status} where delivery = #{delivery}
+    </update>
+    <update id="updateErrorMsg">
+        update sms_header set error_message = #{msg} where id = #{id}
+    </update>
+    <select id="getPageHeader" resultType="com.neefull.fsp.web.sms.entity.Header">
+        select * from sms_header t where 1=1
+        <if test="header.delivery != null and header.delivery != ''">
+            AND t.delivery like concat('%',#{header.delivery},'%')
+        </if>
+        <if test="header.soldParty != null and header.soldParty != ''">
+            AND t.sold_party like concat('%',#{header.soldParty},'%')
+        </if>
+        <if test="header.soldPartyName != null and header.soldPartyName != ''">
+            AND t.sold_party_name like concat('%',#{header.soldPartyName},'%')
+        </if>
+        <if test="header.shipParty != null and header.shipParty != ''">
+            AND t.ship_party like concat('%',#{header.shipParty},'%')
+        </if>
+        <if test="header.shipPartyName != null and header.shipPartyName != ''">
+            AND t.ship_party_name like concat('%',#{header.shipPartyName},'%')
+        </if>
+        <if test="header.salesOrder != null and header.salesOrder != ''">
+            AND t.sales_order like concat('%',#{header.salesOrder},'%')
+        </if>
+        <choose>
+            <when test="header.plant != null and header.plant != ''">
+                AND t.plant like concat('%',#{header.plant},'%')
+            </when>
+            <otherwise>
+                AND t.plant  in
+                <foreach collection="header.plants" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </otherwise>
+        </choose>
+        order by create_time desc
+    </select>
+    <select id="selectHeaderByScanDn" resultType="com.neefull.fsp.web.sms.entity.Header">
+        select  t.* from sms_header t where delivery in
+            ((select delivery from sms_scan where box_code in
+                (select distinct box_code from sms_scan where delivery = #{dn} and mat_code != '000000')))
+    </select>
+    <select id="queryHeaderDetailByDelivery" resultMap="headerDetail">
+        select h.id h_id,
+               h.sold_party,
+               h.ship_party,
+               h.plant h_plant,
+               h.error_message error_msg,
+               d.id,
+               d.material,
+               d.batch,
+               d.quantity,
+               d.error_message
+        from sms_header h inner join sms_detail d on h.delivery = d.delivery where h.delivery = #{dn}
+    </select>
+
+    <select id="queryScanDn" resultType="com.neefull.fsp.web.sms.entity.vo.HeaderVo">
+        select * from sms_header where plant = #{plant} and status in (#{status1},#{status2}) and delivery = #{delivery}
+    </select>
+    <select id="selecHeaderList" resultType="com.neefull.fsp.web.sms.entity.Header">
+        select t.delivery,t.status from sms_header t  where t.plant  in
+        <foreach collection="plants" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="queryCompareList" resultType="com.neefull.fsp.web.sms.entity.Header">
+        select * from sms_header t where status = '2'
+        <if test="singleHeader.delivery != null and singleHeader.delivery != ''">
+            AND t.delivery like concat('%',#{singleHeader.delivery},'%')
+        </if>
+        <if test="singleHeader.soldParty != null and singleHeader.soldParty != ''">
+            AND t.sold_party like concat('%',#{singleHeader.soldParty},'%')
+        </if>
+        <if test="singleHeader.soldPartyName != null and singleHeader.soldPartyName != ''">
+            AND t.sold_party_name like concat('%',#{singleHeader.soldPartyName},'%')
+        </if>
+        <if test="singleHeader.shipParty != null and singleHeader.shipParty != ''">
+            AND t.ship_party like concat('%',#{singleHeader.shipParty},'%')
+        </if>
+        <if test="singleHeader.shipPartyName != null and singleHeader.shipPartyName != ''">
+            AND t.ship_party_name like concat('%',#{singleHeader.shipPartyName},'%')
+        </if>
+        <if test="singleHeader.salesOrder != null and singleHeader.salesOrder != ''">
+            AND t.sales_order like concat('%',#{singleHeader.salesOrder},'%')
+        </if>
+        <choose>
+            <when test="singleHeader.plant != null and singleHeader.plant != ''">
+                AND t.plant like concat('%',#{singleHeader.plant},'%')
+            </when>
+            <otherwise>
+                AND t.plant  in
+                <foreach collection="singleHeader.plants" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </otherwise>
+        </choose>
+        order by create_time desc
+    </select>
+</mapper>

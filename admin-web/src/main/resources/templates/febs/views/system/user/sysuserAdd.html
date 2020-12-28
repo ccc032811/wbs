@@ -12,7 +12,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label febs-form-item-require">用户名：</label>
             <div class="layui-input-block">
-                <input type="text" name="username" minlength="2" maxlength="10" lay-verify="range|username"
+                <input type="text" name="username"  lay-verify="range|username"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -41,9 +41,14 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">部门：</label>
+            <label class="layui-form-label febs-form-item-require">工厂：</label>
             <div class="layui-input-block">
-                <input type="text" name="deptId" id="user-add-dept" class="layui-input">
+                <select name="factoryId"
+                        lay-verify="required"
+                        xm-select-direction="down"
+                        xm-select="factory-add"
+                        xm-select-skin="default">
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -90,12 +95,27 @@
 
         formSelects.render();
 
-        treeSelect.render({
-            elem: $view.find('#user-add-dept'),
-            type: 'get',
-            data: ctx + 'dept/select/tree',
-            placeholder: '请选择',
-            search: false
+        formSelects.config('factory-add', {
+            searchUrl: ctx + 'scan/factory/getFactory',
+            response: {
+                statusCode: 200
+            },
+            beforeSuccess: function (id, url, searchVal, result) {
+                var data = result.data;
+                var tranData = [];
+                for (var i = 0; i < data.length; i++) {
+                    tranData.push({
+                        name: data[i].factoryName,
+                        value: data[i].id
+                    })
+                }
+                result.data = tranData;
+                return result;
+            },
+            error: function (id, url, searchVal, err) {
+                console.error(err);
+                febs.alert.error('获取工厂列表失败');
+            }
         });
 
         formSelects.config('user-add-role', {

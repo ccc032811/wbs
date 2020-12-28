@@ -1,0 +1,194 @@
+<style  type="text/css">
+    #detail-show {
+        padding: 20px 25px 25px 0;
+    }
+
+    #conserve-detail .layui-treeSelect .ztree li a, .ztree li span {
+        margin: 0 0 2px 3px !important;
+    }
+
+    /* 覆盖样式 */
+    .layui-form-item ,.layui-form-item .layui-inline{
+        margin-bottom: 0;
+    }
+    .layui-form-item-rigth{
+        border-right: 1px solid #000;
+    }
+    .layui-col-sm4,.layui-col-sm6,.layui-col-sm8,.layui-col-sm12 {
+        border-left: 1px solid #000;
+        border-top: 1px solid #000;
+    }
+    .layui-input-block{
+        border-left: 1px solid #000;
+    }
+    .layui-col-sm4,.layui-col-sm6,.layui-col-sm8 {
+        height: 39px;
+    }
+    .layui-form-label {
+        text-align: center;
+    }
+    .layui-form-item-rigth,.layui-inline,.layui-form-label,.layui-input-block,.layui-input{
+        height: 55px;
+    }
+
+</style>
+
+<div class="layui-fluid" id="scan"  lay-title="扫描信息详情">
+
+    <form class="layui-form " action="" lay-filter="scan-detail-show">
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">DN号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="delivery" autocomplete="off" class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">箱名</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="boxName" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">箱码</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="boxCode" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">物料号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="matCode"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">物料名</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="matName"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">批次</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="batch"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">条形码</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" id="serialNumber"  autocomplete="off" class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">SN码</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="snCode"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">数量</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="quantity" id="quantity" autocomplete="off" class="layui-input" >
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">有效期</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" id="expiryDate"  autocomplete="off" class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">工厂</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="plant"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">单位</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="unit" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item"><div style="border-top: 1px solid #000;margin-top: 1px"></div></div>
+        <div class="layui-form-item febs-hide">
+            <button class="layui-btn" lay-submit="" lay-filter="scan-submit" id="submit"></button>
+            <div style="float: right">
+                <input style="border:0;" name="id" type="hidden">
+            </div>
+        </div>
+    </form>
+    <div class="layui-form-item" >
+        <div  style="margin-top: 35px;text-align: center;" >
+            <button class="layui-btn" id="submit-control" >修改</button>
+        </div>
+    </div>
+</div>
+
+
+<script data-th-inline="javascript">
+    layui.use([ 'form','febs'], function () {
+        var $ = layui.$,
+            form = layui.form,
+            febs = layui.febs,
+            scan = [[${scan}]],
+            edit = [[${edit}]],
+            $view = $('#scan');
+
+
+        form.render();
+        initConserveValue();
+
+        if(edit==='2'){
+            $('#quantity').attr("readonly","readonly");
+            $('#submit-control').attr("style","display:none;");
+        }
+
+        function initConserveValue() {
+            form.val("scan-detail-show", {
+                "id":scan.id,
+                "delivery": scan.delivery,
+                "boxName": scan.boxName,
+                "boxCode": scan.boxCode,
+                "matCode": scan.matCode,
+                "matName": scan.matName,
+                "batch": scan.batch,
+                "serialNumber": scan.serialNumber,
+                "snCode": scan.snCode,
+                "quantity": scan.quantity,
+                "expiryDate": scan.expiryDate,
+                "plant": scan.plant,
+                "unit": scan.unit
+            });
+        }
+
+        $view.on('click', '#submit-control', function () {
+            $view.find('#submit').trigger('click');
+        });
+
+        form.on('submit(scan-submit)', function (data) {
+            if (febs.nativeEqual(data.field, scan)) {
+                febs.alert.warn('数据未作任何修改！');
+                return false;
+            }
+            $('#submit-control').attr("style","display:none;");
+            var date = [data.field];
+            var result=JSON.stringify(date);
+            febs.post(ctx + 'scan/smsScan/editScanDetail',{scans:result}, function () {
+                febs.alert.success('数据修改成功');
+
+            });
+
+
+        })
+
+
+
+    });
+</script>

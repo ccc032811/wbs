@@ -95,9 +95,9 @@
 <!--头部工具栏-->
 <script type="text/html" id="toolbarCheck">
     <div class="layui-btn-container">
-        <!--<button class="layui-btn layui-btn-sm" lay-event="addSysUser">添加用户</button>-->
+        <button class="layui-btn layui-btn-sm" lay-event="addSysUser">添加用户</button>
         <button class="layui-btn layui-btn-sm" lay-event="passwordReset">密码重置</button>
-        <button class="layui-btn layui-btn-sm" lay-event="exportExcel">导出Excel</button>
+        <!--<button class="layui-btn layui-btn-sm" lay-event="exportExcel">导出Excel</button>-->
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
@@ -219,6 +219,9 @@
                 url: ctx + 'sysUser/list',
                 toolbar: '#toolbarCheck',     //开启头部工具栏
                 defaultToolbar: ['filter','print'],   //显示默认的三个工具，需要哪个写哪个的单词'filter','exports','print'
+                where:{
+                    time:new Date()
+                },
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'username', title: '用户名'},
@@ -257,7 +260,7 @@
                 febs.alert.warn('所选用户包含当前登录用户，无法删除');
                 return;
             }
-            febs.get(ctx + 'user/delete/' + userIds, null, function () {
+            febs.get(ctx + 'sysUser/delete/' + userIds, null, function () {
                 febs.alert.success('删除用户成功');
                 $query.click();
             });

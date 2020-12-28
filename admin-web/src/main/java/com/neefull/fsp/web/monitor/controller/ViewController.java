@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-/**
+/**("monitorView")
  * @author pei.wang
  */
-@Controller("monitorView")
+
+
+@Controller
 @RequestMapping(FebsConstant.VIEW_PREFIX + "monitor")
 public class ViewController {
 
@@ -70,6 +72,14 @@ public class ViewController {
     public String httptrace() {
         return FebsUtil.view("monitor/httpTrace");
     }
+
+
+    @GetMapping("icon")
+    @RequiresPermissions("icons:view")
+    public String icon() {
+        return FebsUtil.view("monitor/icon");
+    }
+
 
     @GetMapping("jvm")
     @RequiresPermissions("jvm:view")

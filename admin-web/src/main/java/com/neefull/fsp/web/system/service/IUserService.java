@@ -31,12 +31,6 @@ public interface IUserService extends IService<User> {
     IPage<User> findUserDetail(User user, QueryRequest request);
 
     /**
-     * 获取所有的使用用户(不包括系统管理员)
-     * @return
-     */
-    List<User> getAllUseUserLst();
-
-    /**
      * 查找用户详细信息--系统用户
      *
      * @param request request
@@ -136,39 +130,8 @@ public interface IUserService extends IService<User> {
      */
     void updateProfile(User user);
 
-    void examineUsers(String[] ids);
-
-    /**
-     * 首页统计图-用户分布情况
-     * @return 用户分布数据
-     */
-    List<Map<String, String>> getUserDistribution();
 
 
 
-    /**查出部门下所有的用户
-     * @param name
-     * @return
-     */
-    List<User> findUserByDepartName(String name);
 
-    /**根据角色id查询所有的用户
-     * @param id
-     * @return
-     */
-    List<User> findUserByRoleId(Integer id);
-
-
-    List<User> getAllUser();
-
-    /**根据名字 查询用户
-     * @param username
-     * @return
-     */
-    User getUserByName(String username);
-
-    /**插入用户
-     * @param typtUser
-     */
-    void insertUser(User typtUser);
 }

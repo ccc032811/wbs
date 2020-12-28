@@ -1,0 +1,175 @@
+<div class="layui-fluid layui-anim febs-anim" id="dn-header" lay-title="DN获取信息查询">
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="dn-header">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">DN号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="delivery" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">售达方代码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="soldParty" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">送达方代码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="shipParty" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">工厂编号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="plant" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 table-action-area">
+                                <div id="conserve-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                    <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="dn-header-query">
+                                        <i class="layui-icon">&#xe848;</i>
+                                    </div>
+                                    <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="dn-header-reset">
+                                        <i class="layui-icon">&#xe79b;</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table lay-filter="dnHeaderTable" lay-data="{id: 'dnHeaderTable'}"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="header-status">
+    <div>
+        {{# if(d.status == '0'){d.status = '未进行扫描'}}
+        <span class="layui-badge febs-tag-red">{{ d.status }}</span>
+        {{# } else if(d.status == '1'){d.status = '扫描已完成'}}
+        <span class="layui-badge febs-tag-magenta">{{ d.status }}</span>
+        {{# } else if(d.status == '2'){d.status = '审核未通过'}}
+        <span class="layui-badge febs-tag-blue" >{{ d.status }}</span>
+        {{# } else if(d.status == '3'){d.status = '审核已通过'}}
+        <span class="layui-badge febs-tag-cyan">{{ d.status }}</span>
+        {{# } else if(d.status == '4'){d.status = '同步已完成'}}
+        <span class="layui-badge febs-tag-green">{{ d.status }}</span>
+        {{# } }}
+    </div>
+</script>
+<script type="text/html" id="header-option">
+
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="header-view">查看</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="header-show">浏览</a>
+    {{# if(d.status == '1'){}}
+    <a class="layui-btn layui-btn-xs " lay-event="header-edit">审核</a>
+    {{# } else if(d.status == '2'){}}
+    <a class="layui-btn layui-btn-xs " lay-event="header-edit">审核</a>
+    {{# } }}
+
+</script>
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['jquery', 'form', 'table', 'febs'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            form = layui.form,
+            table = layui.table,
+            $view = $('#dn-header'),
+            $query = $view.find('#dn-header-query'),
+            $reset = $view.find('#dn-header-reset'),
+            $searchForm = $view.find('form'),
+            tableIns;
+
+        form.render();
+        initTable();
+
+
+        $query.on('click', function () {
+            var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});
+            tableIns.reload({where: params, page: {curr: 1}});
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});
+            tableIns.reload({where: params, page: {curr: 1}});
+        });
+
+        function initTable() {
+            tableIns = febs.table.init({
+                elem: $view.find('table'),
+                id: 'dnHeaderTable',
+                url: ctx + 'scan/smsHeader/queryHeaderList',
+                where:{
+                    time:new Date(),
+                    plants:currentUser.factoryName
+                },
+                cols: [[
+                    {field: 'delivery',align:'center',title: 'DN号',minWidth:150},
+                    {field: 'soldParty',align:'center', title: '售达方代码',minWidth:150},
+                    {field: 'soldPartyName',align:'center', title: '售达方名称',minWidth:150},
+                    {field: 'shipParty',align:'center', title: '送达方代码',minWidth:150},
+                    {field: 'shipPartyName',align:'center', title: '送达方名称',minWidth:150},
+                    {field: 'address',align:'center', title: '送货地址',minWidth:150},
+                    {field: 'salesOrder',align:'center', title: '销售订单号',minWidth:150},
+                    {field: 'status',align:'center', title: '状态',minWidth:100,templet: "#header-status"},
+                    {title: '操作', toolbar: '#header-option',align:'center',width: 180}
+                ]],
+                done:function (res,curr,count) {
+                    $(".layui-table-header .layui-table thead tr th").css("border","1px solid white").css("background-color","#E8E8E8");
+                    $(".layui-table-body .layui-table-col-special .layui-table-cell .layui-btn").css("margin-top","4px").css("float","left");
+                }
+            });
+        }
+
+
+        table.on('tool(dnHeaderTable)', function (obj) {
+            var data = obj.data,
+                layEvent = obj.event;
+            if (layEvent === 'header-show') {
+                febs.modal.open('DN Detail信息', 'sms/detail/' + data.delivery, {
+                    area:  [$(window).width() <= 750 ? '85%' : '75%',$(window).width() <= 750 ? '85%' : '75%']
+                });
+            }
+            if (layEvent === 'header-view') {
+                febs.modal.open('DN Header信息', 'sms/header/' + data.delivery, {
+                    area:  [$(window).width() <= 750 ? '70%' : '60%']
+                });
+            }
+            if(layEvent === 'header-edit'){
+                edit(data.delivery)
+            }
+
+        });
+
+
+        function edit(dn) {
+            febs.get(ctx + 'scan/smsScan/auditDn/' + dn, new Date(), function (res) {
+                if(res.code === 200){
+                    febs.alert.success('审核成功');
+                    $query.click();
+                }
+            });
+        }
+
+
+        function getQueryParams() {
+            return {
+                delivery: $searchForm.find('input[name="delivery"]').val().trim(),
+                plant: $searchForm.find('input[name="plant"]').val().trim(),
+                soldParty: $searchForm.find('input[name="soldParty"]').val().trim(),
+                shipParty: $searchForm.find('input[name="shipParty"]').val().trim(),
+                invalidate_ie_cache: new Date()
+            };
+        }
+    })
+</script>

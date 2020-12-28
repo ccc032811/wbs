@@ -5,9 +5,9 @@
     <delete id="deleteRoleMenus" parameterType="string">
         DELETE
         FROM
-        qff_role_menu
+            sms_role_menu
         WHERE
-        menu_id IN ( SELECT m.menu_id FROM ( SELECT menu_id FROM qff_menu WHERE FIND_IN_SET( menu_id, findMenuChildren (
+        menu_id IN ( SELECT m.menu_id FROM ( SELECT menu_id FROM sms_menu WHERE FIND_IN_SET( menu_id, findMenuChildren (
         #{menuId} ) ) > 0 ) m )
     </delete>
 </mapper>

@@ -10,19 +10,18 @@ import com.neefull.fsp.web.common.utils.CaptchaUtil;
 import com.neefull.fsp.web.monitor.entity.LoginLog;
 import com.neefull.fsp.web.monitor.service.ILoginLogService;
 import com.neefull.fsp.web.system.entity.User;
+import com.neefull.fsp.web.system.entity.UserLogin;
 import com.neefull.fsp.web.system.service.IUserService;
 import com.wf.captcha.Captcha;
 import org.apache.shiro.authc.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +67,30 @@ public class LoginController extends BaseController {
         }
     }
 
+    @PostMapping("/appLogin")
+    public FebsResponse login(User user, HttpServletRequest request) throws FebsException {
+        String username = user.getUsername();
+        String password = user.getPassword();
+        User reUser = userService.findByName(username);
+        password = EncryptUtil.encrypt(password, FebsConstant.AES_KEY);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        try {
+            super.login(token);
+            // 保存登录日志
+            LoginLog loginLog = new LoginLog();
+            loginLog.setUsername(username);
+            loginLog.setSystemBrowserInfo();
+            this.loginLogService.saveLoginLog(loginLog);
+            return new FebsResponse().success().data(reUser);
+        } catch (UnknownAccountException | IncorrectCredentialsException | LockedAccountException e) {
+            e.printStackTrace();
+            throw new FebsException(e.getMessage());
+        } catch (AuthenticationException e) {
+            throw new FebsException("认证失败！");
+        }
+    }
+
+
     @PostMapping("regist")
     public FebsResponse regist(
             @NotBlank(message = "{required}") String username,
@@ -99,9 +122,6 @@ public class LoginController extends BaseController {
         param.setUsername(username);
         List<Map<String, Object>> lastSevenUserVisitCount = this.loginLogService.findLastSevenDaysVisitCount(param);
         data.put("lastSevenUserVisitCount", lastSevenUserVisitCount);
-        //获取用户分布情况
-        List<Map<String,String>> userCountMap = userService.getUserDistribution();
-        data.put("userDistributionCount", userCountMap);
         return new FebsResponse().success().data(data);
     }
 

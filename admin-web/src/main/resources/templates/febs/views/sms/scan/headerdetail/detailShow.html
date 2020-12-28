@@ -1,0 +1,243 @@
+<style  type="text/css">
+    #detail-show {
+        padding: 20px 25px 25px 0;
+    }
+
+    #conserve-detail .layui-treeSelect .ztree li a, .ztree li span {
+        margin: 0 0 2px 3px !important;
+    }
+
+    /* 覆盖样式 */
+    .layui-form-item ,.layui-form-item .layui-inline{
+        margin-bottom: 0;
+    }
+    .layui-form-item-rigth{
+        border-right: 1px solid #000;
+    }
+    .layui-col-sm4,.layui-col-sm6,.layui-col-sm8,.layui-col-sm12 {
+        border-left: 1px solid #000;
+        border-top: 1px solid #000;
+    }
+    .layui-input-block{
+        border-left: 1px solid #000;
+    }
+    .layui-col-sm4,.layui-col-sm6,.layui-col-sm8 {
+        height: 39px;
+    }
+    .layui-form-label {
+        text-align: center;
+    }
+    .layui-form-item-rigth,.layui-inline,.layui-form-label,.layui-input-block,.layui-input{
+        height: 55px;
+    }
+
+</style>
+
+<div class="layui-fluid"  lay-title="DN Detail具体信息">
+
+    <form class="layui-form " action="" lay-filter="dn-detail-show" id="dn-detail-show" >
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">药厂DO号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="rocheDelivery" autocomplete="off" class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">DN号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="delivery" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">DN行项目号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="deliveryItem" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">药厂DO行项目号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="rocheDeliveryItem"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">药厂DO行数</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="rocheDeliveryItemCode"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">物料代码</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="material"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">药厂物料代码</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" id="rocheMaterial"  autocomplete="off" class="layui-input " readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">物料描述</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="materialDescription"  autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">物料英文描述</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="materialDescriptionEn" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">药厂物料描述</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="rocheMaterialDescription" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">plant</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="plant" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">sap批号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="batch" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">药厂批次号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="rocheBatch" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">序列号</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="serialNumber" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">数量</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="quantity" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">单位</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="uom" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">药厂单位</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="rocheUom" autocomplete="off" class="layui-input" readonly="readonly" >
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">审核时间</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="expiryDate" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">是否批次管理</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="ifBatchManagement" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">是否序列号管理</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="ifSerialNumberManagement" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">是否有效期管理</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="ifExpiryDateManagement" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm6">
+                <label class="layui-form-label">存储条件</label>
+                <div class="layui-input-block input-six">
+                    <input type="text" name="saveMode" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm6">
+                <label class="layui-form-label">存储条件描述</label>
+                <div class="layui-input-block input-six">
+                    <input type="text" name="saveModeDescription" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item"><div style="border-top: 1px solid #000;margin-top: 1px"></div></div>
+    </form>
+
+</div>
+
+
+<script data-th-inline="javascript">
+    layui.use([ 'form','layer','jquery'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            detail = [[${detail}]];
+
+
+        form.render();
+        initConserveValue();
+
+
+        function initConserveValue() {
+            form.val("dn-detail-show", {
+                "id":detail.id,
+                "rocheDelivery": detail.rocheDelivery,
+                "delivery": detail.delivery,
+                "deliveryItem": detail.deliveryItem,
+                "rocheDeliveryItem": detail.rocheDeliveryItem,
+                "rocheDeliveryItemCode": detail.rocheDeliveryItemCode,
+                "material": detail.material,
+                "rocheMaterial": detail.rocheMaterial,
+                "materialDescription": detail.materialDescription,
+                "materialDescriptionEn": detail.materialDescriptionEn,
+                "rocheMaterialDescription": detail.rocheMaterialDescription,
+                "plant": detail.plant,
+                "batch": detail.batch,
+                "rocheBatch":detail.rocheBatch,
+                "serialNumber": detail.serialNumber,
+                "quantity": detail.quantity,
+                "uom": detail.uom,
+                "rocheUom": detail.rocheUom,
+                "expiryDate": detail.expiryDate,
+                "ifBatchManagement": detail.ifBatchManagement,
+                "ifSerialNumberManagement": detail.ifSerialNumberManagement,
+                "ifExpiryDateManagement": detail.ifExpiryDateManagement,
+                "saveMode": detail.saveMode,
+                "saveModeDescription": detail.saveModeDescription,
+                "errorMessage": detail.errorMessage
+            });
+        }
+
+
+
+    });
+</script>

@@ -1,0 +1,106 @@
+<div class="layui-fluid layui-anim febs-anim" id="tms" lay-title="对接TMS记录">
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="tms">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">DN号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="delivery" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">工厂编号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="plant" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 table-action-area">
+                                <div id="conserve-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                    <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="tms-query">
+                                        <i class="layui-icon">&#xe848;</i>
+                                    </div>
+                                    <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="tms-reset">
+                                        <i class="layui-icon">&#xe79b;</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table lay-filter="tmsTable" lay-data="{id: 'tmsTable'}"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['jquery', 'form', 'table', 'febs'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            form = layui.form,
+            table = layui.table,
+            $view = $('#tms'),
+            $query = $view.find('#tms-query'),
+            $reset = $view.find('#tms-reset'),
+            $searchForm = $view.find('form'),
+            tableIns;
+
+        form.render();
+        initTable();
+
+
+        table.on('sort(tmsTable)', function (obj) {
+            tableIns.reload({
+                where: $.extend(getQueryParams())
+            });
+        });
+
+        $query.on('click', function () {
+            var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});
+            tableIns.reload({where: params, page: {curr: 1}});
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});
+            tableIns.reload({where: params, page: {curr: 1}});
+        });
+
+
+        function initTable() {
+            tableIns = febs.table.init({
+                elem: $view.find('table'),
+                id: 'scanLogTable',
+                url: ctx + 'tms/queryTmsList',
+                where:{
+                    time:new Date(),
+                    plants:currentUser.factoryName
+                },
+                cols: [[
+                    {field: 'delivery', title: 'DN号',align:'center',width: 150},
+                    {field: 'data',align:'center', title: 'DN返回结果',minWidth:1000},
+                    {field: 'plant',align:'center', title: '工厂',width:100},
+                    {field: 'createTime',align:'center', title: '入库时间',width: 200}
+                ]],
+                done:function (res,curr,count) {
+                    $(".layui-table-header .layui-table thead tr th").css("border","1px solid white").css("background-color","#E8E8E8");
+                    $(".layui-table-body .layui-table-col-special .layui-table-cell .layui-btn").css("float","left").css("margin-top","4px");
+                }
+            });
+        }
+
+        function getQueryParams() {
+            return {
+                delivery: $searchForm.find('input[name="delivery"]').val().trim(),
+                plant: $searchForm.find('input[name="plant"]').val().trim(),
+                invalidate_ie_cache: new Date()
+            };
+        }
+    })
+</script>

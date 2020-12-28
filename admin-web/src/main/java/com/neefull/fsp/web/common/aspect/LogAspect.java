@@ -1,5 +1,6 @@
 package com.neefull.fsp.web.common.aspect;
 
+import com.alibaba.fastjson.JSON;
 import com.neefull.fsp.web.common.properties.FebsProperties;
 import com.neefull.fsp.web.common.utils.HttpContextUtil;
 import com.neefull.fsp.web.common.utils.IPUtil;
@@ -45,8 +46,6 @@ public class LogAspect {
         // 执行方法
         result = point.proceed();
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-        // 设置 IP地址
-        String ip = IPUtil.getIpAddr(request);
         // 执行时长(毫秒)
         long time = System.currentTimeMillis() - beginTime;
         if (febsProperties.isOpenAopLog()) {
@@ -55,7 +54,7 @@ public class LogAspect {
             Log log = new Log();
             if (user != null)
                 log.setUsername(user.getUsername());
-            log.setIp(ip);
+            log.setResponse(JSON.toJSONString(result));
             log.setTime(time);
             logService.saveLog(point, log);
         }

@@ -16,7 +16,7 @@ import java.util.Date;
  * @author pei.wang
  */
 @Data
-@TableName("qff_log")
+@TableName("sms_log")
 @Excel("系统日志表")
 public class Log implements Serializable {
 
@@ -32,57 +32,39 @@ public class Log implements Serializable {
      * 操作用户
      */
     @TableField("USERNAME")
-    @ExcelField(value = "操作用户")
     private String username;
 
     /**
      * 操作内容
      */
     @TableField("OPERATION")
-    @ExcelField(value = "操作内容")
     private String operation;
 
     /**
      * 耗时
      */
     @TableField("TIME")
-    @ExcelField(value = "耗时（毫秒）")
     private Long time;
 
-    /**
-     * 操作方法
-     */
-    @TableField("METHOD")
-    @ExcelField(value = "操作方法")
-    private String method;
 
     /**
      * 方法参数
      */
     @TableField("PARAMS")
-    @ExcelField(value = "方法参数")
     private String params;
 
     /**
      * 操作者IP
      */
-    @TableField("IP")
-    @ExcelField(value = "操作者IP")
-    private String ip;
+    @TableField("RESPONSE")
+    private String response;
 
     /**
      * 创建时间
      */
     @TableField("CREATE_TIME")
-    @ExcelField(value = "操作时间", writeConverter = TimeConverter.class)
     private Date createTime;
 
-    /**
-     * 操作地点
-     */
-    @TableField("LOCATION")
-    @ExcelField(value = "操作地点")
-    private String location;
 
     private transient String createTimeFrom;
     private transient String createTimeTo;
@@ -120,14 +102,6 @@ public class Log implements Serializable {
         this.time = time;
     }
 
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
     public String getParams() {
         return params;
     }
@@ -136,12 +110,12 @@ public class Log implements Serializable {
         this.params = params;
     }
 
-    public String getIp() {
-        return ip;
+    public String getResponse() {
+        return response;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setResponse(String response) {
+        this.response = response;
     }
 
     public Date getCreateTime() {
@@ -150,14 +124,6 @@ public class Log implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public String getCreateTimeFrom() {

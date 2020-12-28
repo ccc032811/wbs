@@ -18,11 +18,11 @@
         SELECT
         m.perms
         FROM
-        qff_role r
-        LEFT JOIN qff_user_role ur ON (r.role_id = ur.role_id)
-        LEFT JOIN qff_user u ON (u.user_id = ur.user_id)
-        LEFT JOIN qff_role_menu rm ON (rm.role_id = r.role_id)
-        LEFT JOIN qff_menu m ON (m.menu_id = rm.menu_id)
+            sms_role r
+        LEFT JOIN sms_user_role ur ON (r.role_id = ur.role_id)
+        LEFT JOIN sms_user u ON (u.user_id = ur.user_id)
+        LEFT JOIN sms_role_menu rm ON (rm.role_id = r.role_id)
+        LEFT JOIN sms_menu m ON (m.menu_id = rm.menu_id)
         WHERE
         u.username = #{username}
         AND m.perms is not null
@@ -33,17 +33,17 @@
         SELECT
         m.*
         FROM
-        qff_menu m
+            sms_menu m
         WHERE
         m.type &lt;&gt; 1
         AND m.MENU_ID IN (
         SELECT DISTINCT
         rm.menu_id
         FROM
-        qff_role_menu rm
-        LEFT JOIN qff_role r ON (rm.role_id = r.role_id)
-        LEFT JOIN qff_user_role ur ON (ur.role_id = r.role_id)
-        LEFT JOIN qff_user u ON (u.user_id = ur.user_id)
+            sms_role_menu rm
+        LEFT JOIN sms_role r ON (rm.role_id = r.role_id)
+        LEFT JOIN sms_user_role ur ON (ur.role_id = r.role_id)
+        LEFT JOIN sms_user u ON (u.user_id = ur.user_id)
         WHERE
         u.username = #{username}
         )
@@ -54,11 +54,11 @@
         SELECT
         m.perms
         FROM
-            qff_role r
-        LEFT JOIN qff_user_role ur ON (r.role_id = ur.role_id)
-        LEFT JOIN qff_user u ON (u.user_id = ur.user_id)
-        LEFT JOIN qff_role_menu rm ON (rm.role_id = r.role_id)
-        LEFT JOIN qff_menu m ON (m.menu_id = rm.menu_id)
+            sms_role r
+        LEFT JOIN sms_user_role ur ON (r.role_id = ur.role_id)
+        LEFT JOIN sms_user u ON (u.user_id = ur.user_id)
+        LEFT JOIN sms_role_menu rm ON (rm.role_id = r.role_id)
+        LEFT JOIN sms_menu m ON (m.menu_id = rm.menu_id)
         WHERE
             u.username = #{userName}
           AND m.perms is not null
@@ -69,9 +69,9 @@
     <delete id="deleteMenus" parameterType="string">
         DELETE
         FROM
-        qff_menu
+            sms_menu
         WHERE
-        menu_id IN ( SELECT m.menu_id FROM ( SELECT menu_id FROM qff_menu WHERE FIND_IN_SET( menu_id, findMenuChildren (
+        menu_id IN ( SELECT m.menu_id FROM ( SELECT menu_id FROM sms_menu WHERE FIND_IN_SET( menu_id, findMenuChildren (
         #{menuId} ) ) > 0 ) m )
     </delete>
 </mapper>

@@ -35,27 +35,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     private IUserRoleService userRoleService;
     @Autowired
+    private IFactoryService factoryService;
+    @Autowired
     private ShiroRealm shiroRealm;
-
-    @DS("typt")
-    @Override
-    public List<User> getAllUser(){
-        return this.baseMapper.getAllUser();
-    }
-
-    @Override
-    public User getUserByName(String username) {
-        return this.baseMapper.getUserByName(username);
-    }
-
-    @Override
-    public void insertUser(User typtUser) {
-        this.baseMapper.saveReturnPrimaryKey(typtUser);
-    }
 
     @Override
     public User findByName(String username) {
-        return this.baseMapper.findByName(username);
+        User user = this.baseMapper.findByName(username);
+        List<Factory> factoryList = factoryService.getFactoryByIds(user);
+        List<String> nameList = new ArrayList<>();
+        for (Factory factory : factoryList) {
+            nameList.add(factory.getFactoryName());
+        }
+        user.setFactoryName(StringUtils.join(nameList.toArray(),","));
+        return user;
     }
 
     @Override
@@ -65,14 +58,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return this.baseMapper.findUserDetailPage(page, user);
     }
 
-    /**
-     * 获取所有的使用用户(不包括系统管理员)
-     * @return
-     */
-    @Override
-    public List<User> getAllUseUserLst() {
-        return this.baseMapper.getAllUseUserLst();
-    }
 
     @Override
     public IPage<User> findSysUserDetail(User user, QueryRequest request) {
@@ -114,7 +99,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setTheme(User.THEME_BLACK);
         user.setIsTab(User.TAB_OPEN);
         user.setPassword(EncryptUtil.encrypt(User.DEFAULT_PASSWORD,FebsConstant.AES_KEY));
-        user.setUserType(User.USERTYPE_SYSTEM);
         save(user);
         // 保存用户角色
         String[] roles = user.getRoleId().split(StringPool.COMMA);
@@ -218,45 +202,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         updateById(user);
     }
 
-    @Override
-    @Transactional
-    public void examineUsers(String[] ids) {
-        LambdaUpdateWrapper<User> lambdaQueryWrapper = new LambdaUpdateWrapper<>();
-        User currentUser = FebsUtil.getCurrentUser();
-        User user = new User();
 
-         for(String id:ids)
-         {
-             long lid = Long.valueOf(id);
-             this.baseMapper.updateUserAuthStatus(lid, User.AUTH_STATUS_SUCCESS);
-             //再去t_auth_freelancer表和t_auth_corp表更新实名状态
-             user = this.baseMapper.selectById(lid);
-
-         }
-    }
-
-    /**
-     * 首页统计图-用户分布情况
-     * @return 用户分布数据
-     */
-    @Override
-    public List<Map<String, String>> getUserDistribution() {
-        return this.baseMapper.getUserDistribution();
-    }
-
-
-
-    @Override
-    public List<User> findUserByDepartName(String name) {
-        List<User> user = this.baseMapper.findUserByDepartName(name);
-        return user;
-    }
-
-    @Override
-    public List<User> findUserByRoleId(Integer id) {
-        List<User> user = this.baseMapper.findUserByRoleId(id);
-        return user;
-    }
 
     private void setUserRoles(User user, String[] roles) {
         List<UserRole> userRoles = new ArrayList<>();
@@ -269,27 +215,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         userRoleService.saveBatch(userRoles);
     }
 
-    /**
-     * 创建用户信息并返回带主键的实体
-     * @return
-     */
-    private User createUserInfo(String userName, String email, String mobile, String userType){
-        User user = new User();
-        user.setUsername(userName);
-        user.setPassword(EncryptUtil.encrypt(User.DEFAULT_PASSWORD,FebsConstant.AES_KEY));
-        user.setDeptId(0L);
-        user.setEmail(email);
-        user.setMobile(mobile);
-        user.setStatus(User.STATUS_VALID);
-        user.setSex(User.SEX_UNKNOW);
-        user.setIsTab(User.TAB_OPEN);
-        user.setTheme(User.THEME_BLACK);
-        user.setAvatar(User.DEFAULT_AVATAR);
-        user.setUserType(userType);
-        user.setAuthStatus(User.AUTH_STATUS_DEFAULT);
-        user.setCardStatus(User.CARD_STATUS_DEFAULT);
-        //新增并返回id
-        this.baseMapper.saveReturnPrimaryKey(user);
-        return user;
-    }
+
 }

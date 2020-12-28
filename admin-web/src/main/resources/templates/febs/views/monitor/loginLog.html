@@ -89,21 +89,11 @@
                         });
                     }
                 }
-                if (name === 'export') {
-                    var params = $.extend(getQueryParams(), {field: sortObject.field, order: sortObject.type});
-                    params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
-                    params.pageNum = $view.find(".layui-laypage-em").next().html();
-                    febs.download(ctx + 'loginLog/excel', params, '登录日志表.xlsx');
-                }
             },
             options: [{
                 name: 'delete',
                 title: '删除日志',
                 perms: 'loginlog:delete'
-            }, {
-                name: 'export',
-                title: '导出Excel',
-                perms: 'loginlog:export'
             }]
         });
 
@@ -146,13 +136,13 @@
                 url: ctx + 'loginLog/list',
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'username', title: '登录用户'},
-                    {field: 'ip', title: 'IP地址'},
-                    {field: 'location', title: '登录地点', minWidth: 180},
-                    {field: 'loginTime', title: '登录时间', minWidth: 180, sort: true},
-                    {field: 'system', title: '登录系统'},
-                    {field: 'browser', title: '浏览器'},
-                    {title: '操作', toolbar: '#login-log-option'}
+                    {field: 'username', title: '登录用户', minWidth: 180,align:'center'},
+                    {field: 'ip', title: 'IP地址', minWidth: 180,align:'center'},
+                    {field: 'location', title: '登录地点', minWidth: 180,align:'center'},
+                    {field: 'loginTime', title: '登录时间', minWidth: 180, sort: true,align:'center'},
+                    {field: 'system', title: '登录系统', minWidth: 180,align:'center'},
+                    {field: 'browser', title: '浏览器', minWidth: 180,align:'center'},
+                    {title: '操作', toolbar: '#login-log-option',align:'center'}
                 ]]
             });
         }

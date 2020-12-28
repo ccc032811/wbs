@@ -21,48 +21,33 @@ import java.util.Date;
  * @author pei.wang
  */
 @Data
-@TableName("qff_user")
+@TableName("sms_user")
 @Excel("用户信息表")
 public class User implements Serializable {
 
     private static final long serialVersionUID = -4352868070794165001L;
 
-    // 用户状态：新注册
+//    // 用户状态：新注册
     public static final String STATUS_VALID = "1";
-    // 用户状态：审核通过
-    public static final String STATUS_AUTH = "2";
-    // 用户状态：锁定
+//    // 用户状态：锁定
     public static final String STATUS_LOCK = "0";
-    // 默认头像
+//    // 默认头像
     public static final String DEFAULT_AVATAR = "default.jpg";
-    // 默认密码
+//    // 默认密码
     public static final String DEFAULT_PASSWORD = "nifu@123";
-    // 性别男
+//    // 性别男
     public static final String SEX_MALE = "0";
-    // 性别女
+//    // 性别女
     public static final String SEX_FEMALE = "1";
-    // 性别保密
+//    // 性别保密
     public static final String SEX_UNKNOW = "2";
-    // 黑色主题
+//    // 黑色主题
     public static final String THEME_BLACK = "black";
-    // 白色主题
+//    // 白色主题
     public static final String THEME_WHITE = "white";
-    // TAB开启
+//    // TAB开启
     public static final String TAB_OPEN = "1";
-    // TAB关闭
-    public static final String TAB_CLOSE = "0";
-    //用户类型：0-企业用户
-    public static final String USERTYPE_CORP = "0";
-    //用户类型：1-自由职业者
-    public static final String USERTYPE_FREELANCER = "1";
-    //用户类型：2-系统用户
-    public static final String USERTYPE_SYSTEM = "2";
-    //实名认证状态：2-认证成功
-    public static final String AUTH_STATUS_SUCCESS = "2";
-    //实名认证状态：0-未实名
-    public static final String AUTH_STATUS_DEFAULT = "0";
-    //是否绑定结算卡 0 未绑定
-    public static final String CARD_STATUS_DEFAULT = "0";
+
 
 
     /**
@@ -75,7 +60,6 @@ public class User implements Serializable {
      * 用户名
      */
     @TableField("USERNAME")
-    @Size(min = 4, max = 10, message = "{range}")
     @ExcelField(value = "用户名")
     private String username;
 
@@ -86,10 +70,13 @@ public class User implements Serializable {
     private String password;
 
     /**
-     * 部门 ID
+     * 工厂 ID
      */
-    @TableField("DEPT_ID")
-    private Long deptId;
+    @TableField("FACTORY_ID")
+    private String factoryId;
+
+    @TableField(exist = false)
+    private String factoryName;
 
     /**
      * 邮箱
@@ -172,11 +159,6 @@ public class User implements Serializable {
     @ExcelField(value = "个人描述")
     private String description;
 
-    /**
-     * 部门名称
-     */
-    @TableField(exist = false)
-    private String deptName;
 
     @TableField(exist = false)
     private String createTimeFrom;
@@ -193,14 +175,7 @@ public class User implements Serializable {
      */
     @TableField(exist = false)
     private String roleName;
-    @ExcelField(value = "用户类型"  , writeConverterExp = "0=企业用户,1=自由职业者")
-    @TableField("USER_TYPE")
-    private String userType;
-    @ExcelField(value = "用户实名状态"  , writeConverterExp = "0=未实名,1=审核中,2=已实名,-1=审核失败")
-    @TableField("AUTH_STATUS")
-    private String authStatus;
-    @TableField("CARD_STATUS")
-    private String cardStatus;
+
 
 
 

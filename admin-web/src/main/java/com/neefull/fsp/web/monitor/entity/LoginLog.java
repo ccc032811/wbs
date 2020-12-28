@@ -21,7 +21,7 @@ import java.util.Date;
  */
 @Slf4j
 @Data
-@TableName("qff_login_log")
+@TableName("sms_login_log")
 @Excel("登录日志")
 public class LoginLog implements Serializable {
 
@@ -36,39 +36,33 @@ public class LoginLog implements Serializable {
      * 登录用户
      */
     @TableField("USERNAME")
-    @ExcelField("登录用户")
     private String username;
 
     /**
      * 登录时间
      */
     @TableField("LOGIN_TIME")
-    @ExcelField("登录时间")
     private Date loginTime;
 
     /**
      * 登录地点
      */
     @TableField("LOCATION")
-    @ExcelField(value = "登录地点", writeConverter = TimeConverter.class)
     private String location;
     /**
      * 登录 IP
      */
     @TableField("IP")
-    @ExcelField("登录IP")
     private String ip;
     /**
      * 操作系统
      */
     @TableField("`SYSTEM`")
-    @ExcelField("操作系统")
     private String system;
     /**
      * 登录浏览器
      */
     @TableField("BROWSER")
-    @ExcelField("登录浏览器")
     private String browser;
 
     private transient String loginTimeFrom;

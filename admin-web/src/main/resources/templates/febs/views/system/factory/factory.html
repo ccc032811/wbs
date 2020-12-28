@@ -1,0 +1,182 @@
+<div class="layui-fluid layui-anim febs-anim" id="febs-factory" lay-title="工厂管理">
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="factory-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">工厂名称</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="factoryName" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">工厂代码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="factoryCode" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">状态</label>
+                                        <div class="layui-input-inline">
+                                            <select name="status">
+                                                <option value=""></option>
+                                                <option value="1">有效</option>
+                                                <option value="2">禁用</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="factory-query">
+                                    <i class="layui-icon">&#xe848;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="factory-reset">
+                                    <i class="layui-icon">&#xe79b;</i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table lay-filter="factoryTable" lay-data="{id: 'factoryTable'}"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="factory-status">
+    {{# if(d.status == '1'){d.status = '可用'}}
+    <span class="layui-badge febs-tag-green">{{ d.status }}</span>
+    {{# } else if(d.status == '2'){d.status = '禁用'}}
+    <span class="layui-badge febs-tag-volcano">{{ d.status }}</span>
+    {{# } }}
+</script>
+
+<script type="text/html" id="factory-option">
+    <a lay-event="edit"  shiro:hasPermission="factory:edit"><i
+            class="layui-icon febs-edit-area febs-blue">&#xe7a4;</i></a>
+    <a lay-event="del"  shiro:hasPermission="factory:del"><i
+            class="layui-icon febs-edit-area febs-red">&#xe7f9;</i></a>
+</script>
+<!--头部工具栏-->
+<script type="text/html" id="toolbarCheck">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addFactory" shiro:hasPermission="factory:add">添加工厂</button>
+    </div>
+</script>
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['dropdown', 'jquery', 'laydate', 'form', 'table', 'febs'], function () {
+        var $ = layui.jquery,
+            laydate = layui.laydate,
+            febs = layui.febs,
+            form = layui.form,
+            table = layui.table,
+            $view = $('#febs-factory'),
+            $query = $view.find('#factory-query'),
+            $reset = $view.find('#factory-reset'),
+            $searchForm = $view.find('form'),
+            tableIns;
+
+        form.render();
+
+        initTable();
+
+
+
+        table.on('tool(factoryTable)', function (obj) {
+            var data = obj.data,
+                layEvent = obj.event;
+            if (layEvent === 'edit') {
+                febs.modal.open('修改工厂', 'system/factory/factoryUpdate/' + data.id, {
+                    area: $(window).width() <= 750 ? '60%' : '25%',
+                    btn: ['提交', '取消'],
+                    yes: function (index, layero) {
+                        $('#factory-update').find('#submit').trigger('click');
+                    },
+                    btn2: function () {
+                        layer.closeAll();
+                    }
+                });
+            }
+            if (layEvent === 'del') {
+                febs.modal.confirm('删除工厂', '确定删除该工厂？', function () {
+                    deleteFactorys(data.id);
+                });
+            }
+        });
+
+        //监听头工具栏事件
+        table.on('toolbar(factoryTable)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'addFactory':
+                    febs.modal.open('新增工厂', 'system/factory/factoryAdd', {
+                        btn: ['提交', '重置'],
+                        area: $(window).width() <= 750 ? '60%' : '25%',
+                        yes: function (index, layero) {
+                            $('#factory-add').find('#submit').trigger('click');
+                        },
+                        btn2: function () {
+                            $('#factory-add').find('#reset').trigger('click');
+                            return false;
+                        }
+                    });
+                    break;
+            }
+        });
+
+
+        $query.on('click', function () {
+            tableIns.reload({where: getQueryParams()});
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            tableIns.reload({where: getQueryParams()});
+        });
+
+        function initTable() {
+            tableIns = febs.table.init({
+                elem: $view.find('table'),
+                id: 'factoryTable',
+                url: ctx + 'scan/factory/list',
+                toolbar: '#toolbarCheck',
+                defaultToolbar: ['filter','print'],
+                where:{
+                    time:new Date()
+                },
+                cols: [[
+                    {type: 'checkbox'},
+                    {field: 'factoryName', title: '工厂名称',align:'center'},
+                    {field: 'factoryCode', title: '工厂代码', minWidth: 120,align:'center'},
+                    {field: 'buildName', title: '创建人', minWidth: 150,align:'center'},
+                    {field: 'editName', title: '修改人', minWidth: 150,align:'center'},
+                    {field: 'createTime', title: '创建时间', minWidth: 180,align:'center'},
+                    {field: 'updateTime', title: '更新时间', minWidth: 180,align:'center'},
+                    {title: '状态', templet: '#factory-status',align:'center'},
+                    {title: '操作', toolbar: '#factory-option', minWidth: 180,align:'center'}
+                ]]
+            });
+        }
+
+        function getQueryParams() {
+            return {
+                factoryName: $searchForm.find('input[name="factoryName"]').val(),
+                status: $searchForm.find("select[name='status']").val(),
+                factoryCode: $searchForm.find("input[name='factoryCode']").val(),
+                invalidate_ie_cache: new Date()
+            };
+        }
+
+
+        function deleteFactorys(ids) {
+            febs.get(ctx + 'scan/factory/deleteFactory/' + ids, null, function () {
+                febs.alert.success('删除成功');
+                $query.click();
+            });
+        }
+    })
+</script>

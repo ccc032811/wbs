@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neefull.fsp.web.sms.mapper.TmsDataMapper">
+    <select id="queryTmsPage" resultType="com.neefull.fsp.web.sms.entity.TmsData">
+        select * from sms_tms t where 1=1
+        <choose>
+            <when test="tmsData.plant != null and tmsData.plant != ''">
+                AND t.plant like concat('%',#{tmsData.plant},'%')
+            </when>
+            <otherwise>
+                AND t.plant  in
+                <foreach collection="tmsData.plants" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </otherwise>
+        </choose>
+        <if test="tmsData.delivery != null and tmsData.delivery != ''">
+            AND t.delivery like concat('%',#{tmsData.delivery},'%')
+        </if>
+        order by t.create_time desc
+    </select>
+</mapper>

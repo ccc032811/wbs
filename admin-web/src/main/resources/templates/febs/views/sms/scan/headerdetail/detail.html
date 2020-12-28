@@ -1,0 +1,134 @@
+<div class="layui-fluid layui-anim febs-anim" id="dn-detail" lay-title="DN Detail信息查询">
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="dn-detail">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline febs-hide">
+                                        <label class="layui-form-label layui-form-label-sm">DN号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" id="number" name="deliveryNumber" th:value="${delivery}" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">物料代码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="material" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">批次</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="batch" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 table-action-area">
+                                <div id="conserve-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                    <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="dn-detail-query">
+                                        <i class="layui-icon">&#xe848;</i>
+                                    </div>
+                                    <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="dn-detail-reset">
+                                        <i class="layui-icon">&#xe79b;</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table lay-filter="dnDetailTable" lay-data="{id: 'dnDetailTable'}"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="detail-option">
+
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail-view">查看详情</a>
+    {{# if(d.scanQuantity != '0'){}}
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="scan-detail-view">扫描详情</a>
+    {{# } }}
+
+</script>
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['jquery', 'form', 'table', 'febs'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            form = layui.form,
+            table = layui.table,
+            $view = $('#dn-detail'),
+            $query = $view.find('#dn-detail-query'),
+            $reset = $view.find('#dn-detail-reset'),
+            $searchForm = $view.find('form'),
+            tableIns;
+
+        form.render();
+        initTable();
+
+
+        $query.on('click', function () {
+            tableIns.reload({where: getQueryParams()});
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            tableIns.reload({where: getQueryParams()});
+        });
+
+        function initTable() {
+            tableIns = febs.table.init({
+                elem: $view.find('table'),
+                id: 'dnDetailTable',
+                url: ctx + 'scan/smsDetail/queryDetailList',
+                where:{
+                    delivery:document.getElementById("number").value,
+                    time:new Date()
+                },
+                page: false,
+                cols: [[
+                    {field: 'delivery',align:'center',title: 'DN号',minWidth:150},
+                    {field: 'material',align:'center', title: '物料代码',minWidth:150},
+                    {field: 'batch',align:'center', title: '批号',minWidth:150},
+                    {field: 'serialNumber',align:'center', title: '序列号',minWidth:150},
+                    {field: 'materialDescription',align:'center', title: '物料描述',minWidth:200},
+                    {field: 'quantity',align:'center', title: '数量',width:120},
+                    {field: 'scanQuantity',align:'center', title: '已扫数量',width:120},
+                    {title: '操作', toolbar: '#detail-option',align:'center',width: 180}
+                ]],
+                done:function (res,curr,count) {
+                    $(".layui-table-header .layui-table thead tr th").css("border","1px solid white").css("background-color","#E8E8E8");
+                    $(".layui-table-body .layui-table-col-special .layui-table-cell .layui-btn").css("margin-top","4px");
+                }
+            });
+        }
+
+
+        table.on('tool(dnDetailTable)', function (obj) {
+            var data = obj.data,
+                layEvent = obj.event;
+            if (layEvent === 'detail-view') {
+                febs.modal.open('DN Detail信息', 'sms/detailShow/' + data.id, {
+                    area:  [$(window).width() <= 750 ? '70%' : '65%',$(window).width() <= 750 ? '70%' : '65%']
+                });
+            }
+            if (layEvent === 'scan-detail-view') {
+                febs.modal.open('扫描信息', 'sms/getScanDetail/'+data.delivery+"/"+data.material+"/"+ data.batch, {
+                    area:  [$(window).width() <= 750 ? '70%' : '65%',$(window).width() <= 750 ? '40%' : '40%']
+                });
+            }
+        });
+
+        function getQueryParams() {
+            return {
+                delivery: $searchForm.find('input[name="deliveryNumber"]').val().trim(),
+                material: $searchForm.find('input[name="material"]').val().trim(),
+                batch: $searchForm.find('input[name="batch"]').val().trim(),
+                invalidate_ie_cache: new Date()
+            };
+        }
+    })
+</script>

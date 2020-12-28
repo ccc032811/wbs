@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author pei.wang
  */
 @Data
-@TableName("qff_role_menu")
+@TableName("sms_role_menu")
 public class RoleMenu implements Serializable {
 
     private static final long serialVersionUID = -5200596408874170216L;

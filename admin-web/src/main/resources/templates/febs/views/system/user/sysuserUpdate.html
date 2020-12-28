@@ -18,14 +18,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label febs-form-item-require">用户名：</label>
             <div class="layui-input-block">
-                <input type="text" name="username" minlength="4" maxlength="10" data-th-id="${user.userId}"
+                <input type="text" name="username"  data-th-id="${user.userId}"   maxlength="50"
                        lay-verify="range|username" autocomplete="off" class="layui-input" readonly>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">手机：</label>
             <div class="layui-input-block">
-                <input type="tel" name="mobile" lay-verify="phone" autocomplete="off" class="layui-input">
+                <input type="tel" name="mobile" lay-verify="phone" maxlength="50" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -47,10 +47,14 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">部门：</label>
+            <label class="layui-form-label febs-form-item-require">工厂：</label>
             <div class="layui-input-block">
-                <input type="text" name="deptId" id="user-update-dept" lay-filter="user-update-dept"
-                       class="layui-input">
+                <select name="factoryId"
+                        lay-verify="required"
+                        xm-select-direction="down"
+                        xm-select="factory-update"
+                        xm-select-skin="default">
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -100,14 +104,29 @@
 
         formSelects.render();
 
-        treeSelect.render({
-            elem: $view.find('#user-update-dept'),
-            type: 'get',
-            data: ctx + 'dept/select/tree',
-            placeholder: '请选择',
-            search: false,
+        formSelects.config('factory-update', {
+            searchUrl: ctx + 'scan/factory/getFactory',
+            response: {
+                statusCode: 200
+            },
+            beforeSuccess: function (id, url, searchVal, result) {
+                var data = result.data;
+                var tranData = [];
+                for (var i = 0; i < data.length; i++) {
+                    tranData.push({
+                        name: data[i].factoryName,
+                        value: data[i].id
+                    })
+                }
+                result.data = tranData;
+                return result;
+            },
             success: function () {
-                treeSelect.checkNode('user-update-dept', user.deptId);
+                formSelects.value('factory-update', user.factoryId.split(','));
+            },
+            error: function (id, url, searchVal, err) {
+                console.error(err);
+                febs.alert.error('获取工厂列表失败');
             }
         });
 

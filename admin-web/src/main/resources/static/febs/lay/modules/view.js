@@ -240,7 +240,7 @@ layui
                             if (name === 'all') {
                                 tab.delAll();
                             }
-                            if (name === 'other') {
+                            if (name === 'tms') {
                                 tab.delOther();
                             }
                             if (name === 'current') {
@@ -256,7 +256,7 @@ layui
                                 title: '关闭当前选项卡'
                             },
                             {
-                                name: 'other',
+                                name: 'tms',
                                 title: '关闭其他选项卡'
                             },
                             {

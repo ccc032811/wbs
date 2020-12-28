@@ -13,9 +13,9 @@
         SELECT
         r.*
         FROM
-        qff_role r
-        LEFT JOIN qff_user_role ur ON (r.role_id = ur.role_id)
-        LEFT JOIN qff_user u ON (u.user_id = ur.user_id)
+            sms_role r
+        LEFT JOIN sms_user_role ur ON (r.role_id = ur.role_id)
+        LEFT JOIN sms_user u ON (u.user_id = ur.user_id)
         WHERE
         u.username = #{username}
     </select>
@@ -29,8 +29,8 @@
         r.modify_time modifyTime,
         GROUP_CONCAT( rm.menu_id ) menuIds
         FROM
-        qff_role r
-        LEFT JOIN qff_role_menu rm ON ( r.role_id = rm.role_id )
+        sms_role r
+        LEFT JOIN sms_role_menu rm ON ( r.role_id = rm.role_id )
         WHERE 1 = 1
         <if test="role.roleName != null and role.roleName != ''">
             AND r.role_name like CONCAT('%',#{role.roleName},'%')

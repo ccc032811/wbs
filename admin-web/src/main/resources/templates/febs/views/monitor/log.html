@@ -108,21 +108,11 @@
                         });
                     }
                 }
-                if (name === 'export') {
-                    var params = $.extend(getQueryParams(), {field: sortObject.field, order: sortObject.type});
-                    params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
-                    params.pageNum = $view.find(".layui-laypage-em").next().html();
-                    febs.download(ctx + 'log/excel', params, '系统日志表.xlsx');
-                }
             },
             options: [{
                 name: 'delete',
                 title: '删除日志',
                 perms: 'log:delete'
-            }, {
-                name: 'export',
-                title: '导出Excel',
-                perms: 'log:export'
             }]
         });
 
@@ -165,15 +155,13 @@
                 url: ctx + 'log/list',
                 cols: [[
                     {type: 'checkbox'},
-                    {field: 'username', title: '操作人'},
-                    {field: 'operation', title: '操作描述'},
-                    {field: 'time', title: '耗时', templet: "#log-time", sort: true},
-                    {field: 'method', title: '操作方法'},
-                    {field: 'params', title: '方法参数'},
-                    {field: 'ip', title: 'IP地址'},
-                    {field: 'location', title: '操作地点'},
-                    {field: 'createTime', title: '创建时间', minWidth: 180, sort: true},
-                    {title: '操作', toolbar: '#log-option'}
+                    // {field: 'username', title: '操作人', minWidth: 180,align:'center'},
+                    {field: 'operation', title: '操作描述', minWidth: 180,align:'center'},
+                    {field: 'time', title: '耗时', templet: "#log-time", sort: true,align:'center',minWidth: 180},
+                    {field: 'params', title: '方法参数', minWidth: 450,align:'center'},
+                    {field: 'response', title: '返回参数', minWidth: 450,align:'center'},
+                    {field: 'createTime', title: '创建时间', minWidth: 180, sort: true,align:'center'},
+                    {title: '操作', toolbar: '#log-option',align:'center', width: 100}
                 ]]
             });
         }

@@ -32,12 +32,6 @@ public interface UserMapper extends BaseMapper<User> {
     IPage<User> findUserDetailPage(Page page, @Param("user") User user);
 
     /**
-     * 获取所有的使用用户(不包括系统管理员)
-     * @return
-     */
-    List<User> getAllUseUserLst();
-
-    /**
      * 查找用户详细信息--系统用户
      *
      * @param page 分页对象
@@ -62,18 +56,6 @@ public interface UserMapper extends BaseMapper<User> {
      */
     List<User> findSysUserDetail(@Param("user") User user);
 
-    /**
-     * 根据用户id更新用户实名状态
-     * @param userId 用户Id
-     * @param authStatus 实名状态
-     */
-    void updateUserAuthStatus(@Param("userId") Long userId, @Param("authStatus") String authStatus);
-
-    /**
-     * 首页统计图-用户分布情况
-     * @return 用户分布数据
-     */
-    List<Map<String, String>> getUserDistribution();
 
     /**
      * 新增并返回Id
@@ -82,11 +64,7 @@ public interface UserMapper extends BaseMapper<User> {
      */
     int saveReturnPrimaryKey(User user);
 
-    /**根据部门查询
-     * @param name
-     * @return
-     */
-    List<User> findUserByDepartName(@Param("name") String name);
+
 
     /**根据角色id查询所有用户
      * @param id
@@ -94,10 +72,6 @@ public interface UserMapper extends BaseMapper<User> {
      */
     List<User> findUserByRoleId(@Param("id") Integer id);
 
-    /**获取所有的用户
-     * @return
-     */
-    List<User> getAllUser();
 
     /**根据名字查询用户
      * @param username

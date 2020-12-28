@@ -29,13 +29,6 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">部门：</label>
-            <div class="layui-input-block">
-                <input type="text" name="deptId" id="profile-update-dept" lay-filter="profile-update-dept"
-                       class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
             <label class="layui-form-label febs-form-item-require">性别：</label>
             <div class="layui-input-block">
                 <input type="radio" name="sex" value="0" title="男性">
@@ -72,16 +65,6 @@
 
         initUserValue();
 
-        treeSelect.render({
-            elem: $view.find('#profile-update-dept'),
-            type: 'get',
-            data: ctx + 'dept/select/tree',
-            placeholder: '请选择',
-            search: false,
-            success: function () {
-                treeSelect.checkNode('profile-update-dept', user.deptId);
-            }
-        });
 
         function initUserValue() {
             form.val("profile-update-form", {

@@ -42,7 +42,7 @@ public class FebsStartedUpRunner implements ApplicationRunner {
             log.error("| |_   / /\\  | | | |");
             log.error("|_|   /_/--\\ |_| |_|__");
             log.error("                        ");
-            log.error("FLP启动失败，{}", e.getMessage());
+            log.error("SMS启动失败，{}", e.getMessage());
             log.error("Redis连接异常，请检查Redis连接配置并确保Redis服务已启动");
             // 关闭 FEBS
             context.close();
@@ -59,7 +59,7 @@ public class FebsStartedUpRunner implements ApplicationRunner {
             log.info("/ /`  / / \\ | |\\/| | |_) | |   | |_   | |  | |_  ");
             log.info("\\_\\_, \\_\\_/ |_|  | |_|   |_|__ |_|__  |_|  |_|__ ");
             log.info("                                                      ");
-            log.info("FLP系统启动完毕，地址：{}", url);
+            log.info("SMS系统启动完毕，地址：{}", url);
         }
     }
 }

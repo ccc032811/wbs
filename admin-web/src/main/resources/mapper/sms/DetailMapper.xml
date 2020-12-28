@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neefull.fsp.web.sms.mapper.DetailMapper">
+    <update id="updateScanQuntity">
+        update  sms_detail set scan_quantity = #{quantity} where id = #{id}
+    </update>
+    <update id="updateupdateErrorMsg">
+        update  sms_detail set error_message = #{msg} ,status = #{status} where id = #{id}
+    </update>
+    <select id="getDetailList" resultType="com.neefull.fsp.web.sms.entity.Detail">
+        select * from sms_detail t where 1=1
+        <if test="delivery != null and delivery != ''">
+            AND t.delivery like concat('%',#{delivery},'%')
+        </if>
+        <if test="deliveryItem != null and deliveryItem != ''">
+            AND t.delivery_item like concat('%',#{deliveryItem},'%')
+        </if>
+        <if test="rocheDeliveryItem != null and rocheDeliveryItem != ''">
+            AND t.roche_delivery_item like concat('%',#{rocheDeliveryItem},'%')
+        </if>
+        <if test="material != null and material != ''">
+            AND t.material like concat('%',#{material},'%')
+        </if>
+        <if test="batch != null and batch != ''">
+            AND t.batch like concat('%',#{batch},'%')
+        </if>
+        <if test="status != null and status != ''">
+            AND t.status = #{status}
+        </if>
+        order by create_time desc
+    </select>
+    <select id="selectScanDetail" resultType="com.neefull.fsp.web.sms.entity.Detail">
+        select d.mat_code material, d.batch, sum(d.quantity) quantity from sms_scan d where d.delivery = #{dn} group by material,batch
+    </select>
+</mapper>

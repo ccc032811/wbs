@@ -31,6 +31,22 @@ public class FebsConfigure {
         return executor;
     }
 
+
+    @Bean("scanAsyncThreadPool")
+    public ThreadPoolTaskExecutor scanAsyncThreadPoolTaskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(10);
+        executor.setMaxPoolSize(20);
+        executor.setQueueCapacity(200);
+        executor.setKeepAliveSeconds(30);
+        executor.setThreadNamePrefix("Scan-Async-Thread");
+        executor.setWaitForTasksToCompleteOnShutdown(true);
+        executor.setAwaitTerminationSeconds(60);
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        executor.initialize();
+        return executor;
+    }
+
     /**
      * XssFilter Bean
      */
@@ -43,7 +59,7 @@ public class FebsConfigure {
         filterRegistrationBean.setEnabled(true);
         filterRegistrationBean.addUrlPatterns("/*");
         Map<String, String> initParameters = new HashMap<>();
-        initParameters.put("excludes", "/favicon.ico,/img/*,/js/*,/css/*");
+        initParameters.put("excludes", "/favicon1.ico,/img/*,/js/*,/css/*");
         initParameters.put("isIncludeRichText", "true");
         filterRegistrationBean.setInitParameters(initParameters);
         return filterRegistrationBean;

@@ -6,6 +6,7 @@ import com.neefull.fsp.web.common.entity.FebsConstant;
 import com.neefull.fsp.web.common.utils.DateUtil;
 import com.neefull.fsp.web.common.utils.FebsUtil;
 import com.neefull.fsp.web.system.entity.*;
+import com.neefull.fsp.web.system.service.IFactoryService;
 import com.neefull.fsp.web.system.service.IUserService;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -31,6 +32,8 @@ public class ViewController extends BaseController {
     private IUserService userService;
     @Autowired
     private ShiroHelper shiroHelper;
+    @Autowired
+    private IFactoryService factoryService;
 
 
 
@@ -94,37 +97,32 @@ public class ViewController extends BaseController {
         return FebsUtil.view("system/user/profileUpdate");
     }
 
-    @GetMapping(FebsConstant.VIEW_PREFIX + "system/user")
-    @RequiresPermissions("user:view")
-    public String systemUser() {
-        return FebsUtil.view("system/user/user");
+    @GetMapping(FebsConstant.VIEW_PREFIX + "opinion/view")
+    public String showOpinion(){
+        return FebsUtil.view("system/opinion/opinion");
     }
 
-    @GetMapping(FebsConstant.VIEW_PREFIX + "system/user/add")
-    @RequiresPermissions("user:add")
-    public String systemUserAdd() {
-        return FebsUtil.view("system/user/userAdd");
+    @GetMapping(FebsConstant.VIEW_PREFIX + "/system/factory")
+    @RequiresPermissions("factory:view")
+    public String sysFactoryView() {
+        return FebsUtil.view("system/factory/factory");
     }
 
-    @GetMapping(FebsConstant.VIEW_PREFIX + "system/user/detail/{username}")
-    @RequiresPermissions("user:view")
-    public String systemUserDetail(@PathVariable String username, Model model) {
-        resolveUserModel(username, model, true);
-        return FebsUtil.view("system/user/userDetail");
+
+    @GetMapping(FebsConstant.VIEW_PREFIX + "/system/factory/factoryAdd")
+    @RequiresPermissions("factory:view")
+    public String sysFactoryAdd() {
+        return FebsUtil.view("system/factory/factoryAdd");
     }
 
-    @GetMapping(FebsConstant.VIEW_PREFIX + "system/user/update/{username}")
-    @RequiresPermissions("user:update")
-    public String systemUserUpdate(@PathVariable String username, Model model) {
-        resolveUserModel(username, model, false);
-        return FebsUtil.view("system/user/userUpdate");
+    @GetMapping(FebsConstant.VIEW_PREFIX + "/system/factory/factoryUpdate/{id}")
+    @RequiresPermissions("factory:view")
+    public String sysFactoryUpdate(@PathVariable Integer id,Model model) {
+        Factory factory = factoryService.queryFactoryById(id);
+        model.addAttribute("factory",factory);
+        return FebsUtil.view("system/factory/factoryUpdate");
     }
 
-    @GetMapping(FebsConstant.VIEW_PREFIX + "system/sendMessage")
-    @RequiresPermissions("message:send")
-    public String sendMessage() {
-        return FebsUtil.view("system/message/sendMessage");
-    }
 
     //**************************************用户管理模块 start *********************************************
     @GetMapping(FebsConstant.VIEW_PREFIX + "system/sysUser")
@@ -166,11 +164,11 @@ public class ViewController extends BaseController {
         return FebsUtil.view("system/menu/menu");
     }
 
-    @GetMapping(FebsConstant.VIEW_PREFIX + "system/dept")
-    @RequiresPermissions("dept:view")
-    public String systemDept() {
-        return FebsUtil.view("system/dept/dept");
-    }
+//    @GetMapping(FebsConstant.VIEW_PREFIX + "system/dept")
+//    @RequiresPermissions("dept:view")
+//    public String systemDept() {
+//        return FebsUtil.view("system/dept/dept");
+//    }
 
     @RequestMapping(FebsConstant.VIEW_PREFIX + "index")
     public String pageIndex() {
@@ -217,6 +215,9 @@ public class ViewController extends BaseController {
         if (user.getLastLoginTime() != null)
             model.addAttribute("lastLoginTime", DateUtil.getDateFormat(user.getLastLoginTime(), DateUtil.FULL_TIME_SPLIT_PATTERN));
     }
+
+
+
 
 
 }

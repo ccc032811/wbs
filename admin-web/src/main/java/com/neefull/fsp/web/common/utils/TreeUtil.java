@@ -1,9 +1,8 @@
 package com.neefull.fsp.web.common.utils;
 
 
-import com.neefull.fsp.web.common.entity.DeptTree;
 import com.neefull.fsp.web.common.entity.MenuTree;
-import com.neefull.fsp.web.qff.entity.OpinionTree;
+import com.neefull.fsp.web.common.entity.OpinionTree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,32 +52,6 @@ public class TreeUtil {
         return root;
     }
 
-    public static <T> List<DeptTree<T>> buildDeptTree(List<DeptTree<T>> nodes) {
-        if (nodes == null) {
-            return null;
-        }
-        List<DeptTree<T>> result = new ArrayList<>();
-        nodes.forEach(children -> {
-            String pid = children.getParentId();
-            if (pid == null || "0".equals(pid)) {
-                result.add(children);
-                return;
-            }
-            for (DeptTree<T> n : nodes) {
-                String id = n.getId();
-                if (id != null && id.equals(pid)) {
-                    if (n.getChildren() == null)
-                        n.initChildren();
-                    n.getChildren().add(children);
-                    children.setHasParent(true);
-                    n.setHasChild(true);
-                    return;
-                }
-            }
-        });
-
-        return result;
-    }
 
     public static <T> List<OpinionTree<T>> buildOpinionTree(List<OpinionTree<T>> nodes) {
         if (nodes == null) {

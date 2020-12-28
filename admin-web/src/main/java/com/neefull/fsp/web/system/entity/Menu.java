@@ -18,7 +18,7 @@ import java.util.Date;
  * @author pei.wang
  */
 @Data
-@TableName("qff_menu")
+@TableName("sms_menu")
 @Excel("菜单信息表")
 public class Menu implements Serializable {
 

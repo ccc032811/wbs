@@ -1,0 +1,140 @@
+<div class="layui-fluid layui-anim febs-anim" id="scan-detail" lay-title="DN Detail信息查询">
+    <div class="layui-row febs-container">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="scan-detail">
+                        <div class="layui-row">
+                            <div class="layui-col-md10">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">DN号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" id="deliveryNumber" name="deliveryNumber"  autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">物料号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="matCode" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">批次</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="batch" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">工厂编号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="plant" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md2 table-action-area">
+                                <div id="conserve-check" class="layui-form-item" style="border-left: 1px solid white;border-top: 1px solid white;height: 40px;">
+                                    <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="scan-detail-query">
+                                        <i class="layui-icon">&#xe848;</i>
+                                    </div>
+                                    <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="scan-detail-reset">
+                                        <i class="layui-icon">&#xe79b;</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table lay-filter="scanDetailTable" lay-data="{id: 'scanDetailTable'}"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="scan-detail-option">
+
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="scan-detail-view">查看</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="scan-detail-edit">修改</a>
+</script>
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['jquery', 'form', 'table', 'febs'], function () {
+        var $ = layui.jquery,
+            febs = layui.febs,
+            form = layui.form,
+            table = layui.table,
+            $view = $('#scan-detail'),
+            $query = $view.find('#scan-detail-query'),
+            $reset = $view.find('#scan-detail-reset'),
+            $searchForm = $view.find('form'),
+            tableIns;
+
+        form.render();
+        initTable();
+
+
+        $query.on('click', function () {
+            var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});
+            tableIns.reload({where: params});
+        });
+
+        $reset.on('click', function () {
+            $searchForm[0].reset();
+            var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});
+            tableIns.reload({where: params});
+        });
+
+        function initTable() {
+            tableIns = febs.table.init({
+                elem: $view.find('table'),
+                id: 'scanDetailTable',
+                url: ctx + 'scan/smsScan/queryScanDetailList',
+                where:{
+                    time:new Date(),
+                    plants:currentUser.factoryName
+                },
+                cols: [[
+                    {field: 'delivery',align:'center', title: 'DN号',minWidth:150},
+                    {field: 'boxCode',align:'center', title: '箱码',minWidth:150},
+                    {field: 'matCode',align:'center', title: '物料号',minWidth:150},
+                    {field: 'batch',align:'center', title: '批次',minWidth:150},
+                    {field: 'serialNumber',align:'center', title: '条形码',minWidth:200},
+                    {field: 'snCode',align:'center', title: 'SN 码',minWidth:150},
+                    {field: 'quantity',align:'center', title: '数量',minWidth:120},
+                    {field: 'expiryDate',align:'center', title: '有效期',minWidth:150},
+                    {title: '操作', toolbar: '#scan-detail-option',align:'center',width: 140}
+                ]],
+                done:function (res,curr,count) {
+                    $(".layui-table-header .layui-table thead tr th").css("border","1px solid white").css("background-color","#E8E8E8");
+                    $(".layui-table-body .layui-table-col-special .layui-table-cell .layui-btn").css("margin-top","4px");
+                }
+            });
+        }
+
+
+        table.on('tool(scanDetailTable)', function (obj) {
+            var data = obj.data,
+                layEvent = obj.event;
+            if (layEvent === 'scan-detail-view') {
+                febs.modal.open('扫描信息详情', 'sms/scanDetailShow/' + data.id+"/2", {
+                    area:  [$(window).width() <= 750 ? '70%' : '60%',$(window).height() <= 750 ? '40%' : '40%']
+                });
+            }
+            if (layEvent === 'scan-detail-edit') {
+                febs.modal.open('扫描信息修改', 'sms/scanDetailShow/' + data.id+"/1", {
+                    area:  [$(window).width() <= 750 ? '70%' : '60%',$(window).height() <= 750 ? '40%' : '40%']
+                });
+            }
+        });
+
+        function getQueryParams() {
+            return {
+                delivery: $searchForm.find('input[name="deliveryNumber"]').val().trim(),
+                matCode: $searchForm.find('input[name="matCode"]').val().trim(),
+                batch: $searchForm.find('input[name="batch"]').val().trim(),
+                plant: $searchForm.find('input[name="plant"]').val().trim(),
+                invalidate_ie_cache: new Date()
+            };
+        }
+    })
+</script>

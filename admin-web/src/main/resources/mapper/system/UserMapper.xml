@@ -10,27 +10,20 @@
         u.status,
         u.create_time createTime,
         u.ssex sex,
-        u.dept_id deptId,
+        u.factory_id factoryId,
         u.last_login_time lastLoginTime,
         u.modify_time modifyTime,
         u.description,
         u.avatar,
-        d.dept_name deptName,
         GROUP_CONCAT(r.role_id) roleId,
-        GROUP_CONCAT(r.ROLE_NAME) roleName,
-        u.user_type userType,
-        u.auth_status authStatus
+        GROUP_CONCAT(r.ROLE_NAME) roleName
         FROM
-        qff_user u
-        LEFT JOIN qff_dept d ON (u.dept_id = d.dept_id)
-        LEFT JOIN qff_user_role ur ON (u.user_id = ur.user_id)
-        LEFT JOIN qff_role r ON r.role_id = ur.role_id
-        WHERE 1 = 1 and u.user_type <![CDATA[ <> ]]> '2'
+        sms_user u
+        LEFT JOIN sms_user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN sms_role r ON r.role_id = ur.role_id
+        WHERE 1 = 1
         <if test="user.username != null and user.username != ''">
             AND u.username = #{user.username}
-        </if>
-        <if test="user.deptId != null and user.deptId != ''">
-            AND d.dept_id = #{user.deptId}
         </if>
         <if test="user.sex != null and user.sex != ''">
             AND u.ssex = #{user.sex}
@@ -46,9 +39,6 @@
         </if>
         <if test="user.createTimeTo!= null and user.createTimeTo !=''">
             And u.create_time &lt; #{user.createTimeTo}
-        </if>
-        <if test="user.userType != null and user.userType != ''">
-            And u.user_type = #{user.userType}
         </if>
         group by u.user_id
     </sql>
@@ -61,27 +51,20 @@
         u.status,
         u.create_time createTime,
         u.ssex sex,
-        u.dept_id deptId,
+        u.factory_id factoryId,
         u.last_login_time lastLoginTime,
         u.modify_time modifyTime,
         u.description,
         u.avatar,
-        d.dept_name deptName,
         GROUP_CONCAT(r.role_id) roleId,
-        GROUP_CONCAT(r.ROLE_NAME) roleName,
-        u.user_type userType,
-        u.auth_status authStatus
+        GROUP_CONCAT(r.ROLE_NAME) roleName
         FROM
-        qff_user u
-        LEFT JOIN qff_dept d ON (u.dept_id = d.dept_id)
-        LEFT JOIN qff_user_role ur ON (u.user_id = ur.user_id)
-        LEFT JOIN qff_role r ON r.role_id = ur.role_id
-        WHERE u.user_type = '2'
+        sms_user u
+        LEFT JOIN sms_user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN sms_role r ON r.role_id = ur.role_id
+        WHERE  1=1
         <if test="user.username != null and user.username != ''">
             AND u.username = #{user.username}
-        </if>
-        <if test="user.deptId != null and user.deptId != ''">
-            AND d.dept_id = #{user.deptId}
         </if>
         <if test="user.sex != null and user.sex != ''">
             AND u.ssex = #{user.sex}
@@ -100,27 +83,24 @@
         </if>
         group by u.user_id
     </sql>
-    <select id="findUserDetailPage" parameterType="user" resultType="user">
-        <include refid="findUserDetailSql"/>
-    </select>
-    
-    <select id="getAllUseUserLst" resultType="com.neefull.fsp.web.system.entity.User">
-        select * from qff_user where user_type <![CDATA[ <> ]]> '2'
-    </select>
-
-    <select id="findSysUserDetailPage" parameterType="user" resultType="user">
-        <include refid="findSysUserDetailSql"/>
-    </select>
-
-    <select id="findUserDetail" parameterType="user" resultType="user">
+    <select id="findUserDetailPage" parameterType="com.neefull.fsp.web.system.entity.User" resultType="com.neefull.fsp.web.system.entity.User">
         <include refid="findUserDetailSql"/>
     </select>
 
-    <select id="findSysUserDetail" parameterType="user" resultType="user">
+
+    <select id="findSysUserDetailPage" parameterType="com.neefull.fsp.web.system.entity.User" resultType="com.neefull.fsp.web.system.entity.User">
         <include refid="findSysUserDetailSql"/>
     </select>
 
-    <select id="findByName" parameterType="string" resultType="user">
+    <select id="findUserDetail" parameterType="com.neefull.fsp.web.system.entity.User" resultType="com.neefull.fsp.web.system.entity.User">
+        <include refid="findUserDetailSql"/>
+    </select>
+
+    <select id="findSysUserDetail" parameterType="com.neefull.fsp.web.system.entity.User" resultType="com.neefull.fsp.web.system.entity.User">
+        <include refid="findSysUserDetailSql"/>
+    </select>
+
+    <select id="findByName" parameterType="string" resultType="com.neefull.fsp.web.system.entity.User">
         SELECT
         u.user_id userId,
         u.username,
@@ -130,53 +110,36 @@
         u.status,
         u.create_time createTime,
         u.ssex sex,
-        u.dept_id deptId,
+        u.factory_id factoryId,
         u.last_login_time lastLoginTime,
         u.modify_time modifyTime,
         u.description,
-        u.user_type userType,
         u.avatar,
         u.theme,
         u.is_tab isTab,
-        d.dept_name deptName,
         GROUP_CONCAT(r.role_id) roleId,
         GROUP_CONCAT(r.ROLE_NAME) roleName
         FROM
-        qff_user u
-        LEFT JOIN qff_dept d ON (u.dept_id = d.dept_id)
-        LEFT JOIN qff_user_role ur ON (u.user_id = ur.user_id)
-        LEFT JOIN qff_role r ON r.role_id = ur.role_id
+            sms_user u
+        LEFT JOIN sms_user_role ur ON (u.user_id = ur.user_id)
+        LEFT JOIN sms_role r ON r.role_id = ur.role_id
         WHERE u.username = #{username}
         group by u.username
     </select>
-    
-    <update id="updateUserAuthStatus">
-        update qff_user set auth_status = #{authStatus},modify_time=NOW() where user_id = #{userId}
-    </update>
-    
-    <select id="getUserDistribution" resultType="Map">
-        SELECT CASE WHEN user_type = '0' THEN '企业用户' WHEN user_type = '1' THEN '自由职业者'
-        WHEN user_type = '2' THEN '系统用户' WHEN user_type is null or user_type = '' THEN '无类型' END 'name',
-        COUNT(1) 'y' FROM qff_user GROUP BY user_type
+
+
+    <select id="findUserByRoleId" resultType="com.neefull.fsp.web.system.entity.User">
+        select * from sms_user u LEFT JOIN qff_user_role ur on u.user_id = ur.user_id where ur.role_id = #{id}
     </select>
 
-    <select id="findUserByDepartName" resultType="com.neefull.fsp.web.system.entity.User">
-        select * from qff_user u left join qff_dept d on u.dept_id = d.dept_id where dept_name = #{name}
-    </select>
-    <select id="findUserByRoleId" resultType="com.neefull.fsp.web.system.entity.User">
-        select * from qff_user u LEFT JOIN qff_user_role ur on u.user_id = ur.user_id where ur.role_id = #{id}
-    </select>
-    <select id="getAllUser" resultType="com.neefull.fsp.web.system.entity.User">
-        select * from typt_user
-    </select>
     <select id="getUserByName" resultType="com.neefull.fsp.web.system.entity.User">
-        select * from qff_user where username = #{username}
+        select * from sms_user where username = #{username}
     </select>
 
     <insert id="saveReturnPrimaryKey" useGeneratedKeys="true" keyProperty="userId" parameterType="com.neefull.fsp.web.system.entity.User">
-        insert into qff_user(user_id,username,password,dept_id,email,mobile,status,create_time,modify_time,ssex,is_tab,
-        theme,avatar,user_type,auth_status,card_status)
-        VALUES (#{userId},#{username},#{password},#{deptId},#{email},#{mobile},#{status},NOW(),NOW(),#{sex},
-        #{isTab},#{theme},#{avatar},#{userType},#{authStatus},#{cardStatus})
+        insert into sms_user(user_id,username,password,factory_id ,email,mobile,status,create_time,modify_time,ssex,is_tab,
+        theme,avatar)
+        VALUES (#{userId},#{username},#{password},#{email},#{factoryId},#{mobile},#{status},NOW(),NOW(),#{sex},
+        #{isTab},#{theme},#{avatar})
     </insert>
 </mapper>
