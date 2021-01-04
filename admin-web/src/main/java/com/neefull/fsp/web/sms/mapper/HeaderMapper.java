@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.neefull.fsp.web.sms.entity.Header;
 import com.neefull.fsp.web.sms.entity.vo.HeaderVo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +14,7 @@ import java.util.List;
  * @Author: chengchengchu
  * @Date: 2020/11/24  14:19
  */
-
-@Component
+@Mapper
 public interface HeaderMapper extends BaseMapper<Header> {
 
     IPage<Header> getPageHeader(IPage<Header> headerPage, Header header);
@@ -29,11 +29,10 @@ public interface HeaderMapper extends BaseMapper<Header> {
 
     void updateErrorMsg(@Param("id") Integer id, @Param("msg") String msg);
 
-    HeaderVo queryScanDn(@Param("plant") String plant, @Param("delivery") String delivery, @Param("status1") String status1, @Param("status2") String status2);
+    HeaderVo queryScanDn(@Param("plant") String plant, @Param("delivery") String delivery);
 
     List<Header> selecHeaderList(Header header);
 
-
-
+    void updateUserByDelivery(@Param("dn") String dn, @Param("userName") String userName, @Param("format") String format);
 
 }

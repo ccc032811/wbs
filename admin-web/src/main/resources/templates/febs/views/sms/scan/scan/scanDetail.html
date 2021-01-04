@@ -56,6 +56,7 @@
 
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="scan-detail-view">查看</a>
     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="scan-detail-edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="scan-detail-del">删除</a>
 </script>
 <script data-th-inline="none" type="text/javascript">
     layui.use(['jquery', 'form', 'table', 'febs'], function () {
@@ -102,7 +103,7 @@
                     {field: 'snCode',align:'center', title: 'SN 码',minWidth:150},
                     {field: 'quantity',align:'center', title: '数量',minWidth:120},
                     {field: 'expiryDate',align:'center', title: '有效期',minWidth:150},
-                    {title: '操作', toolbar: '#scan-detail-option',align:'center',width: 140}
+                    {title: '操作', toolbar: '#scan-detail-option',align:'center',width: 200}
                 ]],
                 done:function (res,curr,count) {
                     $(".layui-table-header .layui-table thead tr th").css("border","1px solid white").css("background-color","#E8E8E8");
@@ -125,7 +126,21 @@
                     area:  [$(window).width() <= 750 ? '70%' : '60%',$(window).height() <= 750 ? '40%' : '40%']
                 });
             }
+            if (layEvent === 'scan-detail-del') {
+                febs.modal.confirm('删除该条数据','确定删除该条数据？', function () {
+                    delScan(data.id);
+                });;
+            }
         });
+        
+        function delScan(id) {
+            febs.get(ctx + 'scan/smsScan/deleteScanById/'+delivery+'/'+id,new Date(), function (date) {
+                if(date.code === 200){
+                    febs.alert.success('操作成功');
+                    $query.click();
+                }
+            });
+        }
 
         function getQueryParams() {
             return {

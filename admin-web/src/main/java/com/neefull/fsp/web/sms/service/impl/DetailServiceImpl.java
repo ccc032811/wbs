@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: chengchengchu
@@ -21,15 +23,19 @@ import java.util.List;
 public class DetailServiceImpl extends ServiceImpl<DetailMapper, Detail> implements IDetailService {
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void insertDetail(Detail detail) {
         this.baseMapper.insert(detail);
     }
 
 
     @Override
-    public List<Detail> getDetailList(Detail detail) {
-        return this.baseMapper.getDetailList(detail);
+    public Map<String, Object> getDetailList(Detail detail) {
+        List<Detail> detailList = this.baseMapper.getDetailList(detail);
+        Map<String, Object> data = new HashMap<>();
+        data.put("rows", detailList);
+        data.put("total", detailList.size());
+        return data;
     }
 
 
@@ -46,14 +52,14 @@ public class DetailServiceImpl extends ServiceImpl<DetailMapper, Detail> impleme
 
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void updateScanQuntity(Integer id, String quantity) {
         this.baseMapper.updateScanQuntity(id,quantity);
     }
 
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void updateErrorMsg(Integer id, String msg,String status) {
         this.baseMapper.updateupdateErrorMsg(id,msg,status);
     }
@@ -64,6 +70,12 @@ public class DetailServiceImpl extends ServiceImpl<DetailMapper, Detail> impleme
         QueryWrapper<Detail> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("delivery",delivery);
         return this.baseMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    public void updateStatusByDelivery(String delivery, String status) {
+        this.baseMapper.updateStatusByDelivery(delivery,status);
     }
 
 

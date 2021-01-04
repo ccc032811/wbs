@@ -50,4 +50,9 @@ public interface IScanLogService  extends IService<ScanLog> {
      */
     void updateStatus(Integer id, String status);
 
+    List<ScanLog> selectScanLogInsert();
+
+
+    void updateScanLogStatus(List<ScanLog> headerList);
+
 }

@@ -69,9 +69,7 @@ public class SubmitScan {
 
             //判断是否还有为推送的，没有更新状态为已推送
             if(scans.size()==0){
-
                 headerService.updateStatus(header.getDelivery(),ScanComment.STATUS_FOUR);
-
             }else {
 
                 List<ScanSubmit> scanSubmitList = new ArrayList<>();
@@ -93,7 +91,7 @@ public class SubmitScan {
 
                 String data = "{\"putSKUData\":{\"data\":{\"header\":"+JSON.toJSONString(scanSubmitList)+"}}}";
 
-                log.info("对接TMS的data具体为：{}",data);
+                log.info("对接TMS的DN号为：{}，对接data为：{}",header.getDelivery(),data);
 
                 String sign = SoapWsUtils.getSign(data, "123456");
 
@@ -115,6 +113,7 @@ public class SubmitScan {
                             "&format="+SoapProperties.FORMAT+"" +
                             "&appsecret="+SoapProperties.APPSECRET+"" +
                             "&data="+encode+"";
+//                    log.info("对接TMS的请求url为: {}",url);
 
                     HttpPost post = new HttpPost(url);
                     HttpResponse response = HttpClients.createDefault().execute(post);
@@ -131,10 +130,14 @@ public class SubmitScan {
                         tmsData.setDelivery(header.getDelivery());
                         tmsData.setData(data);
                         tmsData.setPlant(header.getPlant());
+
                         tmsDataService.addTmsData(tmsData);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    log.error("对接TMS失败，失败原因为: {}",e.getMessage());
+
+                    //TODO  添加到系统操作日志里面
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.neefull.fsp.web.sms.controller;
 
+import com.neefull.fsp.web.common.annotation.Log;
 import com.neefull.fsp.web.common.controller.BaseController;
 import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
@@ -34,17 +35,15 @@ public class DetailController extends BaseController {
      * @return
      * @throws FebsException
      */
+    @Log("据DN号查询对应的DN Detail集合")
     @GetMapping("/queryDetailList")
     public FebsResponse queryDetailList(Detail detail) throws FebsException {
         try {
-            List<Detail>  detailList = detailService.getDetailList(detail);
-            Map<String, Object> data = new HashMap<>();
-            data.put("rows", detailList);
-            data.put("total", detailList.size());
+            Map<String, Object>  data = detailService.getDetailList(detail);
             return new FebsResponse().success().data(data);
         } catch (Exception e) {
             String message = "查询DN Detail表失败！";
-            log.error(message,e);
+            log.error(message+"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }

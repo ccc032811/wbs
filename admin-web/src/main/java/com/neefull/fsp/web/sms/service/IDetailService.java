@@ -2,8 +2,10 @@ package com.neefull.fsp.web.sms.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.sms.entity.Detail;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: chengchengchu
@@ -20,7 +22,7 @@ public interface IDetailService extends IService<Detail> {
      * @param detail
      * @return
      */
-    List<Detail> getDetailList(Detail detail);
+    Map<String, Object> getDetailList(Detail detail);
 
     /**根据id查询DN Detail
      * @param id
@@ -51,5 +53,7 @@ public interface IDetailService extends IService<Detail> {
      * @return
      */
     List<Detail> queryDetailByDelivery(String delivery);
+
+    void updateStatusByDelivery(String delivery, String status);
 
 }

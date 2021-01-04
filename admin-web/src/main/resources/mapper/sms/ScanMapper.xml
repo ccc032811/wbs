@@ -4,10 +4,13 @@
     <update id="updateScanStatus">
         update sms_scan set status = #{status} where id = #{id}
     </update>
+    <update id="deleteScanById">
+        update sms_scan set del = #{del} where id = #{id}
+    </update>
 
 
     <select id="queryScanDetailList" resultType="com.neefull.fsp.web.sms.entity.Scan">
-        select * from sms_scan t  where 1=1
+        select * from sms_scan t  where  del = 1
         <choose>
             <when test="scan.plant != null and scan.plant != ''">
                 AND t.plant like concat('%',#{scan.plant},'%')
@@ -32,7 +35,7 @@
     </select>
     <select id="getScanInfoList" resultType="com.neefull.fsp.web.sms.entity.Scan">
         select distinct t.delivery ,h.status,h.plant,h.sold_party,h.ship_party from sms_scan t
-              left join sms_header h on t.delivery = h.delivery where 1=1
+              left join sms_header h on t.delivery = h.delivery where  t.del = 1
         <choose>
             <when test="scan.plant != null and scan.plant != ''">
                 AND t.plant like concat('%',#{scan.plant},'%')
@@ -49,7 +52,13 @@
         </if>
         order by t.create_time desc
     </select>
-
+    <select id="queryScanAndCountByDelivery" resultType="com.neefull.fsp.web.sms.entity.Scan">
+        select t.*,d.quantity as count from sms_scan t left join sms_detail d  on
+            t.delivery = d.delivery
+                and t.mat_code = d.material
+                    and t.batch = d.batch
+                        where t.delivery = #{delivery} and t.del = 1
+    </select>
 
 
 </mapper>

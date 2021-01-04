@@ -25,7 +25,7 @@ public class TmsDataServiceImpl extends ServiceImpl<TmsDataMapper, TmsData> impl
 
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void addTmsData(TmsData tmsData) {
         this.baseMapper.insert(tmsData);
     }

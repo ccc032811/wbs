@@ -7,7 +7,6 @@ import com.neefull.fsp.web.common.entity.FebsResponse;
 import com.neefull.fsp.web.common.exception.FebsException;
 import com.neefull.fsp.web.sms.entity.*;
 import com.neefull.fsp.web.sms.entity.vo.DetailScanVo;
-import com.neefull.fsp.web.sms.entity.vo.DetailVo;
 import com.neefull.fsp.web.sms.entity.vo.HeaderVo;
 import com.neefull.fsp.web.sms.service.IScanLogService;
 import com.neefull.fsp.web.sms.service.IScanService;
@@ -51,7 +50,7 @@ public class ScanController extends BaseController {
             return new FebsResponse().success().data(dnMessage);
         } catch (Exception e) {
             String message = "根据DN号查询失败！";
-            log.error(message,e);
+            log.error(message+"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }
@@ -63,15 +62,15 @@ public class ScanController extends BaseController {
      * @throws FebsException
      */
     @Log("审核DN")
-    @GetMapping("/auditDn/{dns}")
+    @GetMapping("/auditDn/{dns}/{userName}")
     @ResponseBody
-    public FebsResponse auditDn(@PathVariable String dns) throws FebsException {
+    public FebsResponse auditDn(@PathVariable String dns,@PathVariable String userName) throws FebsException {
         try {
-            List<HeaderVo> headerVos = scanService.auditDn(dns);
+            List<HeaderVo> headerVos = scanService.auditDn(dns,userName);
             return new FebsResponse().success().data(headerVos);
         } catch (Exception e) {
-            String message = "审核DN失败";
-            log.error(message,e);
+            String message = "审核DN失败！";
+            log.error(message+"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }
@@ -90,7 +89,7 @@ public class ScanController extends BaseController {
             return new FebsResponse().success();
         } catch (Exception e) {
             String message = "新增扫描记录信息失败！";
-            log.error(message,e);
+            log.error(message+"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }
@@ -109,7 +108,7 @@ public class ScanController extends BaseController {
             return new FebsResponse().success().data(getDataTable(headerList));
         } catch (Exception e) {
             String message = "查询扫描记录信息分页失败！";
-            log.error(message,e);
+            log.error(message +"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }
@@ -127,13 +126,11 @@ public class ScanController extends BaseController {
             IPage<Scan> scanDetailList = scanService.queryScanDetailList(scan);
             return new FebsResponse().success().data(getDataTable(scanDetailList));
         } catch (Exception e) {
-            String message = "查询扫描记录信息失败";
-            log.error(message,e);
+            String message = "查询扫描记录信息失败！";
+            log.error(message +"失败原因为: {}",e);
             throw new FebsException(message);
         }
-
     }
-
 
 
     /**查询DN获取记录集合
@@ -149,7 +146,7 @@ public class ScanController extends BaseController {
             return new FebsResponse().success().data(dataTable);
         } catch (Exception e) {
             String message = "查询已获取DN数据失败！";
-            log.error(message,e);
+            log.error(message +"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }
@@ -168,10 +165,30 @@ public class ScanController extends BaseController {
             return new FebsResponse().success();
         } catch (Exception e) {
             String message = "查询已获取DN数据失败！";
-            log.error(message,e);
+            log.error(message +"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }
+
+
+    /**获取所有的扫描记录
+     * @param delivery
+     * @return
+     * @throws FebsException
+     */
+    @GetMapping("/getScanList/{delivery}")
+    @ResponseBody
+    public FebsResponse getScanList(@PathVariable String delivery) throws FebsException {
+        try {
+            List<Scan> scanList = scanService.queryScanAndCountByDelivery(delivery);
+            return new FebsResponse().success().data(scanList);
+        } catch (Exception e) {
+            String message = "查询已获取DN数据失败！";
+            log.error(message +"失败原因为: {}",e);
+            throw new FebsException(message);
+        }
+    }
+
 
 
     /**删除扫描信息
@@ -179,7 +196,7 @@ public class ScanController extends BaseController {
      * @return
      * @throws FebsException
      */
-    @Log("删除扫描信息")
+    @Log("重扫删除扫描信息")
     @GetMapping("/deleteScanDetail/{delivery}")
     @ResponseBody
     public FebsResponse deleteScanDetail(@PathVariable String delivery) throws FebsException {
@@ -188,12 +205,25 @@ public class ScanController extends BaseController {
             return new FebsResponse().success();
         } catch (Exception e) {
             String message = "删除已扫DN数据失败！";
-            log.error(message,e);
+            log.error(message +"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }
 
 
+    @Log("根据id删除扫描信息")
+    @GetMapping("/deleteScanById/{delivery}/{id}")
+    @ResponseBody
+    public FebsResponse deleteScanById(@PathVariable String delivery,@PathVariable Integer id) throws FebsException {
+        try {
+            scanService.deleteScanById(id,delivery);
+            return new FebsResponse().success();
+        } catch (Exception e) {
+            String message = "根据id删除扫描信息失败！";
+            log.error(message +"失败原因为: {}",e);
+            throw new FebsException(message);
+        }
+    }
 
 
 }

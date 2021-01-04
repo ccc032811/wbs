@@ -13,6 +13,8 @@ public class DetailScanVo implements Serializable {
 
     private String status;   //1  表示有扫描记录   2表示没有扫描记录
 
+    private String plant;
+
     private List<DetailVo> detailVoList;
 
     public String getStatus() {
@@ -21,6 +23,14 @@ public class DetailScanVo implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPlant() {
+        return plant;
+    }
+
+    public void setPlant(String plant) {
+        this.plant = plant;
     }
 
     public List<DetailVo> getDetailVoList() {

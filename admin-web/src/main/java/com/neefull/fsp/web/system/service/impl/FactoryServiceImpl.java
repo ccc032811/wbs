@@ -28,8 +28,6 @@ import java.util.List;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class FactoryServiceImpl extends ServiceImpl<FactoryMapper, Factory> implements IFactoryService {
 
-    @Autowired
-    private IUserService userService;
 
     @Override
     public IPage<Factory> getFactoryPage(Factory factory) {

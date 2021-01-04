@@ -33,18 +33,19 @@ public class HeaderAndDetailInsert {
     @Autowired
     private IDetailService detailService;
 
-//    @Transactional
-//    public void insertHeaderAndDetail(){
-//        List<ScanLog> headerList = scanLogService.selectScanLogInsert();
-//        for (ScanLog scanLog : headerList) {
-//            Header header = XmlUtils.resolverSapMessage(scanLog.getDeliveryResponse());
-//            headerService.insertHeader(header);
-//            List<Detail> detailList = header.getDetailList();
-//            for (Detail detail : detailList) {
-//                detailService.insertDetail(detail);
-//            }
-//        }
-//        scanLogService.updateScanLogStatus(headerList);
-//    }
+    @Transactional
+    public void insertSapMsg(){
+
+        List<ScanLog> headerList = scanLogService.selectScanLogInsert();
+        for (ScanLog scanLog : headerList) {
+            Header header = XmlUtils.resolverSapMessage(scanLog.getDeliveryResponse());
+            headerService.insertHeader(header);
+            List<Detail> detailList = header.getDetailList();
+            for (Detail detail : detailList) {
+                detailService.insertDetail(detail);
+            }
+        }
+        scanLogService.updateScanLogStatus(headerList);
+    }
 
 }

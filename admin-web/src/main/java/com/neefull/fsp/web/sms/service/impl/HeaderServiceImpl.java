@@ -10,9 +10,13 @@ import com.neefull.fsp.web.sms.entity.vo.HeaderVo;
 import com.neefull.fsp.web.sms.mapper.HeaderMapper;
 import com.neefull.fsp.web.sms.service.IDetailService;
 import com.neefull.fsp.web.sms.service.IHeaderService;
+import com.neefull.fsp.web.sms.service.IScanLogService;
 import com.neefull.fsp.web.sms.utils.ScanComment;
+import com.neefull.fsp.web.sms.utils.XmlUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,10 +36,12 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
 
     @Autowired
     private IDetailService detailService;
+    @Autowired@Lazy
+    private IScanLogService scanLogService;
 
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void insertHeader(Header header) {
         this.baseMapper.insert(header);
     }
@@ -57,7 +63,7 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
 
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void updateStatus(String delivery, String status) {
         this.baseMapper.updateStatusByDelivery(delivery,status);
     }
@@ -76,7 +82,7 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
 
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void updateErrorMsg(Integer id, String msg) {
         this.baseMapper.updateErrorMsg(id,msg);
     }
@@ -95,13 +101,12 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
         QueryWrapper<Header> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("delivery",delivery);
         return this.baseMapper.selectOne(queryWrapper);
-
     }
 
 
     @Override
     public HeaderVo queryScanDn(String plant,String delivery) {
-        HeaderVo headerVo = this.baseMapper.queryScanDn(plant, delivery, ScanComment.STATUS_ONE ,ScanComment.STATUS_TWO);
+        HeaderVo headerVo = this.baseMapper.queryScanDn(plant, delivery);
         if(headerVo!=null){
             List<Detail> detailList = detailService.queryDetailByDelivery(delivery);
             StringBuffer msg = new StringBuffer();
@@ -126,7 +131,7 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
         zeroStatus = oneStatus = twoStatus = threeStatus = fourStatus = 0;
 
         for (Header head : headerList) {
-            if(StringUtils.isEmpty(head.getStatus())){
+            if(head.getStatus().equals(ScanComment.STATUS_ZERO)){
                 zeroStatus += 1;
             }else if(head.getStatus().equals(ScanComment.STATUS_ONE)){
                 oneStatus += 1;
@@ -149,6 +154,32 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
 
         return map;
     }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    public void updateUserByDelivery(String dn, String userName, String format) {
+        this.baseMapper.updateUserByDelivery(dn,userName,format);
+    }
+
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    public void insertHeaderAndDetail(String message,Integer id) {
+
+        Header header = XmlUtils.resolverSapMessage(message);
+        if(header!=null){
+            insertHeader(header);
+        }
+        List<Detail> detailList = header.getDetailList();
+        if(CollectionUtils.isNotEmpty(detailList)){
+            for (Detail detail : detailList) {
+                detailService.insertDetail(detail);
+            }
+        }
+        scanLogService.updateStatus(id,ScanComment.STATUS_TWO);
+
+    }
+
 
 
 }

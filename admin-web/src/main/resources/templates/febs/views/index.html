@@ -12,27 +12,93 @@
 </style>
 <div class="layui-fluid layui-anim febs-anim" id="fbs-serve" lay-title="数量统计">
     <div class="layui-row febs-container">
-        <div class="layui-card-body febs-table-full">
-            <div class="item" >
-                <div>
-                    <div class="item-count" id = "num"></div>
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div id="chart" style="height: 350px"></div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
 
 <script data-th-inline="none" type="text/javascript">
-    layui.use(['jquery'], function () {
+    layui.use(['jquery','highcharts','apexcharts'], function () {
         var $ = layui.jquery;
 
         $.get(ctx +"scan/smsHeader/queryScanNumber",{plants:currentUser.factoryName}, function (data) {
+
             var num = data.data;
-            $("#num").append('<span style="color: red"><h2>当前一共有'+num.count+'条数据,有'+num.zeroStatus+'条未扫描' +
-                ',有'+num.oneStatus+'条已扫描,有'+num.twoStatus+'条审核未通过,有'+num.threeStatus+'条审核通过' +
-                ',有'+num.fourStatus+'条已同步</h2></span>')
+            var data_arr = new Array();
+            data_arr[0]=num.zeroStatus;
+            data_arr[1]=num.oneStatus;
+            data_arr[2]=num.twoStatus;
+            data_arr[3]=num.threeStatus;
+            data_arr[4]=num.fourStatus;
+
+            var options = {
+                title: {
+                    text: '数据统计 总数'+num.count+'条',
+                    align: 'center'
+                },
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                    toolbar: {
+                        show: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '32rem'
+                    }
+                },
+                dataLabels: {
+                    enabled: true
+                },
+                stroke: {
+                    show: true,
+                    width: 1,
+                    colors: ['transparent']
+                },
+                series: [{
+                    name:'数量',
+                    data:data_arr
+                }],
+                xaxis: {
+                    categories: ['未扫描', '已扫描', '审核未通过', '审核通过', '已同步'],
+                    axisTicks: {
+                        show: true
+                    },
+                    axisBorder: {
+                        show: true,
+                        color: '#f1f1f1'
+                    }
+                },
+                fill: {
+                    opacity: 1
+                },
+                grid: {
+                    row: {
+                        colors: ['transparent', 'transparent'],
+                        opacity: 0.2
+                    },
+                    borderColor: '#f1f1f1'
+                }
+            };
+
+            new ApexCharts(
+                document.querySelector("#chart"),
+                options
+            ).render();
+
         });
+
+
+
 
     });
 </script>

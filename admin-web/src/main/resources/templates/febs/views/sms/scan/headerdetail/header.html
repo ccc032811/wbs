@@ -146,14 +146,14 @@
                 });
             }
             if(layEvent === 'header-edit'){
-                edit(data.delivery)
+                edit(data.delivery,currentUser.username)
             }
 
         });
 
 
-        function edit(dn) {
-            febs.get(ctx + 'scan/smsScan/auditDn/' + dn, new Date(), function (res) {
+        function edit(dn,name) {
+            febs.get(ctx + 'scan/smsScan/auditDn/' + dn+"/"+name, new Date(), function (res) {
                 if(res.code === 200){
                     febs.alert.success('审核成功');
                     $query.click();

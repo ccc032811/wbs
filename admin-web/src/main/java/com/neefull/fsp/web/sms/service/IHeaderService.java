@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.sms.entity.Header;
 import com.neefull.fsp.web.sms.entity.vo.HeaderVo;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -81,5 +83,17 @@ public interface IHeaderService extends IService<Header> {
     Map<String, Integer> queryScanNumber(Header header);
 
 
+    /**更新审批用户
+     * @param dn
+     * @param userName
+     * @param format
+     */
+    void updateUserByDelivery(String dn, String userName, String format);
 
+    /**异步解析入库
+     * @param message
+     * @param id
+     */
+    @Async("scanAsyncThreadPool")
+    void insertHeaderAndDetail(String message, Integer id);
 }

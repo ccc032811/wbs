@@ -37,7 +37,7 @@ public class HeaderController extends BaseController {
             return new FebsResponse().success().data(dataTable);
         } catch (Exception e) {
             String message = "查询DN Header表失败！";
-            log.error(message,e);
+            log.error(message+"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }
@@ -56,7 +56,7 @@ public class HeaderController extends BaseController {
             return new FebsResponse().success().data(header);
         } catch (Exception e) {
             String message = "查询DN Header失败！";
-            log.error(message,e);
+            log.error(message+"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }
@@ -73,7 +73,7 @@ public class HeaderController extends BaseController {
             return new FebsResponse().success().data(headerVo);
         } catch (Exception e) {
             String message = "查询DN失败！";
-            log.error(message,e);
+            log.error(message+"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }
@@ -90,7 +90,7 @@ public class HeaderController extends BaseController {
             return new FebsResponse().success().data(num);
         } catch (Exception e) {
             String message = "查询DN失败！";
-            log.error(message,e);
+            log.error(message+"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }
@@ -109,7 +109,7 @@ public class HeaderController extends BaseController {
             return new FebsResponse().success().data(dataTable);
         } catch (Exception e) {
             String message = "查询扫描对比表失败！";
-            log.error(message,e);
+            log.error(message+"失败原因为: {}",e);
             throw new FebsException(message);
         }
     }

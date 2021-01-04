@@ -17,7 +17,9 @@ import com.neefull.fsp.web.sms.utils.ScanComment;
 import com.neefull.fsp.web.sms.utils.XmlUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,15 +40,15 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
     private IHeaderService headerService;
     @Autowired
     private IDetailService detailService;
-    @Autowired
-    private IScanLogService scanLogService;
 
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void insertScanMsg(ScanAdd scanAdd) {
         for (Scan scan : scanAdd.getScanList()) {
-            this.baseMapper.insert(scan);
+            if(!scan.getFlag().equals(ScanComment.STATUS_THREE)){
+                this.baseMapper.insert(scan);
+            }
         }
         headerService.updateStatus(scanAdd.getDelivery(), ScanComment.STATUS_ONE);
     }
@@ -71,13 +73,14 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
     @Override
     public List<Scan> queryScanByDelivery(String delivery) {
-        QueryWrapper<Scan> wrapper = new QueryWrapper<>();
-        wrapper.eq("delivery",delivery);
-        return this.baseMapper.selectList(wrapper);
+        QueryWrapper<Scan> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("delivery",delivery);
+        queryWrapper.eq("del",ScanComment.STATUS_ONE);
+        return this.baseMapper.selectList(queryWrapper);
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void updateScanStatus(Integer id, String status) {
         this.baseMapper.updateScanStatus(id,status);
     }
@@ -87,16 +90,31 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void editScanDetail(List<Scan> scanList) {
         for (Scan scan : scanList) {
+
             QueryWrapper<Scan> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("delivery",scan.getDelivery());
             queryWrapper.eq("mat_code",scan.getMatCode());
             queryWrapper.eq("batch",scan.getBatch());
-            Scan isScan = this.baseMapper.selectOne(queryWrapper);
-            if(isScan==null){
+
+            if(scan.getFlag().equals(ScanComment.STATUS_ONE)){
                 this.baseMapper.insert(scan);
-            }else {
-                scan.setId(isScan.getId());
-                this.baseMapper.updateById(scan);
+            }else if(scan.getFlag().equals(ScanComment.STATUS_TWO)){
+                this.baseMapper.update(scan,queryWrapper);
+            }else if(scan.getFlag().equals(ScanComment.STATUS_THREE)){
+                Scan sca = new Scan();
+                sca.setDel(ScanComment.STATUS_TWO);
+                this.baseMapper.update(sca,queryWrapper);
             }
+
+//            this.baseMapper.update(scan,queryWrapper);
+//            Scan isScan = this.baseMapper.selectOne(queryWrapper);
+//
+//            if(isScan==null){
+//                this.baseMapper.insert(scan);
+//            }else {
+//                scan.setId(isScan.getId());
+//                this.baseMapper.updateById(scan);
+//            }
             headerService.updateStatus(scan.getDelivery(),ScanComment.STATUS_ONE);
         }
     }
@@ -108,31 +126,34 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
         queryWrapper.eq("delivery",delivery);
         queryWrapper.eq("mat_code",matCode);
         queryWrapper.eq("batch",batch);
+        queryWrapper.eq("del",ScanComment.STATUS_ONE);
         return this.baseMapper.selectOne(queryWrapper);
     }
 
-    @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
-    public void insertHeaderAndDetail(String message,Integer id) {
-
-        Header header = XmlUtils.resolverSapMessage(message);
-        headerService.insertHeader(header);
-        List<Detail> detailList = header.getDetailList();
-        for (Detail detail : detailList) {
-            detailService.insertDetail(detail);
-        }
-        scanLogService.updateStatus(id,ScanComment.STATUS_TWO);
-
-    }
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void deleteScanDetail(String delivery) {
-
+        Scan scan = new Scan();
+        scan.setDel(ScanComment.STATUS_TWO);
         QueryWrapper<Scan> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("delivery",delivery);
-        this.baseMapper.delete(queryWrapper);
+        this.baseMapper.update(scan,queryWrapper);
+        headerService.updateStatus(delivery,ScanComment.STATUS_ZERO);
+        detailService.updateStatusByDelivery(delivery,ScanComment.STATUS_ZERO);
 
+    }
+
+    @Override
+    public List<Scan> queryScanAndCountByDelivery(String delivery) {
+        return this.baseMapper.queryScanAndCountByDelivery(delivery);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    public void deleteScanById(Integer id,String delivery) {
+        this.baseMapper.deleteScanById(id,ScanComment.STATUS_TWO);
+        headerService.updateStatus(delivery,ScanComment.STATUS_ONE);
     }
 
 
@@ -144,7 +165,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
-    public List<HeaderVo> auditDn(String dns) {
+    public List<HeaderVo> auditDn(String dns,String userName) {
 
         String[] deliveryList = dns.split(StringPool.COMMA);
         List<HeaderVo> headerVos = new ArrayList<>();
@@ -201,20 +222,20 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
                     Detail maDeta = new Detail();
                     boolean material = true;
                     for (Detail deta : scanList) {
-                        if(detail.getMaterial().equals(deta.getMaterial())&&detail.getBatch().equals(deta.getBatch())){
+                        if(detail.getMaterial().equals(deta.getMaterial())&&detail.getRocheBatch().equals(deta.getRocheBatch())){
                             maDeta = deta;
                             material = false;
                             break;
                         }
                     }
                     if(material){
-                        errorMsg.append("该物料:" + detail.getMaterial() + "不存在或该批次:" + detail.getBatch() + "不存在; ");
-                        detailService.updateErrorMsg(detail.getId(),"该物料:" + detail.getMaterial() + "不存在或该批次:" + detail.getBatch() + "不存在; ",ScanComment.STATUS_ONE);
+                        errorMsg.append("该物料:" + detail.getMaterial() + "不存在或该批次:" + detail.getRocheBatch() + "不存在; ");
+                        detailService.updateErrorMsg(detail.getId(),"该物料:" + detail.getMaterial() + "不存在或该批次:" + detail.getRocheBatch() + "不存在; ",ScanComment.STATUS_ONE);
                     }
                     if(!material){
                         if(!detail.getQuantity().equals(maDeta.getQuantity())){
-                            errorMsg.append("该物料:"+detail.getMaterial()+"的数量不相同; ");
-                            detailService.updateErrorMsg(detail.getId(),"该物料:"+detail.getMaterial()+"的数量不相同; ",ScanComment.STATUS_ONE);
+                            errorMsg.append("该物料:"+detail.getMaterial()+"和批次:" + detail.getRocheBatch() +"的数量不相同; ");
+                            detailService.updateErrorMsg(detail.getId(),"该物料:"+detail.getMaterial()+"和批次:" + detail.getRocheBatch() +"的数量不相同; ",ScanComment.STATUS_ONE);
                         }
                     }
                 }
@@ -222,7 +243,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
             for (Detail detail : detailList) {
                 for (Detail scanDatail : scanList) {
-                    if(detail.getBatch().equals(scanDatail.getBatch())&&detail.getMaterial().equals(scanDatail.getMaterial())){
+                    if(detail.getRocheBatch().equals(scanDatail.getRocheBatch())&&detail.getMaterial().equals(scanDatail.getMaterial())){
                         detailService.updateScanQuntity(detail.getId(),scanDatail.getQuantity());
                     }
                 }
@@ -238,6 +259,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
             }
             headerVos.add(headerVo);
+            headerService.updateUserByDelivery(dn,userName, DateFormatUtils.format(new Date(),"yyyy-MM-dd HH:mm:ss"));
 
         }
         return headerVos;

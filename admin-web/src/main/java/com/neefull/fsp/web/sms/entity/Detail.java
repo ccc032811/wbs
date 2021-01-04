@@ -522,12 +522,12 @@ public class Detail implements Serializable {
         if (object == null || getClass() != object.getClass()) return false;
         Detail detail = (Detail) object;
         return Objects.equals(material, detail.material) &&
-                Objects.equals(batch, detail.batch) &&
+                Objects.equals(rocheBatch, detail.rocheBatch) &&
                 Objects.equals(quantity, detail.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(material, batch, quantity);
+        return Objects.hash(material, rocheBatch, quantity);
     }
 }

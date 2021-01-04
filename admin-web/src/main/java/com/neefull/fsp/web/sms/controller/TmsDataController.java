@@ -32,8 +32,8 @@ public class TmsDataController extends BaseController {
             IPage<TmsData> tmsDataIPage = tmsDataService.queryTmsList(tmsData);
             return new FebsResponse().success().data(getDataTable(tmsDataIPage));
         } catch (Exception e) {
-            String message = "查询对接TMS记录失败";
-            log.error(message,e);
+            String message = "查询对接TMS记录失败！";
+            log.error(message+"失败原因为: {}",e);
             throw new FebsException(message);
         }
 

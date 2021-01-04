@@ -45,7 +45,7 @@ public interface IScanService  extends IService<Scan> {
      * @param dn
      * @return
      */
-    List<HeaderVo> auditDn(String dns);
+    List<HeaderVo> auditDn(String dns,String userName);
 
 
     /**根据DN查询
@@ -75,18 +75,20 @@ public interface IScanService  extends IService<Scan> {
      */
     Scan getScanDetail(String delivery, String matCode, String batch);
 
-
-    /**异步解析入库
-     * @param message
-     * @param id
-     */
-    @Async("scanAsyncThreadPool")
-    void insertHeaderAndDetail(String message,Integer id);
-
-
     /**删除已扫信息
      * @param delivery
      */
     void deleteScanDetail(String delivery);
+
+    /**查询扫描跟数量
+     * @param delivery
+     * @return
+     */
+    List<Scan> queryScanAndCountByDelivery(String delivery);
+
+    /**根据id删除扫描信息
+     * @param id
+     */
+    void deleteScanById(Integer id,String delivery);
 
 }

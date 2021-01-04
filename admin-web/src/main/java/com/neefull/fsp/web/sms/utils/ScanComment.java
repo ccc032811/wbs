@@ -15,6 +15,8 @@ import java.util.Map;
 
 public abstract class ScanComment {
 
+    public final static String STATUS_ZERO = "0";
+
     public final static String STATUS_ONE = "1";  // 1 已扫描
 
     public final static String STATUS_TWO = "2";  // 2   审核未通过

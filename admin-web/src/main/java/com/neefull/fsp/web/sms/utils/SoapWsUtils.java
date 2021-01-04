@@ -33,6 +33,8 @@ public abstract class SoapWsUtils {
         StringBuffer result = null;
         OutputStream outObject = null;
 
+        log.info("请求SAP报文为：{}",soapMsg);
+
         try {
             URL url = new URL(invoke_ws_url);
             HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
@@ -48,7 +50,7 @@ public abstract class SoapWsUtils {
             outObject = httpConn.getOutputStream();
             outObject.write(soapMsg.getBytes("utf-8"));
 
-            log.info(httpConn.getResponseMessage());
+            log.info("请求SAP返回结果：{}",httpConn.getResponseMessage());
 
             isr = new InputStreamReader(httpConn.getInputStream(), encoding);
             inReader = new BufferedReader(isr);
@@ -57,6 +59,7 @@ public abstract class SoapWsUtils {
             while ((inputLine = inReader.readLine()) != null) {
                 result.append(inputLine);
             }
+            log.info("请求SAP返回报文为：{}",result);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -89,7 +92,7 @@ public abstract class SoapWsUtils {
                 "         \n" +
                 "         </T_DELIVERY_ITEM>\n" +
                 "         <T_MSG>\n" +
-                "          \n" +
+                "       \n" +
                 "         </T_MSG>\n" +
                 "      </urn:ZCHN_SD_GET_DN_INFO>\n" +
                 "   </soapenv:Body>\n" +

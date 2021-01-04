@@ -1,9 +1,6 @@
 package com.neefull.fsp.web.sms.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -74,6 +71,9 @@ public class Scan implements Serializable {
      */
     @TableField(value = "quantity")
     private String quantity;
+
+    @TableField(exist = false)
+    private String count;
     /**
      *  有效期
      */
@@ -97,7 +97,15 @@ public class Scan implements Serializable {
      */
     @TableField(value = "status")
     private String status;
+    /**
+     *  状态   1有效    2删除
+     */
+    @TableField(value = "del")
+    private String del;
 
+    //  1新增  2 修改  删除
+    @TableField(exist = false)
+    private String flag;
     /**
      *
      */
@@ -255,6 +263,14 @@ public class Scan implements Serializable {
         this.quantity = quantity;
     }
 
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
     public String getPlant() {
         return plant;
     }
@@ -285,6 +301,14 @@ public class Scan implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDel() {
+        return del;
+    }
+
+    public void setDel(String del) {
+        this.del = del;
     }
 
     public String getScanUser() {
@@ -445,5 +469,13 @@ public class Scan implements Serializable {
 
     public void setShipParty(String shipParty) {
         this.shipParty = shipParty;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

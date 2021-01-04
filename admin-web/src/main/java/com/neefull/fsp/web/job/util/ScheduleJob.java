@@ -53,7 +53,8 @@ public class ScheduleJob extends QuartzJobBean {
             jobLog.setTimes(times);
             // 任务状态 0：成功 1：失败
             jobLog.setStatus(JobLog.JOB_SUCCESS);
-            if(scheduleJob.getJobId() !=10){
+
+            if(scheduleJob.getJobId() != 13){
                 log.info("任务执行完毕，任务ID：{} 总共耗时：{} 毫秒", scheduleJob.getJobId(), times);
             }
 

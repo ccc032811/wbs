@@ -8,7 +8,7 @@ spring:
     multipart:
       max-file-size: 2MB # 限制文件上传的大小
   profiles:
-    active: test
+    active: prod
 
   thymeleaf:
     cache: false
@@ -34,9 +34,10 @@ mybatis-plus:
     # 关闭 mybatis-plus的 banner
     banner: false
 
+
 sms:
   soap:
-    soapUrl: http://eccappdev.sphkdl.shaphar.net:8008/sap/bc/srt/rfc/sap/zchn_sd_get_dn_info_ws/200/zchn_sd_get_dn_info_ws/zchn_sd_get_dn_info_ws
+    soapUrl: http://eccappqas.sphkdl.shaphar.net:8008/sap/bc/srt/rfc/sap/zchn_sd_get_dn_info_ws/200/zchn_sd_get_dn_info_ws/zchn_sd_get_dn_info_ws
   tms:
     method: putORDREData
     client_customerid: SYKY_ERP

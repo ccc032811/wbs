@@ -72,10 +72,13 @@
     
     
     <update id="updateStatusByDelivery">
-        update sms_header set status = #{status} where delivery = #{delivery}
+        update sms_header set status = #{status} ,error_message = null ,verify_user = null ,verify_date = null where delivery = #{delivery}
     </update>
     <update id="updateErrorMsg">
         update sms_header set error_message = #{msg} where id = #{id}
+    </update>
+    <update id="updateUserByDelivery">
+        update sms_header set verify_user = #{userName},verify_date = #{format} where delivery = #{dn}
     </update>
     <select id="getPageHeader" resultType="com.neefull.fsp.web.sms.entity.Header">
         select * from sms_header t where 1=1
@@ -111,9 +114,9 @@
         order by create_time desc
     </select>
     <select id="selectHeaderByScanDn" resultType="com.neefull.fsp.web.sms.entity.Header">
-        select  t.* from sms_header t where delivery in
+        select  t.*  from sms_header t where delivery in
             ((select delivery from sms_scan where box_code in
-                (select distinct box_code from sms_scan where delivery = #{dn} and mat_code != '000000')))
+                (select distinct box_code from sms_scan where delivery = #{dn} and mat_code != '000000' and del =1)))
     </select>
     <select id="queryHeaderDetailByDelivery" resultMap="headerDetail">
         select h.id h_id,
@@ -123,14 +126,14 @@
                h.error_message error_msg,
                d.id,
                d.material,
-               d.batch,
+               d.roche_batch,
                d.quantity,
                d.error_message
         from sms_header h inner join sms_detail d on h.delivery = d.delivery where h.delivery = #{dn}
     </select>
 
     <select id="queryScanDn" resultType="com.neefull.fsp.web.sms.entity.vo.HeaderVo">
-        select * from sms_header where plant = #{plant} and status in (#{status1},#{status2}) and delivery = #{delivery}
+        select * from sms_header where plant = #{plant} and delivery = #{delivery}
     </select>
     <select id="selecHeaderList" resultType="com.neefull.fsp.web.sms.entity.Header">
         select t.delivery,t.status from sms_header t  where t.plant  in

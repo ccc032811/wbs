@@ -42,6 +42,9 @@ public class TmsData implements Serializable {
     @TableField(value = "plant")
     private String plant;
 
+//    @TableField(value = "res_data")
+    private String resData;
+
     @TableField(exist = false)
     private List<String> plants;
     /**

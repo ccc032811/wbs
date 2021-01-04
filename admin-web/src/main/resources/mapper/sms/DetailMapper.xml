@@ -7,6 +7,9 @@
     <update id="updateupdateErrorMsg">
         update  sms_detail set error_message = #{msg} ,status = #{status} where id = #{id}
     </update>
+    <update id="updateStatusByDelivery">
+        update sms_detail set scan_quantity = #{status} where delivery = #{delivery}
+    </update>
     <select id="getDetailList" resultType="com.neefull.fsp.web.sms.entity.Detail">
         select * from sms_detail t where 1=1
         <if test="delivery != null and delivery != ''">
@@ -21,8 +24,8 @@
         <if test="material != null and material != ''">
             AND t.material like concat('%',#{material},'%')
         </if>
-        <if test="batch != null and batch != ''">
-            AND t.batch like concat('%',#{batch},'%')
+        <if test="rocheBatch != null and rocheBatch != ''">
+            AND t.roche_batch like concat('%',#{rocheBatch},'%')
         </if>
         <if test="status != null and status != ''">
             AND t.status = #{status}
@@ -30,6 +33,6 @@
         order by create_time desc
     </select>
     <select id="selectScanDetail" resultType="com.neefull.fsp.web.sms.entity.Detail">
-        select d.mat_code material, d.batch, sum(d.quantity) quantity from sms_scan d where d.delivery = #{dn} group by material,batch
+        select d.mat_code material, d.batch rocheBatch, sum(d.quantity) quantity from sms_scan d where d.delivery = #{dn} and d.del =1  group by material,batch
     </select>
 </mapper>
