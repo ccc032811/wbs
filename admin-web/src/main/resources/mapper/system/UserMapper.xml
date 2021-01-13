@@ -10,7 +10,7 @@
         u.status,
         u.create_time createTime,
         u.ssex sex,
-        u.factory_id factoryId,
+        u.SCAN_TYPE scanType,
         u.last_login_time lastLoginTime,
         u.modify_time modifyTime,
         u.description,
@@ -51,7 +51,7 @@
         u.status,
         u.create_time createTime,
         u.ssex sex,
-        u.factory_id factoryId,
+        u.SCAN_TYPE scanType,
         u.last_login_time lastLoginTime,
         u.modify_time modifyTime,
         u.description,
@@ -110,7 +110,7 @@
         u.status,
         u.create_time createTime,
         u.ssex sex,
-        u.factory_id factoryId,
+        u.SCAN_TYPE scanType,
         u.last_login_time lastLoginTime,
         u.modify_time modifyTime,
         u.description,
@@ -135,11 +135,14 @@
     <select id="getUserByName" resultType="com.neefull.fsp.web.system.entity.User">
         select * from sms_user where username = #{username}
     </select>
+    <select id="getScanType" resultType="java.lang.String">
+        select SCAN_TYPE from sms_user where username = #{username}
+    </select>
 
     <insert id="saveReturnPrimaryKey" useGeneratedKeys="true" keyProperty="userId" parameterType="com.neefull.fsp.web.system.entity.User">
-        insert into sms_user(user_id,username,password,factory_id ,email,mobile,status,create_time,modify_time,ssex,is_tab,
+        insert into sms_user(user_id,username,password,SCAN_TYPE ,email,mobile,status,create_time,modify_time,ssex,is_tab,
         theme,avatar)
-        VALUES (#{userId},#{username},#{password},#{email},#{factoryId},#{mobile},#{status},NOW(),NOW(),#{sex},
+        VALUES (#{userId},#{username},#{password},#{email},#{scanType},#{mobile},#{status},NOW(),NOW(),#{sex},
         #{isTab},#{theme},#{avatar})
     </insert>
 </mapper>

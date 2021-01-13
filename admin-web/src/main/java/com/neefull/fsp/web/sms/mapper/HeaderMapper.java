@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,12 +28,21 @@ public interface HeaderMapper extends BaseMapper<Header> {
 
     Header queryHeaderDetailByDelivery(@Param("dn") String dn);
 
-    void updateErrorMsg(@Param("id") Integer id, @Param("msg") String msg);
+    void updateError( @Param("message") String message,@Param("delivery") String delivery);
 
-    HeaderVo queryScanDn(@Param("plant") String plant, @Param("delivery") String delivery);
+    HeaderVo queryScanDn( @Param("delivery") String delivery);
 
     List<Header> selecHeaderList(Header header);
 
     void updateUserByDelivery(@Param("dn") String dn, @Param("userName") String userName, @Param("format") String format);
+
+    void updateDeliveryStatus(@Param("dn") String dn, @Param("status") String status);
+
+    List<Header> getHeaderExcel(Header header);
+
+    List<Header> getCompareExcel(Header header);
+
+
+
 
 }

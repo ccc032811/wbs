@@ -7,6 +7,7 @@ import com.neefull.fsp.web.sms.entity.vo.HeaderVo;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +58,7 @@ public interface IHeaderService extends IService<Header> {
      * @param id
      * @param toString
      */
-    void updateErrorMsg(Integer id, String msg);
+    void updateErrorMsg(String delivery, String msg);
 
     /**查询可同步的数据
      * @return
@@ -75,7 +76,7 @@ public interface IHeaderService extends IService<Header> {
      * @param plant
      * @return
      */
-    HeaderVo queryScanDn(String plant,String delivery);
+    HeaderVo queryScanDn(String delivery);
 
     /**查询三个状态的数量
      * @return
@@ -96,4 +97,15 @@ public interface IHeaderService extends IService<Header> {
      */
     @Async("scanAsyncThreadPool")
     void insertHeaderAndDetail(String message, Integer id);
+
+    void updateDeliveryStatus(String dn, String status);
+
+    List<Header> getHeaderExcel(Header header);
+
+    List<Header> getCompareExcel(Header header);
+
+    void deleteByDelivery(String delivery);
+
+
+
 }

@@ -46,15 +46,22 @@
                 </select>
             </div>
         </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label febs-form-item-require">工厂：</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<select name="factoryId"-->
+                        <!--lay-verify="required"-->
+                        <!--xm-select-direction="down"-->
+                        <!--xm-select="factory-update"-->
+                        <!--xm-select-skin="default">-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="layui-form-item">
-            <label class="layui-form-label febs-form-item-require">工厂：</label>
+            <label class="layui-form-label febs-form-item-require">扫描类型：</label>
             <div class="layui-input-block">
-                <select name="factoryId"
-                        lay-verify="required"
-                        xm-select-direction="down"
-                        xm-select="factory-update"
-                        xm-select-skin="default">
-                </select>
+                <input type="radio" name="scanType" value="1" title="按料扫箱" checked="">
+                <input type="radio" name="scanType" value="2" title="按箱扫料">
             </div>
         </div>
         <div class="layui-form-item">
@@ -162,6 +169,7 @@
                 "mobile": user.mobile,
                 "email": user.email,
                 "status": user.status,
+                "scanType": user.scanType,
                 "sex": user.sex,
                 "description": user.description
             });

@@ -77,6 +77,11 @@ public class OpinionServiceImpl extends ServiceImpl<OpinionMapper, Opinion> impl
         return opinionMapper.getOpinions(name);
     }
 
+    @Override
+    public String queryOpionById(String boxtype) {
+        return this.baseMapper.queryOpionById(boxtype);
+    }
+
 
     private List<OpinionTree<Opinion>> convertOpinions(List<Opinion> opinions) {
         List<OpinionTree<Opinion>> trees = new ArrayList<>();

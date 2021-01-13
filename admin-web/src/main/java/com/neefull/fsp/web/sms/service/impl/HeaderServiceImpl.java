@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void insertHeader(Header header) {
         this.baseMapper.insert(header);
     }
@@ -49,23 +50,24 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
 
     @Override
     public IPage<Header> queryHeaderList(Header header) {
-        Header singleHeader = (Header) ScanComment.containPlant(header);
-        IPage<Header> headerPage = new Page<>(singleHeader.getPageNum(),singleHeader.getPageSize());
-        return this.baseMapper.getPageHeader(headerPage,singleHeader);
+//        Header singleHeader = (Header) ScanComment.containPlant(header);
+        IPage<Header> headerPage = new Page<>(header.getPageNum(),header.getPageSize());
+        return this.baseMapper.getPageHeader(headerPage,header);
     }
+
 
     @Override
     public IPage<Header> queryCompareList(Header header) {
-        Header singleHeader = (Header) ScanComment.containPlant(header);
-        IPage<Header> headerPage = new Page<>(singleHeader.getPageNum(),singleHeader.getPageSize());
-        return this.baseMapper.queryCompareList(headerPage,singleHeader);
+//        Header singleHeader = (Header) ScanComment.containPlant(header);
+        IPage<Header> headerPage = new Page<>(header.getPageNum(),header.getPageSize());
+        return this.baseMapper.queryCompareList(headerPage,header);
     }
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void updateStatus(String delivery, String status) {
-        this.baseMapper.updateStatusByDelivery(delivery,status);
+        this.baseMapper.updateDeliveryStatus(delivery,status);
     }
 
 
@@ -82,9 +84,9 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
-    public void updateErrorMsg(Integer id, String msg) {
-        this.baseMapper.updateErrorMsg(id,msg);
+    @Transactional
+    public void updateErrorMsg(String delivery, String message) {
+        this.baseMapper.updateError(message,delivery);
     }
 
 
@@ -105,8 +107,8 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
 
 
     @Override
-    public HeaderVo queryScanDn(String plant,String delivery) {
-        HeaderVo headerVo = this.baseMapper.queryScanDn(plant, delivery);
+    public HeaderVo queryScanDn(String delivery) {
+        HeaderVo headerVo = this.baseMapper.queryScanDn(delivery);
         if(headerVo!=null){
             List<Detail> detailList = detailService.queryDetailByDelivery(delivery);
             StringBuffer msg = new StringBuffer();
@@ -156,14 +158,14 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void updateUserByDelivery(String dn, String userName, String format) {
         this.baseMapper.updateUserByDelivery(dn,userName,format);
     }
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void insertHeaderAndDetail(String message,Integer id) {
 
         Header header = XmlUtils.resolverSapMessage(message);
@@ -177,9 +179,34 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
             }
         }
         scanLogService.updateStatus(id,ScanComment.STATUS_TWO);
-
     }
 
+
+
+    @Override
+    @Transactional
+    public void updateDeliveryStatus(String dn, String status) {
+        this.baseMapper.updateDeliveryStatus(dn,status);
+    }
+
+    @Override
+    public List<Header> getHeaderExcel(Header header) {
+        return this.baseMapper.getHeaderExcel(header);
+    }
+
+    @Override
+    public List<Header> getCompareExcel(Header header) {
+
+        return this.baseMapper.getCompareExcel(header);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByDelivery(String delivery) {
+        QueryWrapper<Header> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("delivery",delivery);
+        this.baseMapper.delete(queryWrapper);
+    }
 
 
 }

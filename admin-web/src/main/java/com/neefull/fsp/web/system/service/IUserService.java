@@ -131,7 +131,6 @@ public interface IUserService extends IService<User> {
     void updateProfile(User user);
 
 
-
-
+    String getScanType(String username);
 
 }

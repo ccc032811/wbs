@@ -37,15 +37,17 @@ public abstract class XmlUtils {
             header.setRocheOrder(getTagContent(sapMessage, "<ROCHE_SALES_ORDER>", "</ROCHE_SALES_ORDER>"));
             header.setRocheCustomerOrder(getTagContent(sapMessage, "<ROCHE_CUSTOMER_ORDER>", "</ROCHE_CUSTOMER_ORDER>"));
 
-            String detailMessage = getTagContent(sapMessage, "<T_DELIVERY_ITEM>", "</T_DELIVERY_ITEM>");
-            String[] detailString = detailMessage.split("<item>");
-            List<String> detailStrList = new ArrayList<>();
-            for (int i=1; i<detailString.length;i++){
-                if(StringUtils.isNotEmpty(detailString[i])){
-                    String dom = detailString[i].split("</item>")[0];
-                    detailStrList.add(dom);
-                }
-            }
+//            String detailMessage = getTagContent(sapMessage, "<T_DELIVERY_ITEM>", "</T_DELIVERY_ITEM>");
+//            String[] detailString = detailMessage.split("<item>");
+//            List<String> detailStrList = new ArrayList<>();
+//            for (int i=1; i<detailString.length;i++){
+//                if(StringUtils.isNotEmpty(detailString[i])){
+//                    String dom = detailString[i].split("</item>")[0];
+//                    detailStrList.add(dom);
+//                }
+//            }
+
+            List<String> detailStrList = getDetailList(sapMessage);
 
             List<Detail> detailList = new ArrayList<>();
             if(CollectionUtils.isNotEmpty(detailStrList)){
@@ -55,15 +57,15 @@ public abstract class XmlUtils {
                     detail.setDeliveryItem(getTagContent(str, "<DELIVERY_ITEM>", "</DELIVERY_ITEM>"));
                     detail.setRocheDeliveryItem(getTagContent(str, "<ROCHE_DELIVERY_ITEM>", "</ROCHE_DELIVERY_ITEM>"));
                     detail.setRocheDeliveryItemCode(getTagContent(str, "<ROCHE_DELIVERY_ITEM_COUNT>", "</ROCHE_DELIVERY_ITEM_COUNT>"));
-                    detail.setMaterial(getTagContent(str, "<MATERIAL>", "</MATERIAL>"));
+                    detail.setMaterial(getMaterial(getTagContent(str, "<MATERIAL>", "</MATERIAL>")));
                     detail.setRocheMaterial(getTagContent(str, "<ROCHE_MATERIAL>", "</ROCHE_MATERIAL>"));
                     detail.setMaterialDescription(getTagContent(str, "<MATERIAL_DESCRIPTION>", "</MATERIAL_DESCRIPTION>"));
                     detail.setMaterialDescriptionEn(getTagContent(str, "<MATERIAL_DESCRIPTION_EN>", "</MATERIAL_DESCRIPTION_EN>"));
                     detail.setRocheMaterialDescription(getTagContent(str, "<ROCHE_MATERIAL_DESCRIPTION>", "</ROCHE_MATERIAL_DESCRIPTION>"));
                     detail.setPlant(getTagContent(str, "<PLANT>", "</PLANT>"));
-                    detail.setBatch(getTagContent(str, "<BATCH>", "</BATCH>"));
-                    detail.setRocheBatch(getTagContent(str, "<ROCHE_BATCH>", "</ROCHE_BATCH>"));
-                    detail.setSerialNumber(getTagContent(str, "<SERIAL_NUMBER>", "</SERIAL_NUMBER>"));
+//                    detail.setBatch(getTagContent(str, "<BATCH>", "</BATCH>"));
+                    detail.setRocheBatch("");
+//                    detail.setSerialNumber(getTagContent(str, "<SERIAL_NUMBER>", "</SERIAL_NUMBER>"));
                     detail.setQuantity(getTagContent(str, "<QUANTITY>", "</QUANTITY>"));
                     detail.setUom(getTagContent(str, "<UOM>", "</UOM>"));
                     detail.setRocheUom(getTagContent(str, "<ROCHE_UOM>", "</ROCHE_UOM>"));
@@ -78,16 +80,23 @@ public abstract class XmlUtils {
 
                     if(CollectionUtils.isNotEmpty(detailList)){
                         for (Detail deta : detailList) {
-                            if(detail.getMaterial().equals(deta.getMaterial())&&detail.getRocheBatch().equals(deta.getRocheBatch())){
-                                BigDecimal detaDec = new BigDecimal(deta.getQuantity());
-                                BigDecimal detailDec = new BigDecimal(detail.getQuantity());
-                                detaDec = detaDec.add(detailDec);
-                                deta.setQuantity(String.valueOf(detaDec));
-                                if(!deta.getBatch().equals(detail.getBatch())&&StringUtils.isNotEmpty(detail.getBatch())){
-                                    deta.setBatch(deta.getBatch()+"|"+detail.getBatch());
+                            if(StringUtils.isNotEmpty(detail.getBatch())){
+                                if (detail.getMaterial().equals(deta.getMaterial()) && detail.getRocheBatch().equals(deta.getRocheBatch())) {
+                                    String count = getCount(deta.getQuantity(), detail.getQuantity());
+                                    deta.setQuantity(count);
+                                    if (!deta.getBatch().equals(detail.getBatch())) {
+                                        deta.setBatch(deta.getBatch() + "|" + detail.getBatch());
+                                    }
+                                    isContain = true;
                                 }
-                                isContain = true;
+                            }else {
+                                if(detail.getMaterial().equals(deta.getMaterial())){
+                                    String count = getCount(deta.getQuantity(), detail.getQuantity());
+                                    deta.setQuantity(count);
+                                    isContain = true;
+                                }
                             }
+
                         }
                     }
                     if(!isContain){
@@ -103,9 +112,17 @@ public abstract class XmlUtils {
 
 
 
-    public static List<DetailVo> resolverDetail(String sapMessage){
+    private static String getCount(String res1,String res2){
+        BigDecimal detaDec = new BigDecimal(res1);
+        BigDecimal detailDec = new BigDecimal(res2);
+        detaDec = detaDec.add(detailDec);
+        return String.valueOf(detaDec);
+    }
 
-        String detailMessage = getTagContent(sapMessage, "<T_DELIVERY_ITEM>", "</T_DELIVERY_ITEM>");
+
+    private static List<String> getDetailList(String msg){
+
+        String detailMessage = getTagContent(msg, "<T_DELIVERY_ITEM>", "</T_DELIVERY_ITEM>");
         String[] detailString = detailMessage.split("<item>");
         List<String> detailStrList = new ArrayList<>();
         for (int i=1; i<detailString.length;i++){
@@ -114,31 +131,72 @@ public abstract class XmlUtils {
                 detailStrList.add(dom);
             }
         }
+        return detailStrList;
+    }
+
+
+
+    public static List<DetailVo> resolverDetail(String sapMessage){
+
+//        String detailMessage = getTagContent(sapMessage, "<T_DELIVERY_ITEM>", "</T_DELIVERY_ITEM>");
+//        String[] detailString = detailMessage.split("<item>");
+//        List<String> detailStrList = new ArrayList<>();
+//        for (int i=1; i<detailString.length;i++){
+//            if(StringUtils.isNotEmpty(detailString[i])){
+//                String dom = detailString[i].split("</item>")[0];
+//                detailStrList.add(dom);
+//            }
+//        }
+
+        List<String> detailStrList = getDetailList(sapMessage);
 
         List<DetailVo> detailVoList = new ArrayList<>();
         if(CollectionUtils.isNotEmpty(detailStrList)){
             for (String str : detailStrList) {
                 DetailVo detailVo = new DetailVo();
 
-                detailVo.setMatCode(getTagContent(str, "<MATERIAL>", "</MATERIAL>"));
+                detailVo.setMatCode(getMaterial(getTagContent(str, "<MATERIAL>", "</MATERIAL>")));
                 detailVo.setMatName(getTagContent(str, "<MATERIAL_DESCRIPTION>", "</MATERIAL_DESCRIPTION>"));
-                detailVo.setBatch(getTagContent(str, "<ROCHE_BATCH>", "</ROCHE_BATCH>"));
-                detailVo.setSerialNumber(getTagContent(str, "<SERIAL_NUMBER>", "</SERIAL_NUMBER>"));
+                detailVo.setBatch("");
+//                detailVo.setBatch(getTagContent(str, "<ROCHE_BATCH>", "</ROCHE_BATCH>"));
+//                detailVo.setSerialNumber(getTagContent(str, "<SERIAL_NUMBER>", "</SERIAL_NUMBER>"));
                 detailVo.setQuantity(getTagContent(str, "<QUANTITY>", "</QUANTITY>"));
                 detailVo.setUnit(getTagContent(str, "<UOM>", "</UOM>"));
                 detailVo.setExpiryDate(getTagContent(str, "<EXPIRY_DATE>", "</EXPIRY_DATE>"));
 
                 boolean isContain = false;
                 if(CollectionUtils.isNotEmpty(detailVoList)){
+
                     for (DetailVo deta : detailVoList) {
-                        if(detailVo.getMatCode().equals(deta.getMatCode())&&detailVo.getBatch().equals(deta.getBatch())){
-                            BigDecimal detaDec = new BigDecimal(deta.getQuantity());
-                            BigDecimal detailDec = new BigDecimal(detailVo.getQuantity());
-                            detaDec = detaDec.add(detailDec);
-                            deta.setQuantity(String.valueOf(detaDec));
-                            isContain = true;
+                        if(StringUtils.isNotEmpty(detailVo.getBatch())){
+                            if (detailVo.getMatCode().equals(deta.getMatCode()) && detailVo.getBatch().equals(deta.getBatch())) {
+                                String count = getCount(deta.getQuantity(), detailVo.getQuantity());
+                                deta.setQuantity(count);
+                                if (!deta.getBatch().equals(detailVo.getBatch())) {
+                                    deta.setBatch(deta.getBatch() + "|" + detailVo.getBatch());
+                                }
+                                isContain = true;
+                            }
+                        }else {
+                            if(detailVo.getMatCode().equals(deta.getMatCode())){
+                                String count = getCount(deta.getQuantity(), detailVo.getQuantity());
+                                deta.setQuantity(count);
+                                isContain = true;
+                            }
                         }
                     }
+
+
+//                    for (DetailVo deta : detailVoList) {
+//                        if(detailVo.getMatCode().equals(deta.getMatCode())&&detailVo.getBatch().equals(deta.getBatch())){
+//                            BigDecimal detaDec = new BigDecimal(deta.getQuantity());
+//                            BigDecimal detailDec = new BigDecimal(detailVo.getQuantity());
+//                            detaDec = detaDec.add(detailDec);
+//                            deta.setQuantity(String.valueOf(detaDec));
+//                            isContain = true;
+//                        }
+//                    }
+
                 }
                 if(!isContain){
                     detailVoList.add(detailVo);
@@ -156,5 +214,12 @@ public abstract class XmlUtils {
             return "";
         }
     }
+
+    private static String getMaterial(String val){
+        int newVal = Integer.parseInt(val);
+        return String.valueOf(newVal);
+    }
+
+
 
 }

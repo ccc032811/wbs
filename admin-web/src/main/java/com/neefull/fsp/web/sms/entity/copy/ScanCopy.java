@@ -1,10 +1,10 @@
-package com.neefull.fsp.web.sms.entity;
+package com.neefull.fsp.web.sms.entity.copy;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.neefull.fsp.web.common.converter.TimeConverter;
-import com.wuwenze.poi.annotation.Excel;
-import com.wuwenze.poi.annotation.ExcelField;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -15,10 +15,9 @@ import java.util.List;
  * @Author: chengchengchu
  * @Date: 2020/11/24  13:06
  */
-@TableName(value = "sms_scan")
-public class Scan implements Serializable {
+@TableName(value = "sms_scan_copy")
+public class ScanCopy implements Serializable {
 
-    private static final long serialVersionUID = 314412906180314266L;
     /**
      *  主键id
      */

@@ -12,8 +12,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class SoapProperties implements InitializingBean {
 
+
     @Value("${sms.soap.soapUrl}")
     private String soapUrl;
+    @Value("${sms.tms.url}")
+    private String url;
     @Value("${sms.tms.method}")
     private String method;
     @Value("${sms.tms.client_customerid}")
@@ -30,9 +33,12 @@ public class SoapProperties implements InitializingBean {
     private String format;
     @Value("${sms.tms.appsecret}")
     private String appSecret;
+    @Value(("${sms.opin.box_type}"))
+    private String boxType;
 
 
     public static String SOAPURL;
+    public static String URL;
     public static String METHOD;
     public static String CLIENTCUSTOMERID;
     public static String CLIENTDB;
@@ -41,10 +47,12 @@ public class SoapProperties implements InitializingBean {
     public static String APPKEY;
     public static String FORMAT;
     public static String APPSECRET;
+    public static String BOXTYPE;
 
     @Override
     public void afterPropertiesSet() throws Exception {
         SOAPURL = this.soapUrl;
+        URL = this.url;
         METHOD = this.method;
         CLIENTCUSTOMERID = this.clientCustomerid;
         CLIENTDB = this.clientDb;
@@ -53,6 +61,7 @@ public class SoapProperties implements InitializingBean {
         APPKEY = this.appKey;
         FORMAT = this.format;
         APPSECRET = this.appSecret;
+        BOXTYPE = this.boxType;
     }
 
 

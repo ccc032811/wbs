@@ -12,8 +12,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label febs-form-item-require">用户名：</label>
             <div class="layui-input-block">
-                <input type="text" name="username"  lay-verify="range|username"
-                       autocomplete="off" class="layui-input">
+                <input type="text" name="username" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -40,15 +39,22 @@
                 </select>
             </div>
         </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label febs-form-item-require">工厂：</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<select name="factoryId"-->
+                        <!--lay-verify="required"-->
+                        <!--xm-select-direction="down"-->
+                        <!--xm-select="factory-add"-->
+                        <!--xm-select-skin="default">-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="layui-form-item">
-            <label class="layui-form-label febs-form-item-require">工厂：</label>
+            <label class="layui-form-label febs-form-item-require">扫描类型：</label>
             <div class="layui-input-block">
-                <select name="factoryId"
-                        lay-verify="required"
-                        xm-select-direction="down"
-                        xm-select="factory-add"
-                        xm-select-skin="default">
-                </select>
+                <input type="radio" name="scanType" value="1" title="按料扫箱" checked="">
+                <input type="radio" name="scanType" value="2" title="按箱扫料">
             </div>
         </div>
         <div class="layui-form-item">
@@ -95,28 +101,28 @@
 
         formSelects.render();
 
-        formSelects.config('factory-add', {
-            searchUrl: ctx + 'scan/factory/getFactory',
-            response: {
-                statusCode: 200
-            },
-            beforeSuccess: function (id, url, searchVal, result) {
-                var data = result.data;
-                var tranData = [];
-                for (var i = 0; i < data.length; i++) {
-                    tranData.push({
-                        name: data[i].factoryName,
-                        value: data[i].id
-                    })
-                }
-                result.data = tranData;
-                return result;
-            },
-            error: function (id, url, searchVal, err) {
-                console.error(err);
-                febs.alert.error('获取工厂列表失败');
-            }
-        });
+        // formSelects.config('factory-add', {
+        //     searchUrl: ctx + 'scan/factory/getFactory',
+        //     response: {
+        //         statusCode: 200
+        //     },
+        //     beforeSuccess: function (id, url, searchVal, result) {
+        //         var data = result.data;
+        //         var tranData = [];
+        //         for (var i = 0; i < data.length; i++) {
+        //             tranData.push({
+        //                 name: data[i].factoryName,
+        //                 value: data[i].id
+        //             })
+        //         }
+        //         result.data = tranData;
+        //         return result;
+        //     },
+        //     error: function (id, url, searchVal, err) {
+        //         console.error(err);
+        //         febs.alert.error('获取工厂列表失败');
+        //     }
+        // });
 
         formSelects.config('user-add-role', {
             searchUrl: ctx + 'role',
@@ -144,7 +150,7 @@
         form.on('submit(user-add-form-submit)', function (data) {
             febs.post(ctx + 'sysUser', data.field, function () {
                 layer.closeAll();
-                febs.alert.success('新增用户成功，初始密码为 nifu@123');
+                febs.alert.success('新增用户成功，初始密码为 kdl@123');
                 $('#febs-user').find('#query').click();
             });
             return false;

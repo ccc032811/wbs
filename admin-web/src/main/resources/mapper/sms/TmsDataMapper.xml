@@ -3,17 +3,17 @@
 <mapper namespace="com.neefull.fsp.web.sms.mapper.TmsDataMapper">
     <select id="queryTmsPage" resultType="com.neefull.fsp.web.sms.entity.TmsData">
         select * from sms_tms t where 1=1
-        <choose>
-            <when test="tmsData.plant != null and tmsData.plant != ''">
-                AND t.plant like concat('%',#{tmsData.plant},'%')
-            </when>
-            <otherwise>
-                AND t.plant  in
-                <foreach collection="tmsData.plants" index="index" item="item" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </otherwise>
-        </choose>
+        <!--<choose>-->
+            <!--<when test="tmsData.plant != null and tmsData.plant != ''">-->
+                <!--AND t.plant like concat('%',#{tmsData.plant},'%')-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--AND t.plant  in-->
+                <!--<foreach collection="tmsData.plants" index="index" item="item" open="(" separator="," close=")">-->
+                    <!--#{item}-->
+                <!--</foreach>-->
+            <!--</otherwise>-->
+        <!--</choose>-->
         <if test="tmsData.delivery != null and tmsData.delivery != ''">
             AND t.delivery like concat('%',#{tmsData.delivery},'%')
         </if>

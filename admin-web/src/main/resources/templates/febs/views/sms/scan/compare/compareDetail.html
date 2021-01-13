@@ -19,12 +19,12 @@
                                             <input type="text" name="material" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
-                                    <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">批次</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" name="batch" autocomplete="off" class="layui-input">
-                                        </div>
-                                    </div>
+                                    <!--<div class="layui-inline">-->
+                                        <!--<label class="layui-form-label layui-form-label-sm">批次</label>-->
+                                        <!--<div class="layui-input-inline">-->
+                                            <!--<input type="text" name="batch" autocomplete="off" class="layui-input">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                 </div>
                             </div>
                             <div class="layui-col-md2 table-action-area">
@@ -87,14 +87,14 @@
                 },
                 page: false,
                 cols: [[
-                    {field: 'delivery',align:'center',title: 'DN号',minWidth:150},
-                    {field: 'material',align:'center', title: '物料号',minWidth:170},
-                    {field: 'batch',align:'center', title: '批次',minWidth:150},
-                    {field: 'serialNumber',align:'center', title: '条形码',minWidth:180},
+                    {field: 'delivery',align:'center',title: 'DN号',minWidth:100},
+                    {field: 'material',align:'center', title: '物料号',minWidth:100},
+                    // {field: 'batch',align:'center', title: '批次',minWidth:150},
+                    {field: 'boxCode',align:'center', title: '箱码',minWidth:100},
                     {field: 'quantity',align:'center', title: '数量',width:100},
                     {field: 'scanQuantity',align:'center', title: '已扫数量',width:100},
                     {field: 'expiryDate',align:'center', title: '有效期',minWwidth:100},
-                    {field: 'errorMessage',align:'center', title: '错误信息',minWidth:200}
+                    {field: 'errorMessage',align:'center', title: '错误信息',minWidth:300}
                 ]],
                 done:function (res,curr,count) {
                     $(".layui-table-header .layui-table thead tr th").css("border","1px solid white").css("background-color","#E8E8E8");
@@ -123,7 +123,7 @@
             return {
                 delivery: $searchForm.find('input[name="deliveryNumber"]').val().trim(),
                 material: $searchForm.find('input[name="material"]').val().trim(),
-                batch: $searchForm.find('input[name="batch"]').val().trim(),
+                // batch: $searchForm.find('input[name="batch"]').val().trim(),
                 invalidate_ie_cache: new Date()
             };
         }

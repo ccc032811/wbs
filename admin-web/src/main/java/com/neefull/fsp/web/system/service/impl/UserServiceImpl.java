@@ -41,14 +41,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public User findByName(String username) {
-        User user = this.baseMapper.findByName(username);
-        List<Factory> factoryList = factoryService.getFactoryByIds(user);
-        List<String> nameList = new ArrayList<>();
-        for (Factory factory : factoryList) {
-            nameList.add(factory.getFactoryName());
-        }
-        user.setFactoryName(StringUtils.join(nameList.toArray(),","));
-        return user;
+        return this.baseMapper.findByName(username);
+//        List<Factory> factoryList = factoryService.getFactoryByIds(user);
+//        List<String> nameList = new ArrayList<>();
+//        for (Factory factory : factoryList) {
+//            nameList.add(factory.getFactoryName());
+//        }
+//        user.setFactoryName(StringUtils.join(nameList.toArray(),","));
+//        return user;
     }
 
     @Override
@@ -202,6 +202,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         updateById(user);
     }
 
+    @Override
+    public String getScanType(String username) {
+        return this.baseMapper.getScanType(username);
+    }
 
 
     private void setUserRoles(User user, String[] roles) {

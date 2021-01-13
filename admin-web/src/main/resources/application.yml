@@ -37,9 +37,12 @@ mybatis-plus:
 
 sms:
   soap:
-    soapUrl: http://eccappqas.sphkdl.shaphar.net:8008/sap/bc/srt/rfc/sap/zchn_sd_get_dn_info_ws/200/zchn_sd_get_dn_info_ws/zchn_sd_get_dn_info_ws
+    soapUrl: http://lxpfleccapp01.sphkdl.shaphar.net:8000/sap/bc/srt/rfc/sap/zchn_sd_get_dn_info_ws/100/zchn_sd_get_dn_info_ws/zchn_sd_get_dn_info_ws
+    #正式    http://lxpfleccapp01.sphkdl.shaphar.net:8000/sap/bc/srt/rfc/sap/zchn_sd_get_dn_info_ws/100/zchn_sd_get_dn_info_ws/zchn_sd_get_dn_info_ws
+    #测试    http://eccappqas.sphkdl.shaphar.net:8008/sap/bc/srt/rfc/sap/zchn_sd_get_dn_info_ws/200/zchn_sd_get_dn_info_ws/zchn_sd_get_dn_info_ws
   tms:
-    method: putORDREData
+    url: http://222.66.94.138:18080/datahub/SYKY_ERP/FluxWmsJsonApi        #正式  http://222.66.94.138:18080/datahub/SYKY_ERP/FluxWmsJsonApi
+    method: putORDREData                                                   #测试  http://222.66.94.137:19192/datahub/SYKY_ERP/FluxWmsJsonApi
     client_customerid: SYKY_ERP
     client_db: FLUXWMSJSONDB
     messageid: ORDRE
@@ -47,3 +50,5 @@ sms:
     appkey: test
     format: json
     appsecret: 123456
+  opin:
+    box_type: 99   #  获取箱号的位数

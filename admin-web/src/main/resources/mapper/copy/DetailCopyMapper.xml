@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neefull.fsp.web.sms.mapper.copy.DetailCopyMapper">
+    <select id="selectCopyDetailByDelivery" resultType="com.neefull.fsp.web.sms.entity.copy.DetailCopy">
+        select * from sms_detail where delivery = #{delivery}
+    </select>
+</mapper>

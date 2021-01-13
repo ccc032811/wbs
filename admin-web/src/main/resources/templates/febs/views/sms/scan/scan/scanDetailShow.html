@@ -44,19 +44,25 @@
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label">箱名</label>
-                <div class="layui-input-block input-four">
-                    <input type="text" name="boxName" autocomplete="off" class="layui-input" readonly="readonly">
-                </div>
-            </div>
-            <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label">箱码</label>
                 <div class="layui-input-block input-four">
                     <input type="text" name="boxCode" autocomplete="off" class="layui-input" readonly="readonly">
                 </div>
             </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">箱型</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="boxType" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
         </div>
         <div class="layui-form-item layui-form-item-rigth">
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">条形码</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="serialNumber"  autocomplete="off" class="layui-input " readonly="readonly">
+                </div>
+            </div>
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label">物料号</label>
                 <div class="layui-input-block input-four">
@@ -69,33 +75,27 @@
                     <input type="text" name="matName"  autocomplete="off" class="layui-input" readonly="readonly">
                 </div>
             </div>
-            <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label">批次</label>
-                <div class="layui-input-block input-four">
-                    <input type="text" name="batch"  autocomplete="off" class="layui-input" readonly="readonly">
-                </div>
-            </div>
         </div>
-        <div class="layui-form-item layui-form-item-rigth">
-            <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label">条形码</label>
-                <div class="layui-input-block input-four">
-                    <input type="text" name="serialNumber"  autocomplete="off" class="layui-input " readonly="readonly">
-                </div>
-            </div>
-            <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label">SN码</label>
-                <div class="layui-input-block input-four">
-                    <input type="text" name="snCode"  autocomplete="off" class="layui-input" readonly="readonly">
-                </div>
-            </div>
-            <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label">数量</label>
-                <div class="layui-input-block input-four">
-                    <input type="text" name="quantity" id="quantity" autocomplete="off" class="layui-input" >
-                </div>
-            </div>
-        </div>
+        <!--<div class="layui-form-item layui-form-item-rigth">-->
+            <!--<div class="layui-inline layui-col-sm4">-->
+                <!--<label class="layui-form-label">批次</label>-->
+                <!--<div class="layui-input-block input-four">-->
+                    <!--<input type="text" name="batch"  autocomplete="off" class="layui-input" readonly="readonly">-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="layui-inline layui-col-sm4">-->
+                <!--<label class="layui-form-label">SN码</label>-->
+                <!--<div class="layui-input-block input-four">-->
+                    <!--<input type="text" name="snCode"  autocomplete="off" class="layui-input" readonly="readonly">-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="layui-inline layui-col-sm4">-->
+                <!--<label class="layui-form-label">工厂</label>-->
+                <!--<div class="layui-input-block input-four">-->
+                    <!--<input type="text" name="plant"  autocomplete="off" class="layui-input" readonly="readonly">-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="layui-form-item layui-form-item-rigth">
             <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label">有效期</label>
@@ -104,9 +104,9 @@
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label">工厂</label>
+                <label class="layui-form-label">数量</label>
                 <div class="layui-input-block input-four">
-                    <input type="text" name="plant"  autocomplete="off" class="layui-input" readonly="readonly">
+                    <input type="text" name="quantity" id="quantity" autocomplete="off" class="layui-input" >
                 </div>
             </div>
             <div class="layui-inline layui-col-sm4">
@@ -121,6 +121,9 @@
             <button class="layui-btn" lay-submit="" lay-filter="scan-submit" id="submit"></button>
             <div style="float: right">
                 <input style="border:0;" name="id" type="hidden">
+            </div>
+            <div style="float: right">
+                <input style="border:0;" name="flag"  type="hidden">
             </div>
         </div>
     </form>
@@ -154,7 +157,7 @@
             form.val("scan-detail-show", {
                 "id":scan.id,
                 "delivery": scan.delivery,
-                "boxName": scan.boxName,
+                "boxType": scan.boxType,
                 "boxCode": scan.boxCode,
                 "matCode": scan.matCode,
                 "matName": scan.matName,
@@ -164,7 +167,8 @@
                 "quantity": scan.quantity,
                 "expiryDate": scan.expiryDate,
                 "plant": scan.plant,
-                "unit": scan.unit
+                "unit": scan.unit,
+                "flag":scan.flag
             });
         }
 
@@ -179,13 +183,12 @@
             }
             $('#submit-control').attr("style","display:none;");
             var date = [data.field];
+            date[0].flag = "2";
             var result=JSON.stringify(date);
             febs.post(ctx + 'scan/smsScan/editScanDetail',{scans:result}, function () {
                 febs.alert.success('数据修改成功');
-
+                $('#scan-detail').find('#query').click();
             });
-
-
         })
 
 

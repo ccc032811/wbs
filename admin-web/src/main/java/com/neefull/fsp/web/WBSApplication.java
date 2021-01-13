@@ -11,8 +11,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  * @author pei.wang
@@ -23,15 +21,15 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableTransactionManagement
 @MapperScan("com.neefull.fsp.web.*.mapper")
 @ComponentScan(basePackages = {"com.neefull.fsp"})
-public class SMSApplication extends SpringBootServletInitializer {
+public class WBSApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication.run(SMSApplication.class,args);
+        SpringApplication.run(WBSApplication.class,args);
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(SMSApplication.class);
+        return application.sources(WBSApplication.class);
     }
 
 

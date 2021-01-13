@@ -25,12 +25,12 @@
                                             <input type="text" name="shipParty" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
-                                    <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">工厂编号</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" name="plant" autocomplete="off" class="layui-input">
-                                        </div>
-                                    </div>
+                                    <!--<div class="layui-inline">-->
+                                        <!--<label class="layui-form-label layui-form-label-sm">工厂编号</label>-->
+                                        <!--<div class="layui-input-inline">-->
+                                            <!--<input type="text" name="plant" autocomplete="off" class="layui-input">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                 </div>
                             </div>
                             <div class="layui-col-md2 table-action-area">
@@ -55,6 +55,13 @@
 
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="header-show">查看</a>
 
+</script>
+<script type="text/html" id="compare-toolbarCheck">
+    <div class="layui-btn-container">
+        <button  class="layui-btn layui-btn-sm " lay-event="compare-download">
+            <i class="layui-icon">&#xe7a8;</i> 导出Excel
+        </button>
+    </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
     layui.use(['jquery', 'form', 'table', 'febs'], function () {
@@ -92,6 +99,8 @@
                     time:new Date(),
                     plants:currentUser.factoryName
                 },
+                toolbar: '#compare-toolbarCheck',
+                defaultToolbar: ['filter'],
                 cols: [[
                     {field: 'delivery',align:'center',title: 'DN号',minWidth:200},
                     {field: 'soldParty',align:'center', title: '售达方代码',minWidth:200},
@@ -107,6 +116,13 @@
             });
         }
 
+        table.on('toolbar(compareHeaderTable)', function(obj){
+            var layEvent = obj.event;
+            if (layEvent === 'compare-download') {
+                var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});
+                febs.download(ctx + 'scan/smsHeader/compareExcel',params, '扫描对比.xlsx')
+            }
+        });
 
         table.on('tool(compareHeaderTable)', function (obj) {
             var data = obj.data,
@@ -122,7 +138,7 @@
         function getQueryParams() {
             return {
                 delivery: $searchForm.find('input[name="delivery"]').val().trim(),
-                plant: $searchForm.find('input[name="plant"]').val().trim(),
+                // plant: $searchForm.find('input[name="plant"]').val().trim(),
                 soldParty: $searchForm.find('input[name="soldParty"]').val().trim(),
                 shipParty: $searchForm.find('input[name="shipParty"]').val().trim(),
                 invalidate_ie_cache: new Date()

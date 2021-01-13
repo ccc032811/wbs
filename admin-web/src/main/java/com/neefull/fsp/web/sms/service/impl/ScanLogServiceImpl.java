@@ -51,7 +51,7 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void updateStatus(Integer id, String status) {
         this.baseMapper.updateStatus(id,status);
     }
@@ -75,15 +75,15 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
 
     @Override
     public IPage<ScanLog> queryScanLogList(ScanLog scanLog) {
-        ScanLog singleScanLog = (ScanLog) ScanComment.containPlant(scanLog);
-        IPage<ScanLog> scanLogPage = new Page<ScanLog>(singleScanLog.getPageNum(), singleScanLog.getPageSize());
-        return this.baseMapper.getPageScanLog(scanLogPage,singleScanLog);
+//        ScanLog singleScanLog = (ScanLog) ScanComment.containPlant(scanLog);
+        IPage<ScanLog> scanLogPage = new Page<ScanLog>(scanLog.getPageNum(), scanLog.getPageSize());
+        return this.baseMapper.getPageScanLog(scanLogPage,scanLog);
 
     }
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public DetailScanVo getDnMessageByDelivery(String delivery) {
         DetailScanVo detailScanVo = new DetailScanVo();
 

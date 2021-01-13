@@ -2,16 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.neefull.fsp.web.sms.mapper.DetailMapper">
     <update id="updateScanQuntity">
-        update  sms_detail set scan_quantity = #{quantity} where id = #{id}
+        update  sms_detail set scan_quantity = #{quantity}  where id = #{id}
     </update>
     <update id="updateupdateErrorMsg">
         update  sms_detail set error_message = #{msg} ,status = #{status} where id = #{id}
     </update>
     <update id="updateStatusByDelivery">
-        update sms_detail set scan_quantity = #{status} where delivery = #{delivery}
+        update sms_detail set
+        <if test="status != null and status != ''">
+            scan_quantity = #{status},
+        </if>
+        error_message = null,status = null where delivery = #{delivery}
     </update>
+
     <select id="getDetailList" resultType="com.neefull.fsp.web.sms.entity.Detail">
-        select * from sms_detail t where 1=1
+        select distinct t.*,GROUP_CONCAT(s.box_code)  boxCode from sms_detail t
+          left join sms_scan s on t.delivery = s.delivery
+               and t.material = s.mat_code
+               and s.del = 1
+--                and t.batch = s.batch
+        where 1=1
         <if test="delivery != null and delivery != ''">
             AND t.delivery like concat('%',#{delivery},'%')
         </if>
@@ -30,7 +40,8 @@
         <if test="status != null and status != ''">
             AND t.status = #{status}
         </if>
-        order by create_time desc
+        group by t.material , t.delivery
+        order by t.create_time desc
     </select>
     <select id="selectScanDetail" resultType="com.neefull.fsp.web.sms.entity.Detail">
         select d.mat_code material, d.batch rocheBatch, sum(d.quantity) quantity from sms_scan d where d.delivery = #{dn} and d.del =1  group by material,batch

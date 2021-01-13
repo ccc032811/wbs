@@ -14,6 +14,9 @@
  Date: 19/12/2019 10:32:15
 */
 
+set global log_bin_trust_function_creators=TRUE;
+
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

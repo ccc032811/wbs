@@ -1,10 +1,11 @@
-package com.neefull.fsp.web.sms.entity;
+package com.neefull.fsp.web.sms.entity.copy;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.neefull.fsp.web.sms.entity.Detail;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -16,10 +17,9 @@ import java.util.List;
  * @Date: 2020/11/23  17:58
  */
 
-@TableName(value = "sms_header")
-public class Header implements Serializable {
+@TableName(value = "sms_header_copy")
+public class HeaderCopy implements Serializable {
 
-    private static final long serialVersionUID = 5336551239146580607L;
     /**
      *  主键id
      */

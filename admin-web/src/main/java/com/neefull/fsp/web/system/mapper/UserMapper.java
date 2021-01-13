@@ -78,4 +78,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     User getUserByName(String username);
+
+    String getScanType(String username);
+
 }

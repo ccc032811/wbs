@@ -34,7 +34,7 @@ public class User implements Serializable {
 //    // 默认头像
     public static final String DEFAULT_AVATAR = "default.jpg";
 //    // 默认密码
-    public static final String DEFAULT_PASSWORD = "nifu@123";
+    public static final String DEFAULT_PASSWORD = "kdl@123";
 //    // 性别男
     public static final String SEX_MALE = "0";
 //    // 性别女
@@ -74,6 +74,9 @@ public class User implements Serializable {
      */
     @TableField("FACTORY_ID")
     private String factoryId;
+
+    @TableField("SCAN_TYPE")
+    private String scanType;
 
     @TableField(exist = false)
     private String factoryName;

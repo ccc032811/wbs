@@ -23,7 +23,7 @@ import java.util.Map;
 public class DetailServiceImpl extends ServiceImpl<DetailMapper, Detail> implements IDetailService {
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void insertDetail(Detail detail) {
         this.baseMapper.insert(detail);
     }
@@ -52,14 +52,14 @@ public class DetailServiceImpl extends ServiceImpl<DetailMapper, Detail> impleme
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void updateScanQuntity(Integer id, String quantity) {
         this.baseMapper.updateScanQuntity(id,quantity);
     }
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void updateErrorMsg(Integer id, String msg,String status) {
         this.baseMapper.updateupdateErrorMsg(id,msg,status);
     }
@@ -73,9 +73,17 @@ public class DetailServiceImpl extends ServiceImpl<DetailMapper, Detail> impleme
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void updateStatusByDelivery(String delivery, String status) {
         this.baseMapper.updateStatusByDelivery(delivery,status);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByDelivery(String delivery) {
+        QueryWrapper<Detail> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("delivery",delivery);
+        this.baseMapper.delete(queryWrapper);
     }
 
 

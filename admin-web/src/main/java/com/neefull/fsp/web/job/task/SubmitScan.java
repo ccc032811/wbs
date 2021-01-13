@@ -50,7 +50,7 @@ public class SubmitScan {
     private ITmsDataService tmsDataService;
 
 
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+
     public void submit(){
 
         List<Header> scanList = headerService.querySubmitDelivery();
@@ -78,10 +78,10 @@ public class SubmitScan {
                     scanSubmit.setKeyid(String.valueOf(sca.getId()));
                     scanSubmit.setDnNo(sca.getDelivery());
                     scanSubmit.setBoxNo(sca.getBoxType()+"|"+sca.getBoxCode());
-                    scanSubmit.setSerialNo(sca.getSerialNumber());
+                    scanSubmit.setSerialNo("");
                     scanSubmit.setItemCode(sca.getMatCode());
                     scanSubmit.setItemName(sca.getMatName());
-                    scanSubmit.setBatchNo(sca.getBatch());
+                    scanSubmit.setBatchNo("");
                     scanSubmit.setExipiryDate(sca.getExpiryDate());
                     scanSubmit.setUnit(sca.getUnit());
                     scanSubmit.setQuantity(sca.getQuantity());
@@ -96,12 +96,12 @@ public class SubmitScan {
                 String sign = SoapWsUtils.getSign(data, "123456");
 
                 String timestamp = Timestamp.valueOf(DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss")).toString();
-
+                String res = "";
                 try {
                     String time = URLEncoder.encode(timestamp, "UTF-8");
                     String encode = URLEncoder.encode(data, "UTF-8");
 
-                    String url = "http://222.66.94.137:19192/datahub/SYKY_ERP/FluxWmsJsonApi?" +
+                    String url = SoapProperties.URL +"?" +
                             "method="+ SoapProperties.METHOD +"" +
                             "&client_customerid="+SoapProperties.CLIENTCUSTOMERID+"" +
                             "&client_db="+SoapProperties.CLIENTDB+"" +
@@ -117,7 +117,7 @@ public class SubmitScan {
 
                     HttpPost post = new HttpPost(url);
                     HttpResponse response = HttpClients.createDefault().execute(post);
-                    String res = EntityUtils.toString(response.getEntity());
+                    res = EntityUtils.toString(response.getEntity());
 
                     log.info("对接TMS的返回结果：{}",res);
 
@@ -130,6 +130,7 @@ public class SubmitScan {
                         tmsData.setDelivery(header.getDelivery());
                         tmsData.setData(data);
                         tmsData.setPlant(header.getPlant());
+                        tmsData.setResData(res);
 
                         tmsDataService.addTmsData(tmsData);
                     }
@@ -138,6 +139,13 @@ public class SubmitScan {
                     log.error("对接TMS失败，失败原因为: {}",e.getMessage());
 
                     //TODO  添加到系统操作日志里面
+                    TmsData tmsData = new TmsData();
+                    tmsData.setDelivery(header.getDelivery());
+                    tmsData.setData(data);
+                    tmsData.setPlant(header.getPlant());
+                    tmsData.setResData(res);
+
+                    tmsDataService.addTmsData(tmsData);
                 }
             }
         }

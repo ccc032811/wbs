@@ -89,12 +89,11 @@ public class ViewController {
         return FebsUtil.view("sms/scan/headerdetail/detailShow");
     }
 
-    @GetMapping(FebsConstant.VIEW_PREFIX + "/sms/getScanDetail/{delivery}/{matCode}/{batch}")
+    @GetMapping(FebsConstant.VIEW_PREFIX + "/sms/getScanDetail/{delivery}/{matCode}")
     public String getScanDetail(@PathVariable String delivery,
                                 @PathVariable String matCode,
-                                @PathVariable String batch,
                                 Model model){
-        Scan scan = scanService.getScanDetail(delivery,matCode,batch);
+        Scan scan = scanService.getScanDetail(delivery,matCode);
         model.addAttribute("scan",scan);
         model.addAttribute("edit","2");
         return FebsUtil.view("sms/scan/scan/scanDetailShow");

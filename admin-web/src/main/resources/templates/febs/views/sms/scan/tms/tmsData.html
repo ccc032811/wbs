@@ -13,12 +13,12 @@
                                             <input type="text" name="delivery" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
-                                    <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">工厂编号</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" name="plant" autocomplete="off" class="layui-input">
-                                        </div>
-                                    </div>
+                                    <!--<div class="layui-inline">-->
+                                        <!--<label class="layui-form-label layui-form-label-sm">工厂编号</label>-->
+                                        <!--<div class="layui-input-inline">-->
+                                            <!--<input type="text" name="plant" autocomplete="off" class="layui-input">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                 </div>
                             </div>
                             <div class="layui-col-md2 table-action-area">
@@ -84,7 +84,8 @@
                 },
                 cols: [[
                     {field: 'delivery', title: 'DN号',align:'center',width: 150},
-                    {field: 'data',align:'center', title: 'DN返回结果',minWidth:1000},
+                    {field: 'data',align:'center', title: 'TMS推送数据集',minWidth:800},
+                    {field: 'resData',align:'center', title: 'TMS返回结果',minWidth:300},
                     {field: 'plant',align:'center', title: '工厂',width:100},
                     {field: 'createTime',align:'center', title: '入库时间',width: 200}
                 ]],
@@ -98,7 +99,7 @@
         function getQueryParams() {
             return {
                 delivery: $searchForm.find('input[name="delivery"]').val().trim(),
-                plant: $searchForm.find('input[name="plant"]').val().trim(),
+                // plant: $searchForm.find('input[name="plant"]').val().trim(),
                 invalidate_ie_cache: new Date()
             };
         }

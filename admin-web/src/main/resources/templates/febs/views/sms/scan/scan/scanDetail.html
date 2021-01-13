@@ -1,4 +1,4 @@
-<div class="layui-fluid layui-anim febs-anim" id="scan-detail" lay-title="DN Detail信息查询">
+<div class="layui-fluid layui-anim febs-anim" id="scan-detail" lay-title="扫描记录查询">
     <div class="layui-row febs-container">
         <div class="layui-col-md12">
             <div class="layui-card">
@@ -20,17 +20,30 @@
                                         </div>
                                     </div>
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">批次</label>
+                                        <label class="layui-form-label layui-form-label-sm">箱码</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="batch" autocomplete="off" class="layui-input">
+                                            <input type="text" name="boxCode" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">工厂编号</label>
+                                        <label class="layui-form-label layui-form-label-sm">扫描时间</label>
                                         <div class="layui-input-inline">
-                                            <input type="text" name="plant" autocomplete="off" class="layui-input">
+                                            <input type="text" name="scan-time" id="scan-time" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
+                                    <!--<div class="layui-inline">-->
+                                        <!--<label class="layui-form-label layui-form-label-sm">批次</label>-->
+                                        <!--<div class="layui-input-inline">-->
+                                            <!--<input type="text" name="batch" autocomplete="off" class="layui-input">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="layui-inline">-->
+                                        <!--<label class="layui-form-label layui-form-label-sm">工厂编号</label>-->
+                                        <!--<div class="layui-input-inline">-->
+                                            <!--<input type="text" name="plant" autocomplete="off" class="layui-input">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+
                                 </div>
                             </div>
                             <div class="layui-col-md2 table-action-area">
@@ -55,13 +68,21 @@
 <script type="text/html" id="scan-detail-option">
 
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="scan-detail-view">查看</a>
-    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="scan-detail-edit">修改</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="scan-detail-del">删除</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="scan-detail-edit" shiro:hasPermission="scan:edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="scan-detail-del" shiro:hasPermission="scan:del">删除</a>
+</script>
+<script type="text/html" id="scan-toolbarCheck">
+    <div class="layui-btn-container">
+        <button  class="layui-btn layui-btn-sm " lay-event="scan-download">
+            <i class="layui-icon">&#xe7a8;</i> 导出Excel
+        </button>
+    </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
-    layui.use(['jquery', 'form', 'table', 'febs'], function () {
+    layui.use(['jquery', 'form', 'table', 'febs','laydate'], function () {
         var $ = layui.jquery,
             febs = layui.febs,
+            laydate = layui.laydate,
             form = layui.form,
             table = layui.table,
             $view = $('#scan-detail'),
@@ -72,6 +93,12 @@
 
         form.render();
         initTable();
+
+        laydate.render({
+            elem: '#scan-time',
+            range: true,
+            trigger: 'click'
+        });
 
 
         $query.on('click', function () {
@@ -94,15 +121,18 @@
                     time:new Date(),
                     plants:currentUser.factoryName
                 },
+                toolbar: '#scan-toolbarCheck',
+                defaultToolbar: ['filter'],
                 cols: [[
-                    {field: 'delivery',align:'center', title: 'DN号',minWidth:150},
-                    {field: 'boxCode',align:'center', title: '箱码',minWidth:150},
-                    {field: 'matCode',align:'center', title: '物料号',minWidth:150},
-                    {field: 'batch',align:'center', title: '批次',minWidth:150},
-                    {field: 'serialNumber',align:'center', title: '条形码',minWidth:200},
-                    {field: 'snCode',align:'center', title: 'SN 码',minWidth:150},
-                    {field: 'quantity',align:'center', title: '数量',minWidth:120},
-                    {field: 'expiryDate',align:'center', title: '有效期',minWidth:150},
+                    {field: 'delivery',align:'center', title: 'DN号',minWidth:100},
+                    {field: 'boxCode',align:'center', title: '箱码',minWidth:100},
+                    {field: 'boxType',align:'center', title: '箱型',minWidth:100},
+                    {field: 'matCode',align:'center', title: '物料号',minWidth:100},
+                    {field: 'matName',align:'center', title: '物料名',minWidth:100},
+                    {field: 'quantity',align:'center', title: '数量',minWidth:100},
+                    {field: 'unit',align:'center', title: '单位',minWidth:100},
+                    {field: 'expiryDate',align:'center', title: '有效期',minWidth:100},
+                    {field: 'createTime',align:'center', title: '扫描时间',minWidth:100},
                     {title: '操作', toolbar: '#scan-detail-option',align:'center',width: 200}
                 ]],
                 done:function (res,curr,count) {
@@ -111,6 +141,14 @@
                 }
             });
         }
+
+        table.on('toolbar(scanDetailTable)', function(obj){
+            var layEvent = obj.event;
+            if (layEvent === 'scan-download') {
+                var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});
+                febs.download(ctx + 'scan/smsScan/scanExcel',params, '扫描记录.xlsx')
+            }
+        });
 
 
         table.on('tool(scanDetailTable)', function (obj) {
@@ -128,12 +166,12 @@
             }
             if (layEvent === 'scan-detail-del') {
                 febs.modal.confirm('删除该条数据','确定删除该条数据？', function () {
-                    delScan(data.id);
+                    delScan(data.id,data.delivery);
                 });;
             }
         });
         
-        function delScan(id) {
+        function delScan(id,delivery) {
             febs.get(ctx + 'scan/smsScan/deleteScanById/'+delivery+'/'+id,new Date(), function (date) {
                 if(date.code === 200){
                     febs.alert.success('操作成功');
@@ -143,11 +181,21 @@
         }
 
         function getQueryParams() {
+            var startTime,
+                endTime,
+                time = $searchForm.find('input[name="scan-time"]').val();
+            if (time) {
+                startTime = time.split(' - ')[0];
+                endTime = time.split(' - ')[1];
+            }
             return {
+                startTime : startTime,
+                endTime : endTime,
                 delivery: $searchForm.find('input[name="deliveryNumber"]').val().trim(),
                 matCode: $searchForm.find('input[name="matCode"]').val().trim(),
-                batch: $searchForm.find('input[name="batch"]').val().trim(),
-                plant: $searchForm.find('input[name="plant"]').val().trim(),
+                // batch: $searchForm.find('input[name="batch"]').val().trim(),
+                // plant: $searchForm.find('input[name="plant"]').val().trim(),
+                boxCode: $searchForm.find('input[name="boxCode"]').val().trim(),
                 invalidate_ie_cache: new Date()
             };
         }

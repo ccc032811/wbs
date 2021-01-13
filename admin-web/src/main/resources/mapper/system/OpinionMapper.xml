@@ -12,6 +12,9 @@
     <select id="getOpinions" resultType="com.neefull.fsp.web.system.entity.Opinion">
         select * from sms_opinion where parent_id = (select id from qff_opinion where name = #{name})
     </select>
+    <select id="queryOpionById" resultType="java.lang.String">
+        select name from sms_opinion where parent_id = #{boxtype}
+    </select>
 
 
 </mapper>

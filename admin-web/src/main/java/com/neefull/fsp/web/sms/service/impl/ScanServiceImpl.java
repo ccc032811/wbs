@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -43,31 +44,54 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void insertScanMsg(ScanAdd scanAdd) {
         for (Scan scan : scanAdd.getScanList()) {
             if(!scan.getFlag().equals(ScanComment.STATUS_THREE)){
                 this.baseMapper.insert(scan);
             }
         }
-        headerService.updateStatus(scanAdd.getDelivery(), ScanComment.STATUS_ONE);
+        List<Detail> detailList = addScanQuantity(scanAdd.getDelivery(), scanAdd.getScanList());
+        for (Detail detail : detailList) {
+            detailService.updateScanQuntity(detail.getId(),detail.getScanQuantity());
+        }
+        headerService.updateDeliveryStatus(scanAdd.getDelivery(), ScanComment.STATUS_ONE);
+    }
+
+
+    private List<Detail> addScanQuantity(String delivery,List<Scan> scanList){
+        List<Detail> detailList = detailService.queryDetailByDelivery(delivery);
+        for (Detail detail : detailList) {
+            String material = detail.getMaterial();
+            BigDecimal matDec = new BigDecimal("0");
+            for (Scan scan : scanList) {
+                if (scan.getMatCode().equals(material)) {
+                    BigDecimal scanDec = new BigDecimal(scan.getQuantity());
+                    matDec = matDec.add(scanDec);
+                }
+            }
+            if(!matDec.toString().equals(ScanComment.STATUS_ZERO)){
+                detail.setScanQuantity(matDec.toString());
+            }
+        }
+        return detailList;
     }
 
 
     @Override
     public IPage<Scan> getScanInfoList(Scan scan) {
-        Scan singleScan = (Scan) ScanComment.containPlant(scan);
-        IPage<Scan> scanPage = new Page<>(singleScan.getPageNum(),singleScan.getPageSize());
-        return this.baseMapper.getScanInfoList(scanPage,singleScan);
+//        Scan singleScan = (Scan) ScanComment.containPlant(scan);
+        IPage<Scan> scanPage = new Page<>(scan.getPageNum(),scan.getPageSize());
+        return this.baseMapper.getScanInfoList(scanPage,scan);
 
     }
 
 
     @Override
     public IPage<Scan> queryScanDetailList(Scan scan) {
-        Scan singleScan = (Scan) ScanComment.containPlant(scan);
-        IPage<Scan> scanPage = new Page<>(singleScan.getPageNum(),singleScan.getPageSize());
-        return this.baseMapper.queryScanDetailList(scanPage,singleScan);
+//        Scan singleScan = (Scan) ScanComment.containPlant(scan);
+        IPage<Scan> scanPage = new Page<>(scan.getPageNum(),scan.getPageSize());
+        return this.baseMapper.queryScanDetailList(scanPage,scan);
     }
 
 
@@ -80,21 +104,22 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void updateScanStatus(Integer id, String status) {
         this.baseMapper.updateScanStatus(id,status);
     }
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void editScanDetail(List<Scan> scanList) {
-        for (Scan scan : scanList) {
 
+        for (Scan scan : scanList) {
             QueryWrapper<Scan> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("delivery",scan.getDelivery());
             queryWrapper.eq("mat_code",scan.getMatCode());
-            queryWrapper.eq("batch",scan.getBatch());
+            queryWrapper.eq("box_code",scan.getBoxCode());
+
 
             if(scan.getFlag().equals(ScanComment.STATUS_ONE)){
                 this.baseMapper.insert(scan);
@@ -105,34 +130,28 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
                 sca.setDel(ScanComment.STATUS_TWO);
                 this.baseMapper.update(sca,queryWrapper);
             }
-
-//            this.baseMapper.update(scan,queryWrapper);
-//            Scan isScan = this.baseMapper.selectOne(queryWrapper);
-//
-//            if(isScan==null){
-//                this.baseMapper.insert(scan);
-//            }else {
-//                scan.setId(isScan.getId());
-//                this.baseMapper.updateById(scan);
-//            }
-            headerService.updateStatus(scan.getDelivery(),ScanComment.STATUS_ONE);
+        }
+        if(CollectionUtils.isNotEmpty(scanList)){
+            String delivery = scanList.get(0).getDelivery();
+            List<Detail> detailList = addScanQuantity(delivery, scanList);
+            for (Detail detail : detailList) {
+                detailService.updateScanQuntity(detail.getId(),detail.getScanQuantity());
+            }
+            headerService.updateStatus(delivery,ScanComment.STATUS_ONE);
+            this.baseMapper.updateStatusByDelivery(delivery,ScanComment.STATUS_ONE);
+            detailService.updateStatusByDelivery(delivery,null);
         }
     }
 
 
     @Override
-    public Scan getScanDetail(String delivery, String matCode, String batch) {
-        QueryWrapper<Scan> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("delivery",delivery);
-        queryWrapper.eq("mat_code",matCode);
-        queryWrapper.eq("batch",batch);
-        queryWrapper.eq("del",ScanComment.STATUS_ONE);
-        return this.baseMapper.selectOne(queryWrapper);
+    public Scan getScanDetail(String delivery, String matCode) {
+        return this.baseMapper.selectScanByDeliveryAndMatCode(delivery,matCode,ScanComment.STATUS_ONE);
     }
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void deleteScanDetail(String delivery) {
         Scan scan = new Scan();
         scan.setDel(ScanComment.STATUS_TWO);
@@ -149,11 +168,33 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
         return this.baseMapper.queryScanAndCountByDelivery(delivery);
     }
 
+
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void deleteScanById(Integer id,String delivery) {
         this.baseMapper.deleteScanById(id,ScanComment.STATUS_TWO);
+        this.baseMapper.updateStatusByDelivery(delivery,ScanComment.STATUS_ONE);
         headerService.updateStatus(delivery,ScanComment.STATUS_ONE);
+        detailService.updateStatusByDelivery(delivery,ScanComment.STATUS_ZERO);
+
+    }
+
+    @Override
+    public List<Scan> downScanExcel(Scan scan) {
+        return this.baseMapper.downScanExcel(scan);
+    }
+
+    @Override
+    public List<String> queryBoxTypeByDeliveryAndMatCode(String delivery, String material) {
+        return this.baseMapper.queryBoxTypeByDeliveryAndMatCode(delivery,material);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByDelivery(String delivery) {
+        QueryWrapper<Scan> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("delivery",delivery);
+        this.baseMapper.delete(queryWrapper);
     }
 
 
@@ -164,7 +205,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public List<HeaderVo> auditDn(String dns,String userName) {
 
         String[] deliveryList = dns.split(StringPool.COMMA);
@@ -184,6 +225,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
                             ||!header.getSoldParty().equals(head.getSoldParty())
                             ||!header.getShipParty().equals(head.getShipParty())){
                         compare = true;
+                        break;
                     }
                 }
             }
@@ -196,11 +238,11 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
                         buffer.append(headerList.get(i).getDelivery()).append("和");
                     }
                 }
-                headerService.updateErrorMsg(header.getId(),buffer.toString());
+                headerService.updateErrorMsg(dn,buffer.toString());
                 errorMsg.append(buffer.toString());
             }else {
                 if(StringUtils.isNotEmpty(header.getErrorMessage())){
-                    headerService.updateErrorMsg(header.getId(),null);
+                    headerService.updateErrorMsg(dn,null);
                 }
             }
             List<Detail> detailList = header.getDetailList();
@@ -221,40 +263,74 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
                 for (Detail detail : defultList) {
                     Detail maDeta = new Detail();
                     boolean material = true;
+                    String batch = "";
                     for (Detail deta : scanList) {
-                        if(detail.getMaterial().equals(deta.getMaterial())&&detail.getRocheBatch().equals(deta.getRocheBatch())){
-                            maDeta = deta;
-                            material = false;
-                            break;
+                        if(StringUtils.isNotEmpty(deta.getBatch())){
+                            if(detail.getMaterial().equals(deta.getMaterial())&&detail.getRocheBatch().equals(deta.getRocheBatch())){
+                                maDeta = deta;
+                                batch = deta.getRocheBatch();
+                                material = false;
+                                break;
+                            }
+                        }else {
+                            if(detail.getMaterial().equals(deta.getMaterial())){
+                                maDeta = deta;
+                                material = false;
+                                break;
+                            }
                         }
+
                     }
                     if(material){
-                        errorMsg.append("该物料:" + detail.getMaterial() + "不存在或该批次:" + detail.getRocheBatch() + "不存在; ");
-                        detailService.updateErrorMsg(detail.getId(),"该物料:" + detail.getMaterial() + "不存在或该批次:" + detail.getRocheBatch() + "不存在; ",ScanComment.STATUS_ONE);
+                        if(StringUtils.isNotEmpty(batch)){
+                            errorMsg.append("该物料:" + detail.getMaterial() + "未进行扫描或该批次:" + detail.getRocheBatch() + "未进行扫描; ");
+                            detailService.updateErrorMsg(detail.getId(),"该物料:" + detail.getMaterial() + "未进行扫描或该批次:" + detail.getRocheBatch() + "未进行扫描; ",ScanComment.STATUS_ONE);
+                        }else {
+                            errorMsg.append("该物料:" + detail.getMaterial() + "未进行扫描;");
+                            detailService.updateErrorMsg(detail.getId(),"该物料:" + detail.getMaterial() + "未进行扫描;",ScanComment.STATUS_ONE);
+                        }
+
                     }
                     if(!material){
-                        if(!detail.getQuantity().equals(maDeta.getQuantity())){
-                            errorMsg.append("该物料:"+detail.getMaterial()+"和批次:" + detail.getRocheBatch() +"的数量不相同; ");
-                            detailService.updateErrorMsg(detail.getId(),"该物料:"+detail.getMaterial()+"和批次:" + detail.getRocheBatch() +"的数量不相同; ",ScanComment.STATUS_ONE);
+                        if(StringUtils.isNotEmpty(batch)){
+                            if(!detail.getQuantity().equals(maDeta.getQuantity())){
+                                errorMsg.append("该物料:"+detail.getMaterial()+"和批次:" + detail.getRocheBatch() +"与订单数量不一致");
+                                detailService.updateErrorMsg(detail.getId(),"该物料:"+detail.getMaterial()+"和批次:" + detail.getRocheBatch() +"与订单数量不一致",ScanComment.STATUS_ONE);
+                            }
+                        }else {
+                            if(!detail.getQuantity().equals(maDeta.getQuantity())){
+                                errorMsg.append("该物料:"+detail.getMaterial()+"与订单数量不一致; ");
+                                detailService.updateErrorMsg(detail.getId(),"该物料:"+detail.getMaterial()+"与订单数量不一致; ",ScanComment.STATUS_ONE);
+                            }
                         }
+
                     }
                 }
             }
 
+//            for (Detail detail : detailList) {
+//                for (Detail scanDatail : scanList) {
+//                    if(detail.getRocheBatch().equals(scanDatail.getRocheBatch())&&detail.getMaterial().equals(scanDatail.getMaterial())){
+//                        detailService.updateScanQuntity(detail.getId(),scanDatail.getQuantity());
+//                    }
+//                }
+//            }
+
             for (Detail detail : detailList) {
                 for (Detail scanDatail : scanList) {
-                    if(detail.getRocheBatch().equals(scanDatail.getRocheBatch())&&detail.getMaterial().equals(scanDatail.getMaterial())){
+                    if(detail.getMaterial().equals(scanDatail.getMaterial())){
                         detailService.updateScanQuntity(detail.getId(),scanDatail.getQuantity());
                     }
                 }
             }
+
             HeaderVo headerVo = new HeaderVo();
             headerVo.setDelivery(dn);
             if(StringUtils.isEmpty(errorMsg)){
-                headerService.updateStatus(dn,ScanComment.STATUS_THREE);
+                headerService.updateDeliveryStatus(dn,ScanComment.STATUS_THREE);
                 headerVo.setErrorMessage(ScanComment.ERRORMSG);
             }else {
-                headerService.updateStatus(dn,ScanComment.STATUS_TWO);
+                headerService.updateDeliveryStatus(dn,ScanComment.STATUS_TWO);
                 headerVo.setErrorMessage(errorMsg.toString());
 
             }

@@ -19,12 +19,12 @@
                                             <input type="text" name="material" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
-                                    <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">批次</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" name="rocheBatch" autocomplete="off" class="layui-input">
-                                        </div>
-                                    </div>
+                                    <!--<div class="layui-inline">-->
+                                        <!--<label class="layui-form-label layui-form-label-sm">批次</label>-->
+                                        <!--<div class="layui-input-inline">-->
+                                            <!--<input type="text" name="rocheBatch" autocomplete="off" class="layui-input">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                 </div>
                             </div>
                             <div class="layui-col-md2 table-action-area">
@@ -90,13 +90,15 @@
                 },
                 page: false,
                 cols: [[
-                    {field: 'delivery',align:'center',title: 'DN号',minWidth:150},
-                    {field: 'material',align:'center', title: '物料代码',minWidth:150},
-                    {field: 'rocheBatch',align:'center', title: '批号',minWidth:150},
-                    {field: 'serialNumber',align:'center', title: '序列号',minWidth:150},
-                    {field: 'materialDescription',align:'center', title: '物料描述',minWidth:200},
-                    {field: 'quantity',align:'center', title: '数量',width:120},
-                    {field: 'scanQuantity',align:'center', title: '已扫数量',width:120},
+                    {field: 'delivery',align:'center',title: 'DN号',minWidth:100},
+                    {field: 'material',align:'center', title: '物料代码',minWidth:100},
+                    // {field: 'rocheBatch',align:'center', title: '批号',minWidth:150},
+                    // {field: 'serialNumber',align:'center', title: '序列号',minWidth:150},
+                    {field: 'materialDescription',align:'center', title: '物料描述',minWidth:100},
+                    {field: 'uom',align:'center', title: '单位',minWidth:100},
+                    {field: 'expiryDate',align:'center', title: '有效期',minWidth:100},
+                    {field: 'quantity',align:'center', title: '数量',width:100},
+                    {field: 'scanQuantity',align:'center', title: '已扫数量',width:100},
                     {title: '操作', toolbar: '#detail-option',align:'center',width: 180}
                 ]],
                 done:function (res,curr,count) {
@@ -116,7 +118,7 @@
                 });
             }
             if (layEvent === 'scan-detail-view') {
-                febs.modal.open('扫描信息', 'sms/getScanDetail/'+data.delivery+"/"+data.material+"/"+ data.rocheBatch, {
+                febs.modal.open('扫描信息', 'sms/getScanDetail/'+data.delivery+"/"+data.material, {
                     area:  [$(window).width() <= 750 ? '70%' : '65%',$(window).width() <= 750 ? '40%' : '40%']
                 });
             }
@@ -126,7 +128,7 @@
             return {
                 delivery: $searchForm.find('input[name="deliveryNumber"]').val().trim(),
                 material: $searchForm.find('input[name="material"]').val().trim(),
-                rocheBatch: $searchForm.find('input[name="rocheBatch"]').val().trim(),
+                // rocheBatch: $searchForm.find('input[name="rocheBatch"]').val().trim(),
                 invalidate_ie_cache: new Date()
             };
         }

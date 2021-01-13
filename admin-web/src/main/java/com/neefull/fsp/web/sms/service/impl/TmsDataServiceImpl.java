@@ -25,15 +25,15 @@ public class TmsDataServiceImpl extends ServiceImpl<TmsDataMapper, TmsData> impl
 
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+    @Transactional
     public void addTmsData(TmsData tmsData) {
         this.baseMapper.insert(tmsData);
     }
 
     @Override
     public IPage<TmsData> queryTmsList(TmsData tmsData) {
-        TmsData tms = (TmsData) ScanComment.containPlant(tmsData);
-        IPage<TmsData> dataPage = new Page<>(tms.getPageNum(),tms.getPageSize());
-        return this.baseMapper.queryTmsPage(dataPage,tms);
+//        TmsData tms = (TmsData) ScanComment.containPlant(tmsData);
+        IPage<TmsData> dataPage = new Page<>(tmsData.getPageNum(),tmsData.getPageSize());
+        return this.baseMapper.queryTmsPage(dataPage,tmsData);
     }
 }

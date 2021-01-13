@@ -54,6 +54,15 @@ public interface IDetailService extends IService<Detail> {
      */
     List<Detail> queryDetailByDelivery(String delivery);
 
+    /**更新detail已扫数量为0
+     * @param delivery
+     * @param matCode
+     * @param status
+     */
     void updateStatusByDelivery(String delivery, String status);
+
+
+    void deleteByDelivery(String delivery);
+
 
 }

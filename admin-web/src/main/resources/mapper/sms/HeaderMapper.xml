@@ -46,6 +46,7 @@
             <result column="roche_batch" property="rocheBatch"/>
             <result column="serial_number" property="serialNumber"/>
             <result column="quantity" property="quantity"/>
+            <result column="scan_quantity" property="scanQuantity"/>
             <result column="uom" property="uom"/>
             <result column="roche_uom" property="rocheUom"/>
             <result column="expiry_date" property="expiryDate"/>
@@ -69,77 +70,88 @@
             <result column="update_time" property="updateTime"/>
         </collection>
     </resultMap>
-    
-    
+    <!--<insert id="insertHeaderCopy">-->
+        <!--insert into sms_header_copy (id,delivery,sold_party,sold_party_name,ship_party,ship_party_name,address,sales_order,roche_delivery,-->
+                                     <!--roche_ship_party,roche_ship_party_name,roche_order,roche_customer_order,plant,verify_user,verify_date,-->
+                                     <!--status,down_user,down_time,del_user,del_time,guid,verify_code,error_message,create_time,update_time)-->
+                             <!--values (#{id},#{delivery},#{sold_party},#{sold_party_name},#{ship_party},#{ship_party_name},#{address},#{sales_order},-->
+                                     <!--#{roche_delivery},#{roche_ship_party},#{roche_ship_party_name},#{roche_order},#{roche_customer_order},#{plant},-->
+                                     <!--#{verify_user},#{verify_date},#{status},#{down_user},#{down_time},#{del_user},#{del_time},#{guid},#{verify_code},-->
+                                     <!--#{error_message},#{create_time},#{update_time})-->
+    <!--</insert>-->
+
+
     <update id="updateStatusByDelivery">
         update sms_header set status = #{status} ,error_message = null ,verify_user = null ,verify_date = null where delivery = #{delivery}
     </update>
-    <update id="updateErrorMsg">
-        update sms_header set error_message = #{msg} where id = #{id}
+    <update id="updateError" parameterType="string">
+        update sms_header set error_message = #{message} where delivery = #{delivery}
     </update>
     <update id="updateUserByDelivery">
         update sms_header set verify_user = #{userName},verify_date = #{format} where delivery = #{dn}
     </update>
+    <update id="updateDeliveryStatus">
+        update sms_header set status = #{status}  where delivery = #{dn}
+    </update>
+
     <select id="getPageHeader" resultType="com.neefull.fsp.web.sms.entity.Header">
-        select * from sms_header t where 1=1
+        select t.*,count(distinct s.box_code) boxNum  from sms_header t left join sms_scan s on
+           t.delivery=s.delivery  and s.del = 1  where 1=1
         <if test="header.delivery != null and header.delivery != ''">
             AND t.delivery like concat('%',#{header.delivery},'%')
         </if>
         <if test="header.soldParty != null and header.soldParty != ''">
             AND t.sold_party like concat('%',#{header.soldParty},'%')
         </if>
-        <if test="header.soldPartyName != null and header.soldPartyName != ''">
-            AND t.sold_party_name like concat('%',#{header.soldPartyName},'%')
+        <if test="header.plant != null and header.plant != ''">
+            AND t.plant like concat('%',#{header.plant},'%')
         </if>
         <if test="header.shipParty != null and header.shipParty != ''">
             AND t.ship_party like concat('%',#{header.shipParty},'%')
         </if>
-        <if test="header.shipPartyName != null and header.shipPartyName != ''">
-            AND t.ship_party_name like concat('%',#{header.shipPartyName},'%')
+        <if test="header.status != null and header.status != ''">
+            AND t.status like concat('%',#{header.status},'%')
         </if>
         <if test="header.salesOrder != null and header.salesOrder != ''">
             AND t.sales_order like concat('%',#{header.salesOrder},'%')
         </if>
-        <choose>
-            <when test="header.plant != null and header.plant != ''">
-                AND t.plant like concat('%',#{header.plant},'%')
-            </when>
-            <otherwise>
-                AND t.plant  in
-                <foreach collection="header.plants" index="index" item="item" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </otherwise>
-        </choose>
+        <if test="header.startTime != null and header.startTime !='' and header.endTime!= null and header.endTime !=''">
+            And date_format(t.create_time,'%Y-%m-%d') between  #{header.startTime} and  #{header.endTime}
+        </if>
+        <!--<choose>-->
+            <!--<when test="header.plant != null and header.plant != ''">-->
+                <!--AND t.plant like concat('%',#{header.plant},'%')-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--AND t.plant  in-->
+                <!--<foreach collection="header.plants" index="index" item="item" open="(" separator="," close=")">-->
+                    <!--#{item}-->
+                <!--</foreach>-->
+            <!--</otherwise>-->
+        <!--</choose>-->
+        group by t.delivery
         order by create_time desc
     </select>
     <select id="selectHeaderByScanDn" resultType="com.neefull.fsp.web.sms.entity.Header">
         select  t.*  from sms_header t where delivery in
             ((select delivery from sms_scan where box_code in
-                (select distinct box_code from sms_scan where delivery = #{dn} and mat_code != '000000' and del =1)))
+                (select distinct box_code from sms_scan where delivery = #{dn} and mat_code != 'thermometer' and del = 1 ) and del =1))
     </select>
     <select id="queryHeaderDetailByDelivery" resultMap="headerDetail">
-        select h.id h_id,
-               h.sold_party,
-               h.ship_party,
-               h.plant h_plant,
-               h.error_message error_msg,
-               d.id,
-               d.material,
-               d.roche_batch,
-               d.quantity,
-               d.error_message
+        select h.id h_id,h.sold_party,h.ship_party,h.plant h_plant,h.error_message error_msg,
+               d.id,d.material,d.roche_batch,d.quantity,d.error_message
         from sms_header h inner join sms_detail d on h.delivery = d.delivery where h.delivery = #{dn}
     </select>
 
     <select id="queryScanDn" resultType="com.neefull.fsp.web.sms.entity.vo.HeaderVo">
-        select * from sms_header where plant = #{plant} and delivery = #{delivery}
+        select * from sms_header where delivery = #{delivery}
     </select>
     <select id="selecHeaderList" resultType="com.neefull.fsp.web.sms.entity.Header">
-        select t.delivery,t.status from sms_header t  where t.plant  in
-        <foreach collection="plants" index="index" item="item" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        select t.delivery,t.status from sms_header t
+        <!--where t.plant  in-->
+        <!--<foreach collection="plants" index="index" item="item" open="(" separator="," close=")">-->
+            <!--#{item}-->
+        <!--</foreach>-->
     </select>
     <select id="queryCompareList" resultType="com.neefull.fsp.web.sms.entity.Header">
         select * from sms_header t where status = '2'
@@ -161,17 +173,92 @@
         <if test="singleHeader.salesOrder != null and singleHeader.salesOrder != ''">
             AND t.sales_order like concat('%',#{singleHeader.salesOrder},'%')
         </if>
-        <choose>
-            <when test="singleHeader.plant != null and singleHeader.plant != ''">
-                AND t.plant like concat('%',#{singleHeader.plant},'%')
-            </when>
-            <otherwise>
-                AND t.plant  in
-                <foreach collection="singleHeader.plants" index="index" item="item" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </otherwise>
-        </choose>
+        <!--<choose>-->
+            <!--<when test="singleHeader.plant != null and singleHeader.plant != ''">-->
+                <!--AND t.plant like concat('%',#{singleHeader.plant},'%')-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--AND t.plant  in-->
+                <!--<foreach collection="singleHeader.plants" index="index" item="item" open="(" separator="," close=")">-->
+                    <!--#{item}-->
+                <!--</foreach>-->
+            <!--</otherwise>-->
+        <!--</choose>-->
         order by create_time desc
     </select>
+    <select id="getHeaderExcel"  resultMap="headerDetail">
+        select h.id h_id,h.delivery,h.sold_party,h.sold_party_name,h.ship_party,h.ship_party_name,h.address,
+               h.sales_order,h.roche_delivery,h.roche_ship_party,h.roche_ship_party_name,h.roche_order,h.plant h_plant,
+               h.error_message error_msg,d.id,d.delivery,d.delivery_item,d.roche_delivery_item,d.roche_delivery_item_code,
+               d.material,d.roche_material,d.material_description,d.material_description_en,d.roche_material_description,
+               d.plant,d.quantity,d.uom,d.roche_uom,d.expiry_date,d.if_batch_management,d.if_serial_number_management,
+               d.if_expiry_date_management,d.save_mode,d.save_mode_description,d.error_message
+        from sms_header h inner join sms_detail d on h.delivery = d.delivery where 1=1
+        <if test="delivery != null and delivery != ''">
+            AND h.delivery like concat('%',#{delivery},'%')
+        </if>
+        <if test="soldParty != null and soldParty != ''">
+            AND h.sold_party like concat('%',#{soldParty},'%')
+        </if>
+        <if test="plant != null and plant != ''">
+            AND h.plant like concat('%',#{plant},'%')
+        </if>
+        <if test="shipParty != null and shipParty != ''">
+            AND h.ship_party like concat('%',#{shipParty},'%')
+        </if>
+        <if test="status != null and status != ''">
+            AND h.status like concat('%',#{status},'%')
+        </if>
+        <if test="salesOrder != null and salesOrder != ''">
+            AND h.sales_order like concat('%',#{salesOrder},'%')
+        </if>
+        <if test="startTime != null and startTime !='' and endTime!= null and endTime !=''">
+            And date_format(h.create_time,'%Y-%m-%d') between  #{startTime} and  #{endTime}
+        </if>
+        order by h.create_time desc
+    </select>
+    <select id="getCompareExcel" resultMap="headerDetail">
+        select h.id h_id,
+               h.delivery,
+               h.sold_party,
+               h.ship_party,
+               h.address,
+               h.plant h_plant,
+               h.error_message error_msg,
+               d.id,
+               d.delivery,
+               d.material,
+               d.plant,
+               d.quantity,
+               d.scan_quantity,
+               d.uom,
+               d.expiry_date,
+               d.error_message
+        from sms_header h inner join sms_detail d on h.delivery = d.delivery
+        where h.status = 2
+        <if test="delivery != null and delivery != ''">
+            AND h.delivery like concat('%',#{delivery},'%')
+        </if>
+        <if test="soldParty != null and soldParty != ''">
+            AND h.sold_party like concat('%',#{soldParty},'%')
+        </if>
+        <if test="plant != null and plant != ''">
+            AND h.plant like concat('%',#{plant},'%')
+        </if>
+        <if test="shipParty != null and shipParty != ''">
+            AND h.ship_party like concat('%',#{shipParty},'%')
+        </if>
+        <if test="status != null and status != ''">
+            AND h.status like concat('%',#{status},'%')
+        </if>
+        <if test="salesOrder != null and salesOrder != ''">
+            AND h.sales_order like concat('%',#{salesOrder},'%')
+        </if>
+        <if test="startTime != null and startTime !='' and endTime!= null and endTime !=''">
+            And date_format(h.create_time,'%Y-%m-%d') between  #{startTime} and  #{endTime}
+        </if>
+        group by d.material , d.delivery
+        order by h.create_time desc
+    </select>
+
 </mapper>

@@ -31,6 +31,25 @@
                                             <input type="text" name="plant" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">打包时间</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="time" id="time" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">状态</label>
+                                        <div class="layui-input-inline">
+                                            <select name="status">
+                                                <option value=""></option>
+                                                <option value="0">未进行扫描</option>
+                                                <option value="1">扫描已完成</option>
+                                                <option value="2">审核未通过</option>
+                                                <option value="3">审核已通过</option>
+                                                <option value="4">同步已完成</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="layui-col-md2 table-action-area">
@@ -69,18 +88,26 @@
 <script type="text/html" id="header-option">
 
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="header-view">查看</a>
-    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="header-show">浏览</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="header-show">明细</a>
     {{# if(d.status == '1'){}}
-    <a class="layui-btn layui-btn-xs " lay-event="header-edit">审核</a>
+    <a class="layui-btn layui-btn-xs " lay-event="header-edit" shiro:hasPermission="scan:audit">审核</a>
     {{# } else if(d.status == '2'){}}
-    <a class="layui-btn layui-btn-xs " lay-event="header-edit">审核</a>
+    <a class="layui-btn layui-btn-xs " lay-event="header-edit" shiro:hasPermission="scan:audit">审核</a>
     {{# } }}
 
 </script>
+<script type="text/html" id="header-toolbarCheck">
+    <div class="layui-btn-container">
+        <button  class="layui-btn layui-btn-sm " lay-event="header-download">
+            <i class="layui-icon">&#xe7a8;</i> 导出Excel
+        </button>
+    </div>
+</script>
 <script data-th-inline="none" type="text/javascript">
-    layui.use(['jquery', 'form', 'table', 'febs'], function () {
+    layui.use(['jquery', 'form', 'table', 'febs','laydate'], function () {
         var $ = layui.jquery,
             febs = layui.febs,
+            laydate = layui.laydate,
             form = layui.form,
             table = layui.table,
             $view = $('#dn-header'),
@@ -92,6 +119,12 @@
         form.render();
         initTable();
 
+
+        laydate.render({
+            elem: '#time',
+            range: true,
+            trigger: 'click'
+        });
 
         $query.on('click', function () {
             var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});
@@ -113,14 +146,17 @@
                     time:new Date(),
                     plants:currentUser.factoryName
                 },
+                toolbar: '#header-toolbarCheck',
+                defaultToolbar: ['filter'],
                 cols: [[
-                    {field: 'delivery',align:'center',title: 'DN号',minWidth:150},
-                    {field: 'soldParty',align:'center', title: '售达方代码',minWidth:150},
-                    {field: 'soldPartyName',align:'center', title: '售达方名称',minWidth:150},
-                    {field: 'shipParty',align:'center', title: '送达方代码',minWidth:150},
-                    {field: 'shipPartyName',align:'center', title: '送达方名称',minWidth:150},
-                    {field: 'address',align:'center', title: '送货地址',minWidth:150},
-                    {field: 'salesOrder',align:'center', title: '销售订单号',minWidth:150},
+                    {field: 'delivery',align:'center',title: 'DN号',minWidth:100},
+                    {field: 'soldParty',align:'center', title: '售达方代码',minWidth:100},
+                    {field: 'soldPartyName',align:'center', title: '售达方名称',minWidth:100},
+                    {field: 'shipParty',align:'center', title: '送达方代码',minWidth:100},
+                    {field: 'shipPartyName',align:'center', title: '送达方名称',minWidth:100},
+                    {field: 'plant',align:'center', title: '工厂',minWidth:100},
+                    {field: 'boxNum',align:'center', title: '箱数',minWidth:100},
+                    {field: 'createTime',align:'center', title: '打包时间',minWidth:100},
                     {field: 'status',align:'center', title: '状态',minWidth:100,templet: "#header-status"},
                     {title: '操作', toolbar: '#header-option',align:'center',width: 180}
                 ]],
@@ -130,6 +166,15 @@
                 }
             });
         }
+
+
+        table.on('toolbar(dnHeaderTable)', function(obj){
+            var layEvent = obj.event;
+            if (layEvent === 'header-download') {
+                var params = $.extend(getQueryParams(), {plants:currentUser.factoryName});
+                febs.download(ctx + 'scan/smsHeader/headerExcel',params, 'DN信息.xlsx')
+            }
+        });
 
 
         table.on('tool(dnHeaderTable)', function (obj) {
@@ -163,9 +208,19 @@
 
 
         function getQueryParams() {
+            var startTime,
+                endTime,
+                time = $searchForm.find('input[name="time"]').val();
+            if (time) {
+                startTime = time.split(' - ')[0];
+                endTime = time.split(' - ')[1];
+            }
             return {
+                startTime : startTime,
+                endTime : endTime,
                 delivery: $searchForm.find('input[name="delivery"]').val().trim(),
                 plant: $searchForm.find('input[name="plant"]').val().trim(),
+                status: $searchForm.find("select[name='status']").val(),
                 soldParty: $searchForm.find('input[name="soldParty"]').val().trim(),
                 shipParty: $searchForm.find('input[name="shipParty"]').val().trim(),
                 invalidate_ie_cache: new Date()

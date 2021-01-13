@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.neefull.fsp.web.sms.mapper.ScanMapper">
+
     <update id="updateScanStatus">
         update sms_scan set status = #{status} where id = #{id}
     </update>
     <update id="deleteScanById">
         update sms_scan set del = #{del} where id = #{id}
     </update>
-
+    <update id="updateStatusByDelivery">
+        update sms_scan set status = #{status} where delivery = #{delivery}
+    </update>
 
     <select id="queryScanDetailList" resultType="com.neefull.fsp.web.sms.entity.Scan">
         select * from sms_scan t  where  del = 1
-        <choose>
-            <when test="scan.plant != null and scan.plant != ''">
-                AND t.plant like concat('%',#{scan.plant},'%')
-            </when>
-            <otherwise>
-                AND t.plant  in
-                <foreach collection="scan.plants" index="index" item="item" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </otherwise>
-        </choose>
+        <!--<choose>-->
+            <!--<when test="scan.plant != null and scan.plant != ''">-->
+                <!--AND t.plant like concat('%',#{scan.plant},'%')-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--AND t.plant  in-->
+                <!--<foreach collection="scan.plants" index="index" item="item" open="(" separator="," close=")">-->
+                    <!--#{item}-->
+                <!--</foreach>-->
+            <!--</otherwise>-->
+        <!--</choose>-->
         <if test="scan.delivery != null and scan.delivery != ''">
             AND t.delivery like concat('%',#{scan.delivery},'%')
         </if>
@@ -31,33 +34,82 @@
         <if test="scan.batch != null and scan.batch != ''">
             AND t.batch like concat('%',#{scan.batch},'%')
         </if>
+        <if test="scan.boxCode != null and scan.boxCode != ''">
+            AND t.box_code like concat('%',#{scan.boxCode},'%')
+        </if>
+        <if test="scan.startTime != null and scan.startTime !='' and scan.endTime!= null and scan.endTime !=''">
+            And date_format(t.create_time,'%Y-%m-%d') between  #{scan.startTime} and  #{scan.endTime}
+        </if>
         order by t.create_time desc
     </select>
+
     <select id="getScanInfoList" resultType="com.neefull.fsp.web.sms.entity.Scan">
         select distinct t.delivery ,h.status,h.plant,h.sold_party,h.ship_party from sms_scan t
               left join sms_header h on t.delivery = h.delivery where  t.del = 1
-        <choose>
-            <when test="scan.plant != null and scan.plant != ''">
-                AND t.plant like concat('%',#{scan.plant},'%')
-            </when>
-            <otherwise>
-                AND t.plant  in
-                <foreach collection="scan.plants" index="index" item="item" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </otherwise>
-        </choose>
+        <!--<choose>-->
+            <!--<when test="scan.plant != null and scan.plant != ''">-->
+                <!--AND t.plant like concat('%',#{scan.plant},'%')-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--AND t.plant  in-->
+                <!--<foreach collection="scan.plants" index="index" item="item" open="(" separator="," close=")">-->
+                    <!--#{item}-->
+                <!--</foreach>-->
+            <!--</otherwise>-->
+        <!--</choose>-->
         <if test="scan.delivery != null and scan.delivery != ''">
             AND t.delivery like concat('%',#{scan.delivery},'%')
         </if>
         order by t.create_time desc
     </select>
+
     <select id="queryScanAndCountByDelivery" resultType="com.neefull.fsp.web.sms.entity.Scan">
         select t.*,d.quantity as count from sms_scan t left join sms_detail d  on
             t.delivery = d.delivery
                 and t.mat_code = d.material
-                    and t.batch = d.batch
+--                     and t.batch = d.batch
                         where t.delivery = #{delivery} and t.del = 1
+    </select>
+    <select id="selectScanByDeliveryAndMatCode"  resultType="com.neefull.fsp.web.sms.entity.Scan">
+        select t.id,t.delivery,t.box_name,t.box_type,t.mat_code,GROUP_CONCAT(t.box_code) box_code,
+               t.mat_name,t.batch,t.serial_number,t.sn_code,sum(t.quantity) quantity,t.expiry_date,t.plant,t.unit,
+               t.status,t.del from sms_scan t where t.delivery = #{delivery} and
+                                                                        t.mat_code = #{matCode} and
+                                                                        t.del = #{status}
+        group by t.mat_code
+    </select>
+    <select id="downScanExcel" resultType="com.neefull.fsp.web.sms.entity.Scan">
+        select * from sms_scan t  where  del = 1
+        <!--<choose>-->
+        <!--<when test="scan.plant != null and scan.plant != ''">-->
+        <!--AND t.plant like concat('%',#{scan.plant},'%')-->
+        <!--</when>-->
+        <!--<otherwise>-->
+        <!--AND t.plant  in-->
+        <!--<foreach collection="scan.plants" index="index" item="item" open="(" separator="," close=")">-->
+        <!--#{item}-->
+        <!--</foreach>-->
+        <!--</otherwise>-->
+        <!--</choose>-->
+        <if test="delivery != null and delivery != ''">
+            AND t.delivery like concat('%',#{delivery},'%')
+        </if>
+        <if test="matCode != null and matCode != ''">
+            AND t.mat_code like concat('%',#{matCode},'%')
+        </if>
+        <if test="batch != null and batch != ''">
+            AND t.batch like concat('%',#{batch},'%')
+        </if>
+        <if test="boxCode != null and boxCode != ''">
+            AND t.box_code like concat('%',#{boxCode},'%')
+        </if>
+        <if test="startTime != null and startTime !='' and endTime!= null and endTime !=''">
+            And date_format(t.create_time,'%Y-%m-%d') between  #{startTime} and  #{endTime}
+        </if>
+        order by t.create_time desc
+    </select>
+    <select id="queryBoxTypeByDeliveryAndMatCode" resultType="java.lang.String">
+        select t.box_code from sms_scan t  where  del = 1 and t.mat_code = #{material} and t.delivery = #{delivery}
     </select>
 
 

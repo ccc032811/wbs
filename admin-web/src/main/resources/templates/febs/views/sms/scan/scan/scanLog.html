@@ -13,12 +13,12 @@
                                             <input type="text" name="delivery" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
-                                    <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">工厂编号</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" name="plant" autocomplete="off" class="layui-input">
-                                        </div>
-                                    </div>
+                                    <!--<div class="layui-inline">-->
+                                        <!--<label class="layui-form-label layui-form-label-sm">工厂编号</label>-->
+                                        <!--<div class="layui-input-inline">-->
+                                            <!--<input type="text" name="plant" autocomplete="off" class="layui-input">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                 </div>
                             </div>
                             <div class="layui-col-md2 table-action-area">
@@ -49,9 +49,10 @@
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
-    layui.use(['jquery', 'form', 'table', 'febs'], function () {
+    layui.use(['jquery', 'form', 'table', 'febs','util'], function () {
         var $ = layui.jquery,
             febs = layui.febs,
+            util = layui.util,
             form = layui.form,
             table = layui.table,
             $view = $('#scan-log'),
@@ -103,10 +104,15 @@
             });
         }
 
-        function getQueryParams() {
+
+        function apiFormat(d) {
+            return util.escape(d.api);
+        }
+
+            function getQueryParams() {
             return {
                 delivery: $searchForm.find('input[name="delivery"]').val().trim(),
-                plant: $searchForm.find('input[name="plant"]').val().trim(),
+                // plant: $searchForm.find('input[name="plant"]').val().trim(),
                 invalidate_ie_cache: new Date()
             };
         }

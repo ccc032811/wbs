@@ -1,4 +1,4 @@
-package com.neefull.fsp.web.sms.entity;
+package com.neefull.fsp.web.sms.entity.copy;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -16,10 +16,9 @@ import java.util.Objects;
  * @Date: 2020/11/24  10:30
  */
 
-@TableName(value = "sms_detail")
-public class Detail implements Serializable {
+@TableName(value = "sms_detail_copy")
+public class DetailCopy implements Serializable {
 
-    private static final long serialVersionUID = 4285670559647893856L;
 
     /**
      *  主键id
@@ -530,7 +529,7 @@ public class Detail implements Serializable {
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        Detail detail = (Detail) object;
+        DetailCopy detail = (DetailCopy) object;
         return Objects.equals(material, detail.material) &&
                 Objects.equals(rocheBatch, detail.rocheBatch) &&
                 Objects.equals(quantity, detail.quantity);

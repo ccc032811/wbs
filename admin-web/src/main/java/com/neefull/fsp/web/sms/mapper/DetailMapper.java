@@ -24,4 +24,6 @@ public interface DetailMapper extends BaseMapper<Detail> {
     void updateupdateErrorMsg(@Param("id") Integer id, @Param("msg") String msg, @Param("status") String status);
 
     void updateStatusByDelivery(@Param("delivery") String delivery, @Param("status") String status);
+
+
 }

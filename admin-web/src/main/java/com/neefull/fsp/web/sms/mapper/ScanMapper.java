@@ -27,4 +27,12 @@ public interface ScanMapper extends BaseMapper<Scan> {
 
     void deleteScanById(@Param("id") Integer id, @Param("del") String del);
 
+    void updateStatusByDelivery(@Param("delivery") String delivery, @Param("status") String status);
+
+    Scan selectScanByDeliveryAndMatCode(@Param("delivery") String delivery, @Param("matCode") String matCode, @Param("status") String status);
+
+    List<Scan> downScanExcel(Scan scan);
+
+    List<String> queryBoxTypeByDeliveryAndMatCode(@Param("delivery") String delivery, @Param("material") String material);
+
 }

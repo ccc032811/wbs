@@ -42,7 +42,10 @@ public class TmsData implements Serializable {
     @TableField(value = "plant")
     private String plant;
 
-//    @TableField(value = "res_data")
+    /**
+     *  返回结果
+     */
+    @TableField(value = "res_data")
     private String resData;
 
     @TableField(exist = false)
@@ -112,6 +115,14 @@ public class TmsData implements Serializable {
 
     public void setPlants(List<String> plants) {
         this.plants = plants;
+    }
+
+    public String getResData() {
+        return resData;
+    }
+
+    public void setResData(String resData) {
+        this.resData = resData;
     }
 
     public Date getCreateTime() {

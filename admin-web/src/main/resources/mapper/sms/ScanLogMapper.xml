@@ -6,17 +6,17 @@
     </update>
     <select id="getPageScanLog" resultType="com.neefull.fsp.web.sms.entity.ScanLog">
         select * from sms_scan_log t  where  1=1
-        <choose>
-            <when test="scanLog.plant != null and scanLog.plant != ''">
-                AND t.plant like concat('%',#{scanLog.plant},'%')
-            </when>
-            <otherwise>
-                AND t.plant  in
-                <foreach collection="scanLog.plants" index="index" item="item" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </otherwise>
-        </choose>
+        <!--<choose>-->
+            <!--<when test="scanLog.plant != null and scanLog.plant != ''">-->
+                <!--AND t.plant like concat('%',#{scanLog.plant},'%')-->
+            <!--</when>-->
+            <!--<otherwise>-->
+                <!--AND t.plant  in-->
+                <!--<foreach collection="scanLog.plants" index="index" item="item" open="(" separator="," close=")">-->
+                    <!--#{item}-->
+                <!--</foreach>-->
+            <!--</otherwise>-->
+        <!--</choose>-->
         <if test="scanLog.delivery != null and scanLog.delivery != ''">
             AND t.delivery like concat('%',#{scanLog.delivery},'%')
         </if>

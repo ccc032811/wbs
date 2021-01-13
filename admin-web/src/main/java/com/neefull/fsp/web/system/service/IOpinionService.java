@@ -36,4 +36,10 @@ public interface IOpinionService extends IService<Opinion> {
      */
     List<Opinion> getOpinions(String name);
 
+    /**
+     * @param boxtype
+     * @return
+     */
+    String queryOpionById(String boxtype);
+
 }

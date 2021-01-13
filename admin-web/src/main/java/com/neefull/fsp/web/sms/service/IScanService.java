@@ -73,7 +73,7 @@ public interface IScanService  extends IService<Scan> {
      * @param batch
      * @return
      */
-    Scan getScanDetail(String delivery, String matCode, String batch);
+    Scan getScanDetail(String delivery, String matCode);
 
     /**删除已扫信息
      * @param delivery
@@ -90,5 +90,16 @@ public interface IScanService  extends IService<Scan> {
      * @param id
      */
     void deleteScanById(Integer id,String delivery);
+
+    /**下载扫描记录
+     * @param scan
+     * @return
+     */
+    List<Scan> downScanExcel(Scan scan);
+
+    List<String> queryBoxTypeByDeliveryAndMatCode(String delivery, String material);
+
+    void deleteByDelivery(String delivery);
+
 
 }

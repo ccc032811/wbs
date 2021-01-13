@@ -15,7 +15,7 @@ public interface OpinionMapper extends BaseMapper<Opinion> {
      *
      * @param
      */
-    void deleteOpinions(String opinionId);
+    void deleteOpinions(@Param("opinionId") String opinionId);
 
     /**查询
      * @param name
@@ -24,5 +24,6 @@ public interface OpinionMapper extends BaseMapper<Opinion> {
     List<Opinion> getOpinions(@Param("name") String name);
 
 
+    String queryOpionById(@Param("boxtype") String boxtype);
 
 }

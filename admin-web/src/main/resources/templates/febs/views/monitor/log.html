@@ -7,12 +7,12 @@
                         <div class="layui-row">
                             <div class="layui-col-md10">
                                 <div class="layui-form-item">
-                                    <div class="layui-inline">
-                                        <label class="layui-form-label layui-form-label-sm">操作人</label>
-                                        <div class="layui-input-inline">
-                                            <input type="text" name="username" autocomplete="off" class="layui-input">
-                                        </div>
-                                    </div>
+                                    <!--<div class="layui-inline">-->
+                                        <!--<label class="layui-form-label layui-form-label-sm">操作人</label>-->
+                                        <!--<div class="layui-input-inline">-->
+                                            <!--<input type="text" name="username" autocomplete="off" class="layui-input">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                     <div class="layui-inline">
                                         <label class="layui-form-label layui-form-label-sm">操作时间</label>
                                         <div class="layui-input-inline">
@@ -184,7 +184,7 @@
             return {
                 createTimeFrom: createTimeFrom,
                 createTimeTo: createTimeTo,
-                username: $searchForm.find('input[name="username"]').val().trim(),
+                // username: $searchForm.find('input[name="username"]').val().trim(),
                 operation: $searchForm.find('input[name="operation"]').val().trim(),
                 invalidate_ie_cache: new Date()
             };
