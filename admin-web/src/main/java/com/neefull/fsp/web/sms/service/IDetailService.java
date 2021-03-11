@@ -65,4 +65,7 @@ public interface IDetailService extends IService<Detail> {
     void deleteByDelivery(String delivery);
 
 
+
+
+
 }

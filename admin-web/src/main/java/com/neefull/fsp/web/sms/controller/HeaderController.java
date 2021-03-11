@@ -31,6 +31,7 @@ import java.util.Map;
 @RequestMapping("/scan/smsHeader")
 public class HeaderController extends BaseController {
 
+
     @Autowired
     private IHeaderService headerService;
     @Autowired
@@ -75,7 +76,7 @@ public class HeaderController extends BaseController {
 
 
     /**查询已扫但是没审核和审核未通过的dn
-     * @param plant
+     * @param
      * @return
      */
     @GetMapping("/queryScanDn/{delivery}")

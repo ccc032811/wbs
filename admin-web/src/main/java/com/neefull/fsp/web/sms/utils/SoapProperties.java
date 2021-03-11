@@ -19,19 +19,19 @@ public class SoapProperties implements InitializingBean {
     private String url;
     @Value("${sms.tms.method}")
     private String method;
-    @Value("${sms.tms.client_customerid}")
-    private String clientCustomerid;
+    @Value("${sms.tms.client_customerId}")
+    private String clientCustomerId;
     @Value("${sms.tms.client_db}")
     private String clientDb;
-    @Value("${sms.tms.messageid}")
+    @Value("${sms.tms.messageId}")
     private String messageId;
-    @Value("${sms.tms.apptoken}")
+    @Value("${sms.tms.appToken}")
     private String appToken;
-    @Value("${sms.tms.appkey}")
+    @Value("${sms.tms.appKey}")
     private String appKey;
     @Value("${sms.tms.format}")
     private String format;
-    @Value("${sms.tms.appsecret}")
+    @Value("${sms.tms.appSecret}")
     private String appSecret;
     @Value(("${sms.opin.box_type}"))
     private String boxType;
@@ -54,7 +54,7 @@ public class SoapProperties implements InitializingBean {
         SOAPURL = this.soapUrl;
         URL = this.url;
         METHOD = this.method;
-        CLIENTCUSTOMERID = this.clientCustomerid;
+        CLIENTCUSTOMERID = this.clientCustomerId;
         CLIENTDB = this.clientDb;
         MESSAGEID = this.messageId;
         APPTOKEN = this.appToken;

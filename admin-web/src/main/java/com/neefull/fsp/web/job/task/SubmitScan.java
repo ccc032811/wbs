@@ -75,7 +75,7 @@ public class SubmitScan {
                 List<ScanSubmit> scanSubmitList = new ArrayList<>();
                 for (Scan sca : scans) {
                     ScanSubmit scanSubmit = new ScanSubmit();
-                    scanSubmit.setKeyid(String.valueOf(sca.getId()));
+                    scanSubmit.setKeyid("R"+String.valueOf(sca.getId()));
                     scanSubmit.setDnNo(sca.getDelivery());
                     scanSubmit.setBoxNo(sca.getBoxType()+"|"+sca.getBoxCode());
                     scanSubmit.setSerialNo("");
@@ -93,7 +93,7 @@ public class SubmitScan {
 
                 log.info("对接TMS的DN号为：{}，对接data为：{}",header.getDelivery(),data);
 
-                String sign = SoapWsUtils.getSign(data, "123456");
+                String sign = SoapWsUtils.getSign(data, SoapProperties.APPSECRET);
 
                 String timestamp = Timestamp.valueOf(DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss")).toString();
                 String res = "";

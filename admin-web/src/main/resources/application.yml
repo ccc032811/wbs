@@ -8,7 +8,7 @@ spring:
     multipart:
       max-file-size: 2MB # 限制文件上传的大小
   profiles:
-    active: prod
+    active: test
 
   thymeleaf:
     cache: false
@@ -43,12 +43,12 @@ sms:
   tms:
     url: http://222.66.94.138:18080/datahub/SYKY_ERP/FluxWmsJsonApi        #正式  http://222.66.94.138:18080/datahub/SYKY_ERP/FluxWmsJsonApi
     method: putORDREData                                                   #测试  http://222.66.94.137:19192/datahub/SYKY_ERP/FluxWmsJsonApi
-    client_customerid: SYKY_ERP
+    client_customerId: SYKY_ERP
     client_db: FLUXWMSJSONDB
-    messageid: ORDRE
-    apptoken: 80AC1A3F-F949-492C-A024-7044B28C8025
-    appkey: test
+    messageId: ORDRE
+    appToken: 80AC1A3F-F949-492C-A024-7044B28C8025
+    appKey: test
     format: json
-    appsecret: 123456
+    appSecret: 123456
   opin:
     box_type: 99   #  获取箱号的位数

@@ -3,6 +3,7 @@ package com.neefull.fsp.web;
 
 
 
+import com.neefull.fsp.web.sms.utils.ScanComment;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,6 +32,8 @@ public class WBSApplication extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(WBSApplication.class);
     }
+
+
 
 
 }

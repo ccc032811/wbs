@@ -25,12 +25,18 @@
                                             <input type="text" name="shipParty" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
-                                    <!--<div class="layui-inline">-->
-                                        <!--<label class="layui-form-label layui-form-label-sm">工厂编号</label>-->
-                                        <!--<div class="layui-input-inline">-->
-                                            <!--<input type="text" name="plant" autocomplete="off" class="layui-input">-->
-                                        <!--</div>-->
-                                    <!--</div>-->
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">工厂编号</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="plant" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">打包时间</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="compare-time" id="compare-time" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="layui-col-md2 table-action-area">
@@ -64,10 +70,11 @@
     </div>
 </script>
 <script data-th-inline="none" type="text/javascript">
-    layui.use(['jquery', 'form', 'table', 'febs'], function () {
+    layui.use(['jquery', 'form', 'table', 'febs','laydate'], function () {
         var $ = layui.jquery,
             febs = layui.febs,
             form = layui.form,
+            laydate = layui.laydate,
             table = layui.table,
             $view = $('#compare-header'),
             $query = $view.find('#compare-header-query'),
@@ -77,6 +84,14 @@
 
         form.render();
         initTable();
+
+
+
+        laydate.render({
+            elem: '#compare-time',
+            range: true,
+            trigger: 'click'
+        });
 
 
         $query.on('click', function () {
@@ -106,6 +121,7 @@
                     {field: 'soldParty',align:'center', title: '售达方代码',minWidth:200},
                     {field: 'shipParty',align:'center', title: '送达方代码',minWidth:200},
                     {field: 'plant',align:'center', title: '工厂',minWidth:200},
+                    {field: 'createTime',align:'center', title: '打包时间',minWidth:100},
                     {field: 'errorMessage',align:'center', title: '错误原因',minWidth:200},
                     {title: '操作', toolbar: '#compareheader-option',align:'center',width: 120}
                 ]],
@@ -136,9 +152,18 @@
 
 
         function getQueryParams() {
+            var startTime,
+                endTime,
+                time = $searchForm.find('input[name="compare-time"]').val();
+            if (time) {
+                startTime = time.split(' - ')[0];
+                endTime = time.split(' - ')[1];
+            }
             return {
+                startTime : startTime,
+                endTime : endTime,
                 delivery: $searchForm.find('input[name="delivery"]').val().trim(),
-                // plant: $searchForm.find('input[name="plant"]').val().trim(),
+                plant: $searchForm.find('input[name="plant"]').val().trim(),
                 soldParty: $searchForm.find('input[name="soldParty"]').val().trim(),
                 shipParty: $searchForm.find('input[name="shipParty"]').val().trim(),
                 invalidate_ie_cache: new Date()

@@ -109,13 +109,6 @@ public class ViewController {
     }
 
 
-//    @GetMapping(FebsConstant.VIEW_PREFIX + "/sms/scanDetail/{delivery}")
-//    @RequiresPermissions("scanHeader:view")
-//    public String getScanDetail(@PathVariable String delivery, Model model) {
-//        model.addAttribute("delivery", delivery);
-//        return FebsUtil.view("sms/scan/scan/scanDetail");
-//    }
-
     @GetMapping(FebsConstant.VIEW_PREFIX + "/sms/scanDetailShow/{id}/{edit}")
     @RequiresPermissions("scanHeader:view")
     public String getScanDetailShow(@PathVariable String id,@PathVariable String edit, Model model) {

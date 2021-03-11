@@ -118,17 +118,17 @@
         <if test="header.startTime != null and header.startTime !='' and header.endTime!= null and header.endTime !=''">
             And date_format(t.create_time,'%Y-%m-%d') between  #{header.startTime} and  #{header.endTime}
         </if>
-        <!--<choose>-->
-            <!--<when test="header.plant != null and header.plant != ''">-->
-                <!--AND t.plant like concat('%',#{header.plant},'%')-->
-            <!--</when>-->
-            <!--<otherwise>-->
-                <!--AND t.plant  in-->
-                <!--<foreach collection="header.plants" index="index" item="item" open="(" separator="," close=")">-->
-                    <!--#{item}-->
-                <!--</foreach>-->
-            <!--</otherwise>-->
-        <!--</choose>-->
+        <choose>
+            <when test="header.plant != null and header.plant != ''">
+                AND t.plant like concat('%',#{header.plant},'%')
+            </when>
+            <otherwise>
+                AND t.plant  in
+                <foreach collection="header.plants" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </otherwise>
+        </choose>
         group by t.delivery
         order by create_time desc
     </select>
@@ -161,14 +161,14 @@
         <if test="singleHeader.soldParty != null and singleHeader.soldParty != ''">
             AND t.sold_party like concat('%',#{singleHeader.soldParty},'%')
         </if>
-        <if test="singleHeader.soldPartyName != null and singleHeader.soldPartyName != ''">
-            AND t.sold_party_name like concat('%',#{singleHeader.soldPartyName},'%')
+        <if test="singleHeader.plant != null and singleHeader.plant != ''">
+            AND t.plant like concat('%',#{singleHeader.plant},'%')
         </if>
         <if test="singleHeader.shipParty != null and singleHeader.shipParty != ''">
             AND t.ship_party like concat('%',#{singleHeader.shipParty},'%')
         </if>
-        <if test="singleHeader.shipPartyName != null and singleHeader.shipPartyName != ''">
-            AND t.ship_party_name like concat('%',#{singleHeader.shipPartyName},'%')
+        <if test="singleHeader.startTime != null and singleHeader.startTime !='' and singleHeader.endTime!= null and singleHeader.endTime !=''">
+            And date_format(t.create_time,'%Y-%m-%d') between  #{singleHeader.startTime} and  #{singleHeader.endTime}
         </if>
         <if test="singleHeader.salesOrder != null and singleHeader.salesOrder != ''">
             AND t.sales_order like concat('%',#{singleHeader.salesOrder},'%')

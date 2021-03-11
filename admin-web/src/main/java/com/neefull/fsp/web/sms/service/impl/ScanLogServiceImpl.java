@@ -19,8 +19,10 @@ import com.neefull.fsp.web.sms.utils.SoapWsUtils;
 import com.neefull.fsp.web.sms.utils.XmlUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +44,8 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
     private IScanService scanService;
     @Autowired@Lazy
     private IHeaderService headerService;
+    @Autowired@Lazy
+    private IScanLogService scanLogService;
 
 
     @Override
@@ -81,6 +85,32 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
 
     }
 
+    @Override
+    @Transactional
+    public void insertScanLog(String message, String delivery) {
+
+        String soldToParty = XmlUtils.getTagContent(message, "<SOLD_TO_PARTY>", "</SOLD_TO_PARTY>");
+        String shipToParty = XmlUtils.getTagContent(message, "<SHIP_TO_PARTY>", "</SHIP_TO_PARTY>");
+        String plant = XmlUtils.getTagContent(message,"<PLANT>", "</PLANT>");
+
+        String reDelivery = XmlUtils.getTagContent(message, "<DELIVERY>", "</DELIVERY>");
+        ScanLog reScanLog = queryDnByDelivery(reDelivery);
+
+        if(StringUtils.isNotEmpty(soldToParty)&&StringUtils.isNotEmpty(shipToParty)){
+
+            if(reScanLog == null) {
+                ScanLog newScanLog = new ScanLog();
+                newScanLog.setDelivery(delivery);
+                newScanLog.setDeliveryResponse(message);
+                newScanLog.setPlant(plant);
+                this.baseMapper.insert(newScanLog);
+
+                headerService.insertHeaderAndDetail(message,newScanLog.getId());
+            }
+
+        }
+    }
+
 
     @Override
     @Transactional
@@ -99,20 +129,27 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
             String soapMessage = SoapWsUtils.getSoapMessage(delivery);
             try {
                 message = SoapWsUtils.callWebService(SoapProperties.SOAPURL,soapMessage);
-
-                String soldToParty = XmlUtils.getTagContent(message, "<SOLD_TO_PARTY>", "</SOLD_TO_PARTY>");
-                String shipToParty = XmlUtils.getTagContent(message, "<SHIP_TO_PARTY>", "</SHIP_TO_PARTY>");
                 plant = XmlUtils.getTagContent(message,"<PLANT>", "</PLANT>");
 
-                if(StringUtils.isNotEmpty(soldToParty)&&StringUtils.isNotEmpty(shipToParty)){
-                    ScanLog newScanLog = new ScanLog();
-                    newScanLog.setDelivery(delivery);
-                    newScanLog.setDeliveryResponse(message);
-                    newScanLog.setPlant(plant);
-                    this.baseMapper.insert(newScanLog);
+//                String soldToParty = XmlUtils.getTagContent(message, "<SOLD_TO_PARTY>", "</SOLD_TO_PARTY>");
+//                String shipToParty = XmlUtils.getTagContent(message, "<SHIP_TO_PARTY>", "</SHIP_TO_PARTY>");
+//                String reDelivery = XmlUtils.getTagContent(message, "<DELIVERY>", "</DELIVERY>");
+//
+//                ScanLog reScanLog = queryDnByDelivery(reDelivery);
+//
+//                if(StringUtils.isNotEmpty(soldToParty)&&StringUtils.isNotEmpty(shipToParty)){
+//                    if(reScanLog == null) {
+//                        ScanLog newScanLog = new ScanLog();
+//                        newScanLog.setDelivery(delivery);
+//                        newScanLog.setDeliveryResponse(message);
+//                        newScanLog.setPlant(plant);
+//                        this.baseMapper.insert(newScanLog);
+//
+//                        headerService.insertHeaderAndDetail(message,newScanLog.getId());
+//                    }
+//                }
 
-                    headerService.insertHeaderAndDetail(message,newScanLog.getId());
-                }
+                scanLogService.insertScanLog(message,delivery);
             } catch (Exception e) {
                 e.printStackTrace();
             }

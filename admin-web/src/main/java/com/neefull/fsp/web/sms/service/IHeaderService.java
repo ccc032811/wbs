@@ -95,7 +95,7 @@ public interface IHeaderService extends IService<Header> {
      * @param message
      * @param id
      */
-    @Async("scanAsyncThreadPool")
+//    @Async("scanAsyncThreadPool")
     void insertHeaderAndDetail(String message, Integer id);
 
     void updateDeliveryStatus(String dn, String status);

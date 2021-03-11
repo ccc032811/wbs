@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class TmsDataServiceImpl extends ServiceImpl<TmsDataMapper, TmsData> implements ITmsDataService {
 
-
     @Override
     @Transactional
     public void addTmsData(TmsData tmsData) {
@@ -36,4 +35,7 @@ public class TmsDataServiceImpl extends ServiceImpl<TmsDataMapper, TmsData> impl
         IPage<TmsData> dataPage = new Page<>(tmsData.getPageNum(),tmsData.getPageSize());
         return this.baseMapper.queryTmsPage(dataPage,tmsData);
     }
+
+
+
 }

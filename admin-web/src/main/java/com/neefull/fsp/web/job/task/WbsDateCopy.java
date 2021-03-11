@@ -1,12 +1,8 @@
 package com.neefull.fsp.web.job.task;
 
-import com.neefull.fsp.web.sms.entity.Header;
 import com.neefull.fsp.web.sms.entity.copy.DetailCopy;
 import com.neefull.fsp.web.sms.entity.copy.HeaderCopy;
 import com.neefull.fsp.web.sms.entity.copy.ScanCopy;
-import com.neefull.fsp.web.sms.mapper.DetailMapper;
-import com.neefull.fsp.web.sms.mapper.HeaderMapper;
-import com.neefull.fsp.web.sms.mapper.ScanMapper;
 import com.neefull.fsp.web.sms.mapper.copy.DetailCopyMapper;
 import com.neefull.fsp.web.sms.mapper.copy.HeaderCopyMapper;
 import com.neefull.fsp.web.sms.mapper.copy.ScanCopyMapper;
@@ -14,14 +10,12 @@ import com.neefull.fsp.web.sms.service.IDetailService;
 import com.neefull.fsp.web.sms.service.IHeaderService;
 import com.neefull.fsp.web.sms.service.IScanService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;

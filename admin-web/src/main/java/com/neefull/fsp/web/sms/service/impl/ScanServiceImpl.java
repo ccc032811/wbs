@@ -337,6 +337,8 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
             headerVos.add(headerVo);
             headerService.updateUserByDelivery(dn,userName, DateFormatUtils.format(new Date(),"yyyy-MM-dd HH:mm:ss"));
 
+
+
         }
         return headerVos;
     }

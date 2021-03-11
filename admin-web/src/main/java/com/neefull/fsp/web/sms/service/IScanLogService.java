@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.neefull.fsp.web.sms.entity.ScanLog;
 import com.neefull.fsp.web.sms.entity.vo.DetailScanVo;
 import com.neefull.fsp.web.sms.entity.vo.DetailVo;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
 
@@ -50,9 +51,12 @@ public interface IScanLogService  extends IService<ScanLog> {
      */
     void updateStatus(Integer id, String status);
 
+
     List<ScanLog> selectScanLogInsert();
 
 
     void updateScanLogStatus(List<ScanLog> headerList);
 
+    @Async("scanAsyncThreadPool")
+    void insertScanLog(String message, String delivery);
 }
