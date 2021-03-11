@@ -122,12 +122,12 @@
             <when test="header.plant != null and header.plant != ''">
                 AND t.plant like concat('%',#{header.plant},'%')
             </when>
-            <otherwise>
-                AND t.plant  in
-                <foreach collection="header.plants" index="index" item="item" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </otherwise>
+            <!--<otherwise>-->
+                <!--AND t.plant  in-->
+                <!--<foreach collection="header.plants" index="index" item="item" open="(" separator="," close=")">-->
+                    <!--#{item}-->
+                <!--</foreach>-->
+            <!--</otherwise>-->
         </choose>
         group by t.delivery
         order by create_time desc
