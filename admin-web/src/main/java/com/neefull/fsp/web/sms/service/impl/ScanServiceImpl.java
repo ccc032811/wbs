@@ -46,11 +46,14 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
     @Override
     @Transactional
     public void insertScanMsg(ScanAdd scanAdd) {
+
+        //判断不为删除的状态的数据直接入库
         for (Scan scan : scanAdd.getScanList()) {
             if(!scan.getFlag().equals(ScanComment.STATUS_THREE)){
                 this.baseMapper.insert(scan);
             }
         }
+        //更新detail的已扫数量
         List<Detail> detailList = addScanQuantity(scanAdd.getDelivery(), scanAdd.getScanList());
         for (Detail detail : detailList) {
             detailService.updateScanQuntity(detail.getId(),detail.getScanQuantity());
@@ -61,6 +64,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
     private List<Detail> addScanQuantity(String delivery,List<Scan> scanList){
         List<Detail> detailList = detailService.queryDetailByDelivery(delivery);
+        //对相同物料的数量进行相加
         for (Detail detail : detailList) {
             String material = detail.getMaterial();
             BigDecimal matDec = new BigDecimal("0");
@@ -122,15 +126,19 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
 
             if(scan.getFlag().equals(ScanComment.STATUS_ONE)){
+                //传过来的flag状态为1 直接入库
                 this.baseMapper.insert(scan);
             }else if(scan.getFlag().equals(ScanComment.STATUS_TWO)){
+                //传过来的flag状态为2 更新入库
                 this.baseMapper.update(scan,queryWrapper);
             }else if(scan.getFlag().equals(ScanComment.STATUS_THREE)){
+                //传过来的flag状态为3  删除
                 Scan sca = new Scan();
                 sca.setDel(ScanComment.STATUS_TWO);
                 this.baseMapper.update(sca,queryWrapper);
             }
         }
+        //更新已扫数量，并将DN状态更改为1
         if(CollectionUtils.isNotEmpty(scanList)){
             String delivery = scanList.get(0).getDelivery();
             List<Detail> detailList = addScanQuantity(delivery, scanList);
@@ -153,6 +161,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
     @Override
     @Transactional
     public void deleteScanDetail(String delivery) {
+        //删除扫描记录   并将DN状态更改
         Scan scan = new Scan();
         scan.setDel(ScanComment.STATUS_TWO);
         QueryWrapper<Scan> queryWrapper = new QueryWrapper<>();
@@ -172,6 +181,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
     @Override
     @Transactional
     public void deleteScanById(Integer id,String delivery) {
+        //删除扫描记录并更新DN状态
         this.baseMapper.deleteScanById(id,ScanComment.STATUS_TWO);
         this.baseMapper.updateStatusByDelivery(delivery,ScanComment.STATUS_ONE);
         headerService.updateStatus(delivery,ScanComment.STATUS_ONE);
@@ -207,15 +217,16 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
     @Override
     @Transactional
     public List<HeaderVo> auditDn(String dns,String userName) {
-
+        //审核DN
         String[] deliveryList = dns.split(StringPool.COMMA);
         List<HeaderVo> headerVos = new ArrayList<>();
 
         for (String dn : deliveryList) {
 
             StringBuffer errorMsg = new StringBuffer();
-
+            //根据DN获取 header  detail  信息
             Header header = headerService.queryHeaderDetailByDelivery(dn);
+            //这个判断有没有拼箱操作
             List<Header> headerList = headerService.selectHeaderByScanDn(dn);
 
             boolean compare = false;
@@ -229,6 +240,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
                     }
                 }
             }
+            //判断soap获取的物料，数量  和 扫码的 物料，数量是否相同
             if(compare){
                 StringBuffer buffer = new StringBuffer("拼箱不符合规则,所属ＤＮ号分别为: ");
                 for (int i = 0;i<headerList.size();i++){
@@ -281,6 +293,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
                         }
 
                     }
+                    //物料不一致，拼接字符串
                     if(material){
                         if(StringUtils.isNotEmpty(batch)){
                             errorMsg.append("该物料:" + detail.getMaterial() + "未进行扫描或该批次:" + detail.getRocheBatch() + "未进行扫描; ");
@@ -291,6 +304,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
                         }
 
                     }
+                    //物料一致，判断数量
                     if(!material){
                         if(StringUtils.isNotEmpty(batch)){
                             if(!detail.getQuantity().equals(maDeta.getQuantity())){
@@ -316,6 +330,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 //                }
 //            }
 
+            //更新detail  已扫数量
             for (Detail detail : detailList) {
                 for (Detail scanDatail : scanList) {
                     if(detail.getMaterial().equals(scanDatail.getMaterial())){
@@ -324,6 +339,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
                 }
             }
 
+            //返回具体信息给扫码枪
             HeaderVo headerVo = new HeaderVo();
             headerVo.setDelivery(dn);
             if(StringUtils.isEmpty(errorMsg)){

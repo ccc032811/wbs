@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
+/**扫描
  * @Author: chengchengchu
  * @Date: 2020/11/24  14:29
  */
@@ -149,7 +149,7 @@ public class ScanController extends BaseController {
     }
 
 
-    /**查询DN获取记录集合
+    /**查询DN获取记录集合   sms_scan_log
      * @param scanLog
      * @return
      * @throws FebsException
@@ -187,7 +187,7 @@ public class ScanController extends BaseController {
     }
 
 
-    /**获取所有的扫描记录
+    /**获取所有的扫描记录  并获取实际扫描数量
      * @param delivery
      * @return
      * @throws FebsException
@@ -242,7 +242,7 @@ public class ScanController extends BaseController {
     }
 
 
-    /**获取人员操作类型
+    /**获取人员操作类型   按箱扫码    按码扫箱
      * @param username
      * @return
      */

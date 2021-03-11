@@ -106,7 +106,7 @@ public class Scan implements Serializable {
     @TableField(value = "del")
     private String del;
 
-    //  1新增  2 修改  删除
+    //  1新增  2 修改  3 删除
     @TableField(exist = false)
     private String flag;
     /**

@@ -51,6 +51,8 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
     @Override
     public IPage<Header> queryHeaderList(Header header) {
 //        Header singleHeader = (Header) ScanComment.containPlant(header);
+
+        //分页查询
         IPage<Header> headerPage = new Page<>(header.getPageNum(),header.getPageSize());
         return this.baseMapper.getPageHeader(headerPage,header);
     }

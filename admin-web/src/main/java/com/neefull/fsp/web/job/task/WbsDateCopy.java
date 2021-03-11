@@ -20,7 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-/**
+/**数据备份
  * @Author: chengchengchu
  * @Date: 2021/1/11  15:26
  */
@@ -45,13 +45,14 @@ public class WbsDateCopy {
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
     public void dateCopy(String dayCount){
-
+        //这个时间往前推一个月的时间
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.DATE,Integer.parseInt("-"+dayCount));
         Date time = calendar.getTime();
 
         try {
+            //获取一个月前这个点的数据
             List<HeaderCopy> headerCopyList = headerCopyMapper.selectCopyDateByTime(time);
             for (HeaderCopy headerCopy : headerCopyList) {
                 headerCopyMapper.insert(headerCopy);

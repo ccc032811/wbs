@@ -22,7 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
+/**  DN  header 操作
+ *
  * @Author: chengchengchu
  * @Date: 2020/11/24  14:07
  */
@@ -75,7 +76,7 @@ public class HeaderController extends BaseController {
     }
 
 
-    /**查询已扫但是没审核和审核未通过的dn
+    /**查询已扫但是没审核和审核未通过的dn ，并携带错误信息
      * @param
      * @return
      */
@@ -128,7 +129,7 @@ public class HeaderController extends BaseController {
     }
 
 
-
+//导出excel
     @GetMapping("/headerExcel")
     public void headerExcel(Header header, HttpServletResponse response) throws FebsException {
 

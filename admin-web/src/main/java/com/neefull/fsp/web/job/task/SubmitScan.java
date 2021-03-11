@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
+/**同步数据给TMS
  * @Author: chengchengchu
  * @Date: 2020/12/8  14:36
  */
@@ -52,23 +52,29 @@ public class SubmitScan {
 
 
     public void submit(){
-
+        //获取审核通过的DN信息
         List<Header> scanList = headerService.querySubmitDelivery();
 
         for (Header header : scanList) {
+            //根据DN号查询所有的扫描信息
             List<Scan> list = scanService.queryScanByDelivery(header.getDelivery());
 
             List<Scan> scans = new ArrayList<>();
             for (Scan scan : list) {
+                //判断这个物料是否未上传
                 if(scan.getStatus().equals(ScanComment.STATUS_ONE)){
                     if(scans.size() < 100){
                         scans.add(scan);
                     }
+//                    else {
+//                        break;
+//                    }
                 }
             }
 
             //判断是否还有为推送的，没有更新状态为已推送
             if(scans.size()==0){
+                //更新状态未上传成功
                 headerService.updateStatus(header.getDelivery(),ScanComment.STATUS_FOUR);
             }else {
 
@@ -122,6 +128,7 @@ public class SubmitScan {
                     log.info("对接TMS的返回结果：{}",res);
 
                     if(res.contains(code)){
+                        //更新扫描记录为已提交状态
                         for (Scan sca : scans) {
                             scanService.updateScanStatus(sca.getId(),ScanComment.STATUS_TWO);
                         }
@@ -131,14 +138,14 @@ public class SubmitScan {
                         tmsData.setData(data);
                         tmsData.setPlant(header.getPlant());
                         tmsData.setResData(res);
-
+                        //添加
                         tmsDataService.addTmsData(tmsData);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                     log.error("对接TMS失败，失败原因为: {}",e.getMessage());
 
-                    //TODO  添加到系统操作日志里面
+                    //失败 添加到系统操作日志里面
                     TmsData tmsData = new TmsData();
                     tmsData.setDelivery(header.getDelivery());
                     tmsData.setData(data);

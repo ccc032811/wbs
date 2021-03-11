@@ -116,16 +116,18 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
     @Transactional
     public DetailScanVo getDnMessageByDelivery(String delivery) {
         DetailScanVo detailScanVo = new DetailScanVo();
-
+        // 根据DN 先去sms_can_log表去查询是否有记录，有记录直接解析，没有记录就去调SOAP接口
         String message = "";
         String plant = "";
         ScanLog scanLog = queryDnByDelivery(delivery);
         List<Scan> scanList = scanService.queryScanByDelivery(delivery);
 
         if(scanLog!=null){
+            //有数据，直接获取
             message = scanLog.getDeliveryResponse();
             plant = XmlUtils.getTagContent(message,"<PLANT>", "</PLANT>");
         }else {
+            //没有数据，调接口
             String soapMessage = SoapWsUtils.getSoapMessage(delivery);
             try {
                 message = SoapWsUtils.callWebService(SoapProperties.SOAPURL,soapMessage);
@@ -148,7 +150,7 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
 //                        headerService.insertHeaderAndDetail(message,newScanLog.getId());
 //                    }
 //                }
-
+                //异步入库
                 scanLogService.insertScanLog(message,delivery);
             } catch (Exception e) {
                 e.printStackTrace();

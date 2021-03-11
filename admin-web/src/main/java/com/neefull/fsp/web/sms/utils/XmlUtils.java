@@ -46,7 +46,7 @@ public abstract class XmlUtils {
 //                    detailStrList.add(dom);
 //                }
 //            }
-
+            //截取detail
             List<String> detailStrList = getDetailList(sapMessage);
 
             List<Detail> detailList = new ArrayList<>();
@@ -77,7 +77,7 @@ public abstract class XmlUtils {
                     detail.setSaveModeDescription(getTagContent(str, "<SAVE_MODE_DESCRIPTION>", "</SAVE_MODE_DESCRIPTION>"));
 
                     boolean isContain = false;
-
+                    //将detail 集合中相同物料，把他们的数量相加合并
                     if(CollectionUtils.isNotEmpty(detailList)){
                         for (Detail deta : detailList) {
                             if(StringUtils.isNotEmpty(detail.getBatch())){
@@ -91,6 +91,7 @@ public abstract class XmlUtils {
                                 }
                             }else {
                                 if(detail.getMaterial().equals(deta.getMaterial())){
+                                    //数量相加
                                     String count = getCount(deta.getQuantity(), detail.getQuantity());
                                     deta.setQuantity(count);
                                     isContain = true;

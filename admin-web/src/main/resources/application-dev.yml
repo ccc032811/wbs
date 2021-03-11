@@ -14,13 +14,13 @@ spring:
       primary: base
       datasource:
         # 数据源-1，名称为 base
-        base:
+        base:                       #数据库配置
            username: root
            password: xrI*W9WP3$hBPaLK
            driver-class-name: com.mysql.cj.jdbc.Driver
            url: jdbc:mysql://10.1.151.169:3306/sms?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=falsmezone=GMT%2b8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true&autoReconnect=true&failOverReadOnly=false
         # 数据源-2，名称为 quartz
-        quartz:
+        quartz:                       #数据库配置
            username: root
            password: xrI*W9WP3$hBPaLK
            driver-class-name: com.mysql.cj.jdbc.Driver

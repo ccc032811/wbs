@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
+/**  解析soap获取的信息
  * @Author: chengchengchu
  * @Date: 2020/11/26  18:02
  */
@@ -35,16 +35,19 @@ public class HeaderAndDetailInsert {
 
     @Transactional
     public void insertSapMsg(){
-
+        //查询没有解析出来的信息
         List<ScanLog> headerList = scanLogService.selectScanLogInsert();
         for (ScanLog scanLog : headerList) {
             Header header = XmlUtils.resolverSapMessage(scanLog.getDeliveryResponse());
+            //入库
             headerService.insertHeader(header);
             List<Detail> detailList = header.getDetailList();
             for (Detail detail : detailList) {
                 detailService.insertDetail(detail);
             }
         }
+
+        //更新状态为以解析
         scanLogService.updateScanLogStatus(headerList);
     }
 
