@@ -207,7 +207,7 @@ public class ScanController extends BaseController {
 
 
 
-    /**删除扫描信息
+    /**删除扫描信息   扫码枪
      * @param delivery
      * @return
      * @throws FebsException
@@ -226,7 +226,7 @@ public class ScanController extends BaseController {
         }
     }
 
-
+    //PC
     @Log("根据id删除扫描信息")
     @GetMapping("/deleteScanById/{delivery}/{id}")
     @ResponseBody

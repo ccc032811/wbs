@@ -25,6 +25,7 @@ public class TmsDataController extends BaseController {
     @Autowired
     private ITmsDataService tmsDataService;
 
+
     //对接TMS数据
     @GetMapping("/queryTmsList")
     public FebsResponse queryTmsList(TmsData tmsData) throws FebsException {

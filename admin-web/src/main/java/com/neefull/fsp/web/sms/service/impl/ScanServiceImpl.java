@@ -58,6 +58,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
         for (Detail detail : detailList) {
             detailService.updateScanQuntity(detail.getId(),detail.getScanQuantity());
         }
+        //状态更新
         headerService.updateDeliveryStatus(scanAdd.getDelivery(), ScanComment.STATUS_ONE);
     }
 
