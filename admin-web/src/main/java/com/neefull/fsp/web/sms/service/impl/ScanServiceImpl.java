@@ -124,6 +124,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
             queryWrapper.eq("delivery",scan.getDelivery());
             queryWrapper.eq("mat_code",scan.getMatCode());
             queryWrapper.eq("box_code",scan.getBoxCode());
+            queryWrapper.eq("batch",scan.getBatch());
 
 
             if(scan.getFlag().equals(ScanComment.STATUS_ONE)){
@@ -278,10 +279,10 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
                     boolean material = true;
                     String batch = "";
                     for (Detail deta : scanList) {
-                        if(StringUtils.isNotEmpty(deta.getBatch())){
+                        if(StringUtils.isNotEmpty(deta.getRocheBatch())){
+                            batch = deta.getRocheBatch();
                             if(detail.getMaterial().equals(deta.getMaterial())&&detail.getRocheBatch().equals(deta.getRocheBatch())){
                                 maDeta = deta;
-                                batch = deta.getRocheBatch();
                                 material = false;
                                 break;
                             }

@@ -19,8 +19,9 @@
         select distinct t.*,GROUP_CONCAT(s.box_code)  boxCode from sms_detail t
           left join sms_scan s on t.delivery = s.delivery
                and t.material = s.mat_code
+               and t.roche_batch = s.batch
                and s.del = 1
---                and t.batch = s.batch
+
         where 1=1
         <if test="delivery != null and delivery != ''">
             AND t.delivery like concat('%',#{delivery},'%')
@@ -40,7 +41,7 @@
         <if test="status != null and status != ''">
             AND t.status = #{status}
         </if>
-        group by t.material , t.delivery
+        group by t.material  ,t.roche_batch
         order by t.create_time desc
     </select>
     <select id="selectScanDetail" resultType="com.neefull.fsp.web.sms.entity.Detail">

@@ -67,7 +67,7 @@
         select t.*,d.quantity as count from sms_scan t left join sms_detail d  on
             t.delivery = d.delivery
                 and t.mat_code = d.material
---                     and t.batch = d.batch
+                   and t.batch = d.roche_batch
                         where t.delivery = #{delivery} and t.del = 1
     </select>
     <select id="selectScanByDeliveryAndMatCode"  resultType="com.neefull.fsp.web.sms.entity.Scan">

@@ -13,6 +13,8 @@ import com.neefull.fsp.web.sms.service.IHeaderService;
 import com.neefull.fsp.web.sms.service.IScanLogService;
 import com.neefull.fsp.web.sms.utils.ScanComment;
 import com.neefull.fsp.web.sms.utils.XmlUtils;
+import com.neefull.fsp.web.system.entity.Opinion;
+import com.neefull.fsp.web.system.service.IOpinionService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Author: chengchengchu
@@ -39,6 +42,8 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
     private IDetailService detailService;
     @Autowired@Lazy
     private IScanLogService scanLogService;
+    @Autowired
+    private IOpinionService opinionService;
 
 
     @Override
@@ -169,8 +174,10 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
     @Override
     @Transactional
     public void insertHeaderAndDetail(String message,Integer id) {
+        List<Opinion> plant = opinionService.getOpinions("Plant");
 
-        Header header = XmlUtils.resolverSapMessage(message);
+        List<String> plants = plant.stream().map(Opinion::getName).collect(Collectors.toList());
+        Header header = XmlUtils.resolverSapMessage(message,plants);
         if(header!=null){
             insertHeader(header);
         }

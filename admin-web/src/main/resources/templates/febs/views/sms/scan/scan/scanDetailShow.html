@@ -38,12 +38,6 @@
     <form class="layui-form " action="" lay-filter="scan-detail-show">
         <div class="layui-form-item layui-form-item-rigth">
             <div class="layui-inline layui-col-sm4">
-                <label class="layui-form-label">DN号</label>
-                <div class="layui-input-block input-four">
-                    <input type="text" name="delivery" autocomplete="off" class="layui-input " readonly="readonly">
-                </div>
-            </div>
-            <div class="layui-inline layui-col-sm4">
                 <label class="layui-form-label">箱码</label>
                 <div class="layui-input-block input-four">
                     <input type="text" name="boxCode" autocomplete="off" class="layui-input" readonly="readonly">
@@ -53,6 +47,12 @@
                 <label class="layui-form-label">箱型</label>
                 <div class="layui-input-block input-four">
                     <input type="text" name="boxType" autocomplete="off" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline layui-col-sm4">
+                <label class="layui-form-label">批次</label>
+                <div class="layui-input-block input-four">
+                    <input type="text" name="batch" autocomplete="off" class="layui-input " readonly="readonly">
                 </div>
             </div>
         </div>
@@ -124,6 +124,9 @@
             </div>
             <div style="float: right">
                 <input style="border:0;" name="flag"  type="hidden">
+            </div>
+            <div style="float: right">
+                <input style="border:0;" name="delivery"  type="hidden">
             </div>
         </div>
     </form>

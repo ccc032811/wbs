@@ -12,6 +12,7 @@ import com.neefull.fsp.web.sms.utils.ScanComment;
 import com.neefull.fsp.web.sms.utils.SoapProperties;
 import com.neefull.fsp.web.sms.utils.SoapWsUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -87,7 +88,13 @@ public class SubmitScan {
                     scanSubmit.setSerialNo("");
                     scanSubmit.setItemCode(sca.getMatCode());
                     scanSubmit.setItemName(sca.getMatName());
-                    scanSubmit.setBatchNo("");
+
+                    if(StringUtils.isEmpty(sca.getBatch())){
+                        scanSubmit.setBatchNo("");
+                    }else {
+                        scanSubmit.setBatchNo(sca.getBatch());
+                    }
+
                     scanSubmit.setExipiryDate(sca.getExpiryDate());
                     scanSubmit.setUnit(sca.getUnit());
                     scanSubmit.setQuantity(sca.getQuantity());

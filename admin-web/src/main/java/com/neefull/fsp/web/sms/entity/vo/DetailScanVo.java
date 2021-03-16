@@ -10,10 +10,12 @@ import java.util.List;
 
 
 public class DetailScanVo implements Serializable {
-
-    private String status;   //1  表示有扫描记录   2表示没有扫描记录
+    //1  表示有扫描记录   2表示没有扫描记录
+    private String status;
 
     private String plant;
+    //  1表示需要扫批次     2  表示不扫批次
+    private boolean type;
 
     private List<DetailVo> detailVoList;
 
@@ -31,6 +33,14 @@ public class DetailScanVo implements Serializable {
 
     public void setPlant(String plant) {
         this.plant = plant;
+    }
+
+    public Boolean getType() {
+        return type;
+    }
+
+    public void setType(Boolean type) {
+        this.type = type;
     }
 
     public List<DetailVo> getDetailVoList() {

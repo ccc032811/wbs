@@ -3,8 +3,12 @@ package com.neefull.fsp.web.sms.utils;
 import com.neefull.fsp.web.sms.entity.Detail;
 import com.neefull.fsp.web.sms.entity.Header;
 import com.neefull.fsp.web.sms.entity.vo.DetailVo;
+import com.neefull.fsp.web.system.entity.Opinion;
+import com.neefull.fsp.web.system.service.IOpinionService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,9 +18,9 @@ import java.util.List;
  * @Author: chengchengchu
  * @Date: 2020/11/26  15:53
  */
-public abstract class XmlUtils {
+public class XmlUtils {
 
-    public static Header resolverSapMessage(String sapMessage){
+    public static Header resolverSapMessage(String sapMessage, List<String> plants){
 
 //        String soldToParty = getTagContent(sapMessage, "<SOLD_TO_PARTY>", "</SOLD_TO_PARTY>");
 //        String shipToParty = getTagContent(sapMessage, "<SHIP_TO_PARTY>", "</SHIP_TO_PARTY>");
@@ -51,6 +55,12 @@ public abstract class XmlUtils {
 
             List<Detail> detailList = new ArrayList<>();
             if(CollectionUtils.isNotEmpty(detailStrList)){
+                String plant = getTagContent(sapMessage, "<PLANT>", "</PLANT>");
+                boolean isPlant = false;
+                if(plants.contains(plant)){
+                    isPlant = true;
+                }
+                //TODO  根据工厂选择不同的解析条件
                 for (String str : detailStrList) {
                     Detail detail = new Detail();
                     detail.setDelivery(delivery);
@@ -62,9 +72,14 @@ public abstract class XmlUtils {
                     detail.setMaterialDescription(getTagContent(str, "<MATERIAL_DESCRIPTION>", "</MATERIAL_DESCRIPTION>"));
                     detail.setMaterialDescriptionEn(getTagContent(str, "<MATERIAL_DESCRIPTION_EN>", "</MATERIAL_DESCRIPTION_EN>"));
                     detail.setRocheMaterialDescription(getTagContent(str, "<ROCHE_MATERIAL_DESCRIPTION>", "</ROCHE_MATERIAL_DESCRIPTION>"));
-                    detail.setPlant(getTagContent(str, "<PLANT>", "</PLANT>"));
+                    detail.setPlant(plant);
+                    if(isPlant){
+                        detail.setRocheBatch(getTagContent(str, "<ROCHE_BATCH>", "</ROCHE_BATCH>"));
+                    }else {
+                        detail.setRocheBatch("");
+                    }
 //                    detail.setBatch(getTagContent(str, "<BATCH>", "</BATCH>"));
-                    detail.setRocheBatch("");
+                    detail.setBatch("");
 //                    detail.setSerialNumber(getTagContent(str, "<SERIAL_NUMBER>", "</SERIAL_NUMBER>"));
                     detail.setQuantity(getTagContent(str, "<QUANTITY>", "</QUANTITY>"));
                     detail.setUom(getTagContent(str, "<UOM>", "</UOM>"));
@@ -84,9 +99,9 @@ public abstract class XmlUtils {
                                 if (detail.getMaterial().equals(deta.getMaterial()) && detail.getRocheBatch().equals(deta.getRocheBatch())) {
                                     String count = getCount(deta.getQuantity(), detail.getQuantity());
                                     deta.setQuantity(count);
-                                    if (!deta.getBatch().equals(detail.getBatch())) {
-                                        deta.setBatch(deta.getBatch() + "|" + detail.getBatch());
-                                    }
+//                                    if (!deta.getBatch().equals(detail.getBatch())) {
+//                                        deta.setBatch(deta.getBatch() + "|" + detail.getBatch());
+//                                    }
                                     isContain = true;
                                 }
                             }else {
@@ -105,7 +120,7 @@ public abstract class XmlUtils {
                     }
                 }
                 header.setDetailList(detailList);
-                header.setPlant(getTagContent(sapMessage, "<PLANT>", "</PLANT>"));
+                header.setPlant(plant);
             }
 //        }
         return header;
@@ -137,7 +152,7 @@ public abstract class XmlUtils {
 
 
 
-    public static List<DetailVo> resolverDetail(String sapMessage){
+    public static List<DetailVo> resolverDetail(String sapMessage,boolean isPlant){
 
 //        String detailMessage = getTagContent(sapMessage, "<T_DELIVERY_ITEM>", "</T_DELIVERY_ITEM>");
 //        String[] detailString = detailMessage.split("<item>");
@@ -158,7 +173,11 @@ public abstract class XmlUtils {
 
                 detailVo.setMatCode(getMaterial(getTagContent(str, "<MATERIAL>", "</MATERIAL>")));
                 detailVo.setMatName(getTagContent(str, "<MATERIAL_DESCRIPTION>", "</MATERIAL_DESCRIPTION>"));
-                detailVo.setBatch("");
+                if(isPlant){
+                    detailVo.setBatch(getTagContent(str, "<ROCHE_BATCH>", "</ROCHE_BATCH>"));
+                }else {
+                    detailVo.setBatch("");
+                }
 //                detailVo.setBatch(getTagContent(str, "<ROCHE_BATCH>", "</ROCHE_BATCH>"));
 //                detailVo.setSerialNumber(getTagContent(str, "<SERIAL_NUMBER>", "</SERIAL_NUMBER>"));
                 detailVo.setQuantity(getTagContent(str, "<QUANTITY>", "</QUANTITY>"));
@@ -173,9 +192,9 @@ public abstract class XmlUtils {
                             if (detailVo.getMatCode().equals(deta.getMatCode()) && detailVo.getBatch().equals(deta.getBatch())) {
                                 String count = getCount(deta.getQuantity(), detailVo.getQuantity());
                                 deta.setQuantity(count);
-                                if (!deta.getBatch().equals(detailVo.getBatch())) {
-                                    deta.setBatch(deta.getBatch() + "|" + detailVo.getBatch());
-                                }
+//                                if (!deta.getBatch().equals(detailVo.getBatch())) {
+//                                    deta.setBatch(deta.getBatch() + "|" + detailVo.getBatch());
+//                                }
                                 isContain = true;
                             }
                         }else {
