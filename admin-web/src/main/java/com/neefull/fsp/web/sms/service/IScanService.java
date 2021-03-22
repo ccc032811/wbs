@@ -78,7 +78,7 @@ public interface IScanService  extends IService<Scan> {
     /**删除已扫信息
      * @param delivery
      */
-    void deleteScanDetail(String delivery);
+    Boolean deleteScanDetail(String delivery);
 
     /**查询扫描跟数量
      * @param delivery

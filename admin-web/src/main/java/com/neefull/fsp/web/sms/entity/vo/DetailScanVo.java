@@ -14,7 +14,7 @@ public class DetailScanVo implements Serializable {
     private String status;
 
     private String plant;
-    //  1表示需要扫批次     2  表示不扫批次
+
     private boolean type;
 
     private List<DetailVo> detailVoList;

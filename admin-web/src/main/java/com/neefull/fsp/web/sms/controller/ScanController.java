@@ -217,8 +217,9 @@ public class ScanController extends BaseController {
     @ResponseBody
     public FebsResponse deleteScanDetail(@PathVariable String delivery) throws FebsException {
         try {
-            scanService.deleteScanDetail(delivery);
-            return new FebsResponse().success();
+            //TODO  给个type
+            Boolean type = scanService.deleteScanDetail(delivery);
+            return new FebsResponse().success().data(type);
         } catch (Exception e) {
             String message = "删除已扫DN数据失败！";
             log.error(message +"失败原因为: {}",e);

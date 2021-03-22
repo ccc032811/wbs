@@ -15,6 +15,8 @@ import com.neefull.fsp.web.sms.service.IScanLogService;
 import com.neefull.fsp.web.sms.service.IScanService;
 import com.neefull.fsp.web.sms.utils.ScanComment;
 import com.neefull.fsp.web.sms.utils.XmlUtils;
+import com.neefull.fsp.web.system.entity.Opinion;
+import com.neefull.fsp.web.system.service.IOpinionService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -26,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author: chengchengchu
@@ -41,6 +44,8 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
     private IHeaderService headerService;
     @Autowired
     private IDetailService detailService;
+    @Autowired
+    private IOpinionService opinionService;
 
 
     @Override
@@ -162,7 +167,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
     @Override
     @Transactional
-    public void deleteScanDetail(String delivery) {
+    public Boolean deleteScanDetail(String delivery) {
         //删除扫描记录   并将DN状态更改
         Scan scan = new Scan();
         scan.setDel(ScanComment.STATUS_TWO);
@@ -171,6 +176,19 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
         this.baseMapper.update(scan,queryWrapper);
         headerService.updateStatus(delivery,ScanComment.STATUS_ZERO);
         detailService.updateStatusByDelivery(delivery,ScanComment.STATUS_ZERO);
+
+        Header header = headerService.queryHeaderByDelivery(delivery);
+
+        List<Opinion> plantList = opinionService.getOpinions("Plant");
+        List<String> plants = plantList.stream().map(Opinion::getName).collect(Collectors.toList());
+        boolean isPlant = false;
+        if(header!=null){
+            if(plants.contains(header.getPlant())){
+                isPlant = true;
+            }
+        }
+
+        return isPlant;
 
     }
 

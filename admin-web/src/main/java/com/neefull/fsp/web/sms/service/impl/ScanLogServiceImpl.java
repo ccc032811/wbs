@@ -264,6 +264,7 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
         if(plants.contains(plant)){
             isPlant = true;
         }
+        //进行解析
         detailScanVo.setDetailVoList(XmlUtils.resolverDetail(message,isPlant));
         detailScanVo.setType(isPlant);
         if(CollectionUtils.isNotEmpty(scanList)){
