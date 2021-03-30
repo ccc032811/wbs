@@ -29,7 +29,7 @@ public interface ScanMapper extends BaseMapper<Scan> {
 
     void updateStatusByDelivery(@Param("delivery") String delivery, @Param("status") String status);
 
-    Scan selectScanByDeliveryAndMatCode(@Param("delivery") String delivery, @Param("matCode") String matCode, @Param("status") String status);
+    Scan selectScanByDeliveryAndMatCode(@Param("delivery") String delivery, @Param("matCode") String matCode, @Param("batch") String batch, @Param("status") String status);
 
     List<Scan> downScanExcel(Scan scan);
 

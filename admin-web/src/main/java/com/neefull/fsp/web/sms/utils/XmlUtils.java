@@ -95,7 +95,8 @@ public class XmlUtils {
                     //将detail 集合中相同物料，把他们的数量相加合并
                     if(CollectionUtils.isNotEmpty(detailList)){
                         for (Detail deta : detailList) {
-                            if(StringUtils.isNotEmpty(detail.getBatch())){
+//                            if(StringUtils.isNotEmpty(detail.getBatch())){  //不应该判断batch，应该是RocheBatch
+                            if(isPlant){
                                 if (detail.getMaterial().equals(deta.getMaterial()) && detail.getRocheBatch().equals(deta.getRocheBatch())) {
                                     String count = getCount(deta.getQuantity(), detail.getQuantity());
                                     deta.setQuantity(count);

@@ -118,7 +118,7 @@
                 });
             }
             if (layEvent === 'scan-detail-view') {
-                febs.modal.open('扫描信息', 'sms/getScanDetail/'+data.delivery+"/"+data.material, {
+                febs.modal.open('扫描信息', 'sms/getScanDetail/'+data.delivery+"/"+data.material+"/"+data.rocheBatch, {
                     area:  [$(window).width() <= 750 ? '70%' : '65%',$(window).width() <= 750 ? '40%' : '40%']
                 });
             }

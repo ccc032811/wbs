@@ -73,11 +73,19 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
         //对相同物料的数量进行相加
         for (Detail detail : detailList) {
             String material = detail.getMaterial();
+            String batch = detail.getRocheBatch();
             BigDecimal matDec = new BigDecimal("0");
             for (Scan scan : scanList) {
-                if (scan.getMatCode().equals(material)) {
-                    BigDecimal scanDec = new BigDecimal(scan.getQuantity());
-                    matDec = matDec.add(scanDec);
+                if(StringUtils.isNotEmpty(batch)){
+                    if (scan.getMatCode().equals(material) && scan.getBatch().equals(batch)) {
+                        BigDecimal scanDec = new BigDecimal(scan.getQuantity());
+                        matDec = matDec.add(scanDec);
+                    }
+                }else{
+                    if (scan.getMatCode().equals(material)) {
+                        BigDecimal scanDec = new BigDecimal(scan.getQuantity());
+                        matDec = matDec.add(scanDec);
+                    }
                 }
             }
             if(!matDec.toString().equals(ScanComment.STATUS_ZERO)){
@@ -121,7 +129,7 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
 
     @Override
-    @Transactional
+//    @Transactional
     public void editScanDetail(List<Scan> scanList) {
 
         for (Scan scan : scanList) {
@@ -160,8 +168,8 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
 
     @Override
-    public Scan getScanDetail(String delivery, String matCode) {
-        return this.baseMapper.selectScanByDeliveryAndMatCode(delivery,matCode,ScanComment.STATUS_ONE);
+    public Scan getScanDetail(String delivery, String matCode, String batch) {
+        return this.baseMapper.selectScanByDeliveryAndMatCode(delivery,matCode,batch,ScanComment.STATUS_ONE);
     }
 
 

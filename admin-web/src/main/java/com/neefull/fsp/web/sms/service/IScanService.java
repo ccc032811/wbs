@@ -73,7 +73,7 @@ public interface IScanService  extends IService<Scan> {
      * @param batch
      * @return
      */
-    Scan getScanDetail(String delivery, String matCode);
+    Scan getScanDetail(String delivery, String matCode, String batch);
 
     /**删除已扫信息
      * @param delivery

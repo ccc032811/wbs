@@ -101,7 +101,7 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
         String reDelivery = XmlUtils.getTagContent(message, "<DELIVERY>", "</DELIVERY>");
         ScanLog reScanLog = queryDnByDelivery(reDelivery);
 
-        if(StringUtils.isNotEmpty(soldToParty)&&StringUtils.isNotEmpty(shipToParty)){
+        if(StringUtils.isNotEmpty(shipToParty)){
 
             if(reScanLog == null) {
                 ScanLog newScanLog = new ScanLog();
@@ -267,12 +267,17 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
         //进行解析
         detailScanVo.setDetailVoList(XmlUtils.resolverDetail(message,isPlant));
         detailScanVo.setType(isPlant);
-        if(CollectionUtils.isNotEmpty(scanList)){
-            detailScanVo.setStatus("1");  //有扫描记录
-        }else {
-            detailScanVo.setStatus("2");  //没有扫描记录
+        //判断是否有sap数据
+        String reDelivery = XmlUtils.getTagContent(message, "<DELIVERY>", "</DELIVERY>");
+        if(StringUtils.isEmpty(reDelivery)){
+            detailScanVo.setStatus("3");  //没有sap返回记录
+        }else{
+            if(CollectionUtils.isNotEmpty(scanList)){
+                detailScanVo.setStatus("1");  //有扫描记录
+            }else {
+                detailScanVo.setStatus("2");  //没有扫描记录
+            }
         }
-
         return detailScanVo;
     }
 

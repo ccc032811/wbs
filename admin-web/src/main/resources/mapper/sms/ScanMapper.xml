@@ -76,6 +76,9 @@
                t.status,t.del from sms_scan t where t.delivery = #{delivery} and
                                                                         t.mat_code = #{matCode} and
                                                                         t.del = #{status}
+        <if test="batch != null and batch != ''">
+             and t.batch=#{batch}
+        </if>
         group by t.mat_code
     </select>
     <select id="downScanExcel" resultType="com.neefull.fsp.web.sms.entity.Scan">
