@@ -114,6 +114,10 @@
     <select id="queryBoxTypeByDeliveryAndMatCode" resultType="java.lang.String">
         select t.box_code from sms_scan t  where  del = 1 and t.mat_code = #{material} and t.delivery = #{delivery}
     </select>
+    <select id="selectScanByDeliveryAndMatCodeAndBatchAndBoxCode"
+            resultType="com.neefull.fsp.web.sms.entity.Scan">
+        select * from sms_scan where delivery = #{delivery} and mat_code = #{matCode} and batch = #{batch} and  del = #{statusOne} and box_code = #{boxCode}
+    </select>
 
 
 </mapper>

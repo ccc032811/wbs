@@ -51,17 +51,17 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
     @Override
     @Transactional
     public void insertScanMsg(ScanAdd scanAdd) {
+        //更新detail的已扫数量
+        List<Detail> detailList = addScanQuantity(scanAdd.getDelivery(), scanAdd.getScanList());
+        for (Detail detail : detailList) {
+            detailService.updateScanQuntity(detail.getId(),detail.getScanQuantity());
+        }
 
         //判断不为删除的状态的数据直接入库
         for (Scan scan : scanAdd.getScanList()) {
             if(!scan.getFlag().equals(ScanComment.STATUS_THREE)){
                 this.baseMapper.insert(scan);
             }
-        }
-        //更新detail的已扫数量
-        List<Detail> detailList = addScanQuantity(scanAdd.getDelivery(), scanAdd.getScanList());
-        for (Detail detail : detailList) {
-            detailService.updateScanQuntity(detail.getId(),detail.getScanQuantity());
         }
         //状态更新
         headerService.updateDeliveryStatus(scanAdd.getDelivery(), ScanComment.STATUS_ONE);
@@ -70,21 +70,45 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
     private List<Detail> addScanQuantity(String delivery,List<Scan> scanList){
         List<Detail> detailList = detailService.queryDetailByDelivery(delivery);
+
         //对相同物料的数量进行相加
         for (Detail detail : detailList) {
             String material = detail.getMaterial();
             String batch = detail.getRocheBatch();
             BigDecimal matDec = new BigDecimal("0");
             for (Scan scan : scanList) {
-                if(StringUtils.isNotEmpty(batch)){
-                    if (scan.getMatCode().equals(material) && scan.getBatch().equals(batch)) {
-                        BigDecimal scanDec = new BigDecimal(scan.getQuantity());
-                        matDec = matDec.add(scanDec);
+                BigDecimal scanQuan = new BigDecimal(detail.getScanQuantity());
+                Scan oldScan = this.baseMapper.selectScanByDeliveryAndMatCodeAndBatchAndBoxCode(scan.getDelivery(),scan.getMatCode(),scan.getBatch(),scan.getBoxCode(),ScanComment.STATUS_ONE);
+                if(scan.getFlag().equals(ScanComment.STATUS_ONE)){
+                    //传过来的flag状态为1
+                    if(StringUtils.isNotEmpty(batch)){
+                        if (scan.getMatCode().equals(material) && scan.getBatch().equals(batch)) {
+                            matDec = matDec.add(new BigDecimal(scan.getQuantity()));
+                        }
+                    }else{
+                        if (scan.getMatCode().equals(material)) {
+                            matDec = matDec.add(new BigDecimal(scan.getQuantity()));
+                        }
                     }
-                }else{
-                    if (scan.getMatCode().equals(material)) {
-                        BigDecimal scanDec = new BigDecimal(scan.getQuantity());
-                        matDec = matDec.add(scanDec);
+                }else if(scan.getFlag().equals(ScanComment.STATUS_TWO)){
+                    //传过来的flag状态为2
+                    if(StringUtils.isNotEmpty(batch)){
+                        if (scan.getMatCode().equals(material) && scan.getBatch().equals(batch)) {
+                            if(StringUtils.isNotEmpty(oldScan.getQuantity())){
+                                scanQuan = scanQuan.subtract(new BigDecimal(oldScan.getQuantity()));
+                            }
+                            scanQuan = scanQuan.add(new BigDecimal(scan.getQuantity()));
+                            matDec = matDec.add(scanQuan);
+
+                        }
+                    }else{
+                        if (scan.getMatCode().equals(material)) {
+                            if(StringUtils.isNotEmpty(oldScan.getQuantity())) {
+                                scanQuan = scanQuan.subtract(new BigDecimal(oldScan.getQuantity()));
+                            }
+                            scanQuan = scanQuan.add(new BigDecimal(scan.getQuantity()));
+                            matDec = matDec.add(scanQuan);
+                        }
                     }
                 }
             }
@@ -129,8 +153,19 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
 
 
     @Override
-//    @Transactional
+    @Transactional
     public void editScanDetail(List<Scan> scanList) {
+        //更新已扫数量，并将DN状态更改为1
+        if(CollectionUtils.isNotEmpty(scanList)){
+            String delivery = scanList.get(0).getDelivery();
+            List<Detail> detailList = addScanQuantity(delivery, scanList);
+            for (Detail detail : detailList) {
+                detailService.updateScanQuntity(detail.getId(),detail.getScanQuantity());
+            }
+            headerService.updateStatus(delivery,ScanComment.STATUS_ONE);
+            this.baseMapper.updateStatusByDelivery(delivery,ScanComment.STATUS_ONE);
+            detailService.updateStatusByDelivery(delivery,null);
+        }
 
         for (Scan scan : scanList) {
             QueryWrapper<Scan> queryWrapper = new QueryWrapper<>();
@@ -152,17 +187,6 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
                 sca.setDel(ScanComment.STATUS_TWO);
                 this.baseMapper.update(sca,queryWrapper);
             }
-        }
-        //更新已扫数量，并将DN状态更改为1
-        if(CollectionUtils.isNotEmpty(scanList)){
-            String delivery = scanList.get(0).getDelivery();
-            List<Detail> detailList = addScanQuantity(delivery, scanList);
-            for (Detail detail : detailList) {
-                detailService.updateScanQuntity(detail.getId(),detail.getScanQuantity());
-            }
-            headerService.updateStatus(delivery,ScanComment.STATUS_ONE);
-            this.baseMapper.updateStatusByDelivery(delivery,ScanComment.STATUS_ONE);
-            detailService.updateStatusByDelivery(delivery,null);
         }
     }
 
@@ -350,19 +374,18 @@ public class ScanServiceImpl extends ServiceImpl<ScanMapper, Scan> implements IS
                 }
             }
 
-//            for (Detail detail : detailList) {
-//                for (Detail scanDatail : scanList) {
-//                    if(detail.getRocheBatch().equals(scanDatail.getRocheBatch())&&detail.getMaterial().equals(scanDatail.getMaterial())){
-//                        detailService.updateScanQuntity(detail.getId(),scanDatail.getQuantity());
-//                    }
-//                }
-//            }
-
-            //更新detail  已扫数量
+//            //更新detail  已扫数量
             for (Detail detail : detailList) {
                 for (Detail scanDatail : scanList) {
-                    if(detail.getMaterial().equals(scanDatail.getMaterial())){
-                        detailService.updateScanQuntity(detail.getId(),scanDatail.getQuantity());
+                    if(StringUtils.isNotEmpty(detail.getRocheBatch())){
+
+                        if(detail.getMaterial().equals(scanDatail.getMaterial())&& detail.getRocheBatch().equals(scanDatail.getRocheBatch())){
+                            detailService.updateScanQuntity(detail.getId(),scanDatail.getQuantity());
+                        }
+                    }else {
+                        if(detail.getMaterial().equals(scanDatail.getMaterial())){
+                            detailService.updateScanQuntity(detail.getId(),scanDatail.getQuantity());
+                        }
                     }
                 }
             }

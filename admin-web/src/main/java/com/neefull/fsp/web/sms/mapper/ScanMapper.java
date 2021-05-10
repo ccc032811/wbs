@@ -35,4 +35,5 @@ public interface ScanMapper extends BaseMapper<Scan> {
 
     List<String> queryBoxTypeByDeliveryAndMatCode(@Param("delivery") String delivery, @Param("material") String material);
 
+    Scan selectScanByDeliveryAndMatCodeAndBatchAndBoxCode(@Param("delivery") String delivery, @Param("matCode") String matCode, @Param("batch") String batch, @Param("boxCode") String boxCode, @Param("statusOne") String statusOne);
 }
