@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 /**
@@ -41,6 +42,8 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> implements IScanLogService {
+
+
 
 
     @Autowired@Lazy
@@ -90,16 +93,52 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
 
     }
 
+
+
+
     @Override
     @Transactional
-    public void insertScanLog(String message, String delivery) {
+    public synchronized void insertScanLog(String message, String delivery) {
 
         String soldToParty = XmlUtils.getTagContent(message, "<SOLD_TO_PARTY>", "</SOLD_TO_PARTY>");
         String shipToParty = XmlUtils.getTagContent(message, "<SHIP_TO_PARTY>", "</SHIP_TO_PARTY>");
         String plant = XmlUtils.getTagContent(message,"<PLANT>", "</PLANT>");
+//        String reDelivery = XmlUtils.getTagContent(message, "<DELIVERY>", "</DELIVERY>");
+//        ReentrantLock lock = new ReentrantLock();
+//
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                if(lock.tryLock()){
+//                    try {
+//                        ScanLog reScanLog = queryDnByDelivery(reDelivery);
+//
+//                        if(StringUtils.isNotEmpty(shipToParty)){
+//
+//                            if(reScanLog == null) {
+//                                ScanLog newScanLog = new ScanLog();
+//                                newScanLog.setDelivery(delivery);
+//                                newScanLog.setDeliveryResponse(message);
+//                                newScanLog.setPlant(plant);
+//                                scanLogMapper.insert(newScanLog);
+//
+//                                headerService.insertHeaderAndDetail(message,newScanLog.getId());
+//                            }
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }finally {
+//                        lock.unlock();
+//                    }
+//                }
+//
+//            }
+//        });
+//
+//        thread.start();
 
-        String reDelivery = XmlUtils.getTagContent(message, "<DELIVERY>", "</DELIVERY>");
-        ScanLog reScanLog = queryDnByDelivery(reDelivery);
+
+        ScanLog reScanLog = queryDnByDelivery(delivery);
 
         if(StringUtils.isNotEmpty(shipToParty)){
 
@@ -112,14 +151,16 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
 
                 headerService.insertHeaderAndDetail(message,newScanLog.getId());
             }
-
         }
+
+
     }
 
 
     @Override
     @Transactional
     public DetailScanVo getDnMessageByDelivery(String delivery) {
+
         List<Opinion> plantList = opinionService.getOpinions("Plant");
         List<String> plants = plantList.stream().map(Opinion::getName).collect(Collectors.toList());
 
@@ -128,7 +169,6 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
         String message = "";
         String plant = "";
         ScanLog scanLog = queryDnByDelivery(delivery);
-        List<Scan> scanList = scanService.queryScanByDelivery(delivery);
 
         if(scanLog!=null){
             //有数据，直接获取
@@ -139,7 +179,6 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
             String soapMessage = SoapWsUtils.getSoapMessage(delivery);
             try {
                 message = SoapWsUtils.callWebService(SoapProperties.SOAPURL,soapMessage);
-
                 plant = XmlUtils.getTagContent(message,"<PLANT>", "</PLANT>");
                 //异步入库
                 scanLogService.insertScanLog(message,delivery);
@@ -160,6 +199,7 @@ public class ScanLogServiceImpl extends ServiceImpl<ScanLogMapper, ScanLog> impl
         if(StringUtils.isEmpty(reDelivery)){
             detailScanVo.setStatus("3");  //没有sap返回记录
         }else{
+            List<Scan> scanList = scanService.queryScanByDelivery(delivery);
             if(CollectionUtils.isNotEmpty(scanList)){
                 detailScanVo.setStatus("1");  //有扫描记录
             }else {

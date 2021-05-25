@@ -174,6 +174,7 @@ public class HeaderServiceImpl extends ServiceImpl<HeaderMapper, Header> impleme
     @Override
     @Transactional
     public void insertHeaderAndDetail(String message,Integer id) {
+
         List<Opinion> plant = opinionService.getOpinions("Plant");
 
         List<String> plants = plant.stream().map(Opinion::getName).collect(Collectors.toList());

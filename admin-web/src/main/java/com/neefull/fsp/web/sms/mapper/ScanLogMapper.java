@@ -17,6 +17,5 @@ public interface ScanLogMapper extends BaseMapper<ScanLog> {
 
     void updateStatus(@Param("id") Integer id, @Param("status") String status);
 
-
     IPage<ScanLog> getPageScanLog(IPage<ScanLog> scanLogPage, ScanLog scanLog);
 }
